@@ -368,3 +368,7 @@ nav.tabs a{text-decoration:none;color:var(--muted);cursor:pointer}
 .nextp small{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .nextp b{font-family:var(--disp);font-size:clamp(20px,4.5vw,30px);letter-spacing:-.02em}
 .nextp b::after{content:" →"}
+.mesa-cta{display:flex;align-items:center;gap:12px;margin:14px 0;padding:14px 16px;border-radius:12px;border:2px solid var(--mid);background:var(--panel);color:var(--fg);text-decoration:none;font-size:15px;line-height:1.35}
+.mesa-cta b{display:block;font-size:16px}.mesa-cta small{display:block;opacity:.8;font-size:13px}.mesa-cta .go{margin-left:auto;font-weight:800;white-space:nowrap}
+.mesa-cta .dot{flex:none;width:12px;height:12px;border-radius:50%;background:var(--mid);animation:mp 1.6s infinite}
+@keyframes mp{50%{opacity:.25}}@media(prefers-reduced-motion:reduce){.mesa-cta .dot{animation:none}}
