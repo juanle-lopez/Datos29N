@@ -55,3 +55,46 @@ function rvScan(){
  m.innerHTML=d>0?'Faltan <b>'+d+'</b> '+(d===1?'día':'días')+' para votar':'Hoy se vota el 29N'})();
 
 window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=true});
+
+/* ===== v18: menú «Más», volver arriba, noticias ===== */
+(function(){
+  var btn=document.getElementById('morebtn');if(!btn)return;
+  var here=location.pathname.split('/').pop()||'index.html';
+  var L=[
+    ['noticias.html','Últimas noticias','Diez titulares del 29-N con enlace a la fuente','<path d="M4 5h12v14H6a2 2 0 01-2-2zM16 9h4v8a2 2 0 01-2 2h-2M7.5 9h5M7.5 12.5h5M7.5 16h3"/>'],
+    ['mesas.html','Mesas electorales','Si te toca: plazos, excusas y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
+    ['vuelos.html','Vuelos oficiales','Mapa de calor de 7.666 vuelos (2021–2026)','<path d="M3 13.5l18-7.5-7.5 18-2.6-7.9z"/>'],
+    ['metodo.html','Método y fuentes','Cómo se hace y de dónde sale cada dato','<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>']];
+  var sh=document.createElement('div');sh.className='msheet';sh.id='moresheet';sh.hidden=true;
+  sh.innerHTML='<div class="msbg" data-close></div><div class="msp" role="dialog" aria-modal="true" aria-label="Más apartados"><div class="msh"><b>Más en Datos 29N</b><button type="button" class="msx" data-close aria-label="Cerrar">✕</button></div>'+
+    L.map(function(l){return '<a class="msl" href="'+l[0]+'"'+(l[0]===here?' aria-current="page"':'')+'><svg viewBox="0 0 24 24" aria-hidden="true">'+l[3]+'</svg><span><b>'+l[1]+'</b><small>'+l[2]+'</small></span></a>'}).join('')+'</div>';
+  document.body.appendChild(sh);
+  function set(o){sh.hidden=!o;btn.setAttribute('aria-expanded',o);document.documentElement.classList.toggle('msopen',o);if(o){var a=sh.querySelector('.msl');a&&a.focus()}else btn.focus()}
+  btn.addEventListener('click',function(){set(sh.hidden)});
+  sh.addEventListener('click',function(e){if(e.target.closest('[data-close]'))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!sh.hidden)set(false)});
+})();
+(function(){
+  var b=document.createElement('button');b.type='button';b.className='totop';b.setAttribute('aria-label','Volver arriba');
+  b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+  document.body.appendChild(b);
+  b.addEventListener('click',function(){window.scrollTo({top:0,behavior:REDUCE?'auto':'smooth'})});
+  var t=false;function u(){t=false;b.classList.toggle('on',window.scrollY>1400)}
+  window.addEventListener('scroll',function(){if(!t){t=true;requestAnimationFrame(u)}},{passive:true});u();
+})();
+(function(){
+  var list=document.getElementById('nlist'),hl=document.getElementById('hlast');if(!list&&!hl)return;
+  var MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  fetch('assets/noticias.json?v=18').then(function(r){return r.json()}).then(function(d){
+    var it=d.items||[],f=d.actualizado.split('-'),fl=+f[2]+' de '+MES[+f[1]-1]+' de '+f[0];
+    var card=function(n){return '<li class="nitem" data-t="'+esc(n.tema)+'"><div class="nmeta"><span class="ntag">'+esc(n.tema)+'</span>'+esc(n.medio)+' · '+esc(n.fecha)+'</div><a href="'+esc(n.url)+'" target="_blank" rel="noopener">'+esc(n.titular)+'</a></li>'};
+    if(list){
+      var fe=document.getElementById('nfecha');if(fe)fe.textContent=fl;
+      var temas=['Todas'].concat([...new Set(it.map(function(n){return n.tema}))]),sel='Todas',nf=document.getElementById('nf');
+      function draw(){list.innerHTML=it.filter(function(n){return sel==='Todas'||n.tema===sel}).map(card).join('');
+        nf.innerHTML='<b>Tema</b>'+temas.map(function(t){return chipBtn('data-t',t,t,t===sel)}).join('')}
+      nf.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sel=b.dataset.t;draw()});draw();
+    }
+    if(hl){hl.innerHTML='<div class="hlh"><span>Lo último</span><small>'+fl+'</small></div><ol>'+it.slice(0,3).map(card).join('')+'</ol><a class="hlm" href="noticias.html">Ver los 10 titulares →</a>';hl.hidden=false}
+  }).catch(function(){if(list)list.innerHTML='<li class="nload">No se han podido cargar los titulares. Recarga la página.</li>'});
+})();

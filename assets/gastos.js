@@ -25,6 +25,7 @@ const SRC={
  gdp:['Eurostat nama_10_gdp (PIB)','https://ec.europa.eu/eurostat/databrowser/view/nama_10_gdp/default/table?lang=en&geo=ES'],
  main:['Eurostat gov_10a_main (ingresos % PIB)','https://ec.europa.eu/eurostat/databrowser/view/gov_10a_main/default/table?lang=en&geo=ES']
 };
+const GW=()=>{const e=document.getElementById('gstack');return e&&e.clientWidth&&e.clientWidth<560?470:760};
 const LK=(s)=>`<a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a>`;
 let mode='cur',hid=new Set(),selY=6;
 
@@ -42,7 +43,7 @@ let mode='cur',hid=new Set(),selY=6;
 /* ---- stacked bars ---- */
 function series(){return FN.map(f=>({k:f[0],n:f[1],c:f[2],v:f[3].map((x,i)=>mode==='cur'?x:mode==='real'?real(x,i):x/GDP[i]*100)}))}
 function renderStack(){
-  const S=series().filter(s=>!hid.has(s.k)),W=760,H=360,L=54,B=28,T=10,R=10,bw=(W-L-R)/YRS.length;
+  const S=series().filter(s=>!hid.has(s.k)),W=GW(),H=360,L=54,B=28,T=10,R=10,bw=(W-L-R)/YRS.length;
   const sums=YRS.map((_,i)=>S.reduce((a,s)=>a+s.v[i],0)),mx=Math.max(...sums,1)*1.08;
   const unit=mode==='pct'?'% PIB':'M€';
   const y=v=>H-B-(v/mx)*(H-B-T);
@@ -101,7 +102,7 @@ const SAL=[
  {y:2026,p:95517.25,v:89776.80,m:84273.98,d:1,n:'Cálculo: 2025 × 1,015 (RDL 14/2025). Podría haber un +0,5% adicional si el IPC de 2026 ≥ 1,5% (se abonaría en 2027)'}
 ];
 function renderSal(){
-  const W=760,H=300,L=54,R=14,T=14,B=28,all=[];
+  const W=GW(),H=300,L=54,R=14,T=14,B=28,all=[];
   const yr=SAL.map(s=>s.y),x=i=>L+(i+.5)*(W-L-R)/yr.length,min=60000,max=100000,y=v=>H-B-(v-min)/(max-min)*(H-B-T);
   const defs=[['p','Presidente','var(--g10)'],['v','Vicepresidente','var(--g3)'],['m','Ministro','var(--g4)']];
   let g='';for(let k=0;k<=4;k++){const v=min+(max-min)*k/4;g+=`<line class="ax" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${fmt(v/1000,0)}k€</text>`}
@@ -155,7 +156,7 @@ function renderFly(){
 
 /* ---- impuestos ---- */
 function renderTax(){
-  const W=760,H=240,L=54,R=14,T=14,B=28,min=36,max=44,x=i=>L+(i+.5)*(W-L-R)/TAXR.length,y=v=>H-B-(v-min)/(max-min)*(H-B-T);
+  const W=GW(),H=240,L=54,R=14,T=14,B=28,min=36,max=44,x=i=>L+(i+.5)*(W-L-R)/TAXR.length,y=v=>H-B-(v-min)/(max-min)*(H-B-T);
   let g='';for(let k=0;k<=4;k++){const v=min+(max-min)*k/4;g+=`<line class="ax" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${fmt(v,0)}%</text>`}
   const d=TAXR.map((t,i)=>(i?'L':'M')+x(i)+' '+y(t[1])).join('');
   g+=`<path d="${d}" fill="none" stroke="var(--g9)" stroke-width="2.6"/>`+TAXR.map((t,i)=>`<circle cx="${x(i)}" cy="${y(t[1])}" r="4" fill="var(--g9)"><title>${t[0]}: ${t[1]}% del PIB</title></circle><text x="${x(i)}" y="${y(t[1])-9}" text-anchor="middle">${fmt(t[1],1)}</text><text x="${x(i)}" y="${H-8}" text-anchor="middle">${t[0]}</text>`).join('');
@@ -165,7 +166,7 @@ function renderTax(){
    {t:'Quienes cuentan «rebajas»',b:'30.000 M€',p:'La entonces ministra de Hacienda, María Jesús Montero, defendió en el Congreso rebajas de 30.000 M€ en IVA e IRPF para clase media y trabajadora. Esa cifra incluye bonificaciones temporales al combustible que ya se retiraron.',s:['El Debate (dic-2024)','https://www.eldebate.com/economia/20241211/montero-presume-rebajas-fiscales-gobierno-subir-81-veces-impuestos_252339.html']},
    {t:'El informe de ABC (oct-2026)',b:'141 alzas',p:'El 7-oct-2026 ABC publicó un balance de ocho años con «141 alzas de impuestos». No he podido leerlo (el medio bloquea el acceso desde aquí), así que no reproduzco sus cifras. Por la coincidencia con la cifra de ~140 del Instituto Juan de Mariana, probablemente usa ese recuento: sin verificar.',s:['ABC (7-oct-2026)','https://www.abc.es/economia/balance-ocho-anos-gobierno-141-alzas-impuestos-20261007012122-nt.html']}
   ];
-  document.getElementById('gtaxc').innerHTML=C.map(c=>`<article class="gcard rv"><span class="gtag p">Cifra de parte</span><h3>${c.t}</h3><div class="big3">${c.b}</div><p>${c.p}</p><p class="srcs">Fuente: ${LK(c.s)}${c.s2?' · '+A(c.s2):''}</p></article>`).join('')+'<article class="gcard rv"><span class="gtag">Contexto</span><h3>Qué sí es objetivo</h3><p>Contar «subidas» y «rebajas» depende de qué se cuenta y cómo se pondera: una sola subida de un impuesto grande puede pesar más que cien pequeñas. El dato objetivo es el de arriba: los ingresos públicos pasaron del 39,0% del PIB en 2018 al 42,3% en 2024, con la inflación aumentando la recaudación.</p></article>';
+  document.getElementById('gtaxc').innerHTML=C.map(c=>`<article class="gcard rv"><span class="gtag p">Cifra de parte</span><h3>${c.t}</h3><div class="big3">${c.b}</div><p>${c.p}</p><p class="srcs">Fuente: ${LK(c.s)}${c.s2?' · '+LK(c.s2):''}</p></article>`).join('')+'<article class="gcard rv"><span class="gtag">Contexto</span><h3>Qué sí es objetivo</h3><p>Contar «subidas» y «rebajas» depende de qué se cuenta y cómo se pondera: una sola subida de un impuesto grande puede pesar más que cien pequeñas. El dato objetivo es el de arriba: los ingresos públicos pasaron del 39,0% del PIB en 2018 al 42,3% en 2024, con la inflación aumentando la recaudación.</p></article>';
 }
 
 /* ---- pendientes ---- */
@@ -187,4 +188,5 @@ function renderPend(){
 }
 document.getElementById('gsrc').innerHTML='<b>Fuentes de las series.</b> Gasto por áreas: '+LK(SRC.eu)+'. Inflación: '+LK(SRC.hicp)+' (euros constantes = euros × IPCA 2018 / IPCA del año). PIB: '+LK(SRC.gdp)+'. Ingresos: '+LK(SRC.main)+'. La clasificación COFOG de la ONU asigna cada gasto a una función; «Servicios públicos generales» incluye, entre otros, los intereses de la deuda y «Asuntos económicos» incluye subvenciones y ayudas a empresas. Último dato disponible: 2024 (provisional).';
 renderCtl();renderStack();renderDiv();renderSal();renderCoste();renderFly();renderTax();renderPend();
+(function(){let w=GW(),t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{if(GW()!==w){w=GW();renderStack();renderSal();renderTax()}},200)})})();
 if(window.rvReady)rvScan();

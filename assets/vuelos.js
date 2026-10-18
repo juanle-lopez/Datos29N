@@ -55,7 +55,7 @@ function tops(W,S){
   requestAnimationFrame(()=>document.querySelectorAll('.vb .f').forEach(f=>f.style.width=f.dataset.w+'%'));
 }
 function bars(){
-  const ys=[2021,2022,2023,2024,2025,2026],W=760,H=280,L=46,B=26,T=10,R=10,bw=(W-L-R)/ys.length;
+  const ys=[2021,2022,2023,2024,2025,2026],W=(document.getElementById('vbars')||{}).clientWidth<560?470:760,H=280,L=46,B=26,T=10,R=10,bw=(W-L-R)/ys.length;
   const tot=ys.map(y=>D.tot.filter(r=>r[0]===y&&(fu==='all'||D.usos[r[1]]===fu)).reduce((a,r)=>a+r[2],0)),mx=Math.max(...tot,1)*1.1;
   const yy=v=>H-B-v/mx*(H-B-T);let g='';
   for(let k=0;k<=4;k++){const v=mx*k/4;g+=`<line class="ax" x1="${L}" x2="${W-R}" y1="${yy(v)}" y2="${yy(v)}"/><text x="${L-6}" y="${yy(v)+4}" text-anchor="end">${fmt(v)}</text>`}
