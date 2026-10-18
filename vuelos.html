@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vuelos oficiales · Datos 29N</title>
+<meta name="description" content="Mapa de los 7.666 vuelos de los aviones oficiales del Gobierno desde 2021: destinos, uso, coste estimado y emisiones, con la fuente citada.">
+<meta property="og:title" content="Vuelos oficiales · Datos 29N">
+<meta property="og:description" content="Mapa de los 7.666 vuelos de los aviones oficiales del Gobierno desde 2021: destinos, uso, coste estimado y emisiones, con la fuente citada.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://juanle-lopez.github.io/Datos29N/vuelos.html">
+<link rel="canonical" href="https://juanle-lopez.github.io/Datos29N/vuelos.html">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=11"><link rel="stylesheet" href="assets/gastos.css?v=11">
+</head>
+<body>
+<div class="wrap">
+  <div class="prog" id="prog" aria-hidden="true"></div>
+  <header class="mini"><a class="brand" href="index.html">Datos <em>29N</em></a><span class="mcd" id="mcd"></span></header>
+  <nav class="tabs" aria-label="Apartados de la web"><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Simulador</span></a><a href="propuestas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/></svg><span>Propuestas</span></a><a href="promesas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><span>Promesas</span></a><a href="casos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/></svg><span>Casos</span></a><a href="gastos.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.7a4 4 0 100 6.6M7.5 11h6M7.5 13.2h6"/></svg><span>Gastos</span></a><a href="metodo.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Método</span></a></nav>
+  <section class="sec" id="v_top" aria-label="Vuelos oficiales">
+    <div class="sech"><span class="num">05 · Gastos</span><h2>Los vuelos de los aviones oficiales</h2><p class="lead">Cada vuelo registrado de los 9 aviones del Grupo 45 del Ejército del Aire (5 Falcon 900, 2 A310 y 2 A330) desde el 1 de marzo de 2021. Filtra por año y por uso.</p></div>
+    <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>No se sabe quién iba a bordo:</b> el registro solo clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
+
+    <div class="exec" style="margin-top:14px">
+      <div class="rowf" id="vy"><b>Año</b></div>
+      <div class="rowf" id="vu"><b>Uso</b></div>
+      <div class="gk" id="vk"></div>
+    </div>
+
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Adónde han volado (mapa de calor)</h2>
+      <p class="lead">Cuanto más intenso el color, más veces ha aparecido ese país en un vuelo como origen o destino. Las líneas parten de Madrid, la base, y son más gruesas cuanto más vuelos. Toca un país para ver el detalle.</p>
+      <div class="gchart"><div id="vworld" class="vmap"></div></div>
+      <div class="gtip" id="vtip">Toca un país del mapa.</div>
+      <div class="vleg" id="vleg"></div>
+    </div>
+
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Dentro de España</h2>
+      <p class="lead">Veces que cada comunidad aparece como origen o destino, sin contar Madrid (la base), que concentra casi todos los vuelos.</p>
+      <div class="gchart"><div id="vspain" class="vmap"></div></div>
+      <div class="gtip" id="vtip2">Toca una comunidad.</div>
+    </div>
+
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Los destinos más repetidos</h2>
+      <div class="vcols"><div><h3 class="vh">Fuera de España</h3><div id="vtopw"></div></div><div><h3 class="vh">Dentro de España (sin Madrid)</h3><div id="vtops"></div></div></div>
+    </div>
+
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Vuelos por año y por uso</h2>
+      <p class="lead">El año 2026 llega hasta el 16 de octubre. Fíjate en el gris: son vuelos sin uso registrado.</p>
+      <div class="gchart"><div id="vbars"></div></div>
+      <div class="gl" id="vbl"></div>
+    </div>
+
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Cómo leerlo y qué límites tiene</h2>
+      <ul class="vul">
+        <li><b>Origen y destino:</b> cada vuelo suma una visita al lugar de despegue y otra al de aterrizaje (una sola si coinciden). Madrid no se cuenta como destino: es la base.</li>
+        <li><b>Coste y CO₂:</b> los calcula falcondespega.es con sus propias fórmulas (combustible, tasas, tripulación, catering, navegación). Son orientativos. Su fórmula de CO₂ divide por 907,185, que es el factor de toneladas cortas de EE. UU., así que la unidad puede no ser toneladas métricas.</li>
+        <li><b>Uso «Militar»:</b> incluye traslados y misiones militares; «Mantenimiento» son vuelos técnicos. No todos son viajes de autoridades.</li>
+        <li><b>Quién viaja:</b> no consta. No se atribuyen vuelos a personas.</li>
+        <li><b>Un vuelo es un tramo:</b> un viaje de ida y vuelta son dos vuelos.</li>
+      </ul>
+      <p class="sources" id="vsrc"></p>
+    </div>
+  </section>
+  <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
+  <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
+</div>
+<script src="assets/core.js?v=11"></script><script src="assets/vuelos.js?v=11"></script>
+</body>
+</html>
