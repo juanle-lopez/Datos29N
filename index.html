@@ -247,6 +247,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .meth ul{margin:0;padding:0 16px 14px 32px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
 @media(max-width:640px){nav.tabs{grid-template-columns:repeat(5,minmax(0,1fr))}nav.tabs button{font-size:10.5px}.tile span{font-size:8px}.tile b{font-size:12px}}
 .aviso p{margin:0 0 10px;padding:0 16px;font-size:14px;line-height:1.55}.aviso p:first-child{margin-top:0}.sg a{color:var(--link)}.aviso .sg{font-size:13.5px}
+.cd{margin-top:14px;border:1px solid var(--line);border-top:4px solid var(--fg);border-radius:8px;background:var(--panel);padding:12px 14px;max-width:520px}
+.cdl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.cdg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;text-align:center}
+.cdg div{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 2px}
+.cdg b{display:block;font-family:var(--mono);font-size:clamp(24px,8vw,34px);line-height:1.1;font-variant-numeric:tabular-nums}
+.cdg span{font-size:11px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.cd.done .cdg{display:none}.cd.done .cdl{font-size:15px;color:var(--fg);margin:0}
 </style>
 </head>
 <body>
@@ -256,6 +263,10 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
       <h1>Datos 29N</h1>
       <p class="sub">Las elecciones generales del 29 de noviembre de 2026 con datos abiertos y fuentes enlazadas. Mismas reglas para todos los partidos.</p>
       <p class="by">Actualizada a diario · última revisión: 18 de octubre de 2026</p>
+      <div class="cd" id="cd" role="timer" aria-label="Cuenta atrás para la votación del 29 de noviembre de 2026">
+        <div class="cdl" id="cdl">Faltan para abrir los colegios · 29 de noviembre, 9:00</div>
+        <div class="cdg" id="cdg"><div><b id="cd_d">--</b><span>días</span></div><div><b id="cd_h">--</b><span>horas</span></div><div><b id="cd_m">--</b><span>minutos</span></div><div><b id="cd_s">--</b><span>segundos</span></div></div>
+      </div>
     </div>
     <nav class="tabs" role="tablist" aria-label="Apartados">
       <button role="tab" id="t_sim" aria-selected="true" aria-controls="p_sim"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Simulador</span></button>
@@ -717,6 +728,29 @@ function renderCols(){
 }
 renderStg();renderCF();renderCols();
 
+</script>
+<script>
+(function(){
+  var OPEN=Date.UTC(2026,10,29,8,0,0),CLOSE=Date.UTC(2026,10,29,19,0,0); /* 9:00 y 20:00 hora peninsular (UTC+1) */
+  var el=document.getElementById('cd');if(!el)return;
+  var p=function(n,w){n=String(n);while(n.length<w)n='0'+n;return n};
+  function tick(){
+    var now=Date.now(),d=OPEN-now;
+    if(d<=0){
+      el.classList.add('done');
+      document.getElementById('cdl').textContent=now<CLOSE?'Hoy es el día: los colegios están abiertos hasta las 20:00.':'La votación ha terminado. Los resultados oficiales los publica el Ministerio del Interior.';
+      el.setAttribute('aria-label',document.getElementById('cdl').textContent);
+      return;
+    }
+    var s=Math.floor(d/1000);
+    document.getElementById('cd_d').textContent=Math.floor(s/86400);
+    document.getElementById('cd_h').textContent=p(Math.floor(s%86400/3600),2);
+    document.getElementById('cd_m').textContent=p(Math.floor(s%3600/60),2);
+    document.getElementById('cd_s').textContent=p(s%60,2);
+    setTimeout(tick,1000-(Date.now()%1000));
+  }
+  tick();
+})();
 </script>
 </body>
 </html>
