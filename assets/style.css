@@ -230,7 +230,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .meth details{border:1px solid var(--line);border-radius:8px;background:var(--bg)}
 .meth summary{cursor:pointer;padding:14px;font-weight:700;font-size:15px;min-height:44px}
 .meth ul{margin:0;padding:0 16px 14px 32px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
-@media(max-width:640px){nav.tabs{grid-template-columns:repeat(5,minmax(0,1fr))}nav.tabs a{font-size:10.5px}.tile span{font-size:8px}.tile b{font-size:12px}}
+@media(max-width:640px){nav.tabs{grid-template-columns:repeat(6,minmax(0,1fr))}nav.tabs a{font-size:10.5px}.tile span{font-size:8px}.tile b{font-size:12px}}
 .aviso p{margin:0 0 10px;padding:0 16px;font-size:14px;line-height:1.55}.aviso p:first-child{margin-top:0}.sg a{color:var(--link)}.aviso .sg{font-size:13.5px}
 .cd{margin-top:14px;border:1px solid var(--line);border-top:4px solid var(--fg);border-radius:8px;background:var(--panel);padding:12px 14px;max-width:520px}
 .cdl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
