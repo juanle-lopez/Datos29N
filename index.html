@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Elecciones generales del 29 de noviembre de 2026: simulador de escaños por provincia, propuestas, promesas cumplidas y casos judiciales, con fuentes enlazadas.">
+<meta property="og:title" content="Datos 29N">
+<meta property="og:description" content="Simulador de escaños por provincia, propuestas, promesas cumplidas y casos judiciales de las generales del 29N, con fuentes enlazadas.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="light dark">
+<style>:root{padding-block:env(safe-area-inset-top,0px) env(safe-area-inset-bottom,0px);color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Datos 29N</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: columna de controles a la izquierda, resultado y tabla a la derecha; una columna en móvil */
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --fg:#14181f; --muted:#5b6472; --line:#dde1e8;
+  --pp:#1d6fb8; --psoe:#d4342c; --vox:#4a9a3a; --sumar:#a03a8f; --reg:#8a919c; --majority:#14181f;
+  --accent:#14181f;
+  --display:'Public Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1318; --panel:#171c23; --fg:#e8ebf0; --muted:#9aa3b0; --line:#2a313b;
+  --pp:#4b9be0; --psoe:#ef6a62; --vox:#74c063; --sumar:#cf6fc0; --reg:#7b8491; --majority:#e8ebf0; --accent:#e8ebf0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1318; --panel:#171c23; --fg:#e8ebf0; --muted:#9aa3b0; --line:#2a313b;
+  --pp:#4b9be0; --psoe:#ef6a62; --vox:#74c063; --sumar:#cf6fc0; --reg:#7b8491; --majority:#e8ebf0; --accent:#e8ebf0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:15px;line-height:1.5;
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:clamp(26px,4.5vw,38px);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:0;text-wrap:balance}
+.sub{color:var(--muted);margin:6px 0 0;max-width:62ch}
+.grid{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:20px;align-items:start}
+@media(max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+h2{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+button{font:inherit;font-size:13px;font-weight:500;color:var(--fg);background:transparent;border:1px solid var(--line);border-radius:6px;padding:7px 11px;cursor:pointer}
+button:hover{border-color:var(--fg)} button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--pp);outline-offset:2px}
+.ctl{display:grid;grid-template-columns:1fr auto;gap:2px 8px;margin-bottom:16px}
+.ctl label{font-weight:600;display:flex;align-items:center;gap:8px}
+.dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+.ctl output{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:600}
+.ctl input{grid-column:1/-1;width:100%;accent-color:var(--fg)}
+.ctl small{grid-column:1/-1;color:var(--muted);font-family:var(--mono);font-size:11.5px}
+.note{color:var(--muted);font-size:13px;margin:0}
+.bar{position:relative;display:flex;height:44px;background:var(--line);margin:30px 0 6px}
+.bar div{height:100%;min-width:0;transition:width .15s}
+.mark{position:absolute;top:-24px;bottom:-6px;width:0;border-left:2px dashed var(--majority);pointer-events:none}
+.mark span{position:absolute;top:0;left:6px;font-family:var(--mono);font-size:11.5px;white-space:nowrap;color:var(--fg)}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.blocs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
+.bloc{border:1px solid var(--line);border-radius:6px;padding:12px}
+.bloc b{font-family:var(--mono);font-size:26px;font-variant-numeric:tabular-nums;display:block;line-height:1.1}
+.bloc span{font-size:13px;color:var(--muted)}
+.bloc .ok{color:var(--vox);font-weight:700}.bloc .no{color:var(--psoe);font-weight:700}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.m{font-family:var(--mono)} .up{color:var(--vox)} .dn{color:var(--psoe)} .eq{color:var(--muted)}
+details summary{cursor:pointer;font-weight:600;padding:2px 0}
+.foot{color:var(--muted);font-size:12.5px;max-width:80ch}
+.foot p{margin:0 0 8px}
+
+:root{--good:#2a8a4a;--mid:#b9811a;--bad:#c93b33;--goodbg:#e4f3e9;--midbg:#f8eed6;--badbg:#f9e3e1}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--good:#5fc17f;--mid:#e0ab42;--bad:#ef7b73;--goodbg:#16301f;--midbg:#352b12;--badbg:#391a18}}
+:root[data-theme="dark"]{--good:#5fc17f;--mid:#e0ab42;--bad:#ef7b73;--goodbg:#16301f;--midbg:#352b12;--badbg:#391a18}
+.top{display:flex;flex-direction:column;gap:14px}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+nav.tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;padding:10px 14px;font-weight:600;font-size:14px;color:var(--muted)}
+nav.tabs button[aria-selected="true"]{color:var(--fg);border-bottom-color:var(--fg);background:transparent}
+section.tab[hidden]{display:none}
+.banner{border:1px solid var(--line);border-left:4px solid var(--mid);background:var(--panel);padding:12px 14px;border-radius:6px;font-size:14px}
+.banner b{font-weight:700}
+.mx{width:100%;min-width:760px;border-collapse:separate;border-spacing:0}
+.mx th,.mx td{white-space:normal;text-align:left;vertical-align:top;padding:12px;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.45}
+.mx thead th{position:sticky;top:0;background:var(--panel);font-size:13px;letter-spacing:0;text-transform:none;color:var(--fg);border-bottom:3px solid var(--c)}
+.mx td:first-child,.mx th:first-child{width:96px;font-weight:700;color:var(--muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.sources{font-size:12.5px;color:var(--muted)} .sources a,.src a{color:inherit}
+.bars{display:flex;flex-direction:column;gap:18px}
+.bar2{display:flex;height:34px;width:100%;background:var(--line)}
+.bar2 div{display:flex;align-items:center;padding:0 10px;font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap;color:#fff;min-width:0}
+.cap{font-size:13px;margin:0 0 6px}
+.cap small{color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+@media(max-width:820px){.two{grid-template-columns:minmax(0,1fr)}}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.cards{display:flex;flex-direction:column;gap:12px}
+.pc{border:1px solid var(--line);border-radius:6px;padding:12px 14px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 12px;background:var(--panel)}
+.st{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:17px;grid-row:span 3}
+.st.g{background:var(--goodbg);color:var(--good)}.st.m{background:var(--midbg);color:var(--mid)}.st.b{background:var(--badbg);color:var(--bad)}
+.pc h3{font-size:14.5px;margin:0;line-height:1.3}
+.pc p{margin:0;font-size:13.5px;line-height:1.45}
+.pc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.pc .src{font-size:12px;color:var(--muted)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:3px;margin-left:6px;vertical-align:1px;color:#fff}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.steps{display:flex;align-items:center;gap:0;margin:6px 0 2px}
+.steps i{width:14px;height:14px;border-radius:50%;border:2px solid var(--line);background:transparent;display:block;position:relative}
+.steps i.on{background:var(--fg);border-color:var(--fg)}
+.steps u{height:2px;width:26px;background:var(--line);display:block}
+.steps u.on{background:var(--fg)}
+.stl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);width:calc(4*14px + 3*26px + 40px);max-width:100%;margin-left:-20px}
+.stl span{width:60px;text-align:center}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start}
+.colh{font-size:14px;font-weight:800;margin:0 0 10px;padding-bottom:6px;border-bottom:3px solid var(--c)}
+.cc{border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:var(--panel);display:flex;flex-direction:column;gap:4px}
+.cc h3{font-size:14.5px;margin:0}.cc p{margin:0;font-size:13.5px;line-height:1.45}
+.cc .who{font-size:12.5px;color:var(--muted)}
+.res{font-weight:700;font-size:12.5px}
+h2.big{font-size:20px;letter-spacing:-.01em;text-transform:none;color:var(--fg);margin:0 0 6px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin:8px 0 2px;gap:0;width:100%;max-width:340px}
+.steps i,.steps u{all:unset}
+.sp{position:relative;text-align:center;font-size:10.5px;font-family:var(--mono);color:var(--muted);padding-top:22px;min-width:0}
+.sp::before{content:"";position:absolute;top:2px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:2px solid var(--line);background:var(--panel);z-index:1;box-sizing:border-box}
+.sp::after{content:"";position:absolute;top:8px;left:-50%;width:100%;height:2px;background:var(--line)}
+.sp:first-child::after{display:none}
+.sp.on::before{background:var(--fg);border-color:var(--fg)}.sp.on::after{background:var(--fg)}.sp.on{color:var(--fg);font-weight:600}
+.exec{border:1px solid var(--line);border-top:4px solid var(--fg);background:var(--panel);border-radius:6px;padding:18px;min-width:0}
+.exec h2.big{margin-bottom:4px}
+.exec .lead{color:var(--muted);margin:0 0 16px;font-size:14px;max-width:70ch}
+.sem{display:flex;flex-direction:column;gap:14px}
+.sr2{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 14px;align-items:center}
+@media(max-width:620px){.sr2{grid-template-columns:minmax(0,1fr)}}
+.sr2 .nm{font-weight:800;font-size:15px;line-height:1.2}.sr2 .nm small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
+.sbar{display:flex;height:44px;width:100%;border-radius:4px;overflow:hidden;background:var(--line)}
+.sbar button{border:0;border-radius:0;padding:0;margin:0;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;font-size:16px;color:#fff;min-width:0}
+.sbar button.g{background:var(--good)}.sbar button.m{background:var(--mid)}.sbar button.b{background:var(--bad)}
+.sbar button:hover{filter:brightness(1.12);border:0}
+.sbar.none{background:repeating-linear-gradient(45deg,var(--line),var(--line) 8px,transparent 8px,transparent 16px);align-items:center;justify-content:center;font-size:13px;color:var(--muted);font-weight:600}
+.sn{grid-column:2;font-size:12.5px;color:var(--muted)}
+@media(max-width:620px){.sn{grid-column:1}}
+.dp{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--muted)}
+.dp span{display:inline-flex;align-items:center;gap:6px}
+.dp i{width:12px;height:12px;border-radius:2px;display:inline-block}
+.dp i.g{background:var(--good)}.dp i.m{background:var(--mid)}.dp i.b{background:var(--bad)}
+.starg{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.star{border:1px solid var(--line);border-top:4px solid var(--c);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.star h3{margin:0;font-size:15px;font-weight:800}
+.star .big2{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-.01em}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;background:var(--panel);line-height:1.3}
+.star .cost{font-size:12px;color:var(--muted)}
+.pos{width:100%;border-collapse:collapse;min-width:520px}
+.pos th,.pos td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:normal}
+.pos th{font-size:12px;letter-spacing:0;text-transform:none;font-weight:800;border-bottom:3px solid var(--c)}
+.pos td:first-child,.pos th:first-child{text-align:left;font-weight:600;font-size:13.5px}
+.pv{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;font-weight:800;font-size:14px}
+.pv.y{background:var(--goodbg);color:var(--good)}.pv.n{background:var(--badbg);color:var(--bad)}.pv.p{background:var(--midbg);color:var(--mid)}.pv.q{background:var(--line);color:var(--muted)}
+.dt{margin-top:26px;scroll-margin-top:12px}
+.dt > h2.big{border-top:1px solid var(--line);padding-top:18px}
+.cardsg{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px;align-items:start}
+.pt{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:3px;color:#fff;margin-bottom:2px;width:max-content}
+.pc .srcs{font-size:12px;color:var(--muted)} .pc .srcs a{color:inherit}
+.stg{width:100%;border-collapse:collapse;min-width:480px}
+.stg th,.stg td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:center;white-space:normal}
+.stg th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.stg td:first-child,.stg th:first-child{text-align:left;font-weight:800;font-size:14px}
+.cnt{display:inline-grid;place-items:center;min-width:34px;height:34px;border-radius:50%;font-family:var(--mono);font-weight:800;font-size:15px;border:2px solid var(--line);color:var(--muted)}
+.cnt.s1{border-color:var(--mid);color:var(--mid)}.cnt.s2{border-color:var(--pp);color:var(--pp)}.cnt.s3{border-color:var(--bad);color:var(--bad)}.cnt.s4{border-color:var(--fg);color:var(--bg);background:var(--fg)}
+.cnt.z{border-color:var(--line);color:var(--line);font-weight:400}
+.rowf{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.rowf b{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+:root{--link:#1d5fa6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--link:#7db4ec}}
+:root[data-theme="dark"]{--link:#7db4ec}
+a{color:var(--link)}
+.sources a,.pc .srcs a,.cc .src a{color:var(--link);text-underline-offset:2px}
+.pc .srcs,.cc .src{display:flex;flex-wrap:wrap;gap:6px;align-items:center;grid-column:1/-1}
+.pc .srcs a,.cc .src a{display:inline-block;padding:5px 10px;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-size:12px;line-height:1.3;background:var(--bg);color:var(--fg)}
+.pc>p{grid-column:1/-1}
+nav.tabs button svg{display:none}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:36px;background:transparent;margin:0;touch-action:pan-y}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:var(--line)}
+input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:var(--line)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-10px;border-radius:50%;background:var(--fg);border:4px solid var(--panel);box-shadow:0 0 0 1px var(--fg),0 2px 6px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--fg);border:4px solid var(--panel);box-shadow:0 0 0 1px var(--fg)}
+@media(max-width:640px){
+  body{padding-block:16px calc(84px + env(safe-area-inset-bottom,0px))}
+  h1{font-size:30px}
+  h2.big{font-size:18px}
+  .exec{padding:14px}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;flex-wrap:nowrap;background:var(--panel);border-top:1px solid var(--line);border-bottom:0;padding:6px max(4px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(4px,env(safe-area-inset-left,0px));box-shadow:0 -4px 16px rgba(0,0,0,.08)}
+  nav.tabs button{display:flex;flex-direction:column;align-items:center;gap:3px;border:0;border-radius:10px;padding:7px 2px;font-size:11.5px;font-weight:700;min-height:52px;color:var(--muted)}
+  nav.tabs button svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  nav.tabs button[aria-selected="true"]{color:var(--fg);background:var(--bg)}
+  .starg{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-inline:-14px;padding:2px 14px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .starg::-webkit-scrollbar{display:none}
+  .star{flex:0 0 80%;scroll-snap-align:center}
+  .star .big2{font-size:19px}
+  .pos{min-width:0;table-layout:fixed}
+  .pos th,.pos td{padding:10px 2px;font-size:11.5px}
+  .pos td:first-child,.pos th:first-child{width:38%;font-size:12.5px;padding-left:0}
+  .pv{width:30px;height:30px}
+  .mx,.mx tbody,.mx tr,.mx td{display:block;min-width:0;width:100%}
+  .mx thead{display:none}
+  .mx tr{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px;background:var(--bg)}
+  .mx td{border:0;padding:10px 14px;font-size:14px;line-height:1.5}
+  .mx td:first-child{width:100%;background:var(--fg);color:var(--bg);font-size:12px;padding:8px 14px}
+  .mx td[data-p]{border-left:5px solid var(--c);border-top:1px solid var(--line)}
+  .mx td[data-p]::before{content:attr(data-p);display:block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:2px}
+  .panel{padding:10px}
+  .stg{table-layout:fixed;width:100%;min-width:0}
+  .stg th{font-size:9.5px;letter-spacing:0;padding:6px 1px;text-align:center}
+  .stg th:first-child{width:22%;text-align:left}
+  .stg td{padding:8px 1px;text-align:center}
+  .stg td:first-child{text-align:left;font-weight:700;font-size:13px}
+  .cnt{min-width:36px;height:36px}
+  .rowf{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding:2px 16px 8px;scrollbar-width:none}
+  .rowf::-webkit-scrollbar{display:none}
+  .rowf button{flex:0 0 auto;min-height:42px;padding:8px 14px;white-space:nowrap}
+  .rowf b{flex:0 0 auto}
+  .bar2 div{overflow:hidden;white-space:nowrap;text-overflow:clip;font-size:11.5px}
+  .sbar{height:52px}
+  .pc{padding:14px;grid-template-columns:30px minmax(0,1fr)}
+  .pc p,.cc p{font-size:14.5px}
+  .cc{padding:14px}
+  .cc .steps .sp{font-size:9.5px}
+}
+
+.by{margin:6px 0 0;font-size:13px;color:var(--muted)}.by b{color:var(--fg)}
+.credit{border-top:1px solid var(--line);padding-top:16px;font-size:12.5px;color:var(--muted);max-width:80ch}.credit b{color:var(--fg)}
+
+.tmap{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));grid-template-rows:repeat(10,auto);gap:3px;max-width:520px;margin:0 auto}
+.tile{aspect-ratio:1;min-width:0;padding:0;border:2px solid transparent;border-radius:5px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;cursor:pointer}
+.tile span{font-size:9px;font-weight:700;letter-spacing:.02em;opacity:.95}.tile b{font-family:var(--mono);font-size:13px}
+.tile.close{border:2px dashed #fff;box-shadow:0 0 0 2px var(--fg)}
+.tile.sel{outline:3px solid var(--fg);outline-offset:1px}
+.tile:hover{filter:brightness(1.1)}
+.mi{border:1px solid var(--line);border-radius:8px;padding:12px;margin-top:10px;background:var(--bg)}.mi h3{margin:0 0 4px;font-size:15px}.mi small{color:var(--muted);font-weight:500}.mi p{margin:4px 0}
+.share{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.share .lab{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sh{display:flex;flex-wrap:wrap;gap:8px}
+.sh a,.sh button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 16px;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--fg);font-weight:700;font-size:14px;text-decoration:none;font-family:inherit}
+.sh a.wa{background:#1f9d55;border-color:#1f9d55;color:#fff}
+.meth{display:flex;flex-direction:column;gap:10px}
+.meth details{border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.meth summary{cursor:pointer;padding:14px;font-weight:700;font-size:15px;min-height:44px}
+.meth ul{margin:0;padding:0 16px 14px 32px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5}
+@media(max-width:640px){nav.tabs{grid-template-columns:repeat(5,minmax(0,1fr))}nav.tabs button{font-size:10.5px}.tile span{font-size:8px}.tile b{font-size:12px}}
+.aviso p{margin:0 0 10px;padding:0 16px;font-size:14px;line-height:1.55}.aviso p:first-child{margin-top:0}.sg a{color:var(--link)}.aviso .sg{font-size:13.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Datos 29N</h1>
+      <p class="sub">Las elecciones generales del 29 de noviembre de 2026 con datos abiertos y fuentes enlazadas. Mismas reglas para todos los partidos.</p>
+      <p class="by">Actualizada a diario · última revisión: 18 de octubre de 2026</p>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Apartados">
+      <button role="tab" id="t_sim" aria-selected="true" aria-controls="p_sim"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Simulador</span></button>
+      <button role="tab" id="t_pro" aria-selected="false" aria-controls="p_pro"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/></svg><span>Propuestas</span></button>
+      <button role="tab" id="t_cum" aria-selected="false" aria-controls="p_cum"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><span>Promesas</span></button>
+      <button role="tab" id="t_cor" aria-selected="false" aria-controls="p_cor"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/></svg><span>Casos</span></button>
+      <button role="tab" id="t_met" aria-selected="false" aria-controls="p_met"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Método</span></button>
+    </nav>
+  </header>
+
+  <section class="tab" id="p_sim" role="tabpanel" aria-labelledby="t_sim">
+    <div class="grid">
+      <section class="panel" aria-label="Controles">
+        <h2>Voto nacional</h2>
+        <div class="presets" role="group" aria-label="Escenarios">
+          <button type="button" data-p="2023" aria-pressed="false">Resultado 23-J</button>
+          <button type="button" data-p="poll" aria-pressed="true">Media encuestas</button>
+        </div>
+        <div id="ctls"></div>
+        <p class="note">El resto de partidos mantienen su voto de 2023 en cada provincia. Los porcentajes se reescalan para que cada provincia sume 100.</p>
+      </section>
+      <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+        <section class="panel" aria-label="Resultado">
+          <h2>Escaños en el Congreso</h2>
+          <div class="bar" id="bar" role="img" aria-label="Reparto de escaños"><div class="mark" id="mark"><span>176</span></div></div>
+          <div class="scale"><span>0</span><span>350</span></div>
+          <div class="blocs" id="blocs"></div>
+          <div class="share" id="share"></div>
+        </section>
+        <section class="panel" aria-label="Mapa por provincias"><h2>Mapa por provincias</h2><p class="note" style="margin:0 0 10px">Cada casilla es una provincia (tamaño igual para todas, no proporcional al territorio) y su color es el partido con más escaños. El borde discontinuo marca un último escaño en el aire.</p><div class="tmap" id="map"></div><p class="note" id="aire" style="margin-top:10px"></p><div id="mapinfo"></div></section>
+        <section class="panel" aria-label="Detalle por partido"><h2>Por partido</h2><div class="tw"><table id="tp"></table></div></section>
+        <section class="panel" aria-label="Detalle por provincia">
+          <details><summary>Detalle por circunscripción</summary>
+          <div class="tw" style="margin-top:12px;max-height:420px;overflow-y:auto"><table id="tc"></table></div></details>
+        </section>
+      </div>
+    </div>
+    <div class="foot" style="margin-top:20px">
+      <p><b>Método.</b> Cada partido nacional (PP, PSOE, Vox, Sumar) multiplica su porcentaje de 2023 en cada provincia por la razón entre su voto nacional elegido y el de 2023. Con los valores de 2023 el modelo reproduce exactamente los 350 escaños de las 52 circunscripciones.</p>
+      <p><b>Límites.</b> Es un escenario, no una previsión: no modela voto útil ni cambios en las listas. Resultados de 2023 tomados de las tablas por circunscripción de Wikipedia (los escaños coinciden con los oficiales). "Media encuestas": media de 11 sondeos de <a href="https://www.democrata.es/encuestas/elecciones-generales/promedio-encuestas-elecciones-generales-adelanto-electoral-2026/">Demócrata</a> (cierre 3-oct-2026): PP 32,1 · PSOE 26,5 · Vox 18,4 · Sumar 6,0 + Podemos 3,3 agrupados. El orden de columnas de esa fuente es una suposición.</p>
+    </div>
+  </section>
+
+    <section class="tab" id="p_pro" role="tabpanel" aria-labelledby="t_pro" hidden>
+    <div class="banner"><b>Todavía no hay programas oficiales.</b> Los partidos los presentan durante la precampaña y la campaña (empieza el 13 de noviembre). Aquí van sus posiciones públicas a mediados de octubre de 2026, según la recopilación de Política Electoral (<a href="https://www.politicaelectoral.com/es/espana/generales-2026/nacional/pp">PP</a>, <a href="https://www.politicaelectoral.com/es/espana/generales-2026/nacional/psoe">PSOE</a>, <a href="https://www.politicaelectoral.com/es/espana/generales-2026/nacional/vox">Vox</a>, <a href="https://www.politicaelectoral.com/es/espana/generales-2026/nacional/sumar">Sumar</a>). Es una fuente secundaria: se sustituirá por los programas oficiales cuando se publiquen.</div>
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Resumen: la medida estrella de cada partido</h2>
+      <p class="lead">Lo que más destaca cada uno en su comunicación de octubre.</p>
+      <div class="starg" id="starg"></div>
+    </div>
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Dónde coinciden y dónde chocan</h2>
+      <p class="lead">✓ a favor · ✕ en contra · ◐ matizado · ? sin posición concreta en las fuentes.</p>
+      <div class="tw"><table class="pos" id="pos"></table></div>
+    </div>
+    <div class="dt" id="d_pro">
+      <h2 class="big">Detalle de propuestas</h2>
+      <div class="rowf" id="ppf"><b>Partido</b></div>
+      <div class="rowf" id="tf"><b>Tema</b></div>
+      <div class="panel"><div class="tw"><table class="mx" id="mx"></table></div></div>
+      <div class="foot" style="margin-top:14px"><p>Sumar concurre previsiblemente dentro del Frente Amplio (registrado el 16-oct) y sus posiciones pueden cambiar. Las propuestas de 2023 de Sumar se indican como tales. Faltan otros partidos con representación (ERC, Junts, EH Bildu, PNV, BNG, Podemos, CCa, UPN): se añadirán con sus programas.</p></div>
+    </div>
+  </section>
+
+  <section class="tab" id="p_cum" role="tabpanel" aria-labelledby="t_cum" hidden>
+    <div class="exec">
+      <h2 class="big">Resumen: qué prometieron y qué hicieron al gobernar</h2>
+      <p class="lead">Cada barra cuenta las promesas documentadas en esta selección, no es un porcentaje del programa entero. Pulsa un color para ir al detalle.</p>
+      <div class="sem" id="sem"></div>
+      <div class="dp"><span><i class="g"></i> Cumplida</span><span><i class="m"></i> Parcial</span><span><i class="b"></i> Incumplida o contraria</span></div>
+    </div>
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Y qué dicen ellos y los verificadores</h2>
+      <div class="bars" style="margin-top:12px">
+        <div><p class="cap"><b>PP: su propio balance de la legislatura 2011–2015</b> <small>· web CumPPlimos, julio de 2015 (cuestionada por no mostrar lo incumplido)</small></p>
+          <div class="bar2"><div style="width:92.5%;background:var(--good)">92,5% cumplido según el PP</div><div style="width:7.5%;background:var(--line)"></div></div>
+          <p class="sources" style="margin:4px 0 0">Otro documento interno del PP citado por infoLibre admite 40 medidas sin cumplir o pendientes de 406 (≈10%).</p></div>
+        <div><p class="cap"><b>Acuerdo de coalición PSOE–Unidas Podemos (2019)</b> <small>· medición de Newtral, junio de 2023</small></p>
+          <div class="bar2"><div style="width:60%;background:var(--good)">60% cumplido</div><div style="width:40%;background:var(--line);color:var(--fg)">40% resto</div></div></div>
+        <div><p class="cap"><b>Pactos de investidura de 2023</b> <small>· medición de Newtral, julio de 2026</small></p>
+          <div class="bar2"><div style="width:76%;background:var(--bad)">76% pendientes</div><div style="width:24%;background:var(--line);color:var(--fg)">24% resto</div></div></div>
+      </div>
+      <p class="sources" style="margin:10px 0 0">Fuentes: <a href="https://www.publico.es/politica/pp-presenta-web-dice-haber-cumplido-92-5-programa-electoral.html">Público</a>, <a href="https://infolibre.es/noticias/politica/2015/07/12/las_promesas_que_incumplido_esta_legislatura_35329_1012.html">infoLibre</a>, Newtral (<a href="https://www.newtral.es/compromisos-gobierno-coalicion-pactocheck/20230603/">2023</a>, <a href="https://www.newtral.es/gobierno-medidas-pactos-investidura-sanchez/20260723/">2026</a>). No pude abrir los artículos completos de Newtral, solo los titulares. El PSOE también publica sus propios balances (por ejemplo, "Dicho y hecho", 2021). Vox, ERC, Junts y el resto no han tenido Gobierno nacional.</p>
+    </div>
+    <div class="dt" id="d_cum">
+      <h2 class="big">Detalle de cada promesa</h2>
+      <div class="rowf" id="pf"><b>Partido</b></div>
+      <div class="rowf" id="sf"><b>Estado</b></div>
+      <div class="cardsg" id="cg"></div>
+      <p class="sources" style="margin:16px 0 0"><b>Cómo se clasifica.</b> "Incumplida o contraria" significa que el hecho contradice lo prometido y está documentado en las fuentes de la tarjeta. Cada tarjeta enlaza medios de distinta línea editorial, normas oficiales y verificadores cuando los hay. El Gobierno 2023–2026 es una coalición PSOE–Sumar: los hitos del área laboral y de sanidad pública se atribuyen a Sumar.</p>
+    </div>
+  </section>
+
+  <section class="tab" id="p_cor" role="tabpanel" aria-labelledby="t_cor" hidden>
+    <div class="banner"><b>Presunción de inocencia.</b> Aquí solo hay casos con actuación judicial. Una investigación o un juicio abierto no implica culpabilidad; solo cuenta la sentencia, y solo es definitiva cuando es firme. El número de casos de cada fila no mide qué partido es más o menos corrupto: depende del tiempo en el poder, del número de cargos y de lo que ha tardado la justicia en cada caso. Datos a 18-oct-2026.</div>
+    <div class="exec" style="margin-top:16px">
+      <h2 class="big">Resumen: en qué etapa está cada caso</h2>
+      <p class="lead">Número de casos recogidos por partido y etapa. Pulsa una cifra para ver esos casos.</p>
+      <div class="tw"><table class="stg" id="stg"></table></div>
+      <p class="sources" style="margin:12px 0 0">Es una selección hecha con prensa y fuentes judiciales. Puede faltar algún caso, sobre todo de partidos con menos cobertura. Un caso con varias piezas cuenta una vez.</p>
+    </div>
+    <div class="dt" id="d_cor">
+      <h2 class="big">Detalle de cada caso</h2>
+      <div class="rowf" id="cpf"><b>Partido</b></div>
+      <div class="rowf" id="csf"><b>Etapa</b></div>
+      <div class="cols" id="cols"></div>
+      <p class="sources" style="margin:16px 0 0">No se han incluido casos que no pude verificar con una fuente actual (por ejemplo, el caso Neurona de Podemos), ni casos que la prensa asocia a un partido sin que haya imputados de ese partido (hidrocarburos, rescate de Air Europa). Si falta un caso con actuación judicial verificable, se puede añadir con su fuente. No están cubiertos los casos autonómicos y municipales.</p>
+    </div>
+  </section>
+
+  <section class="tab" id="p_met" role="tabpanel" aria-labelledby="t_met" hidden>
+    <div class="exec">
+      <h2 class="big">Cómo está hecho esto</h2>
+      <p class="lead">Las reglas son las mismas para todos los partidos. Aquí se explica cada decisión para que puedas comprobarla o discutirla.</p>
+      <div class="meth">
+        <details open><summary>Aviso y fuentes consultadas</summary>
+          <div class="aviso">
+          <p><b>Aviso.</b> Esta web es informativa. No es asesoramiento ni una recomendación de voto, y no está vinculada a ningún partido, institución ni medio. Los textos de resumen son elaboración propia a partir de las fuentes que se enlazan en cada tarjeta; las citas y los datos pertenecen a sus autores. Aunque se verifica cada dato, puede haber errores u omisiones: si ves uno, avisa con la fuente que lo corrige.</p>
+          <p><b>Las fuentes son de línea editorial diversa</b> y ninguna se considera neutral. Cuando un hecho es polémico se enlazan medios distintos. Se actualiza a diario; la fecha de la última revisión está arriba.</p>
+          <p><b>Fuentes consultadas</b> (las citadas en esta web):</p><p class="sg"><b>Datos electorales, encuestas y propuestas</b><br><a href="https://es.wikipedia.org">Wikipedia (resultados de 2023 por circunscripción)</a> · <a href="https://www.democrata.es">Demócrata (media de encuestas)</a> · <a href="https://www.politicaelectoral.com">Política Electoral (compilación de propuestas)</a></p><p class="sg"><b>Prensa generalista y política</b><br><a href="https://www.publico.es">Público</a> · <a href="https://www.elindependiente.com">El Independiente</a> · <a href="https://www.eleconomista.es">elEconomista</a> · <a href="https://www.eldiario.es">elDiario.es</a> · <a href="https://www.infolibre.es">infoLibre</a> · <a href="https://www.infobae.com">Infobae</a> · <a href="https://es.euronews.com">Euronews</a> · <a href="https://es.ara.cat">Ara</a> · <a href="https://theobjective.com">The Objective</a> · <a href="https://www.libertaddigital.com">Libre Mercado (Libertad Digital)</a> · <a href="https://www.diariocritico.com">Diariocrítico</a> · <a href="https://www.articulo14.es">Artículo 14</a> · <a href="https://www.moncloa.com">Moncloa.com</a> · <a href="https://www.bolsamania.com">Bolsamanía</a> · <a href="https://rtvc.es">RTVC</a></p><p class="sg"><b>Prensa regional y local</b><br><a href="https://www.menorca.info">Menorca.info</a> · <a href="https://www.noticiasdenavarra.com">Noticias de Navarra</a> · <a href="https://www.deia.eus">Deia</a> · <a href="https://orain.eus">Orain</a> · <a href="https://www.ondavasca.com">Onda Vasca</a> · <a href="https://www.poresto.com">Por Esto</a> · <a href="https://www.mallorcadiario.com">Mallorcadiario</a></p><p class="sg"><b>Verificadores</b><br><a href="https://maldita.es">Maldita.es</a> · <a href="https://www.newtral.es">Newtral (solo he podido leer los titulares)</a></p><p class="sg"><b>Jurídicas, normativa y otros datos</b><br><a href="https://www.legaltoday.com">LegalToday</a> · <a href="https://www.economistjurist.es">Economist & Jurist</a> · <a href="https://www.csn.es">CSN (texto de la Ley 19/2013)</a> · <a href="https://www.oie.es">OIE (tabla del salario mínimo)</a> · <a href="https://housfy.com">Housfy (índice de precios de alquiler)</a></p>
+          <p class="sg">No he podido consultar directamente las webs oficiales del Ministerio del Interior, del INE ni del Congreso: el acceso desde mi entorno estaba bloqueado. Por eso los resultados de 2023 vienen de Wikipedia (sus escaños coinciden con los oficiales) y las votaciones del Congreso aún no están incluidas.</p>
+          </div></details>
+        <details><summary>Principios</summary>
+          <ul><li>No recomendamos voto ni puntuamos partidos.</li><li>Cada dato enlaza a una fuente. Si no hay fuente, no se publica.</li><li>Cuando un hecho es polémico, se citan medios de distinta línea editorial.</li><li>Los números por partido no son un ranking: dependen del tiempo en el poder, del número de cargos y de lo que ha tardado la justicia.</li><li>Última revisión de datos: 18 de octubre de 2026.</li></ul></details>
+        <details><summary>Simulador de escaños</summary>
+          <ul><li><b>Punto de partida:</b> resultados del 23-J de 2023 en las 52 circunscripciones (los escaños reproducidos coinciden con los oficiales: 350).</li><li><b>Escenario:</b> PP, PSOE, Vox y Sumar multiplican su porcentaje de 2023 en cada provincia por la razón entre su voto nacional elegido y el de 2023. El resto de partidos mantiene su voto.</li><li><b>Reparto:</b> en cada provincia se normaliza a 100 y se aplica la regla D'Hondt entre las candidaturas con al menos el 3% del voto provincial.</li><li><b>Mapa:</b> el color es el partido con más escaños en la provincia (a igualdad, el de más voto). Un escaño está "en el aire" si el siguiente partido llega al 95% o más del cociente D'Hondt del último escaño repartido.</li><li><b>Límites:</b> es un escenario, no una previsión. No modela voto útil, nuevas listas ni coaliciones electorales (por ejemplo, un frente amplio a la izquierda). Los porcentajes de la media de encuestas vienen de Demócrata y el orden de sus columnas es una suposición.</li></ul></details>
+        <details><summary>Propuestas</summary>
+          <ul><li>Los programas oficiales aún no se han publicado (la campaña empieza el 13 de noviembre). Hasta entonces se resumen posiciones públicas según la compilación de Política Electoral, que es una fuente secundaria.</li><li>Se sustituirán por citas literales de los programas, con página, en cuanto existan.</li><li>La tabla de ✓/✕ marca posición declarada, no valoración. "?" significa que no hay posición concreta en las fuentes.</li></ul></details>
+        <details><summary>Promesas cumplidas</summary>
+          <ul><li><b>Qué entra:</b> una promesa con cita verificable y un hecho posterior documentado en al menos una fuente (la mayoría tienen dos o tres).</li><li><b>Cumplida ✓:</b> el hecho coincide con lo prometido. <b>Parcial ◐:</b> se cumplió en parte o con retraso. <b>Incumplida o contraria ✕:</b> el hecho contradice lo prometido.</li><li><b>Es una selección</b>, no el porcentaje de un programa entero. Las barras cuentan las promesas documentadas aquí: no comparan partidos entre sí.</li><li><b>Contexto:</b> el PP se mide en 2011–2018, el PSOE en 2018–2026 y Sumar en la coalición actual, con muestra pequeña. Vox no ha gobernado a nivel nacional.</li><li>Los balances de los propios partidos (CumPPlimos) y los de verificadores (Newtral) se muestran aparte y con su fecha.</li></ul></details>
+        <details><summary>Casos judiciales</summary>
+          <ul><li>Solo casos con actuación judicial y fuente actual. Investigación o juicio abierto no implica culpabilidad: solo cuenta la sentencia, y solo es definitiva cuando es firme.</li><li><b>Etapas:</b> Instrucción (investigación), Juicio (juicio oral abierto o celebrado), Sentencia (hay sentencia, sin ser firme) y Firme (agotados los recursos).</li><li>Se indica si la persona investigada no tiene cargo en el partido (familiares, por ejemplo).</li><li>No se incluyen casos que no pude verificar con una fuente reciente.</li></ul></details>
+        <details><summary>Lo que sé que falta</summary>
+          <ul><li>No he encontrado la sentencia de Kitchen ni la de la última pieza de Gürtel.</li><li>No consta si las condenas de Púnica son firmes, ni el resultado de las nuevas sentencias de los ERE.</li><li>De las mediciones de Newtral solo he podido leer los titulares.</li><li>Faltan las votaciones reales en el Congreso y las citas literales de los programas oficiales.</li></ul></details>
+        <details><summary>Correcciones</summary>
+          <ul><li>Si ves un dato mal, díselo a JuanLe con el enlace a la fuente que lo contradice. Se corrige y la fecha de revisión se actualiza.</li><li>Los cambios de fondo se anotarán aquí.</li></ul></details>
+      </div>
+    </div>
+  </section>
+  <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
+</div><script>
+const DATA=[{"n":"A Coruña","s":8,"p":{"PP":43.1,"PSOE":28.2,"VOX":5.1,"SUMAR":12.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":10.0,"CCa":0.0,"UPN":0.0},"a":{"PP":4,"PSOE":2,"VOX":0,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":1,"CCa":0,"UPN":0}},{"n":"Araba/Álava","s":4,"p":{"PP":17.9,"PSOE":27.7,"VOX":3.9,"SUMAR":12.7,"ERC":0.0,"JUNTS":0.0,"BILDU":19.5,"PNV":16.6,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":1,"PNV":1,"BNG":0,"CCa":0,"UPN":0}},{"n":"Albacete","s":4,"p":{"PP":39.9,"PSOE":34.5,"VOX":16.6,"SUMAR":7.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Alicante","s":12,"p":{"PP":36.7,"PSOE":32.0,"VOX":16.3,"SUMAR":12.9,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":5,"PSOE":4,"VOX":2,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Almería","s":6,"p":{"PP":41.0,"PSOE":29.0,"VOX":21.4,"SUMAR":6.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Asturias","s":7,"p":{"PP":35.6,"PSOE":34.3,"VOX":12.5,"SUMAR":14.8,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":2,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Ávila","s":3,"p":{"PP":43.3,"PSOE":27.4,"VOX":15.4,"SUMAR":5.1,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Badajoz","s":5,"p":{"PP":37.8,"PSOE":39.2,"VOX":13.7,"SUMAR":6.8,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Illes Balears","s":8,"p":{"PP":35.6,"PSOE":30.2,"VOX":15.2,"SUMAR":16.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":3,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Barcelona","s":32,"p":{"PP":13.8,"PSOE":35.7,"VOX":7.6,"SUMAR":15.2,"ERC":12.3,"JUNTS":9.7,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":5,"PSOE":13,"VOX":2,"SUMAR":5,"ERC":4,"JUNTS":3,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Bizkaia","s":8,"p":{"PP":11.5,"PSOE":25.8,"VOX":2.6,"SUMAR":10.9,"ERC":0.0,"JUNTS":0.0,"BILDU":20.7,"PNV":27.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":2,"VOX":0,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":2,"PNV":2,"BNG":0,"CCa":0,"UPN":0}},{"n":"Burgos","s":4,"p":{"PP":40.6,"PSOE":34.4,"VOX":12.8,"SUMAR":8.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Cáceres","s":4,"p":{"PP":38.1,"PSOE":38.9,"VOX":13.6,"SUMAR":6.9,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Cádiz","s":9,"p":{"PP":34.8,"PSOE":33.2,"VOX":15.2,"SUMAR":12.9,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":4,"PSOE":3,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Cantabria","s":5,"p":{"PP":42.1,"PSOE":33.3,"VOX":14.1,"SUMAR":8.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Castellón","s":5,"p":{"PP":35.2,"PSOE":32.6,"VOX":15.9,"SUMAR":14.3,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Ceuta","s":1,"p":{"PP":38.8,"PSOE":34.0,"VOX":23.3,"SUMAR":2.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":0,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Ciudad Real","s":5,"p":{"PP":40.5,"PSOE":35.4,"VOX":16.3,"SUMAR":6.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Córdoba","s":6,"p":{"PP":37.9,"PSOE":32.1,"VOX":13.9,"SUMAR":13.7,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Cuenca","s":3,"p":{"PP":39.8,"PSOE":37.4,"VOX":15.6,"SUMAR":5.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Gipuzkoa","s":6,"p":{"PP":8.7,"PSOE":23.3,"VOX":2.1,"SUMAR":10.6,"ERC":0.0,"JUNTS":0.0,"BILDU":31.2,"PNV":22.6,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":0,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":2,"PNV":2,"BNG":0,"CCa":0,"UPN":0}},{"n":"Girona","s":6,"p":{"PP":9.7,"PSOE":28.9,"VOX":7.0,"SUMAR":10.9,"ERC":14.7,"JUNTS":19.6,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":0,"PSOE":2,"VOX":0,"SUMAR":1,"ERC":1,"JUNTS":2,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Granada","s":7,"p":{"PP":37.0,"PSOE":33.0,"VOX":16.1,"SUMAR":11.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":2,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Guadalajara","s":3,"p":{"PP":36.3,"PSOE":33.0,"VOX":19.3,"SUMAR":9.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":1,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Huelva","s":5,"p":{"PP":36.4,"PSOE":36.0,"VOX":14.6,"SUMAR":10.4,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Huesca","s":3,"p":{"PP":38.2,"PSOE":33.6,"VOX":12.6,"SUMAR":11.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Jaén","s":5,"p":{"PP":37.3,"PSOE":36.3,"VOX":14.8,"SUMAR":8.0,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"La Rioja","s":4,"p":{"PP":45.6,"PSOE":35.7,"VOX":9.8,"SUMAR":6.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Las Palmas","s":8,"p":{"PP":25.9,"PSOE":33.2,"VOX":14.6,"SUMAR":10.3,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":3,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"León","s":4,"p":{"PP":36.9,"PSOE":33.6,"VOX":12.9,"SUMAR":6.7,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Lleida","s":4,"p":{"PP":12.8,"PSOE":29.5,"VOX":6.8,"SUMAR":7.9,"ERC":18.6,"JUNTS":18.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":0,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":1,"JUNTS":1,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Lugo","s":4,"p":{"PP":50.2,"PSOE":30.3,"VOX":4.4,"SUMAR":5.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":8.7,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Madrid","s":37,"p":{"PP":40.5,"PSOE":27.8,"VOX":14.0,"SUMAR":15.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":16,"PSOE":10,"VOX":5,"SUMAR":6,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Málaga","s":11,"p":{"PP":38.3,"PSOE":30.3,"VOX":16.5,"SUMAR":12.3,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":5,"PSOE":3,"VOX":2,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Melilla","s":1,"p":{"PP":49.2,"PSOE":25.4,"VOX":15.9,"SUMAR":3.0,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":0,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Murcia","s":10,"p":{"PP":41.2,"PSOE":25.3,"VOX":21.8,"SUMAR":9.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":4,"PSOE":3,"VOX":2,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Navarra","s":5,"p":{"PP":16.7,"PSOE":27.4,"VOX":5.7,"SUMAR":12.8,"ERC":0.0,"JUNTS":0.0,"BILDU":17.2,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":15.3},"a":{"PP":1,"PSOE":2,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":1,"PNV":0,"BNG":0,"CCa":0,"UPN":1}},{"n":"Ourense","s":4,"p":{"PP":50.0,"PSOE":30.1,"VOX":4.9,"SUMAR":5.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":8.2,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Palencia","s":3,"p":{"PP":42.0,"PSOE":34.7,"VOX":12.9,"SUMAR":6.1,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Pontevedra","s":7,"p":{"PP":39.6,"PSOE":31.4,"VOX":4.7,"SUMAR":13.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":9.4,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":3,"VOX":0,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Salamanca","s":4,"p":{"PP":47.0,"PSOE":30.4,"VOX":14.7,"SUMAR":5.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Santa Cruz de Tenerife","s":7,"p":{"PP":35.4,"PSOE":33.5,"VOX":0.0,"SUMAR":10.8,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":16.7,"UPN":0.0},"a":{"PP":3,"PSOE":3,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":1,"UPN":0}},{"n":"Segovia","s":3,"p":{"PP":45.0,"PSOE":30.6,"VOX":14.1,"SUMAR":8.1,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Sevilla","s":12,"p":{"PP":33.4,"PSOE":36.6,"VOX":13.3,"SUMAR":14.0,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":4,"PSOE":5,"VOX":1,"SUMAR":2,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Soria","s":2,"p":{"PP":37.2,"PSOE":29.5,"VOX":9.8,"SUMAR":3.4,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Tarragona","s":6,"p":{"PP":13.9,"PSOE":32.9,"VOX":10.3,"SUMAR":11.3,"ERC":15.1,"JUNTS":11.1,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":1,"PSOE":2,"VOX":0,"SUMAR":1,"ERC":1,"JUNTS":1,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Teruel","s":3,"p":{"PP":35.0,"PSOE":29.3,"VOX":13.1,"SUMAR":5.4,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Toledo","s":6,"p":{"PP":37.8,"PSOE":32.6,"VOX":19.6,"SUMAR":8.2,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Valencia","s":16,"p":{"PP":33.6,"PSOE":32.1,"VOX":15.2,"SUMAR":16.9,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":6,"PSOE":5,"VOX":2,"SUMAR":3,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Valladolid","s":5,"p":{"PP":40.8,"PSOE":32.8,"VOX":15.2,"SUMAR":8.9,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":2,"VOX":1,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Zamora","s":3,"p":{"PP":44.8,"PSOE":32.5,"VOX":13.2,"SUMAR":5.6,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":2,"PSOE":1,"VOX":0,"SUMAR":0,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}},{"n":"Zaragoza","s":7,"p":{"PP":36.0,"PSOE":30.8,"VOX":15.3,"SUMAR":13.5,"ERC":0.0,"JUNTS":0.0,"BILDU":0.0,"PNV":0.0,"BNG":0.0,"CCa":0.0,"UPN":0.0},"a":{"PP":3,"PSOE":2,"VOX":1,"SUMAR":1,"ERC":0,"JUNTS":0,"BILDU":0,"PNV":0,"BNG":0,"CCa":0,"UPN":0}}];
+const PARTIES=['PP','PSOE','VOX','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'];
+const BASE={PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31};
+function simulate(data,nat){
+  const tot={};PARTIES.forEach(p=>tot[p]=0);const prov=[];
+  for(const c of data){
+    const listed=PARTIES.reduce((a,p)=>a+c.p[p],0);
+    const raw={};PARTIES.forEach(p=>{let v=c.p[p];if(nat[p]!==undefined&&BASE[p])v=v*nat[p]/BASE[p];raw[p]=v});
+    const others=Math.max(0,100-listed);
+    const sum=PARTIES.reduce((a,p)=>a+raw[p],0)+others;
+    const sh={};PARTIES.forEach(p=>sh[p]=raw[p]/sum*100);
+    const el=PARTIES.filter(p=>sh[p]>=3);
+    const seats={};PARTIES.forEach(p=>seats[p]=0);
+    let lastQ=0,lastP=null;
+    for(let k=0;k<c.s;k++){let best=null,bv=-1;for(const p of el){const q=sh[p]/(seats[p]+1);if(q>bv){bv=q;best=p}}if(best){seats[best]++;lastQ=bv;lastP=best;}}
+    let nq=0,np=null;for(const p of el){const q=sh[p]/(seats[p]+1);if(q>nq){nq=q;np=p}}
+    PARTIES.forEach(p=>tot[p]+=seats[p]);prov.push({n:c.n,s:c.s,seats,sh,marg:{win:lastP,lose:np,ratio:lastQ?nq/lastQ:0}});
+  }
+  return {tot,prov};
+}
+
+const SITE_URL='https://claude.ai/artifact/63Bq3s41z16g3wUQ28YNTF';
+const GEO={'A Coruña':['COR',0,0],'Lugo':['LUG',1,0],'Asturias':['AST',2,0],'Cantabria':['CAN',3,0],'Bizkaia':['BIZ',4,0],'Gipuzkoa':['GIP',5,0],'Navarra':['NAV',6,0],'Huesca':['HUE',7,0],'Lleida':['LLE',8,0],'Girona':['GIR',9,0],
+'Pontevedra':['PON',0,1],'Ourense':['OUR',1,1],'León':['LEO',2,1],'Palencia':['PAL',3,1],'Burgos':['BUR',4,1],'Araba/Álava':['ARA',5,1],'La Rioja':['RIO',6,1],'Zaragoza':['ZAR',7,1],'Tarragona':['TAR',8,1],'Barcelona':['BCN',9,1],
+'Zamora':['ZAM',2,2],'Valladolid':['VLL',3,2],'Segovia':['SEG',4,2],'Soria':['SOR',5,2],'Guadalajara':['GUA',6,2],'Teruel':['TER',7,2],'Castellón':['CAS',8,2],
+'Salamanca':['SAL',2,3],'Ávila':['AVI',3,3],'Madrid':['MAD',4,3],'Cuenca':['CUE',5,3],'Valencia':['VAL',7,3],'Illes Balears':['BAL',9,3],
+'Cáceres':['CAC',3,4],'Toledo':['TOL',4,4],'Albacete':['ALB',5,4],'Alicante':['ALI',7,4],
+'Badajoz':['BAD',3,5],'Ciudad Real':['CRE',4,5],'Jaén':['JAE',5,5],'Murcia':['MUR',7,5],
+'Huelva':['HUV',2,6],'Sevilla':['SEV',3,6],'Córdoba':['COD',4,6],'Granada':['GRA',5,6],'Almería':['ALM',6,6],
+'Cádiz':['CAD',3,7],'Málaga':['MAL',4,7],'Ceuta':['CEU',2,8],'Melilla':['MEL',5,8],'Las Palmas':['LPA',0,9],'Santa Cruz de Tenerife':['TFE',1,9]};
+let mapSel=null,lastProv=null;
+const tileWinner=c=>{let b=null,bs=-1,bsh=-1;for(const p of PARTIES){const k=c.seats[p];if(k>bs||(k===bs&&c.sh[p]>bsh)){b=p;bs=k;bsh=c.sh[p]}}return b};
+function renderMap(r){
+  lastProv=r.prov;
+  const el=document.getElementById('map');if(!el)return;
+  const by={};r.prov.forEach(c=>by[c.n]=c);
+  let h='';
+  for(const n in GEO){const g=GEO[n],c=by[n];if(!c)continue;const w=tileWinner(c);const close=c.marg.ratio>=0.95&&c.marg.win!==c.marg.lose;
+    h+=`<button type="button" class="tile${close?' close':''}${mapSel===n?' sel':''}" data-n="${n.replace(/"/g,'&quot;')}" style="grid-column:${g[1]+1};grid-row:${g[2]+1};background:${COL[w]||REG}" aria-label="${n}: ${c.s} escaños, gana ${NAMES[w]}${close?', último escaño en el aire':''}"><span>${g[0]}</span><b>${c.s}</b></button>`}
+  el.innerHTML=h;
+  el.querySelectorAll('.tile').forEach(b=>b.addEventListener('click',()=>{mapSel=b.dataset.n;renderMap(r);showInfo()}));
+  const lead=r.prov.filter(c=>c.marg.ratio>=0.95&&c.marg.win!==c.marg.lose).sort((a,b)=>b.marg.ratio-a.marg.ratio);
+  document.getElementById('aire').innerHTML=lead.length?`<b>${lead.length} provincias con un escaño en el aire</b> (el siguiente partido llega al 95% o más del cociente del último escaño): `+lead.slice(0,8).map(c=>`${c.n} (${NAMES[c.marg.win]} lo gana por poco frente a ${NAMES[c.marg.lose]})`).join('; ')+(lead.length>8?'…':'')+'.':'Ninguna provincia tiene un último escaño a menos del 5% de cambiar de manos.';
+  showInfo();
+}
+function showInfo(){
+  const box=document.getElementById('mapinfo');if(!box||!lastProv)return;
+  const c=lastProv.find(x=>x.n===mapSel);
+  if(!c){box.innerHTML='<p class="note">Toca una provincia para ver su reparto.</p>';return}
+  const seats=PARTIES.filter(p=>c.seats[p]).sort((a,b)=>c.seats[b]-c.seats[a]);
+  const top=PARTIES.slice().sort((a,b)=>c.sh[b]-c.sh[a]).slice(0,4);
+  box.innerHTML=`<div class="mi"><h3>${c.n} <small>${c.s} ${c.s===1?'escaño':'escaños'}</small></h3><p>${seats.map(p=>`<span class="dot" style="background:${COL[p]||REG}"></span>${NAMES[p]} <b>${c.seats[p]}</b>`).join(' &nbsp; ')}</p><p class="note">Voto estimado: ${top.map(p=>NAMES[p]+' '+fmt(c.sh[p])+'%').join(' · ')}. ${c.marg.win&&c.marg.win!==c.marg.lose?`Último escaño: ${NAMES[c.marg.win]}; el siguiente es ${NAMES[c.marg.lose]} con el ${Math.round(c.marg.ratio*100)}% de su cociente.`:''}</p></div>`;
+}
+function renderShare(t){
+  const box=document.getElementById('share');if(!box)return;
+  const txt=`Mi simulación para el 29N: PP ${t.PP}, PSOE ${t.PSOE}, Vox ${t.VOX}, Sumar ${t.SUMAR} escaños. PP+Vox: ${t.PP+t.VOX}. Pruébalo con tus datos:`;
+  const u=encodeURIComponent(SITE_URL),x=encodeURIComponent(txt);
+  box.innerHTML=`<span class="lab">Compartir mi resultado</span><div class="sh"><a class="wa" href="https://wa.me/?text=${x}%20${u}">WhatsApp</a><a href="https://t.me/share/url?url=${u}&text=${x}">Telegram</a><a href="https://twitter.com/intent/tweet?text=${x}&url=${u}">X</a><button type="button" id="cp">Copiar texto</button></div><span class="note" id="cpm" aria-live="polite"></span>`;
+  document.getElementById('cp').addEventListener('click',async()=>{
+    const full=txt+' '+SITE_URL,m=document.getElementById('cpm');
+    try{await navigator.clipboard.writeText(full);m.textContent='Copiado.'}catch(e){m.textContent=full}
+  });
+}
+const NAMES={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar',ERC:'ERC',JUNTS:'Junts',BILDU:'EH Bildu',PNV:'PNV',BNG:'BNG',CCa:'CCa',UPN:'UPN'};
+const COL={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)'};
+const REG='var(--reg)';
+const PRESETS={'2023':{PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31},poll:{PP:32.1,PSOE:26.5,VOX:18.4,SUMAR:9.3}};
+const MAIN=['PP','PSOE','VOX','SUMAR'];
+const LABEL={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar (+Podemos)'};
+let nat={...PRESETS.poll};
+const ctls=document.getElementById('ctls');
+MAIN.forEach(p=>{
+  const d=document.createElement('div');d.className='ctl';
+  d.innerHTML=`<label for="r_${p}"><span class="dot" style="background:${COL[p]}"></span>${LABEL[p]}</label><output id="o_${p}"></output><input type="range" id="r_${p}" min="0" max="45" step="0.1"><small id="s_${p}"></small>`;
+  ctls.appendChild(d);
+  d.querySelector('input').addEventListener('input',e=>{nat[p]=parseFloat(e.target.value);setPressed(null);render()});
+});
+function setPressed(k){document.querySelectorAll('[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===k)))}
+document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{nat={...PRESETS[b.dataset.p]};setPressed(b.dataset.p);render()}));
+const fmt=n=>n.toFixed(1).replace('.',',');
+function bloc(title,seats,list){
+  const n=list.reduce((a,p)=>a+seats[p],0);
+  return `<div class="bloc"><span>${title}</span><b>${n}</b><span class="${n>=176?'ok':'no'}">${n>=176?'Mayoría absoluta':'Faltan '+(176-n)}</span></div>`;
+}
+function render(){
+  const r=simulate(DATA,nat), t=r.tot;
+  MAIN.forEach(p=>{document.getElementById('r_'+p).value=nat[p];document.getElementById('o_'+p).textContent=fmt(nat[p])+'%';
+    const d=nat[p]-PRESETS['2023'][p];document.getElementById('s_'+p).textContent='23-J: '+fmt(PRESETS['2023'][p])+'%  ('+(d>=0?'+':'')+fmt(d)+')'});
+  const order=['PP','PSOE','VOX','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'];
+  const bar=document.getElementById('bar');bar.querySelectorAll('.seg').forEach(e=>e.remove());
+  const mark=document.getElementById('mark');
+  order.forEach(p=>{if(!t[p])return;const s=document.createElement('div');s.className='seg';s.style.width=(t[p]/350*100)+'%';s.style.background=COL[p]||REG;s.title=NAMES[p]+': '+t[p];bar.insertBefore(s,mark)});
+  mark.style.left=(176/350*100)+'%';
+  const total=Object.values(t).reduce((a,b)=>a+b,0);
+  bar.setAttribute('aria-label','Reparto de escaños: '+order.filter(p=>t[p]).map(p=>NAMES[p]+' '+t[p]).join(', '));
+  document.getElementById('blocs').innerHTML=
+    bloc('PP + Vox',t,['PP','VOX'])+
+    bloc('PP + Vox + UPN + CCa',t,['PP','VOX','UPN','CCa'])+
+    bloc('PSOE + Sumar + socios 2023',t,['PSOE','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa']);
+  const base=PRESETS['2023'];
+  const A23={PP:137,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1,UPN:1};
+  document.getElementById('tp').innerHTML='<tr><th>Partido</th><th>Escaños</th><th>23-J</th><th>Cambio</th></tr>'+
+    order.map(p=>{const d=t[p]-A23[p];return `<tr><td><span class="dot" style="background:${COL[p]||REG}"></span> ${NAMES[p]}</td><td class="m">${t[p]}</td><td class="m">${A23[p]}</td><td class="m ${d>0?'up':d<0?'dn':'eq'}">${d>0?'+':''}${d}</td></tr>`}).join('')+
+    `<tr><td><b>Total</b></td><td class="m"><b>${total}</b></td><td class="m">350</td><td></td></tr>`;
+  document.getElementById('tc').innerHTML='<tr><th>Circunscripción</th><th>Esc.</th><th>PP</th><th>PSOE</th><th>Vox</th><th>Sumar</th><th>Otros</th></tr>'+
+    r.prov.map(c=>{const o=c.s-c.seats.PP-c.seats.PSOE-c.seats.VOX-c.seats.SUMAR;return `<tr><td>${c.n}</td><td class="m">${c.s}</td><td class="m">${c.seats.PP}</td><td class="m">${c.seats.PSOE}</td><td class="m">${c.seats.VOX}</td><td class="m">${c.seats.SUMAR}</td><td class="m">${o}</td></tr>`}).join('');
+  renderMap(r);renderShare(t);
+}
+render();
+
+const TABS=['sim','pro','cum','cor','met'];
+TABS.forEach(k=>document.getElementById('t_'+k).addEventListener('click',()=>{
+  TABS.forEach(j=>{const on=j===k;document.getElementById('t_'+j).setAttribute('aria-selected',String(on));document.getElementById('p_'+j).hidden=!on});
+}));
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const A=(l,u)=>`<a href="${u}">${esc(l)}</a>`;
+const go=id=>{const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})};
+const chipBtn=(attr,val,label,on)=>`<button type="button" ${attr}="${val}" aria-pressed="${on}">${label}</button>`;
+
+/* ================= PROPUESTAS ================= */
+const PARTS=[['PP','PP','var(--pp)'],['PSOE','PSOE','var(--psoe)'],['VOX','Vox','var(--vox)'],['SUMAR','Sumar','var(--sumar)']];
+const TOPICS=['Vivienda','Impuestos','Inmigración','Energía','Sanidad','Pensiones'];
+const PROP={
+PP:['Un millón de viviendas en cuatro años; silencio positivo a los 90 días; avales públicos del 95–100% para jóvenes; IVA del 4% en obra nueva; fin de los topes en zonas tensionadas.',
+ 'IVA 0% en alimentos básicos; IVA de luz y gas del 21% al 10%; deflactar el IRPF; suprimir el impuesto a la generación eléctrica. Sin coste calculado todavía.',
+ 'Visado por puntos y cupos por país ligados a cooperación en devoluciones; fin de regularizaciones masivas; expulsión tras delitos graves.',
+ 'Derogar el calendario de cierre nuclear; suprimir el impuesto a la generación; desbloquear el acceso a la red.',
+ 'Plantillas un 15% mayores; más plazas MIR; 10.000 profesionales de salud mental. Polémica: que las mutuas puedan dar altas.',
+ 'Revalorización anual con el IPC, también sin presupuestos. Sin detalle de financiación.'],
+PSOE:['Mantener los decretos tumbados el 2-oct: suspender desahucios de familias vulnerables hasta 2030, tope del 2% a la subida de alquileres vigentes hasta finales de 2027, IVA del 10% a pisos turísticos.',
+ 'Tipo del 50% en el IRPF para rentas de más de 300.000 € (Congreso federal 2024); mantener el impuesto a la banca y el mínimo del 15% a multinacionales.',
+ 'Mantener la regularización extraordinaria (1.174.978 solicitudes); vías legales con control de fronteras; reparto de menores no acompañados.',
+ 'Cumplir el PNIEC 2023–2030 (81% de electricidad renovable en 2030). Almaraz podrá operar hasta junio de 2030.',
+ 'Defender la sanidad pública y limitar la privada; "cero recortes". La ley de gestión pública decae con la disolución de las Cortes.',
+ 'Cuatro años más de revalorización con el IPC; Fondo de Reserva hasta 20.000 M€; subida de 2027 por decreto en diciembre.'],
+VOX:['Vivienda social "masiva" con "prioridad nacional"; IVA 0% en la primera vivienda; derogar la Ley de Vivienda de 2023; desalojo de okupas en 24 horas.',
+ 'IRPF: 22.000 € exentos, 15% hasta 70.000 € y 25% por encima; IVA 18% y 8%; Sociedades 15%. Vox calcula 64.000 M€ de coste; Hacienda eleva solo el del IRPF a 85.000 M€.',
+ '"Remigración"; deportación inmediata por delitos; prioridad nacional en ayudas y vivienda pública.',
+ 'IVA del 4% en luz y gas; alargar las nucleares (Almaraz); derogar la Ley de Cambio Climático de 2021.',
+ 'Limitar la atención a inmigrantes irregulares a urgencias; tarjeta sanitaria única y recentralización; más conciertos con la privada.',
+ 'Se pagarán "al precio que sea y como sea"; sin detalle de financiación. Propuesta de un sistema mixto con capitalización (2025).'],
+SUMAR:['Renovación automática de contratos y bloqueo de desahucios; prohibir compras de vivienda por empresas y fondos. (2023: dos millones de alquileres asequibles en diez años.)',
+ 'Impuesto estatal a herencias y donaciones de más de 1 M€ (proposición de mayo de 2026). (2023: tributo a grandes fortunas.)',
+ 'Respalda la regularización extraordinaria (RD 316/2026). (2023: cerrar los CIE.)',
+ 'Mantener el cierre nuclear (2035); oponerse a Almaraz; moratoria a nuevos proyectos nucleares.',
+ 'Gestión pública como norma (ley decaída). (2023: +0,5 puntos de PIB al año en gasto sanitario.)',
+ 'Revalorización por ley con el IPC (programa de 2023); respaldó la subida del 2,7% de 2026.']
+};
+const STAR=[
+ {c:'var(--pp)',n:'PP',big:'Un millón de viviendas en cuatro años',chips:['IVA de luz y gas al 10%','IVA 0% en alimentos básicos','Pensiones con el IPC','Visado por puntos'],cost:'Sin coste total calculado todavía.'},
+ {c:'var(--psoe)',n:'PSOE',big:'Mantener los decretos de vivienda tumbados el 2-oct',chips:['IRPF del 50% desde 300.000 €','Pensiones con el IPC cuatro años más','Regularización extraordinaria'],cost:'Subida de pensiones de 2027 por decreto en diciembre.'},
+ {c:'var(--vox)',n:'Vox',big:'IRPF de dos tipos: 15% y 25%',chips:['IVA 18% y 8%','Derogar la Ley de Vivienda 2023','"Remigración"','IVA 4% luz y gas'],cost:'Coste: 64.000 M€ según Vox; Hacienda eleva solo el del IRPF a 85.000 M€.'},
+ {c:'var(--sumar)',n:'Sumar',big:'Jornada de 37,5 horas sin bajar el sueldo',chips:['Renovación automática de alquileres','Impuesto a herencias de más de 1 M€','Mantener el cierre nuclear'],cost:'El Congreso la rechazó el 10-sep-2025 (PP, Vox y Junts).'}
+];
+document.getElementById('starg').innerHTML=STAR.map(s=>`<article class="star" style="--c:${s.c}"><h3>${s.n}</h3><div class="big2">${esc(s.big)}</div><div class="chips">${s.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div><div class="cost">${esc(s.cost)}</div></article>`).join('');
+const POS=[
+ ['Revalorizar las pensiones con el IPC',['y','y','q','y']],
+ ['Bajar el IRPF',['y','n','y','n']],
+ ['Fin de los topes de alquiler en zonas tensionadas',['y','n','y','q']],
+ ['Mantener la regularización extraordinaria',['n','y','n','y']],
+ ['Alargar la vida de las nucleares',['y','p','y','n']]
+];
+const PV={y:'✓',n:'✕',p:'◐',q:'?'};
+document.getElementById('pos').innerHTML='<thead><tr><th></th>'+PARTS.map(p=>`<th style="--c:${p[2]}">${p[1]}</th>`).join('')+'</tr></thead><tbody>'+
+ POS.map(r=>`<tr><td>${r[0]}</td>${r[1].map(v=>`<td><span class="pv ${v}">${PV[v]}</span></td>`).join('')}</tr>`).join('')+'</tbody>';
+let tsel='all',psel='all';
+function renderMx(){
+  document.getElementById('ppf').innerHTML='<b>Partido</b>'+chipBtn('data-pp','all','Todos',psel==='all')+PARTS.map(p=>chipBtn('data-pp',p[0],p[1],psel===p[0])).join('');
+  document.getElementById('tf').innerHTML='<b>Tema</b>'+chipBtn('data-t','all','Todos',tsel==='all')+TOPICS.map((t,i)=>chipBtn('data-t',i,t,String(tsel)===String(i))).join('');
+  document.querySelectorAll('[data-pp]').forEach(b=>b.addEventListener('click',()=>{psel=b.dataset.pp;renderMx()}));
+  document.querySelectorAll('[data-t]').forEach(b=>b.addEventListener('click',()=>{tsel=b.dataset.t;renderMx()}));
+  const rows=TOPICS.map((t,i)=>[t,i]).filter(([t,i])=>tsel==='all'||String(i)===String(tsel));
+  const cols=PARTS.filter(p=>psel==='all'||p[0]===psel);
+  const m=document.getElementById('mx');
+  m.style.minWidth=cols.length===4?'':'0';
+  m.innerHTML='<thead><tr><th></th>'+cols.map(p=>`<th style="--c:${p[2]}">${p[1]}</th>`).join('')+'</tr></thead><tbody>'+
+   rows.map(([t,i])=>`<tr><td>${t}</td>${cols.map(p=>`<td data-p="${p[1]}" style="--c:${p[2]}">${esc(PROP[p[0]][i])}</td>`).join('')}</tr>`).join('')+'</tbody>';
+}
+renderMx();
+
+/* ================= PROMESAS ================= */
+const U={
+ pub11:['Público (dic. 2011)','https://www.publico.es/actualidad/rajoy-incumple-palabra-sube-impuestos.amp.html'],
+ legal:['LegalToday (jul. 2012)','https://www.legaltoday.com/actualidad-juridica/noticias-de-derecho/el-gobierno-ejecuta-por-real-decreto-las-subidas-tributarias-2012-07-17/'],
+ libre:['Libre Mercado (nov. 2013)','https://www.libertaddigital.com/libremercado/2013-11-20/las-diez-grandes-promesas-incumplidas-de-rajoy-en-materia-economica-1276504565/'],
+ diacri:['Diariocrítico (nov. 2012)','https://www.diariocritico.com/noticia/423171/nacional/rajoy:-un-ano-de-promesas-incumplidas-recortes-sombras-y-luces-al-final-del-tunel.html'],
+ orain:['Orain (2020)','https://orain.eus/es/actualidad/economia/2020/05/22/que-cambios-introdujo-reforma-laboral-aprobada-pp-2012/'],
+ eld:['elDiario.es (ene. 2015)','https://www.eldiario.es/politica/promesas-incumplidas-rajoy-frustracion-generado_1_4425493.html'],
+ ley19:['Texto de la Ley 19/2013','https://www.csn.es/documents/10182/896578/Ley%2019-2013,%20de%209%20de%20diciembre,%20de%20transparencia,%20acceso%20a%20la%20informaci%C3%B3n%20y%20buen%20gobierno'],
+ pub15:['Público (jul. 2015)','https://www.publico.es/politica/pp-presenta-web-dice-haber-cumplido-92-5-programa-electoral.html'],
+ mal:['Maldita Hemeroteca (nov. 2023)','https://maldita.es/malditahemeroteca/20231115/feijoo-hemeroteca-sanchez-investidura/'],
+ malA:['Maldita Hemeroteca (amnistía)','https://maldita.es/malditahemeroteca/20231031/pedro-sanchez-amnistia-constitucion/'],
+ amn:['Menorca.info (may. 2024)','https://www.menorca.info/actualidad/nacional/2024/05/30/2174477/ley-amnistia-aprobada-definitivamente-mayoria-del-congreso.html'],
+ tjue:['El Independiente (ago. 2026)','https://www.elindependiente.com/espana/2026/08/02/curso-judicial-sentencias-historicas-seis-frentes-psoe/amp/'],
+ ntl23:['Newtral (jun. 2023)','https://www.newtral.es/compromisos-gobierno-coalicion-pactocheck/20230603/'],
+ ntl26:['Newtral (jul. 2026)','https://www.newtral.es/gobierno-medidas-pactos-investidura-sanchez/20260723/'],
+ jor:['RTVC (sep. 2025)','https://rtvc.es/pp-vox-junts-tumban-ley-jornada-laboral-10-septiembre-2025/'],
+ jor2:['Bolsamanía (sep. 2025)','https://www.bolsamania.com/noticias_print/economia/economia--ugt-y-ccoo-se-movilizaran-en-la-calle-por-la-reduccion-de-jornada-y-censuran-el-veto-de-pp-vox-y-junts--20870686.html'],
+ dec:['Por Esto (oct. 2026)','https://www.poresto.com/internacional/2026/10/5/pedro-sanchez-adelanta-elecciones-en-espana-seran-el-29-de-noviembre-de-2026.amp.html'],
+ dec2:['Euronews (sep. 2026)','https://es.euronews.com/2026/09/28/la-acampada-en-sol-entra-en-su-tercer-dia-socios-negocian-contrarreloj'],
+ viv:['Housfy (feb. 2024)','https://housfy.com/blog/ya-se-puede-consultar-el-indice-estatal-de-precios-para-limitar-el-alquiler/'],
+ smi:['OIE (tabla SMI)','https://www.oie.es/salario-minimo-interprofesional/'],
+ smi2:['Mallorcadiario (2026)','https://www.mallorcadiario.com/salario-minimo-interprofesional-subira-1-221-euros-brutos-mes-2026'],
+ pe:['Política Electoral (PSOE)','https://www.politicaelectoral.com/es/espana/generales-2026/nacional/psoe'],
+ su:['Política Electoral (Sumar)','https://www.politicaelectoral.com/es/espana/generales-2026/nacional/sumar']
+};
+const PCOL={pp:['PP','var(--pp)'],psoe:['PSOE','var(--psoe)'],sumar:['Sumar','var(--sumar)']};
+const PROM=[
+ {k:'pp',s:'b',t:'No subir impuestos',p:'Rajoy defendió bajar impuestos; en 2009 dijo "subir los impuestos hoy significa más paro y más recesión" y días antes de anunciarlo aseguró que no pensaba subirlos.',h:'El 30-dic-2011 aprobó un recargo temporal del IRPF y subió el IBI. El RDL 20/2012 elevó el IVA general del 18% al 21% desde el 1-sep-2012.',f:[U.pub11,U.legal,U.libre]},
+ {k:'pp',s:'b',t:'Pensiones como prioridad',p:'En nov-2011 las llamó su "prioridad".',h:'Dejó de indexarlas al IPC de noviembre; la subida de 2013 (1%) no compensó la pérdida de poder adquisitivo.',f:[U.libre,U.eld]},
+ {k:'pp',s:'b',t:'Contratos laborales más simples',p:'El programa prometía simplificar los tipos de contrato para reducir la temporalidad.',h:'La reforma de feb-2012 no los simplificó: siguen vigentes los 41 contratos y se añadieron modalidades.',f:[U.libre]},
+ {k:'pp',s:'b',t:'No abaratar el despido',p:'Un mes antes de las elecciones, el PP aseguró que no abarataría el despido.',h:'La reforma de 2012 bajó la indemnización por despido improcedente de 45 a 33 días por año (tope de 24 mensualidades) y fijó 20 días para el objetivo.',f:[U.orain,U.eld]},
+ {k:'pp',s:'b',t:'Rescate bancario sin coste',p:'En oct-2011 dijo que la ayuda a la banca serían préstamos a devolver.',h:'Se inyectaron unos 54.000 M€ en Banco de Valencia, Bankia, Catalunya Banc y NCG; Bankia recibió 23.000 M€ (cifras de Libre Mercado).',f:[U.libre]},
+ {k:'pp',s:'b',t:'Tarifas de la luz',p:'En su investidura dijo que no se podía aplicar una subida de tarifas que recayera íntegramente sobre los consumidores.',h:'El déficit de tarifa siguió creciendo en 2012 y la reforma eléctrica de jul-2013 no resolvió el problema de fondo.',f:[U.libre,U.diacri]},
+ {k:'pp',s:'m',t:'Déficit público',p:'Llegar al objetivo de la UE: 4,5% del PIB en 2012 y cerca del 3% en 2013.',h:'Lo redujo, pero tarde: el 3% no se alcanzaría hasta 2016, según Libre Mercado; Diariocrítico lo calificó en 2012 de "insuficiente".',f:[U.libre,U.diacri]},
+ {k:'pp',s:'g',t:'Reforma laboral',p:'Anunció una reforma laboral al llegar al Gobierno y dio unas semanas a patronal y sindicatos para pactarla.',h:'La aprobó por decreto-ley en febrero de 2012 y el Congreso la tramitó después con apoyo de CiU, UPN y Foro.',f:[U.orain]},
+ {k:'pp',s:'g',t:'Ley de Transparencia',p:'Compromiso de transparencia del Gobierno.',h:'Ley 19/2013, de 9 de diciembre. Público cuestiona que sea "la más avanzada de Europa", como la define el PP.',f:[U.ley19,U.pub15]},
+ {k:'psoe',s:'b',t:'Amnistía',p:'A tres días del 23-J de 2023 dijo que la amnistía era algo "que desde luego este Gobierno no va a aceptar".',h:'La ley se aprobó definitivamente el 30-may-2024. El TJUE avaló su compatibilidad con el derecho europeo el 16-jul-2026.',f:[U.mal,U.amn,U.tjue]},
+ {k:'psoe',s:'b',t:'Indultos',p:'En 2014: "Siento vergüenza de que un político indulte a otros políticos".',h:'En 2021 aprobó los indultos a los líderes condenados por el procés.',f:[U.mal]},
+ {k:'psoe',s:'b',t:'Podemos e independentistas en el Gobierno',p:'2019: "Ni yo ni el 95% de los españoles dormiríamos tranquilos con Podemos en el Gobierno". Entre 2016 y 2019: no dejaría que la gobernabilidad descansara en partidos independentistas.',h:'Gobierna en coalición con Unidas Podemos y luego Sumar, y la investidura de 2023 se apoyó en pactos con ERC, Junts y otros.',f:[U.mal,U.ntl23,U.ntl26]},
+ {k:'psoe',s:'b',t:'Decretos de vivienda',p:'En sept-2026 Sánchez prometió aprobar el decreto de vivienda ante la presión social.',h:'El Congreso rechazó los dos decretos el 2-oct-2026 y días después se adelantaron las elecciones.',f:[U.dec2,U.dec]},
+ {k:'psoe',s:'m',t:'Ley de Vivienda y zonas tensionadas',p:'Limitar el alquiler en zonas tensionadas.',h:'La ley se aprobó en 2023, pero en febrero de 2024 solo Cataluña había propuesto zonas. Dato por actualizar.',f:[U.viv]},
+ {k:'psoe',s:'g',t:'Impuesto a la banca y mínimo del 15%',p:'Gravar a la banca y fijar un mínimo del 15% a grandes empresas.',h:'Ambos están aprobados.',f:[U.pe]},
+ {k:'psoe',s:'g',t:'Pensiones con el IPC',p:'Mantener por ley la revalorización con el IPC.',h:'Se aplicó la subida del 2,7% de 2026 (RDL 3/2026).',f:[U.su]},
+ {k:'sumar',s:'b',t:'Reducción de jornada a 37,5 horas',p:'Compromiso del pacto de Gobierno, impulsado por Sumar.',h:'El Congreso la tumbó el 10-sep-2025 con los votos de PP, Vox y Junts.',f:[U.jor,U.jor2]},
+ {k:'sumar',s:'b',t:'Ley de gestión pública del SNS',p:'Hacer de la gestión pública la norma en la sanidad.',h:'El Consejo de Ministros la aprobó el 12-may-2026, pero decae con la disolución de las Cortes.',f:[U.su]},
+ {k:'sumar',s:'g',t:'Subir el salario mínimo',p:'Subir el SMI de forma sostenida.',h:'De 735,90 € al mes en 14 pagas (2018) a 1.221 € (RD 126/2026): un 66% más.',f:[U.smi,U.smi2]}
+];
+const ICON={g:'✓',m:'◐',b:'✕'},SNAME={g:'Cumplida',m:'Parcial',b:'Incumplida o contraria'};
+let pf='all',sf='all';
+function counts(k){return ['g','m','b'].map(s=>PROM.filter(x=>x.k===k&&x.s===s).length)}
+function renderSem(){
+  const rows=[['pp','PP','Gobierno 2011–2018','Rajoy'],['psoe','PSOE','Gobierno 2018–2026','Sánchez'],['sumar','Sumar','Coalición 2023–2026','Muestra pequeña']];
+  document.getElementById('sem').innerHTML=rows.map(([k,n,sub])=>{
+    const c=counts(k),tot=c[0]+c[1]+c[2];
+    return `<div class="sr2"><div class="nm" style="color:${PCOL[k][1]}">${n}<small>${sub}</small></div><div class="sbar" role="group" aria-label="${n}: ${c[0]} cumplidas, ${c[1]} parciales, ${c[2]} incumplidas">${['g','m','b'].map((s,i)=>c[i]?`<button type="button" class="${s}" style="width:${c[i]/tot*100}%" data-go="${k}|${s}" title="${SNAME[s]}: ${c[i]}">${c[i]}</button>`:'').join('')}</div><div class="sn">${tot} promesas documentadas</div></div>`;
+  }).join('')+`<div class="sr2"><div class="nm">Vox<small>Sin Gobierno nacional</small></div><div class="sbar none">Nada que medir en el Gobierno de España</div><div class="sn">También ERC, Junts, EH Bildu, PNV y el resto.</div></div>`;
+  document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{const [k,s]=b.dataset.go.split('|');pf=k;sf=s;renderPF();renderCards();go('d_cum')}));
+}
+function renderPF(){
+  document.getElementById('pf').innerHTML='<b>Partido</b>'+chipBtn('data-pf','all','Todos',pf==='all')+Object.keys(PCOL).map(k=>chipBtn('data-pf',k,PCOL[k][0],pf===k)).join('');
+  document.getElementById('sf').innerHTML='<b>Estado</b>'+chipBtn('data-sf','all','Todos',sf==='all')+['g','m','b'].map(s=>chipBtn('data-sf',s,`${ICON[s]} ${SNAME[s]}`,sf===s)).join('');
+  document.querySelectorAll('[data-pf]').forEach(b=>b.addEventListener('click',()=>{pf=b.dataset.pf;renderPF();renderCards()}));
+  document.querySelectorAll('[data-sf]').forEach(b=>b.addEventListener('click',()=>{sf=b.dataset.sf;renderPF();renderCards()}));
+}
+function renderCards(){
+  const arr=PROM.filter(x=>(pf==='all'||x.k===pf)&&(sf==='all'||x.s===sf));
+  document.getElementById('cg').innerHTML=arr.length?arr.map(x=>`<article class="pc"><span class="st ${x.s}" aria-hidden="true">${ICON[x.s]}</span><div><span class="pt" style="background:${PCOL[x.k][1]}">${PCOL[x.k][0]}</span><h3>${esc(x.t)} <span style="position:absolute;left:-9999px">(${SNAME[x.s]})</span></h3></div><p><span class="lab">Prometió</span><br>${esc(x.p)}</p><p><span class="lab">Hizo</span><br>${esc(x.h)}</p><p class="srcs">Fuentes: ${x.f.map(f=>A(f[0],f[1])).join('')}</p></article>`).join(''):'<p class="note">Ninguna con ese filtro.</p>';
+}
+renderSem();renderPF();renderCards();
+
+/* ================= CASOS ================= */
+const STG=['Instrucción','Juicio','Sentencia','Firme'];
+const L={
+ koldo:['Euronews (jun. 2026)','https://es.euronews.com/my-europe/2026/06/22/el-supremo-condena-a-abalos-a-24-anos-de-carcel-en-el-caso-mascarillas'],
+ koldo2:['RTVC (jun. 2026)','https://rtvc.es/el-supremo-condena-a-abalos-a-24-anos-de-carcel-22-junio-2026/'],
+ a14:['Artículo 14 (oct. 2026)','https://www.articulo14.es/politica/los-9-casos-de-corrupcion-que-rodean-al-psoe-y-a-sanchez-antes-de-las-elecciones-del-29n-20261013.html'],
+ eleco:['elEconomista (oct. 2026)','https://www.eleconomista.es/actualidad/noticias/14018468/10/26/el-cerco-sobre-pedro-sanchez-los-nueve-escandalos-y-casos-de-corrupcion-que-amenazan-al-psoe-ante-las-elecciones.html'],
+ indep:['El Independiente (ago. 2026)','https://www.elindependiente.com/espana/2026/08/02/curso-judicial-sentencias-historicas-seis-frentes-psoe/amp/'],
+ ere:['Ara (jul. 2024)','https://es.ara.cat/politica/tc-anula-condena-prevaricacion-manuel-chaves-caso-ere-andalucia_1_5090487.html'],
+ ere2:['Noticias de Navarra (jul. 2024)','https://www.noticiasdenavarra.com/politica/2024/07/03/constitucional-reduce-condena-malversacion-exconsejero-8434423.html'],
+ gur:['Público (Supremo confirma)','https://www.publico.es/politica/supremo-confirma-condena-al-pp-guertel.html'],
+ gur2:['Economist & Jurist','https://www.economistjurist.es/noticias-juridicas/caso-gurtel-el-ts-confirma-penas-de-hasta-51-anos-de-prision'],
+ gur3:['Onda Vasca (Aena)','https://www.ondavasca.com/caso-gurtel-confirman-la-pena-de-6-anos-para-correa-por-los-contratos-irregulares-con-aena/'],
+ gur4:['Ara (sep. 2025)','https://en.ara.cat/politics/kitchen-punica-or-gurtel-the-judicial-fronts-the-pp-has-open-this-political-year_1_5488618.html'],
+ pun:['Infobae (jul. 2026)','https://www.infobae.com/espana/2026/07/02/la-audiencia-nacional-condena-a-francisco-granados-a-dos-anos-y-medio-de-carcel-por-amanar-contratos-publicos-en-favor-de-una-empresa-de-festejos-del-caso-punica/'],
+ pun2:['The Objective (dic. 2025)','https://theobjective.com/espana/tribunales/2025-12-22/condenados-seis-exalcaldes-corrupcion-punica/'],
+ kit:['Moncloa.com (jul. 2026)','https://www.moncloa.com/2026/07/28/juicio-kitchen-visto-sentencia-audiencia-nacional-3406964/'],
+ kit2:['Ara (jul. 2026)','https://en.ara.cat/politics/the-prosecutor-concludes-that-fernandez-diaz-led-the-kitchen-to-boycott-gurtel-and-ratifies-the-15-year-prison-sentence_1_5784936.html'],
+ lez:['Infobae/EFE (oct. 2026)','https://www.infobae.com/espana/agencias/2026/10/11/comienza-el-martes-el-primer-juicio-a-ignacio-gonzalez-por-el-caso-de-corrupcion-lezo/'],
+ mon:['Ara (ago. 2026)','https://es.ara.cat/politica/punto-caso-montoro-ano-despues-salir-luz_1_5821351.html'],
+ vox1:['Menorca.info (jul. 2024)','https://www.menorca.info/actualidad/nacional/2024/07/08/2199643/vox-tribunal-cuentas-multa-200000-euros-por-financiacion-irregular.html'],
+ vox2:['The Objective (mar. 2025)','https://theobjective.com/espana/tribunales/2025-03-10/fiscalia-anticorrupcion-vox-financiacion-irregular/'],
+ puj:['Deia (may. 2026)','https://www.deia.eus/politica/2026/05/14/juicio-pujol-queda-visto-sentencia-11070304.html']
+};
+const CASES=[
+ {k:'psoe',n:'PSOE y su entorno',c:'var(--psoe)',items:[
+  {t:'Koldo / mascarillas',w:'José Luis Ábalos (exministro, suspendido de militancia en feb. 2024), Koldo García, Víctor de Aldama',s:3,r:'Supremo, 22-jun-2026: Ábalos 24 años y 3 meses; Koldo García 19 años y 8 meses; Aldama 4 años y 6 meses (ingreso suspendido). Ábalos anunció recurso ante el Constitucional.',f:[L.koldo,L.koldo2]},
+  {t:'Koldo / obra pública y Santos Cerdán',w:'Santos Cerdán (exsecretario de Organización) y su entorno',s:1,r:'Informe de la UCO: 323.178 € de ganancias irregulares atribuidas a Cerdán y su entorno (2015–2024). Falta valoración judicial.',f:[L.a14,L.indep]},
+  {t:'Leire Díez',w:'Leire Díez y Santos Cerdán; Audiencia Nacional',s:1,r:'Se investiga una presunta estructura para recopilar información contra jueces y fiscales. El 9-oct el juez rechazó imputar al PSOE como persona jurídica por falta de indicios hasta ahora.',f:[L.a14,L.indep]},
+  {t:'Pagos en efectivo del PSOE',w:'El partido (2017–2024); sin personas imputadas indicadas',s:1,r:'Pieza separada abierta el 17-dic-2025. Sin responsabilidad penal establecida.',f:[L.a14,L.eleco]},
+  {t:'ERE de Andalucía',w:'Manuel Chaves y José Antonio Griñán (expresidentes de la Junta)',s:3,r:'Condenados en 2019 por la Audiencia de Sevilla (confirmado por el Supremo). El Constitucional anuló en jul-2024 sus condenas (7 votos a 4) y ordenó dictar nuevas sentencias; no consta el resultado.',f:[L.ere,L.ere2]},
+  {t:'David Sánchez y Gallardo',w:'David Sánchez (hermano del presidente) y Miguel Ángel Gallardo (exlíder del PSOE extremeño)',s:3,r:'Audiencia de Badajoz, 14-jul-2026: 9 años de inhabilitación a David Sánchez por prevaricación (absuelto de tráfico de influencias) y 18 a Gallardo. No firme: recurso ante el TSJ de Extremadura.',f:[L.indep,L.a14]},
+  {t:'Begoña Gómez',w:'Esposa del presidente (sin cargo en el partido)',s:2,r:'El 16-jul-2026 el tribunal confirmó el juicio con jurado por tráfico de influencias y malversación; fecha por fijar. La Fiscalía pide la absolución; la acusación popular pide 13 años.',f:[L.indep,L.a14]},
+  {t:'Caso Mediador',w:'Juan Bernardo Fuentes Curbelo ("Tito Berni", exdiputado) y otros 13 acusados',s:2,r:'Juicio oral abierto el 24-sep-2026. Abrirlo implica indicios suficientes, no culpabilidad.',f:[L.a14]},
+  {t:'Plus Ultra',w:'José Luis Rodríguez Zapatero (expresidente del Gobierno) y otros',s:1,r:'Zapatero fue imputado el 19-may-2026 por blanqueo y tráfico de influencias (Audiencia Nacional). Sin sentencia.',f:[L.indep,L.a14]}]},
+ {k:'pp',n:'PP y su entorno',c:'var(--pp)',items:[
+  {t:'Gürtel',w:'Francisco Correa, Luis Bárcenas y el propio PP',s:4,r:'Sentencias firmes: el PP fue condenado como partícipe a título lucrativo; penas de hasta 51 años (Correa) y 33 (Bárcenas), confirmadas por el Supremo en oct-2020. El Supremo también confirmó 6 años a Correa en la pieza de Aena. La última pieza tenía juicio previsto en nov-2025; no encontré su sentencia.',f:[L.gur,L.gur2,L.gur3,L.gur4]},
+  {t:'Púnica',w:'Francisco Granados (exconsejero) y exalcaldes del PP',s:3,r:'Audiencia Nacional, 2-jul-2026: Granados 2,5 años; Boza 4; otros dos, 2 años; dos exalcaldes de Móstoles absueltos. En dic-2025 otra pieza condenó a seis exalcaldes. Las fuentes no indican si son firmes.',f:[L.pun,L.pun2]},
+  {t:'Kitchen',w:'Jorge Fernández Díaz (exministro del Interior), Francisco Martínez, José Manuel Villarejo y otros',s:2,r:'Visto para sentencia el 28-jul-2026. La Fiscalía pide 15 años para Fernández Díaz y Martínez y hasta 19 para Villarejo. No encontré sentencia a 18-oct. Los acusados niegan haber ordenado el operativo.',f:[L.kit,L.kit2,L.indep]},
+  {t:'Lezo',w:'Ignacio González (expresidente de la Comunidad de Madrid) y otros cuatro acusados',s:2,r:'Primer juicio por dos delitos de cohecho en el Canal de Isabel II, que arrancó en la semana del 11-oct-2026. Anticorrupción pide 6 años de prisión por acusado.',f:[L.lez]},
+  {t:'Montoro / Equipo Económico',w:'Cristóbal Montoro (exministro de Hacienda) y su equipo',s:1,r:'Instruye un juez de Tarragona. Se investiga si se modificaron leyes a favor de gasistas a cambio de pagos (850.000 € sospechosos, 2011–2019). Montoro figura entre los investigados aún sin declarar. Sin sentencia.',f:[L.mon]},
+  {t:'Alberto González Amador',w:'Pareja de Isabel Díaz Ayuso (sin cargo en el partido)',s:1,r:'Investigación por delitos fiscales; Ara (sep-2025) indicaba que avanzaría en los meses siguientes. Sin juicio ni sentencia en las fuentes que he podido ver.',f:[L.gur4]}]},
+ {k:'vox',n:'Vox',c:'var(--vox)',items:[
+  {t:'Financiación irregular',w:'El partido',s:1,r:'El Tribunal de Cuentas multó a Vox con 230.000 € en jul-2024 (sanción administrativa). La Fiscalía Anticorrupción abrió una investigación en mar-2025. No consta sentencia penal.',f:[L.vox1,L.vox2]}]},
+ {k:'otros',n:'Otros',c:'var(--reg)',items:[
+  {t:'Familia Pujol',w:'Jordi Pujol (fundador de CDC) y sus hijos',s:2,r:'Visto para sentencia el 14-may-2026. Jordi Pujol quedó exonerado del juicio (la Audiencia Nacional confirmó su archivo el 11-may); la Fiscalía no rebajó las penas para los hijos.',f:[L.puj]}]}
+];
+let cpf='all',csf='all';
+function renderStg(){
+  document.getElementById('stg').innerHTML='<thead><tr><th>Partido</th>'+STG.map(s=>`<th>${s}</th>`).join('')+'</tr></thead><tbody>'+
+   CASES.map(g=>`<tr><td style="color:${g.c}">${g.n.replace(' y su entorno','')}</td>${[1,2,3,4].map(n=>{const c=g.items.filter(i=>i.s===n).length;return `<td>${c?`<button type="button" class="cnt s${n}" data-cs="${g.k}|${n}" style="padding:0" aria-label="${g.n}, ${STG[n-1]}: ${c} casos">${c}</button>`:`<span class="cnt z">0</span>`}</td>`}).join('')}</tr>`).join('')+'</tbody>';
+  document.querySelectorAll('[data-cs]').forEach(b=>b.addEventListener('click',()=>{const [k,n]=b.dataset.cs.split('|');cpf=k;csf=n;renderCF();renderCols();go('d_cor')}));
+}
+function renderCF(){
+  document.getElementById('cpf').innerHTML='<b>Partido</b>'+chipBtn('data-cpf','all','Todos',cpf==='all')+CASES.map(g=>chipBtn('data-cpf',g.k,g.n.split(' ')[0],cpf===g.k)).join('');
+  document.getElementById('csf').innerHTML='<b>Etapa</b>'+chipBtn('data-csf','all','Todas',csf==='all')+STG.map((s,i)=>chipBtn('data-csf',i+1,s,String(csf)===String(i+1))).join('');
+  document.querySelectorAll('[data-cpf]').forEach(b=>b.addEventListener('click',()=>{cpf=b.dataset.cpf;renderCF();renderCols()}));
+  document.querySelectorAll('[data-csf]').forEach(b=>b.addEventListener('click',()=>{csf=b.dataset.csf;renderCF();renderCols()}));
+}
+function renderCols(){
+  const html=CASES.filter(g=>cpf==='all'||g.k===cpf).map(g=>{
+    const its=g.items.filter(i=>csf==='all'||String(i.s)===String(csf));
+    if(!its.length)return '';
+    return `<div style="--c:${g.c}"><h3 class="colh">${g.n}</h3><div class="cards">${its.map(i=>`<article class="cc"><h3>${esc(i.t)}</h3><p class="who">${esc(i.w)}</p><div class="steps" role="img" aria-label="Etapa: ${STG[i.s-1]}">${STG.map((l,k)=>`<div class="sp ${k<i.s?'on':''}">${l}</div>`).join('')}</div><p>${esc(i.r)}</p><p class="src">Fuentes: ${i.f.map(f=>A(f[0],f[1])).join('')}</p></article>`).join('')}</div></div>`;
+  }).join('');
+  document.getElementById('cols').innerHTML=html||'<p class="note">Ningún caso con ese filtro.</p>';
+}
+renderStg();renderCF();renderCols();
+
+</script>
+</body>
+</html>
