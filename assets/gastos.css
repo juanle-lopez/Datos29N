@@ -71,3 +71,5 @@ nav.tabs.six{}
 #vbars svg{min-width:0}
 #vy,#vu{flex-wrap:wrap!important;overflow:visible!important}
 #gsal svg,#gstack svg,#gtax svg{min-width:0}
+#gpol .tr::after{display:none}
+#g_vuelos .nextp small{display:block;margin-bottom:4px}

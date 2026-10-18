@@ -65,6 +65,6 @@ function bars(){
   document.getElementById('vbl').innerHTML=D.usos.filter(u=>u!=='Otro').map(u=>`<span style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:3px;background:${UC[u]}"></i>${u}</span>`).join('');
 }
 function render(){chips();kpis();const {W,S}=agg();worldMap(W);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
-Promise.all([fetch('assets/vuelos-data.json?v=13').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=13').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();
+Promise.all([fetch('assets/vuelos-data.json?v=15').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=15').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();
  document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.666 tramos del 1-mar-2021 al 16-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
 }).catch(()=>{document.getElementById('vk').innerHTML='<p class="na">No se han podido cargar los datos.</p>'});
