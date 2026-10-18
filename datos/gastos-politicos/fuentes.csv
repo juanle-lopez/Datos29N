@@ -1,0 +1,8 @@
+id,ambito,tipo,periodo,organismo,url,estado
+F001,partido,cuentas_anuales,2023-2025,PSOE,https://www.psoe.es/transparencia/informacion-economica/cuentas-e-informes-financieros/,portal_verificado
+F002,partido,gastos_electorales,2023-2024,PSOE,https://www.psoe.es/transparencia/informacion-economica/gastosingresoselectorales/,portal_verificado
+F003,institucional,retribuciones_altos_cargos,2023-2025,Portal de Transparencia,https://transparencia.gob.es/publicidad-activa/por-materias/altos-cargos/retribuciones,portal_verificado
+F004,parlamentario,desplazamientos,2023-2026,PSOE,https://www.psoe.es/congreso/informe-desplazamientos/,portal_verificado
+F005,institucional,contratacion_publica,2023-2026,Plataforma de Contratacion del Sector Publico,https://contrataciondelestado.es/,portal_pendiente_de_extraccion
+F006,partido,fiscalizacion,2023-2026,Tribunal de Cuentas,https://www.tcu.es/,portal_pendiente_de_extraccion
+F007,institucional,solicitudes_informacion,2023-2026,Portal de Transparencia,https://sede.transparencia.gob.es/,portal_de_solicitudes
