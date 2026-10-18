@@ -52,7 +52,7 @@ function rvScan(){
 })();
 
 (function(){var m=document.getElementById('mcd');if(!m)return;var d=Math.floor((Date.UTC(2026,10,29,8,0,0)-Date.now())/864e5);
- m.innerHTML=d>0?'Faltan <b>'+d+'</b> '+(d===1?'día':'días')+' para votar':'Hoy se vota el 29N'})();
+ m.innerHTML=d>0?'<span class="mlong">Faltan </span><b>'+d+'</b> '+(d===1?'día':'días')+'<span class="mlong"> para votar</span><span class="mshort"> para el 29N</span>':'Hoy se vota el 29N'})();
 
 window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=true});
 
@@ -96,4 +96,14 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     }
     if(hl){hl.innerHTML='<div class="hlh"><span>Lo último</span><small>'+fl+'</small></div><ol>'+it.slice(0,3).map(card).join('')+'</ol><a class="hlm" href="noticias.html">Ver los 10 titulares →</a>';hl.hidden=false}
   }).catch(function(){if(list)list.innerHTML='<li class="nload">No se han podido cargar los titulares. Recarga la página.</li>'});
+})();
+/* compartir la web por WhatsApp (arriba a la derecha) */
+(function(){
+  var url='https://juanle-lopez.github.io/Datos29N/';
+  var txt='Datos 29N: simulador del Congreso, propuestas, promesas, casos y gastos, con fuentes enlazadas. Elecciones del 29 de noviembre: '+url;
+  var a=document.createElement('a');a.className='wshare';a.href='https://wa.me/?text='+encodeURIComponent(txt);a.target='_blank';a.rel='noopener';
+  a.setAttribute('aria-label','Compartir la web por WhatsApp');
+  a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 01-11.8 7L4 20l1.4-4A8 8 0 1120 11.6z"/><path d="M12 8v6M9 11l3-3 3 3"/></svg><span>Compartir</span>';
+  var hero=document.querySelector('.hero .hin'),mini=document.querySelector('header.mini');
+  if(hero){a.classList.add('onhero');hero.appendChild(a)}else if(mini){mini.appendChild(a)}
 })();

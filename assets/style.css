@@ -523,3 +523,15 @@ html.msopen{overflow:hidden}
   .vfs .vfi img{height:100%;max-height:260px;object-fit:cover;object-position:46% 40%}
 }
 @media(min-width:1100px){.hero h1{font-size:clamp(84px,8.4vw,128px);white-space:nowrap}}
+/* v24: compartir la web por WhatsApp */
+.wshare{display:inline-flex;align-items:center;gap:7px;padding:8px 14px 8px 11px;border-radius:999px;background:#1f9d55;color:#fff;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 4px 14px rgba(31,157,85,.3);transition:translate .2s,box-shadow .2s;min-height:40px;box-sizing:border-box}
+.wshare:hover{translate:0 -2px;box-shadow:0 8px 20px rgba(31,157,85,.38)}
+.wshare svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mini .mcd{margin-left:auto}
+.wshare.onhero{position:absolute;top:clamp(14px,3vw,36px);right:clamp(14px,3vw,48px);z-index:3}
+.hero .eyebrow{padding-right:140px}
+@media(min-width:1100px){.hlast:not([hidden]){top:96px}}
+@media(max-width:480px){.wshare span{display:none}.wshare{padding:0;width:42px;height:42px;justify-content:center}.hero .eyebrow{padding-right:52px}}
+.mcd .mshort{display:none}
+@media(max-width:480px){.mini{flex-wrap:nowrap}.mini .mcd{font-size:11.5px;padding:6px 10px;white-space:nowrap}.mcd .mlong{display:none}.mcd .mshort{display:inline}}
+.mini .brand{white-space:nowrap}@media(max-width:400px){.mcd .mshort{display:none}}
