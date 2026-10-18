@@ -464,7 +464,7 @@ html.msopen{overflow:hidden}
 .mtl li.mday::before{background:var(--mid);border-color:var(--mid)}
 .mtl .md{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.04em;padding:2px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin-bottom:4px}
 .mtl .mday .md{background:var(--mid);border-color:var(--mid);color:#fff}
-.mtl b{display:block;font-size:17px}
+.mtl li>b{display:block;font-size:17px}
 .mtl p{margin:4px 0 0;color:var(--muted);line-height:1.5;font-size:14.5px;max-width:68ch}
 .mcalc{border-top-color:var(--mid)!important}
 .mcin{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px;font-weight:600}
@@ -516,3 +516,10 @@ html.msopen{overflow:hidden}
 @media(min-width:980px) and (max-width:1149px){nav.tabs a.x{display:none}nav.tabs .more{display:flex;gap:7px;align-items:center;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px}nav.tabs .more svg{width:16px;height:16px;stroke-width:2}nav.tabs .more[data-on]{background:var(--fg);color:var(--bg)}}
 @media(min-width:1150px){nav.tabs a{padding-inline:12px}}
 @media(max-width:374px){nav.tabs a,nav.tabs .more{font-size:9.2px;letter-spacing:-.02em}}
+/* v23: portátil */
+@media(min-width:900px){
+  .vfs{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center}
+  .vfs .vfi{align-self:stretch}
+  .vfs .vfi img{height:100%;max-height:260px;object-fit:cover;object-position:46% 40%}
+}
+@media(min-width:1100px){.hero h1{font-size:clamp(84px,8.4vw,128px);white-space:nowrap}}
