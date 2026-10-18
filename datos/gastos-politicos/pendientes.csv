@@ -1,0 +1,9 @@
+categoria,ambito,periodo,detalle,estado
+vuelos_falcon,institucional,2023-2026,Fechas trayectos finalidad horas coste metodologia,pendiente_documentacion
+viajes_ministeriales,institucional,2023-2026,Facturas billetes hoteles dietas y comitivas,pendiente_extraccion_y_solicitudes
+vehiculos_oficiales,institucional,2023-2026,Flota combustible mantenimiento conductores y coste,pendiente_extraccion_y_solicitudes
+salarios_ministros,institucional,2023-2025,Retribucion anual por persona y cargo,pendiente_descarga_csv
+asesores,institucional,2023-2026,Nombramientos puestos y retribuciones,pendiente_cruce_fuentes
+cuentas_psoe,partido,2023-2025,Partidas de gastos ordinarios y memoria anual,pendiente_extraccion_pdf
+gastos_electorales,partido,2023-2024,Partidas de campañas y conciliacion con cuentas anuales,pendiente_extraccion_pdf
+contratos,institucional,2023-2026,Adjudicaciones por organismo y proveedor,pendiente_descarga_datos_abiertos
