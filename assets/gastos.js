@@ -5,7 +5,7 @@ const FN=[
  ['GF07','Sanidad','var(--g7)',[72146,75917,85545,88541,93327,98630,102942]],
  ['GF09','Educación','var(--g9)',[47764,50052,52003,55885,58669,62532,65862]],
  ['GF04','Asuntos económicos','var(--g4)',[51532,52761,65789,78943,77131,74851,80908]],
- ['GF01','Servicios públicos generales (incl. intereses de la deuda)','var(--g1)',[67520,67671,66059,70976,77818,84425,92551]],
+ ['GF01','Servicios públicos generales','var(--g1)',[67520,67671,66059,70976,77818,84425,92551]],
  ['GF03','Orden público y seguridad','var(--g3)',[21542,22685,23458,24540,25798,27414,28628]],
  ['GF08','Ocio, cultura y religión','var(--g6)',[13544,14420,13382,14607,17120,18638,19193]],
  ['GF05','Medio ambiente','var(--g5)',[10258,10803,10785,11465,13335,14579,15539]],
@@ -154,6 +154,6 @@ function renderPend(){
   ];
   document.getElementById('gpend').innerHTML=P.map(p=>`<article class="gcard rv"><span class="gtag p">Pendiente</span><h3>${p[0]}</h3><p>${p[1]}</p></article>`).join('');
 }
-document.getElementById('gsrc').innerHTML='<b>Fuentes de las series.</b> Gasto por áreas: '+LK(SRC.eu)+'. Inflación: '+LK(SRC.hicp)+' (euros constantes = euros × IPCA 2018 / IPCA del año). PIB: '+LK(SRC.gdp)+'. Ingresos: '+LK(SRC.main)+'. La clasificación COFOG de la ONU asigna cada gasto a una función; «Servicios públicos generales» incluye los intereses de la deuda y «Asuntos económicos» incluye subvenciones y ayudas a empresas. Último dato disponible: 2024 (provisional).';
+document.getElementById('gsrc').innerHTML='<b>Fuentes de las series.</b> Gasto por áreas: '+LK(SRC.eu)+'. Inflación: '+LK(SRC.hicp)+' (euros constantes = euros × IPCA 2018 / IPCA del año). PIB: '+LK(SRC.gdp)+'. Ingresos: '+LK(SRC.main)+'. La clasificación COFOG de la ONU asigna cada gasto a una función; «Servicios públicos generales» incluye, entre otros, los intereses de la deuda y «Asuntos económicos» incluye subvenciones y ayudas a empresas. Último dato disponible: 2024 (provisional).';
 renderCtl();renderStack();renderDiv();renderSal();renderFly();renderTax();renderPend();
 if(window.rvReady)rvScan();

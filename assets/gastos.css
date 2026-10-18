@@ -43,3 +43,9 @@
 nav.tabs.six{}
 @media(max-width:640px){nav.tabs{grid-template-columns:repeat(6,minmax(0,1fr))!important}nav.tabs a{font-size:9.5px!important;letter-spacing:-.01em}.dv{grid-template-columns:96px 1fr 58px}}
 .sources,.gcard,.gtip,.gnote{overflow-wrap:anywhere}
+.gtbl td:first-child,.gtbl th:first-child{white-space:normal;min-width:104px;max-width:120px;font-size:12px;line-height:1.25;box-shadow:1px 0 0 var(--line);z-index:1}
+.gtbl table{min-width:0;width:max-content}
+.gtbl td,.gtbl th{padding:6px 6px}
+.dv{grid-template-columns:minmax(96px,150px) 1fr 52px}
+@media(max-width:640px){.dv{grid-template-columns:100px 1fr 48px;font-size:12px}}
+.gcard .big3{font-size:clamp(18px,5.4vw,24px);line-height:1.15}
