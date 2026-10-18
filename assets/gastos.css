@@ -41,7 +41,7 @@
 .gnote{border-left:4px solid var(--mid);background:var(--midbg);padding:10px 12px;border-radius:6px;font-size:13px;margin:12px 0}
 .na{color:var(--muted);font-style:italic}
 nav.tabs.six{}
-@media(max-width:640px){nav.tabs{grid-template-columns:repeat(6,minmax(0,1fr))!important}nav.tabs a{font-size:9.5px!important;letter-spacing:-.01em}.dv{grid-template-columns:96px 1fr 58px}}
+@media(max-width:640px){nav.tabs{grid-template-columns:repeat(7,minmax(0,1fr))!important}nav.tabs a{font-size:9.5px!important;letter-spacing:-.01em}.dv{grid-template-columns:96px 1fr 58px}}
 .sources,.gcard,.gtip,.gnote{overflow-wrap:anywhere}
 .gtbl td:first-child,.gtbl th:first-child{white-space:normal;min-width:104px;max-width:120px;font-size:12px;line-height:1.25;box-shadow:1px 0 0 var(--line);z-index:1}
 .gtbl table{min-width:0;width:max-content}

@@ -62,8 +62,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
   var here=location.pathname.split('/').pop()||'index.html';
   var L=[
     ['noticias.html','Últimas noticias','Diez titulares del 29-N con enlace a la fuente','<path d="M4 5h12v14H6a2 2 0 01-2-2zM16 9h4v8a2 2 0 01-2 2h-2M7.5 9h5M7.5 12.5h5M7.5 16h3"/>'],
-    ['mesas.html','Mesas electorales','Si te toca: plazos, excusas y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
-    ['vuelos.html','Vuelos oficiales','Mapa de calor de 7.666 vuelos (2021–2026)','<path d="M3 13.5l18-7.5-7.5 18-2.6-7.9z"/>'],
+    ['mesas.html','Mesas electorales','Si te toca: plazos, causas para no ir y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
     ['metodo.html','Método y fuentes','Cómo se hace y de dónde sale cada dato','<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>']];
   var sh=document.createElement('div');sh.className='msheet';sh.id='moresheet';sh.hidden=true;
   sh.innerHTML='<div class="msbg" data-close></div><div class="msp" role="dialog" aria-modal="true" aria-label="Más apartados"><div class="msh"><b>Más en Datos 29N</b><button type="button" class="msx" data-close aria-label="Cerrar">✕</button></div>'+
