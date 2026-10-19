@@ -26,8 +26,9 @@ function kpis(){
   ].map(x=>`<div><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
   if(window.rvReady)rvScan();
 }
-function heat(v,cf){return v?cf(v):'color-mix(in srgb,var(--line) 55%,transparent)'}
-const STOPS=[[0,[192,40,28]],[.1,[214,62,30]],[.22,[232,100,28]],[.34,[240,150,40]],[.46,[232,190,60]],[.58,[168,194,84]],[.7,[92,176,114]],[.84,[170,214,184]],[1,[154,164,174]]];
+function heat(v,cf){return v?cf(v):LAND}
+const STOPS=[[0,[190,50,190]],[.06,[150,18,60]],[.16,[200,32,36]],[.28,[236,84,28]],[.4,[248,150,36]],[.52,[250,214,60]],[.62,[176,210,72]],[.74,[66,184,96]],[.87,[58,168,196]],[1,[70,116,206]]];
+const LAND='#4b6684',LANDHI='#93a6ba';
 const lerpC=(p)=>{let a=STOPS[0],b=STOPS[STOPS.length-1];for(let i=1;i<STOPS.length;i++)if(p<=STOPS[i][0]){a=STOPS[i-1];b=STOPS[i];break}const k=b[0]===a[0]?0:(p-a[0])/(b[0]-a[0]),e=k*k*(3-2*k);return 'rgb('+[0,1,2].map(n=>Math.round(a[1][n]+(b[1][n]-a[1][n])*e)).join(',')+')'};
 // Color continuo: mezcla la posición del país en la lista y su valor (escala logarítmica); sin saltos bruscos.
 function mkSC(values){const vs=values.filter(x=>x>0),n=vs.length,mx=Math.max(1,...vs);return v=>{if(!v)return 'none';const gt=vs.filter(x=>x>v).length,pr=n>1?gt/(n-1):0,pv=1-Math.log(1+v)/Math.log(1+mx);return lerpC(Math.min(1,.65*pr+.35*pv))}}
@@ -37,7 +38,7 @@ function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
   let lines='',pl='';
   list.forEach(([x,y,v],ai)=>{const r=v/mx,col=cf(v),dx=x-mx0,dy=y-my0,len=Math.hypot(dx,dy),cx=mx0+dx/2,cy=my0+dy/2-len*bend,w=Math.sqrt(r),
     d=`M${mx0.toFixed(1)},${my0.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`,dr=`M${x.toFixed(1)},${y.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`;
-    lines+=`<path class="arc" d="${d}" style="stroke:${col};opacity:.95" stroke-width="${((.6+w*3)*wf).toFixed(2)}"/>`;
+    lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:.4" stroke-width="${((.6+w*3)*wf+1.1*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:${col};opacity:1" stroke-width="${((.6+w*3)*wf).toFixed(2)}"/>`;
     if(reduce)return;
     const np=Math.min(4,1+Math.floor(w*4)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=(sc*wf*(.75+w*.5)).toFixed(2);
     for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d;
@@ -46,16 +47,17 @@ function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
 function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px;max-width:360px"><span style="display:block;height:8px;border-radius:4px;background:${SCGRAD}"></span><span style="display:flex;justify-content:space-between;font-size:11px"><span>1–2 visitas</span><span>Pocas</span><span>Frecuente</span><span>Los más visitados</span></span></span>`}
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),cf=mkSC(Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
-  const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?'color-mix(in srgb,var(--fg) 22%,var(--panel))':heat(W[k]||0,cf)}"/>`).join('');
+  const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?LANDHI:heat(W[k]||0,cf)}"/>`).join('');
+  const glow=Object.entries(G.world).filter(([k])=>W[k]&&k!=='ESP').map(([k,d])=>`<path d="${d}" fill="${heat(W[k],cf)}"/>`).join('');
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const EU=wz==='eu',inEU=([x,y])=>x>=425&&x<=612&&y>=30&&y<=158,
     lst=EU?Object.entries(W).filter(([k])=>G.cent[k]&&inEU(G.cent[k])):top.filter(([k])=>G.cent[k]),
     arcs=routes(lst.map(([k,v])=>[...G.cent[k],v]),mx0,my0,mx,EU?.12:.22,EU?.85:.85,EU?7:12,EU?16:30,EU?7:18,REDUCE,cf,EU?.2:1),planes='';
   let labels='';
-  if(EU){const used=[];lst.slice().sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{const [x,y]=G.cent[k],nm=(D.names[k]||k).replace('Estados Unidos de América','EE. UU.').replace('República Dominicana','R. Dominicana').replace('Emiratos Árabes Unidos','EAU'),t=nm+' '+v,wd=t.length*1.7,hit=b=>used.some(u=>b[0]<u[2]&&b[2]>u[0]&&b[1]<u[3]&&b[3]>u[1]);let yy=y,ok=false;for(const dy of [0,3.2,-3.2,6.4,-6.4]){const bx=[x-wd/2,y+dy-2.2,x+wd/2,y+dy+.6];if(!hit(bx)){used.push(bx);yy=y+dy;ok=true;break}}if(!ok)return;labels+=`<text x="${x}" y="${yy}" text-anchor="middle" style="font-size:2.6px;font-weight:700;fill:var(--fg);paint-order:stroke;stroke:var(--panel);stroke-width:.9px;pointer-events:none">${t}</text>`})}
+  if(EU){const used=[];lst.slice().sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{const [x,y]=G.cent[k],nm=(D.names[k]||k).replace('Estados Unidos de América','EE. UU.').replace('República Dominicana','R. Dominicana').replace('Emiratos Árabes Unidos','EAU'),t=nm+' '+v,wd=t.length*1.7,hit=b=>used.some(u=>b[0]<u[2]&&b[2]>u[0]&&b[1]<u[3]&&b[3]>u[1]);let yy=y,ok=false;for(const dy of [0,3.2,-3.2,6.4,-6.4]){const bx=[x-wd/2,y+dy-2.2,x+wd/2,y+dy+.6];if(!hit(bx)){used.push(bx);yy=y+dy;ok=true;break}}if(!ok)return;labels+=`<text x="${x}" y="${yy}" text-anchor="middle" style="font-size:2.6px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:.9px;pointer-events:none">${t}</text>`})}
   document.getElementById('vworld').classList.toggle('eu',EU);
   document.querySelectorAll('[data-wz]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wz===wz)));
-  document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos">${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="var(--fg)" stroke="var(--panel)" stroke-width="${EU?.3:1.5}"/>${labels}</svg>`;
+  document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><filter id="hglow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${EU?.9:3.2}"/></filter></defs><g filter="url(#hglow)" opacity=".8" style="pointer-events:none">${glow}</g>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
   document.querySelectorAll('#vworld .c').forEach(p=>p.addEventListener('click',()=>{const sc=document.querySelector('#vworld').parentNode.scrollLeft;selW=p.dataset.i;worldTip(W);worldMap(W);document.querySelector('#vworld').parentNode.scrollLeft=sc}));
   if(!window._vc&&!EU){window._vc=1;const c=document.querySelector('#vworld').parentNode;setTimeout(()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)},120)}
   document.getElementById('vleg').innerHTML=`<span>Menos visitados</span><i style="background:${SCGRAD}"></i><span>Más visitados (hasta ${fmt(mx)} veces)</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Líneas y aviones, mismos colores: '+tierLeg()+'</div>';
@@ -69,8 +71,8 @@ function worldTip(W){
 function spainMap(S){
   const mx=Math.max(1,...Object.values(S)),cf=mkSC(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid').map(x=>x[1]));
   const ca=k=>P2CA[k];
-  const paths=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return `<path class="c${selS===c?' sel':''}" data-c="${c}" d="${d}" fill="${c==='Comunidad de Madrid'?'color-mix(in srgb,var(--fg) 22%,var(--panel))':heat(v,cf)}" stroke-width=".5"/>`}).join('');
-  document.getElementById('vspain').innerHTML=`<svg viewBox="0 0 ${G.sw} ${G.sh+70}" style="max-height:520px" role="img" aria-label="Mapa de calor de comunidades">${paths}</svg>`;
+  const glow=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return v?`<path d="${d}" fill="${heat(v,cf)}"/>`:''}).join(''),paths=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return `<path class="c${selS===c?' sel':''}" data-c="${c}" d="${d}" fill="${c==='Comunidad de Madrid'?LANDHI:heat(v,cf)}" stroke-width=".5"/>`}).join('');
+  document.getElementById('vspain').innerHTML=`<svg viewBox="0 0 ${G.sw} ${G.sh+70}" style="max-height:520px" role="img" aria-label="Mapa de calor de comunidades"><defs><filter id="sglow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.5"/></filter></defs><g filter="url(#sglow)" opacity=".8" style="pointer-events:none">${glow}</g>${paths}</svg>`;
   spainArcs(S);
   spainCM(S,cf);
   const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Líneas y aviones: '+tierLeg();
@@ -80,8 +82,8 @@ function spainCM(S,cf){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
   let add='';
   ['Ceuta','Melilla'].forEach(n=>{const pt=svg.querySelector(`path[data-c="${n}"]`);if(!pt)return;const b=pt.getBBox(),cx=b.x+b.width/2,cy=b.y+b.height/2,v=S[n]||0;
-    pt.setAttribute('transform',`translate(${cx} ${cy}) scale(7) translate(${-cx} ${-cy})`);pt.setAttribute('fill',v?cf(v):'color-mix(in srgb,var(--fg) 30%,var(--panel))');pt.setAttribute('stroke','var(--fg)');pt.setAttribute('stroke-width','.35');
-    add+=`<text x="${cx}" y="${cy+b.height*3.5+9}" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--fg);pointer-events:none;paint-order:stroke;stroke:var(--panel);stroke-width:2px">${n}${v?' '+v:''}</text>`});
+    pt.setAttribute('transform',`translate(${cx} ${cy}) scale(7) translate(${-cx} ${-cy})`);pt.setAttribute('fill',v?cf(v):LANDHI);pt.setAttribute('stroke','#fff');pt.setAttribute('stroke-width','.35');
+    add+=`<text x="${cx}" y="${cy+b.height*3.5+9}" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#fff;pointer-events:none;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:2.4px">${n}${v?' '+v:''}</text>`});
   svg.insertAdjacentHTML('beforeend',add);
 }
 function spainArcs(S){
@@ -92,7 +94,7 @@ function spainArcs(S){
   svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(c==='Comunidad de Madrid')return;const b=pt.getBBox(),r=cc[c];if(!r)cc[c]={x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height,pts:[pt]};else{r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches,top=Object.entries(S).filter(([k])=>cc[k]).sort((a,b)=>b[1]-a[1]);
   const cfS=mkSC(top.map(x=>x[1])),g=routes(top.map(([k,v])=>{const r=cc[k];return [(r.x0+r.x1)/2,(r.y0+r.y1)/2,v]}),mx0,my0,mxv,.2,1.5,3,8,45,REDUCE,cfS),pl='';
-  svg.insertAdjacentHTML('beforeend',`<g style="pointer-events:none">${g}${pl}<circle cx="${mx0.toFixed(1)}" cy="${my0.toFixed(1)}" r="5" fill="var(--fg)" stroke="var(--panel)" stroke-width="1.5"/></g>`);
+  svg.insertAdjacentHTML('beforeend',`<g style="pointer-events:none">${g}${pl}<circle cx="${mx0.toFixed(1)}" cy="${my0.toFixed(1)}" r="5" fill="#fff" stroke="#14202e" stroke-width="1.8"/></g>`);
 }
 function spainTip(S){const el=document.getElementById('vtip2');if(!selS)return;el.innerHTML=selS==='Comunidad de Madrid'?'<b>Comunidad de Madrid</b>: es la base de los aviones y no se cuenta como destino.':`<b>${selS}</b>: ${fmt(S[selS]||0)} visitas con los filtros actuales.${(selS==='Ceuta'||selS==='Melilla')&&!(S[selS])?' No hay ninguna registrada con esa ubicación (las visitas «sin precisar» no se asignan a ninguna comunidad).':''}`}
 function tops(W,S){
