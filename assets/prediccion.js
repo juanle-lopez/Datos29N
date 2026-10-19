@@ -41,13 +41,13 @@
       s+=`<polyline fill="none" stroke="${c}" stroke-width="1.3" opacity=".34" stroke-linejoin="round" points="${pts(a)}">${animate?`${mv}<animate attributeName="opacity" values=".16;.62;.16" dur="${(du*.6).toFixed(1)}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`;
       if(animate&&ti<14){const xe0=X(D1)+5,ex=sm=>{const v=Math.round(sm[sm.length-1]),i=v-hg.min,d=i>=0&&i<hg.c.length?hg.c[i]:0;return (xe0+Math.max(2,d*DW*.8))+','+Y(sm[sm.length-1])},pe=sm=>pts(sm)+' '+(X(D1)+2)+','+Y(sm[sm.length-1])+' '+ex(sm);
         s+=`<polyline fill="none" stroke="${c}" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" opacity=".95" stroke-dasharray="0.01 77.99" points="${pe(a)}"><animate attributeName="points" values="${pe(a)};${pe(b)};${pe(a)}" dur="${du}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/><animate attributeName="stroke-dashoffset" from="0" to="-78" dur="${(4.2+(ti%5)*.7).toFixed(1)}s" repeatCount="indefinite"/></polyline>`}});
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".28" filter="url(#gl-${id})" points="${X(dd('2026-10-12'))},${Y(base)} ${cen}"/>`;
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${X(dd('2026-10-12'))},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".28" filter="url(#gl-${id})" points="${X(dd('2026-10-19'))},${Y(base)} ${cen}"/>`;
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${X(dd('2026-10-19'))},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
     // nube de densidad el 29-N: cuántas de las 4.000 simulaciones acaban en cada número de escaños
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
     s+=`<path d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
     s+=`</g>`;
-    if(animate){s+=`<circle cx="${X(dd('2026-10-12'))}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
+    if(animate){s+=`<circle cx="${X(dd('2026-10-19'))}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
@@ -55,7 +55,7 @@
     hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${Y(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${Y(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
     s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" points="${hs.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
-    const m12=dd('2026-10-12');
+    const m12=dd('2026-10-19');
     s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="4.4" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/><text x="${X(m12)}" y="${Y(base)-9}" text-anchor="middle" style="fill:${c};font-size:10.5px">${base}</text>`;
     // marcador del valor central del 29-N y rango del 80 %
     s+=`<line x1="${xe-3}" x2="${xe+DW+3}" y1="${Y(ev.c)}" y2="${Y(ev.c)}" stroke="${c}" stroke-width="2.2"/><text class="lab" x="${xe+DW+6}" y="${Y(ev.c)+4}" style="fill:${c};font-size:12.5px">${ev.c}</text>`;
@@ -98,16 +98,16 @@
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="2.4"/>')}Sigma Dos (misma empresa, ago → oct)</span>`+
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="1.4"/><rect x="13" y="1.5" width="7" height="7" transform="rotate(45 16.5 5)" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>')}CIS (jul, sep, oct)</span>`+
     `<span>${sw('<circle cx="17" cy="5" r="2.6" fill="currentColor" opacity=".5"/>')}Otras encuestas</span>`+
-    `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7"/>')}Proyección de la media de las 10 encuestas (punto grande: la media del 12-oct)</span>`+
+    `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7"/>')}Proyección de la media de las 14 encuestas (punto grande: la media del 24-sep al 19-oct)</span>`+
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="9 5"/>')}Escenario solo CIS</span>`+
     `<span>${sw('<rect x="0" y="0" width="34" height="3" fill="currentColor" opacity=".12"/><rect x="0" y="3.5" width="34" height="3" fill="currentColor" opacity=".25"/><rect x="0" y="7" width="34" height="3" fill="currentColor" opacity=".12"/>')}Tubo: 50 %, 80 % y 95 % de las simulaciones</span>`+
     `<span>${sw('<path d="M0 8 L10 2 L22 6 L34 1" fill="none" stroke="currentColor" stroke-width=".9" opacity=".5"/>')}24 trayectorias simuladas (suavizadas)</span>`+
     `<span>${sw('<path d="M2 0 Q30 5 2 10 Z" fill="currentColor" opacity=".38" stroke="currentColor"/>')}Nube del 29-N (suavizada): el 95 % central de las simulaciones, igual que el final del tubo</span>`;
-  document.getElementById('psrc').innerHTML=`Cada punto son los escaños que da el simulador de la portada a una encuesta (no los que publicó la empresa). Fuentes: ${PRED.n} encuestas privadas publicadas del 9 al 12-oct-2026 y CIS de oct. (campo ${PRED.cis.campo}), de <a href="${PRED.cis.url}">elecciones29noviembre.com</a>; CIS de julio y septiembre, de <a href="https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html">Ara</a> (la fecha del de julio es aproximada); Sigma Dos y Demoscopia y Servicios de agosto, de <a href="https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/">Moncloa.com</a>. Sumar y Podemos van sumados.`;
+  document.getElementById('psrc').innerHTML=`Cada punto son los escaños que da el simulador de la portada a una encuesta (no los que publicó la empresa). Fuentes: ${PRED.n} encuestas privadas publicadas del 24-sep al 19-oct-2026 (la última de cada empresa) y CIS de oct. (campo ${PRED.cis.campo}), de <a href="${PRED.cis.url}">elecciones29noviembre.com</a>; CIS de julio y septiembre, de <a href="https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html">Ara</a> (la fecha del de julio es aproximada); Sigma Dos y Demoscopia y Servicios de agosto, de <a href="https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/">Moncloa.com</a>. Sumar y Podemos van sumados.`;
   const row=(k,n,sc,bs)=>{const e=sc.escanos[k];return `<tr><td>${n}</td><td class="m">${bs[k]}</td><td class="m">${e.c}</td><td class="m">${e.p10}–${e.p90}</td></tr>`};
   const blk=(t,sc,bs)=>`<tr class="sc"><td colspan="4">${t}</td></tr>`+K.map(([k,n])=>row(k,n,sc,bs)).join('')+`<tr><td>PP + Vox (mayoría: 176)</td><td class="m">${bs.PP+bs.VOX}</td><td class="m">${sc.ppVox.c}</td><td class="m">${sc.ppVox.p10}–${sc.ppVox.p90}</td></tr>`;
   document.getElementById('ptab').innerHTML=`<thead><tr><th>Partido</th><th>Escaños hoy</th><th>Escaños 29-N (central)</th><th>Rango 80 % el 29-N</th></tr></thead><tbody>`+
-    blk('Media de las 10 encuestas privadas (hoy: la media del 9–12 oct)',PRED.escPrivadas,PRED.escBase.priv)+blk('Solo CIS (hoy: el barómetro de octubre)',PRED.escCIS,PRED.escBase.cis)+`</tbody>`;
+    blk('Media de las 14 encuestas privadas (hoy: la media del 24-sep al 19-oct)',PRED.escPrivadas,PRED.escBase.priv)+blk('Solo CIS (hoy: el barómetro de octubre)',PRED.escCIS,PRED.escBase.cis)+`</tbody>`;
   const [y,m,d]=PRED.generado.split('-').map(Number);
   document.getElementById('pgen').textContent=`Calculado el ${d} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m-1]} de ${y}.`;
   const df=(sc,bs)=>K.map(([k,n])=>{const x=sc.escanos[k].c-bs[k];return n+' '+(x>0?'+':x<0?'−':'')+Math.abs(x)}).join(', ');

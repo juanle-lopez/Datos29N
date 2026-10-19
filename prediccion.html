@@ -59,7 +59,7 @@
 
       <details class="pdet" style="margin-top:12px"><summary>Notas sobre estas cifras</summary>
         <ol>
-          <li>La portada da 195 escaños a PP + Vox y aquí salen 194: son dos fechas (la media de hoy y la proyección al 29-N), no dos cálculos enfrentados.</li>
+          <li>«Hoy» (la portada) y «29-N» (la proyección) son dos fechas distintas: sus cifras pueden coincidir o diferir en unos pocos escaños sin que sean dos cálculos enfrentados.</li>
           <li>Los escaños se calculan con D’Hondt provincia a provincia a partir de los porcentajes de cada encuesta, y pueden diferir de los que publica cada empresa. Con los porcentajes de Sigma Dos de agosto, por ejemplo, nuestro simulador da más escaños a Sumar y Podemos que los que publicó esa empresa.</li>
           <li>No damos probabilidad de mayoría: con este modelo saldría una cifra falsamente segura.</li>
         </ol>
@@ -67,7 +67,7 @@
       <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
       <details class="pdet" open><summary>Los cinco pasos</summary>
         <ol class="steps">
-          <li><b>Datos.</b><span>Las 10 encuestas privadas del 9 al 12-oct y el CIS del 14-oct, con su historial. Sumar y Podemos van juntos, como en el simulador.</span></li>
+          <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (24-sep a 19-oct) y el CIS del 14-oct, con su historial. Sumar y Podemos van juntos, como en el simulador.</span></li>
           <li><b>Media.</b><span>Media simple de las 10 privadas. El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Tendencia.</b><span>Cambio por día entre las dos últimas encuestas de la misma empresa, que se apaga con una vida media de 14 días. Es un supuesto débil.</span></li>
           <li><b>Error.</b><span>Crece con los días e incluye el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos) el día de la votación.</span></li>
@@ -84,11 +84,11 @@
         <p>Solo compiten los partidos con al menos un 3 % del voto de esa provincia (método D’Hondt).</p>
         <p><b>3. Voto proyectado en la fecha t.</b></p>
         <div class="frm">V(k,t) = M(k) + b(k) × 14 × (1 − e^(−t/14))</div>
-        <p>M(k) es la media de las 10 encuestas (o el barómetro del CIS, en su escenario) y b(k) la tendencia diaria, medida entre las dos últimas encuestas de la misma empresa. El 14 es la vida media, en días, con la que se amortigua la tendencia.</p>
+        <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario) y b(k) la tendencia diaria, medida entre las dos últimas encuestas de la misma empresa. El 14 es la vida media, en días, con la que se amortigua la tendencia.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = s(k)² + 1,0² × t / 40
 en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
-        <p>s(k) es el error de la media actual (la desviación de las 10 encuestas entre sí, dividida por √10; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana, y solo se suma el día de la votación.</p>
+        <p>s(k) es el error de la media actual (la desviación de las 14 encuestas entre sí, dividida por √14; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana, y solo se suma el día de la votación.</p>
         <p><b>5. Simulaciones.</b> 4.000 veces: se sortea V(k) con distribución normal de media V(k,29-N) y desviación σ(k), se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
       </details>
       <details class="pdet"><summary>Cuánto acierta este método (prueba con 2019 y 2023)</summary>
@@ -120,9 +120,9 @@ en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
   <a class="nextp" href="index.html"><small>Simulador</small><b>¿Cómo quedaría el Congreso?</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=28"></script>
-<script src="assets/prediccion-data.js?v=10"></script>
-<script src="assets/prediccion.js?v=10"></script>
+<script src="assets/core.js?v=29"></script>
+<script src="assets/prediccion-data.js?v=13"></script>
+<script src="assets/prediccion.js?v=13"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

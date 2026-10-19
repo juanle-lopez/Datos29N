@@ -60,7 +60,7 @@ python3 -m http.server 8000
 ## Cómo se calcula
 
 - **Simulador.** Para PP, PSOE, Vox y Sumar (con Podemos agrupado) se multiplica el voto de 2023 en cada provincia por la razón entre el voto nacional elegido y el de 2023; el resto de partidos mantiene su voto, se reescala cada provincia a 100, se aplica el mínimo del 3 % y se reparten los escaños con D'Hondt.
-- **Media de encuestas.** Media simple, sin ponderar, de las encuestas privadas nacionales publicadas del 9 al 12-oct-2026. El CIS no entra en la media y se muestra aparte como segundo escenario.
+- **Media de encuestas.** Media simple, sin ponderar, de las encuestas privadas nacionales publicadas del 24-sep al 19-oct-2026 (la última de cada empresa). El CIS no entra en la media y se muestra aparte como segundo escenario.
 - **Predicción.** Tendencia amortiguada entre las dos últimas encuestas de la misma empresa, incertidumbre que crece con los días y error histórico de las encuestas, 4.000 simulaciones y D'Hondt. Es un modelo experimental, no una previsión oficial, y no da probabilidad de mayoría a propósito. Detalle completo en la web.
 
 Para recalcular la proyección tras actualizar `tools/prediccion-input.json`:
