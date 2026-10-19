@@ -50,15 +50,20 @@ function heatField(items,W,H,scale,sigma){
 const SCGRAD='linear-gradient(90deg,'+STOPS.slice().reverse().map(x=>`rgb(${x[1].join(',')}) ${(1-x[0])*100}%`).join(',')+')';
 const PLANE='M7,0L2,-1.7L-1,-6L-2.8,-6L-1.4,-1.5L-5,-1.2L-6.2,-3L-7.6,-3L-6.6,0L-7.6,3L-6.2,3L-5,1.2L-1.4,1.5L-2.8,6L-1,6L2,1.7Z';
 function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
-  let lines='',pl='';
-  list.forEach(([x,y,v],ai)=>{const r=v/mx,col=cf(v),dx=x-mx0,dy=y-my0,len=Math.hypot(dx,dy),cx=mx0+dx/2,cy=my0+dy/2-len*bend,w=Math.sqrt(r),
-    d=`M${mx0.toFixed(1)},${my0.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`,dr=`M${x.toFixed(1)},${y.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`;
-    lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:.4" stroke-width="${((.6+w*3)*wf+1.1*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:${col};opacity:1" stroke-width="${((.6+w*3)*wf).toFixed(2)}"/>`;
+  // Efecto 3D: sombra en el suelo (cuerda recta), trayectoria elevada (arco con volumen), avión que sube y baja con su sombra.
+  let gr='',lines='',pl='';
+  list.forEach(([x,y,v],ai)=>{const r=v/mx,dx=x-mx0,dy=y-my0,len=Math.hypot(dx,dy),cx=mx0+dx/2,cy=my0+dy/2-len*bend*1.5,w=Math.sqrt(r),wd=(.6+w*3)*wf,
+    d=`M${mx0.toFixed(1)},${my0.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`,dr=`M${x.toFixed(1)},${y.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`,
+    g=`M${mx0.toFixed(1)},${my0.toFixed(1)}L${x.toFixed(1)},${y.toFixed(1)}`,gro=`M${x.toFixed(1)},${y.toFixed(1)}L${mx0.toFixed(1)},${my0.toFixed(1)}`;
+    gr+=`<path class="arc" d="${g}" style="stroke:#05090f;opacity:.28" stroke-width="${(wd*.9).toFixed(2)}" stroke-dasharray="${(2*wf).toFixed(2)} ${(1.6*wf).toFixed(2)}"/>`;
+    lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:.32" stroke-width="${(wd+1.3*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#10161f;opacity:1" stroke-width="${wd.toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#9fb0c4;opacity:.75" stroke-width="${Math.max(.2*wf,wd*.28).toFixed(2)}" transform="translate(0 ${(-wd*.22).toFixed(2)})"/>`;
     if(reduce)return;
-    const np=Math.min(4,1+Math.floor(w*4)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=(sc*wf*(.75+w*.5)).toFixed(2);
-    for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d;
-      pl+=`<g opacity="0"><animateMotion dur="${dur.toFixed(1)}s" begin="-${bg}s" repeatCount="indefinite" path="${path}" rotate="auto"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.88;1" dur="${dur.toFixed(1)}s" begin="-${bg}s" repeatCount="indefinite"/><path d="${PLANE}" transform="scale(${s})" fill="${col}" stroke="#fff" stroke-width="1.1" paint-order="stroke"/></g>`}});
-  return lines+pl}
+    const np=Math.min(4,1+Math.floor(w*4)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=sc*wf*(.75+w*.5),D=dur.toFixed(1);
+    for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d,gpath=j%2?gro:g,op=`<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.88;1" dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/>`,
+      sz=`calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1" keyTimes="0;.5;1"`;
+      gr+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${gpath}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#05090f" opacity=".32"/></g>`;
+      pl+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${path}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#10161f" stroke="#fff" stroke-width="1.3" paint-order="stroke"><animateTransform attributeName="transform" type="scale" values="${(s*.62).toFixed(2)};${(s*1.35).toFixed(2)};${(s*.62).toFixed(2)}" ${sz} dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/></path></g>`}});
+  return gr+lines+pl}
 function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px;max-width:360px"><span style="display:block;height:8px;border-radius:4px;background:${SCGRAD}"></span><span style="display:flex;justify-content:space-between;font-size:11px"><span>1–2 visitas</span><span>Pocas</span><span>Frecuente</span><span>Los más visitados</span></span></span>`}
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),cf=mkSC(Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
@@ -77,7 +82,7 @@ function worldMap(W){
   document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><clipPath id="hclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.w}" height="${G.h}" preserveAspectRatio="none" clip-path="url(#hclip)" style="pointer-events:none"/>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
   document.querySelectorAll('#vworld .c').forEach(p=>p.addEventListener('click',()=>{const sc=document.querySelector('#vworld').parentNode.scrollLeft;selW=p.dataset.i;worldTip(W);worldMap(W);document.querySelector('#vworld').parentNode.scrollLeft=sc}));
   if(!window._vc&&!EU){window._vc=1;const c=document.querySelector('#vworld').parentNode;setTimeout(()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)},120)}
-  document.getElementById('vleg').innerHTML=`<span>Menos visitados</span><i style="background:${SCGRAD}"></i><span>Más visitados (hasta ${fmt(mx)} veces)</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Líneas y aviones, mismos colores: '+tierLeg()+'</div>';
+  document.getElementById('vleg').innerHTML=`<span>Menos visitados</span><i style="background:${SCGRAD}"></i><span>Más visitados (hasta ${fmt(mx)} veces)</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Color del mapa: '+tierLeg()+'<span>Líneas y aviones en negro: más gruesas, más vuelos.</span></div>';
 }
 function worldTip(W){
   const el=document.getElementById('vtip');if(!selW){return}
@@ -93,7 +98,7 @@ function spainMap(S){
   spainHeat(S);
   spainArcs(S);
   spainCM(S,cf);
-  const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Líneas y aviones: '+tierLeg();
+  const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Color del mapa: '+tierLeg()+' <span style="margin-left:12px">Líneas y aviones en negro: más gruesas, más vuelos.</span>';
   document.querySelectorAll('#vspain .c').forEach(p=>p.addEventListener('click',()=>{selS=p.dataset.c;spainTip(S);spainMap(S)}));
 }
 function spainHeat(S){
