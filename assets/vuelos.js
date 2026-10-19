@@ -27,10 +27,10 @@ function kpis(){
   if(window.rvReady)rvScan();
 }
 function heat(v,cf){return v?cf(v):'color-mix(in srgb,var(--line) 55%,transparent)'}
-const STOPS=[[0,[192,40,28]],[.05,[192,40,28]],[.14,[226,84,26]],[.28,[240,160,48]],[.45,[79,174,114]],[.7,[191,227,200]],[1,[154,164,174]]];
-const lerpC=(p)=>{let a=STOPS[0],b=STOPS[STOPS.length-1];for(let i=1;i<STOPS.length;i++)if(p<=STOPS[i][0]){a=STOPS[i-1];b=STOPS[i];break}const k=b[0]===a[0]?0:(p-a[0])/(b[0]-a[0]);return 'rgb('+[0,1,2].map(n=>Math.round(a[1][n]+(b[1][n]-a[1][n])*k)).join(',')+')'};
-// Color por posición: los más visitados en rojo, luego naranja, verde cada vez más claro y gris para 1–2 visitas.
-function mkSC(values){const vs=values.filter(x=>x>0),n=vs.length;return v=>{if(!v)return 'none';if(v<=2)return 'rgb(154,164,174)';const gt=vs.filter(x=>x>v).length;return lerpC(n>1?gt/(n-1):0)}}
+const STOPS=[[0,[192,40,28]],[.1,[214,62,30]],[.22,[232,100,28]],[.34,[240,150,40]],[.46,[232,190,60]],[.58,[168,194,84]],[.7,[92,176,114]],[.84,[170,214,184]],[1,[154,164,174]]];
+const lerpC=(p)=>{let a=STOPS[0],b=STOPS[STOPS.length-1];for(let i=1;i<STOPS.length;i++)if(p<=STOPS[i][0]){a=STOPS[i-1];b=STOPS[i];break}const k=b[0]===a[0]?0:(p-a[0])/(b[0]-a[0]),e=k*k*(3-2*k);return 'rgb('+[0,1,2].map(n=>Math.round(a[1][n]+(b[1][n]-a[1][n])*e)).join(',')+')'};
+// Color continuo: mezcla la posición del país en la lista y su valor (escala logarítmica); sin saltos bruscos.
+function mkSC(values){const vs=values.filter(x=>x>0),n=vs.length,mx=Math.max(1,...vs);return v=>{if(!v)return 'none';const gt=vs.filter(x=>x>v).length,pr=n>1?gt/(n-1):0,pv=1-Math.log(1+v)/Math.log(1+mx);return lerpC(Math.min(1,.65*pr+.35*pv))}}
 const SCGRAD='linear-gradient(90deg,'+STOPS.slice().reverse().map(x=>`rgb(${x[1].join(',')}) ${(1-x[0])*100}%`).join(',')+')';
 const PLANE='M7,0L2,-1.7L-1,-6L-2.8,-6L-1.4,-1.5L-5,-1.2L-6.2,-3L-7.6,-3L-6.6,0L-7.6,3L-6.2,3L-5,1.2L-1.4,1.5L-2.8,6L-1,6L2,1.7Z';
 function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
