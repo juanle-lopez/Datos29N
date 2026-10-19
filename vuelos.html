@@ -17,6 +17,7 @@
 .vhero .vh1{font-size:clamp(22px,5.4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:0 0 4px}
 .vhero .vh1 em{font-style:normal;color:var(--hot)}
 .vhero .vsub{color:var(--muted,#667);margin:0 0 12px;max-width:62ch}
+.vleg{flex-wrap:wrap}
 .vcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
 .vcards div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel)}
 .vcards b{display:block;font-size:clamp(22px,6vw,30px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
@@ -58,9 +59,10 @@
 
     <div class="exec" style="margin-top:16px">
       <h2 class="big">Dentro de España</h2>
-      <p class="lead">Veces que cada comunidad aparece como origen o destino, sin contar Madrid (la base), que concentra casi todos los vuelos.</p>
+      <p class="lead">Veces que cada comunidad aparece como origen o destino, sin contar Madrid (la base), que concentra casi todos los vuelos. Las líneas salen de Madrid hacia cada comunidad: rojo, las que más vuelos reciben; naranja, frecuentes; verde, poco frecuentes; gris, muy puntuales.</p>
       <div class="gchart"><div id="vspain" class="vmap"></div></div>
       <div class="gtip" id="vtip2">Toca una comunidad.</div>
+      <div class="vleg" id="vleg2" style="flex-wrap:wrap"></div>
     </div>
 
     <div class="exec" style="margin-top:16px">
@@ -111,7 +113,7 @@
   <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=22"></script>
+<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=25"></script>
 <script>
 (function(){
 const PAX=[
