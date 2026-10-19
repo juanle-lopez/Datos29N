@@ -26,6 +26,11 @@
 .pdet summary{cursor:pointer;padding:12px 0;font-weight:700}
 .pdet p,.pdet li{font-size:14.5px;max-width:72ch}
 .pdet ol{padding-left:20px}
+.steps{display:block!important;list-style:none;padding:0 0 10px!important;margin:0}
+.steps li{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:8px 0;border-top:1px solid var(--line);max-width:none!important}
+.steps li:first-child{border-top:0}
+.steps span{max-width:64ch}
+@media(max-width:520px){.steps li{grid-template-columns:1fr;gap:2px}}
 #hid{display:none}
 .frm{font-family:var(--mono);font-size:13px;line-height:1.75;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:8px 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}
 .frm b{font-family:var(--sans,inherit)}
@@ -39,12 +44,12 @@
   <section class="sec" id="p_pred" aria-label="Predicción hasta el 29-N">
     <div class="sech"><span class="num">Experimental</span><h2>Hacia el 29-N: predicción</h2><p class="lead">Cuántos escaños resultarían de las encuestas publicadas hasta hoy, con su margen de error y el modelo explicado paso a paso.</p></div>
     <div class="exec">
-      <p class="banner"><b>Modelo experimental, no es una previsión oficial.</b> Aplica las mismas reglas a todos los partidos y no ordena a ninguno: el orden de las filas es el del simulador y no implica nada. Las cifras salen de encuestas publicadas, no de una opinión de esta web. El 24-nov esta sección se retira sola, porque la ley electoral prohíbe publicar encuestas en los cinco días previos a la votación.</p>
+      <p class="banner"><b>Modelo experimental, no es una previsión oficial.</b> Mismas reglas para todos los partidos; el orden es el del simulador y no implica nada. Se retira el 24-nov por la ley electoral (no se pueden publicar encuestas en los cinco días previos).</p>
       <div id="hid" class="banner" style="margin-top:14px"><b>Sección retirada.</b> Desde el 24-nov no se publican encuestas ni proyecciones basadas en ellas, a la espera de que se confirme el plazo exacto con la Junta Electoral Central.</div>
       <div id="pbody">
       <h3 style="margin:18px 0 6px">Escaños estimados hasta el 29-N</h3>
-      <p class="note" style="max-width:72ch">Un gráfico por partido, cada uno con su propia escala para que se vea el movimiento. A la izquierda de «hoy», los escaños que da el simulador a lo ya publicado por la misma empresa en el tiempo (así se mide un cambio sin mezclar empresas con sesgos distintos). A la derecha, la proyección: ahora mismo la línea central es casi plana porque las encuestas de la misma empresa se han movido poco, pero el tubo se abre con el tiempo porque la incertidumbre crece. Dentro del tubo, cada hilo fino es una trayectoria posible (suavizada para que se lea), y la nube del 29-N muestra en qué número de escaños acaban la mayoría. Pasa el cursor o toca el gráfico para ver el valor de cada fecha.</p>
-      <div class="panel" style="margin-top:12px;padding:12px"><div id="pgrid" style="display:grid;gap:12px"></div>
+      <p class="note">Un gráfico por partido, con su propia escala. Pasa el cursor o toca para ver cada fecha.</p>
+      <div style="margin-top:10px"><div id="pgrid" style="display:grid;gap:12px"></div>
       <div class="leg" id="leg"></div></div>
       <p class="sources" id="psrc" style="margin:10px 0 0"></p>
 
@@ -61,12 +66,12 @@
       </details>
       <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
       <details class="pdet" open><summary>Los cinco pasos</summary>
-        <ol>
-          <li><b>Datos de entrada.</b> Las encuestas nacionales publicadas del 9 al 12-oct-2026 (10 empresas, recopiladas en <a href="https://elecciones29noviembre.com/encuestas/">elecciones29noviembre.com</a>), el barómetro del CIS del 14-oct y, como historial, los del CIS de julio y septiembre y encuestas privadas de agosto y septiembre. Sumar y Podemos se agrupan, igual que en el simulador. El cierre de campo no figura en todas.</li>
-          <li><b>Media.</b> Media simple de las 10 encuestas privadas de octubre: todas pesan lo mismo, sin ponderar por muestra, fecha ni empresa. El CIS no entra en la media porque es un organismo público con metodología distinta; se muestra aparte como segundo escenario.</li>
-          <li><b>Tendencia (amortiguada).</b> Se mide el cambio por día entre las dos últimas encuestas de <i>la misma empresa</i>, para que no pese el sesgo de cada una: Sigma Dos (26-ago → 12-oct) y GAD3 solo para Vox (3-sep → 12-oct) en la media privada, y el CIS (sep → oct) en su escenario. Ese cambio se prolonga con una vida media de 14 días, porque una tendencia de pocas semanas no suele mantenerse. Es un supuesto, y con tan pocas encuestas por empresa la estimación es débil. <span id="ptend"></span></li>
-          <li><b>Margen de error.</b> En cada fecha futura la incertidumbre suma el error de la media actual (la desviación de las encuestas entre sí, dividida por la raíz de su número) y la deriva posible de la opinión, que estimamos en ±1,0 punto en 40 días (supuesto grueso). Al llegar al 29-N se añade el error histórico de las encuestas de la última semana frente al resultado: ±1,9 puntos, raíz del error cuadrático medio en nov-2019 y jul-2023 (ocho valores). El abanico dibujado es el intervalo del 80 %; la barra del 29-N incluye todo.</li>
-          <li><b>Escaños.</b> Partiendo del voto proyectado para el 29-N, en cada una de las 4.000 simulaciones se perturba el voto de cada partido con la incertidumbre total, se escala el voto de 2023 en cada provincia y se reparten los escaños con D’Hondt (mínimo del 3 % por circunscripción), como en el simulador. Se muestra el valor central y el rango del 80 %.</li>
+        <ol class="steps">
+          <li><b>Datos.</b><span>Las 10 encuestas privadas del 9 al 12-oct y el CIS del 14-oct, con su historial. Sumar y Podemos van juntos, como en el simulador.</span></li>
+          <li><b>Media.</b><span>Media simple de las 10 privadas. El CIS no entra: se muestra aparte como segundo escenario.</span></li>
+          <li><b>Tendencia.</b><span>Cambio por día entre las dos últimas encuestas de la misma empresa, que se apaga con una vida media de 14 días. Es un supuesto débil.</span></li>
+          <li><b>Error.</b><span>Crece con los días e incluye el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos) el día de la votación.</span></li>
+          <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %.</span></li>
         </ol>
       </details>
       <details class="pdet"><summary>La fórmula, paso a paso</summary>

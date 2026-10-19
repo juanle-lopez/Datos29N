@@ -14,14 +14,14 @@
   const MESL=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const fecha=d=>{const [y,m,dn]=d.split('-').map(Number);return dn+'-'+MESL[m-1]};
   function panel(k,name,c,W,animate){
-    const H=W<420?236:262,L=36,R=W<420?86:96,T=42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
+    const H=W<420?236:262,L=30,R=W<420?86:96,T=42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
     const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
     const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];hc.concat(hs).forEach(h=>vals.push(h.esc[k]));dots.forEach(p=>vals.push(p.esc[k]));rC.forEach(r=>vals.push(r.esc));rP.forEach(r=>vals.push(r.lo95,r.hi95));
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>L+(t-D0)/(D1-D0)*pw,Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
     let s=`<defs><clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${animate?0:W}" height="${H}">${animate?`<animate attributeName="width" from="0" to="${W}" dur="1.8s" begin="0s" fill="freeze" calcMode="spline" keySplines=".2 .7 .2 1" keyTimes="0;1"/>`:''}</rect></clipPath><filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
-    s+=`<text x="${L}" y="14" class="lab" style="fill:${c};font-size:13px">${name}</text>${W<420?`<text x="${L}" y="29" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`:`<text x="${W-4}" y="14" text-anchor="end" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text><text x="4" y="${T-17}">escaños</text>`}`;
+    s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="30" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
     for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
     s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text>`;
@@ -93,7 +93,7 @@
     `<span>${sw('<rect x="0" y="0" width="34" height="3" fill="currentColor" opacity=".12"/><rect x="0" y="3.5" width="34" height="3" fill="currentColor" opacity=".25"/><rect x="0" y="7" width="34" height="3" fill="currentColor" opacity=".12"/>')}Tubo: 50 %, 80 % y 95 % de las simulaciones</span>`+
     `<span>${sw('<path d="M0 8 L10 2 L22 6 L34 1" fill="none" stroke="currentColor" stroke-width=".9" opacity=".5"/>')}24 trayectorias simuladas (suavizadas)</span>`+
     `<span>${sw('<path d="M2 0 Q30 5 2 10 Z" fill="currentColor" opacity=".38" stroke="currentColor"/>')}Nube del 29-N (suavizada): en qué número de escaños acaban las simulaciones</span>`;
-  document.getElementById('psrc').innerHTML=`Cada punto es el reparto de escaños que da el simulador de la portada a una encuesta publicada (no el que publicó la empresa). Fuentes: ${PRED.n} encuestas privadas publicadas del 9 al 12-oct-2026 y CIS de oct. (campo ${PRED.cis.campo}), de <a href="${PRED.cis.url}">elecciones29noviembre.com</a>; CIS de julio y septiembre, de <a href="https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html">Ara</a> (la fecha del de julio es aproximada); Sigma Dos y Demoscopia y Servicios de agosto, de <a href="https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/">Moncloa.com</a>. Cada gráfico tiene su propia escala vertical. Sumar y Podemos van sumados.`;
+  document.getElementById('psrc').innerHTML=`Cada punto son los escaños que da el simulador de la portada a una encuesta (no los que publicó la empresa). Fuentes: ${PRED.n} encuestas privadas publicadas del 9 al 12-oct-2026 y CIS de oct. (campo ${PRED.cis.campo}), de <a href="${PRED.cis.url}">elecciones29noviembre.com</a>; CIS de julio y septiembre, de <a href="https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html">Ara</a> (la fecha del de julio es aproximada); Sigma Dos y Demoscopia y Servicios de agosto, de <a href="https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/">Moncloa.com</a>. Sumar y Podemos van sumados.`;
   const row=(k,n,sc,bs)=>{const e=sc.escanos[k];return `<tr><td>${n}</td><td class="m">${bs[k]}</td><td class="m">${e.c}</td><td class="m">${e.p10}–${e.p90}</td></tr>`};
   const blk=(t,sc,bs)=>`<tr class="sc"><td colspan="4">${t}</td></tr>`+K.map(([k,n])=>row(k,n,sc,bs)).join('')+`<tr><td>PP + Vox (mayoría: 176)</td><td class="m">${bs.PP+bs.VOX}</td><td class="m">${sc.ppVox.c}</td><td class="m">${sc.ppVox.p10}–${sc.ppVox.p90}</td></tr>`;
   document.getElementById('ptab').innerHTML=`<thead><tr><th>Partido</th><th>Escaños hoy</th><th>Escaños 29-N (central)</th><th>Rango 80 % el 29-N</th></tr></thead><tbody>`+
@@ -101,6 +101,5 @@
   const [y,m,d]=PRED.generado.split('-').map(Number);
   document.getElementById('pgen').textContent=`Calculado el ${d} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m-1]} de ${y}.`;
   const df=(sc,bs)=>K.map(([k,n])=>{const x=sc.escanos[k].c-bs[k];return n+' '+(x>0?'+':x<0?'−':'')+Math.abs(x)}).join(', ');
-  const e=document.getElementById('ptend');if(e)e.textContent=`Efecto de esa tendencia sobre los escaños entre hoy y el 29-N: en la media de las 10 encuestas, ${df(PRED.escPrivadas,PRED.escBase.priv)}; en el CIS, ${df(PRED.escCIS,PRED.escBase.cis)}.`;
   if(window.rvReady&&typeof rvScan==='function')rvScan();
 })();
