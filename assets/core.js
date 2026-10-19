@@ -14,7 +14,7 @@ if('IntersectionObserver' in window&&!REDUCE){
 function rvScan(){
   document.querySelectorAll(RV_SEL).forEach(el=>{
     if(el.dataset.rv)return;el.dataset.rv='1';
-    if(!rvIO){el.classList.add('in');return}
+    if(!rvIO||el.offsetHeight>innerHeight*2){el.classList.add('in');return}
     const sib=[...el.parentNode.children].filter(x=>x.matches&&x.matches(RV_SEL));
     el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*70+'ms');
     el.classList.add('rv');rvIO.observe(el);
