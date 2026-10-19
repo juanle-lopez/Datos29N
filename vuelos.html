@@ -13,6 +13,22 @@
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
 <link rel="stylesheet" href="assets/style.css?v=29"><link rel="stylesheet" href="assets/gastos.css?v=22">
+<style>
+.vhero .vh1{font-size:clamp(22px,5.4vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:0 0 4px}
+.vhero .vh1 em{font-style:normal;color:var(--hot)}
+.vhero .vsub{color:var(--muted,#667);margin:0 0 12px;max-width:62ch}
+.vcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.vcards div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel)}
+.vcards b{display:block;font-size:clamp(22px,6vw,30px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.vcards small{display:block;margin-top:4px;line-height:1.35}
+#vwaf .wr{display:flex;align-items:flex-start;gap:10px;margin:7px 0}
+#vwaf .wy{flex:0 0 44px;font-weight:700;font-size:13px;padding-top:1px}
+#vwaf .wd{display:flex;flex-wrap:wrap;gap:3px;flex:1}
+#vwaf i{width:7px;height:7px;border-radius:50%;display:block;opacity:0}
+#vwaf.on i{animation:wpop .5s ease forwards}
+@keyframes wpop{0%{opacity:0;transform:scale(.2)}100%{opacity:1;transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#vwaf i{opacity:1}#vwaf.on i{animation:none}}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -23,6 +39,8 @@
     <div class="sech"><span class="num">Falcon</span><h2>Los vuelos de los aviones oficiales</h2><p class="lead">Cada vuelo registrado de los 9 aviones del Grupo 45 del Ejército del Aire (5 Falcon 900, 2 A310 y 2 A330) desde el 1 de marzo de 2021. Filtra por año y por uso.</p></div>
     <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>El registro no indica quién iba a bordo</b> (la sección de pasajeros es una atribución de esa web, sin verificar aquí): clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
 
+    <div class="exec vhero" id="v_hero" style="margin-top:14px"></div>
+
     <div class="exec" style="margin-top:14px">
       <div class="rowf" id="vy"><b>Año</b></div>
       <div class="rowf" id="vu"><b>Uso</b></div>
@@ -32,6 +50,7 @@
     <div class="exec" style="margin-top:16px">
       <h2 class="big">Adónde han volado (mapa de calor)</h2>
       <p class="lead">Cuanto más intenso el color, más veces ha aparecido ese país en un vuelo como origen o destino. Las líneas parten de Madrid, la base, y son más gruesas cuanto más vuelos. Toca un país para ver el detalle.</p>
+      <div class="rowf" style="margin:8px 0"><button type="button" id="vplay" class="chip" aria-pressed="false">▶ Ver año a año</button><span id="vplst" class="note" style="margin:0 0 0 8px" aria-live="polite"></span></div>
       <div class="gchart"><div id="vworld" class="vmap"></div></div>
       <div class="gtip" id="vtip">Toca un país del mapa.</div>
       <div class="vleg" id="vleg"></div>
@@ -56,6 +75,20 @@
       <div class="gl" id="vbl"></div>
     </div>
 
+    <div class="exec" style="margin-top:16px" id="v_waf">
+      <h2 class="big">Cada punto, 10 vuelos</h2>
+      <p class="lead">Todos los vuelos del registro, año por año y por uso. Se ve de un vistazo cuánto pesa cada uso y cuánto queda sin registrar (gris).</p>
+      <div id="vwaf"></div>
+      <div class="gl" id="vwl"></div>
+    </div>
+
+    <div class="exec" style="margin-top:16px" id="v_ritmo">
+      <h2 class="big">Año a año: ritmo, coste y tipo de avión</h2>
+      <p class="lead">Cálculos propios a partir de los datos del registro: no están en la web de origen. El coste y el CO₂ son estimaciones de falcondespega.es; las ratios son simples divisiones de sus cifras.</p>
+      <div class="tw"><table id="vyt"></table></div>
+      <p class="note" id="vyn" style="max-width:72ch;margin-top:8px"></p>
+    </div>
+
     <div class="exec" style="margin-top:16px" id="v_pax">
       <h2 class="big">Pasajeros destacados, según falcondespega.es</h2>
       <p class="lead">Número de vuelos que la web de origen atribuye a cada persona, ordenados como en esa web. Son atribuciones suyas: el registro oficial de vuelos no indica quién viaja y la web no detalla cómo lo determina, así que no las hemos podido verificar.</p>
@@ -78,7 +111,7 @@
   <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=18"></script>
+<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=22"></script>
 <script>
 (function(){
 const PAX=[
