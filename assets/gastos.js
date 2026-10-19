@@ -187,6 +187,45 @@ function renderPend(){
   document.getElementById('gpend').innerHTML=P.map(p=>`<article class="gcard rv"><span class="gtag p">Pendiente</span><h3>${p[0]}</h3><p>${p[1]}</p></article>`).join('');
 }
 document.getElementById('gsrc').innerHTML='<b>Fuentes de las series.</b> Gasto por áreas: '+LK(SRC.eu)+'. Inflación: '+LK(SRC.hicp)+' (euros constantes = euros × IPCA 2018 / IPCA del año). PIB: '+LK(SRC.gdp)+'. Ingresos: '+LK(SRC.main)+'. La clasificación COFOG de la ONU asigna cada gasto a una función; «Servicios públicos generales» incluye, entre otros, los intereses de la deuda y «Asuntos económicos» incluye subvenciones y ayudas a empresas. Último dato disponible: 2024 (provisional).';
-renderCtl();renderStack();renderDiv();renderSal();renderCoste();renderFly();renderTax();renderPend();
-(function(){let w=GW(),t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{if(GW()!==w){w=GW();renderStack();renderSal();renderTax()}},200)})})();
+
+/* ---- 2 bis: personal público y funcionamiento, 2012-2024, con tendencia lineal ---- */
+const FY=[2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024];
+const FD1=[113630,114448,115006,119257,121546,123501,127668,134769,140652,148094,154459,163887,172749];
+const FP2=[58351,55632,56073,58330,58080,59203,61627,64416,66231,71270,79029,85551,89450];
+const FGDP=[1035964,1025652,1038949,1087112,1122967,1170024,1212276,1253710,1129214,1235474,1375863,1496277,1598588];
+const FHI=[99.31,100.83,100.63,100.00,99.66,101.69,103.46,104.26,103.91,107.04,115.95,119.89,123.33];
+let fmode='real';
+function fval(a,i){return fmode==='cur'?a[i]:fmode==='real'?a[i]*FHI[6]/FHI[i]:a[i]/FGDP[i]*100}
+function ols(v){const n=v.length,mx=(n-1)/2,my=v.reduce((a,b)=>a+b,0)/n;let sxy=0,sxx=0;v.forEach((y,i)=>{sxy+=(i-mx)*(y-my);sxx+=(i-mx)**2});const b=sxy/sxx;return{b,a:my-b*mx}}
+function renderFun(){
+  const M=[['real','Euros constantes (2018)'],['cur','Euros corrientes'],['pct','% del PIB']];
+  document.getElementById('gfmode').innerHTML=M.map(m=>`<button type="button" data-m="${m[0]}" aria-pressed="${fmode===m[0]}">${m[1]}</button>`).join('');
+  document.querySelectorAll('#gfmode button').forEach(b=>b.addEventListener('click',()=>{fmode=b.dataset.m;renderFun()}));
+  const S=[['Personal público (sueldos)',FD1,'var(--g10)'],['Funcionamiento (compras corrientes)',FP2,'var(--g4)']].map(s=>({n:s[0],c:s[2],v:FY.map((_,i)=>fval(s[1],i))}));
+  const W=GW(),H=320,L=58,R=14,T=14,B=28,pct=fmode==='pct',x=i=>L+(i+.5)*(W-L-R)/FY.length;
+  const raw=Math.max(...S.flatMap(s=>s.v))*1.05,stp=pct?(raw>8?2:1):(raw>120000?40000:raw>60000?20000:10000),mx=Math.ceil(raw/stp)*stp,y=v=>H-B-v/mx*(H-B-T);
+  const lab=v=>pct?fmt(v,1)+' %':fmt(v/1000,0)+' mil M€';
+  let g='';for(let v=0;v<=mx+1e-9;v+=stp){g+=`<line class="ax" x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L-6}" y="${y(v)+4}" text-anchor="end">${pct?fmt(v,0)+'%':fmt(v/1000,0)+'k'}</text>`}
+  FY.forEach((yy,i)=>{if(W>=560||i%2===0)g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle">${yy}</text>`});
+  const tr=S.map(s=>{const o=ols(s.v);return{...o,n:s.n}});
+  S.forEach((s,k)=>{
+    g+=`<path d="${s.v.map((v,i)=>(i?'L':'M')+x(i)+' '+y(v)).join('')}" fill="none" stroke="${s.c}" stroke-width="2.4"/>`;
+    g+=`<line x1="${x(0)}" x2="${x(FY.length-1)}" y1="${y(tr[k].a)}" y2="${y(tr[k].a+tr[k].b*(FY.length-1))}" stroke="${s.c}" stroke-width="1.6" stroke-dasharray="6 5" opacity=".75"/>`;
+    s.v.forEach((v,i)=>g+=`<circle cx="${x(i)}" cy="${y(v)}" r="3.4" fill="${s.c}"><title>${s.n} ${FY[i]}: ${lab(v)}</title></circle>`);
+  });
+  document.getElementById('gfun').innerHTML=`<svg class="gsvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gasto en personal público y en funcionamiento, 2012-2024, con línea de tendencia">${g}</svg><div class="gl">${S.map(s=>`<span style="display:flex;gap:6px;align-items:center"><i style="width:14px;height:3px;background:${s.c}"></i>${s.n}</span>`).join('')}<span style="display:flex;gap:6px;align-items:center"><i style="width:14px;height:0;border-top:2px dashed var(--muted)"></i>Tendencia lineal 2012–2024</span></div>`;
+  const u=pct?'puntos de PIB':'M€',sl=t=>pct?(t.b>=0?'+':'−')+fmt(Math.abs(t.b),2)+' puntos de PIB al año':(t.b>=0?'+':'−')+fmt(Math.abs(t.b)/1000,1)+' mil M€ al año';
+  document.getElementById('gfsrc').innerHTML=`<b>Lectura.</b> Personal: ${lab(S[0].v[0])} en 2012 → ${lab(S[0].v[12])} en 2024; tendencia ${sl(tr[0])}. Funcionamiento: ${lab(S[1].v[0])} → ${lab(S[1].v[12])}; tendencia ${sl(tr[1])}. La línea es una recta de mínimos cuadrados sobre los 13 años: resume el rumbo, no predice. 2012–2013 fueron años de recortes y 2020 de pandemia. Fuentes: ${LK(['Eurostat gov_10a_main (gasto por tipo, todas las Administraciones)',SRC.main[1]])} (D1 «remuneración de asalariados» y P2 «consumos intermedios», todas las Administraciones), ${LK(SRC.hicp)} y ${LK(SRC.gdp)}.`;
+}
+(function(){
+  const d=FD1[12],p=FP2[12],t=TOT[6],rd=FD1[12]*FHI[6]/FHI[12]/(FD1[0]*FHI[6]/FHI[0])-1,rp=FP2[12]*FHI[6]/FHI[12]/(FP2[0]*FHI[6]/FHI[0])-1;
+  document.getElementById('gfk').innerHTML=[
+   [mm(d),'sueldos de empleados públicos en 2024 ('+fmt(d/t*100,1)+' % del gasto total)'],
+   [(rd>=0?'+':'')+fmt(rd*100,1)+'%','personal desde 2012, quitando la inflación'],
+   [mm(p),'compras corrientes de funcionamiento en 2024 ('+fmt(p/t*100,1)+' % del gasto)'],
+   [(rp>=0?'+':'')+fmt(rp*100,1)+'%','funcionamiento desde 2012, quitando la inflación']
+  ].map(x=>`<div class="rv"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
+})();
+renderCtl();renderStack();renderDiv();renderFun();renderSal();renderCoste();renderFly();renderTax();renderPend();
+(function(){let w=GW(),t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{if(GW()!==w){w=GW();renderStack();renderFun();renderSal();renderTax()}},200)})})();
 if(window.rvReady)rvScan();
