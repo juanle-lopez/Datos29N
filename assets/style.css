@@ -538,3 +538,6 @@ html.msopen{overflow:hidden}
 .mini .brand{white-space:nowrap}@media(max-width:400px){.mcd .mshort{display:none}}
 @media(min-width:1150px){nav.tabs{flex-wrap:nowrap;gap:1px}nav.tabs a{padding:9px 9px;gap:6px;font-size:13px;white-space:nowrap}nav.tabs a svg{width:15px;height:15px}}
 @media(min-width:1000px){.foot{max-width:none;column-count:2;column-gap:48px}.foot p{break-inside:avoid}.credit{max-width:none}}
+.rdet{margin:4px 0 12px;border:1px solid var(--line);border-radius:8px;padding:0 12px;background:var(--panel)}
+.rdet summary{cursor:pointer;padding:10px 0;font-weight:700;font-size:14px}
+.rdet[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
