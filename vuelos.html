@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://juanle-lopez.github.io/Datos29N/vuelos.html">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=26"><link rel="stylesheet" href="assets/gastos.css?v=21">
+<link rel="stylesheet" href="assets/style.css?v=26"><link rel="stylesheet" href="assets/gastos.css?v=22">
 </head>
 <body>
 <div class="wrap">
@@ -60,7 +60,7 @@
       <h2 class="big">Pasajeros destacados, según falcondespega.es</h2>
       <p class="lead">Número de vuelos que la web de origen atribuye a cada persona, ordenados como en esa web. Son atribuciones suyas: el registro oficial de vuelos no indica quién viaja y la web no detalla cómo lo determina, así que no las hemos podido verificar.</p>
       <div class="pax" id="pax"></div>
-      <p class="sources" style="margin:10px 0 0">Fuente: <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a>, sección «Pasajeros destacados en el periodo» (captura aportada el 19-oct-2026; no consta el filtro de periodo que tenía aplicado). Un vuelo es un tramo y el mismo vuelo puede llevar a varias personas, así que las cifras no se suman. «Gobierno» y «Casa Real» son el uso con el que la web clasifica el vuelo. Fotos: Wikipedia, enlazadas en cada tarjeta; si no cargan se muestran las iniciales.</p>
+      <p class="sources" style="margin:10px 0 0">Fuente: <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a>, sección «Pasajeros destacados en el periodo» (captura aportada el 19-oct-2026; no consta el filtro de periodo que tenía aplicado). Un vuelo es un tramo y el mismo vuelo puede llevar a varias personas, así que las cifras no se suman. «Gobierno» y «Casa Real» son el uso con el que la web clasifica el vuelo. Cargos actuales según <a href="https://www.lamoncloa.gob.es/gobierno/composiciondelgobierno/paginas/index.aspx">La Moncloa</a> (Gobierno) y la Casa Real; de Nadia Calviño se indica también el que tenía hasta dic. 2023. Fotos: Wikipedia, enlazadas en cada tarjeta; si no cargan se muestran las iniciales.</p>
     </div>
 
     <div class="exec" style="margin-top:16px">
@@ -82,13 +82,13 @@
 <script>
 (function(){
 const PAX=[
- ['Felipe de Borbón y Grecia','Casa Real',417,'Felipe_VI'],['Pedro Sánchez','Gobierno',382,'Pedro_Sánchez'],['Margarita Robles','Gobierno',366,'Margarita_Robles'],['José Manuel Albares','Gobierno',309,'José_Manuel_Albares'],
- ['Letizia Ortiz','Casa Real',214,'Letizia_Ortiz'],['Yolanda Díaz','Gobierno',79,'Yolanda_Díaz'],['Fernando Grande-Marlaska','Gobierno',67,'Fernando_Grande-Marlaska'],['Carlos Cuerpo','Gobierno',41,'Carlos_Cuerpo'],
- ['Leonor de Borbón','Casa Real',37,'Leonor_de_Borbón'],['Nadia Calviño','Gobierno',29,'Nadia_Calviño'],['Félix Bolaños','Gobierno',28,'Félix_Bolaños'],['Sofía de Borbón','Casa Real',25,'Infanta_Sofía_de_España']
+ ['Felipe de Borbón y Grecia','Casa Real',417,'Felipe_VI_de_España','Rey de España'],['Pedro Sánchez','Gobierno',382,'Pedro_Sánchez','Presidente del Gobierno'],['Margarita Robles','Gobierno',366,'Margarita_Robles','Ministra de Defensa'],['José Manuel Albares','Gobierno',309,'José_Manuel_Albares','Ministro de Asuntos Exteriores, UE y Cooperación'],
+ ['Letizia Ortiz','Casa Real',214,'Letizia_Ortiz','Reina de España'],['Yolanda Díaz','Gobierno',79,'Yolanda_Díaz','Vicepresidenta segunda y ministra de Trabajo y Economía Social'],['Fernando Grande-Marlaska','Gobierno',67,'Fernando_Grande-Marlaska','Ministro del Interior'],['Carlos Cuerpo','Gobierno',41,'Carlos_Cuerpo','Vicepresidente primero y ministro de Economía, Comercio y Empresa'],
+ ['Leonor de Borbón','Casa Real',37,'Leonor_de_Borbón','Princesa de Asturias'],['Nadia Calviño','Gobierno',29,'Nadia_Calviño','Presidenta del Banco Europeo de Inversiones (hasta dic. 2023, vicepresidenta primera del Gobierno)'],['Félix Bolaños','Gobierno',28,'Félix_Bolaños','Ministro de la Presidencia, Justicia y Relaciones con las Cortes'],['Sofía de Borbón','Casa Real',25,'Infanta_Sofía_de_España','Infanta de España']
 ];
 const ini=n=>n.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 const el=document.getElementById('pax');if(!el)return;
-el.innerHTML=PAX.map((x,i)=>`<article class="px"><span class="av" id="av${i}" aria-hidden="true">${ini(x[0])}</span><div><b>${x[0]}</b><small>${x[1]} · ${x[2]} vuelos</small><a class="ph" id="ph${i}" href="https://es.wikipedia.org/wiki/${encodeURIComponent(x[3])}" target="_blank" rel="noopener">Wikipedia</a></div></article>`).join('');
+el.innerHTML=PAX.map((x,i)=>`<article class="px"><span class="av" id="av${i}" aria-hidden="true">${ini(x[0])}</span><div><b>${x[0]}</b><span class="cg">${x[4]}</span><small>${x[1]} · ${x[2]} vuelos</small><a class="ph" id="ph${i}" href="https://es.wikipedia.org/wiki/${encodeURIComponent(x[3])}" target="_blank" rel="noopener">Wikipedia</a></div></article>`).join('');
 PAX.forEach((x,i)=>{try{fetch('https://es.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(x[3])).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.type==='standard'&&j.thumbnail&&j.thumbnail.source){const a=document.getElementById('av'+i);if(a){a.innerHTML='';const im=new Image();im.alt='';im.referrerPolicy='no-referrer';im.src=j.thumbnail.source;im.onerror=()=>{a.textContent=ini(x[0])};a.appendChild(im)}}}).catch(()=>{})}catch(e){}});
 })();
 </script>
