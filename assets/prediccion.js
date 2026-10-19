@@ -31,15 +31,17 @@
     const cen=rP.map(r=>X(dd(r.d))+','+Y(r.esc)).join(' ');
     // Todo lo proyectado (tubo, hilos, resplandor, línea punteada) se descubre de izquierda a derecha
     s+=`<g clip-path="url(#cp-${id})">`;
-    s+=`<polygon points="${poly('lo95','hi95')}" fill="${c}" opacity=".12">${animate?AN('.08;.17;.08','7s'):''}</polygon><polygon points="${poly('lo','hi')}" fill="${c}" opacity=".2">${animate?AN('.14;.27;.14','5.5s'):''}</polygon><polygon points="${poly('lo50','hi50')}" fill="${c}" opacity=".32">${animate?AN('.24;.42;.24','4.2s'):''}</polygon>`;
-    tr.slice(0,24).forEach((t,ti)=>{const sm=t.map((v,i)=>i===0||i===t.length-1?v:(t[i-1]+v+t[i+1])/3);s+=`<polyline fill="none" stroke="${c}" stroke-width="1" opacity=".2" stroke-linejoin="round" points="${sm.map((v,i)=>X(dd(rP[i].d))+','+Y(v)).join(' ')}">${animate?`<animate attributeName="opacity" values=".04;.38;.04" dur="${(4+(ti%6)*.8).toFixed(1)}s" begin="${(1.8+ti*.23).toFixed(2)}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`});
+    s+=`<polygon points="${poly('lo95','hi95')}" fill="${c}" opacity=".12">${animate?AN('.09;.15;.09','22s'):''}</polygon><polygon points="${poly('lo','hi')}" fill="${c}" opacity=".2">${animate?AN('.16;.25;.16','17s'):''}</polygon><polygon points="${poly('lo50','hi50')}" fill="${c}" opacity=".32">${animate?AN('.26;.38;.26','13s'):''}</polygon>`;
+    const smo=t=>t.map((v,i)=>i===0||i===t.length-1?v:(t[i-1]+v+t[i+1])/3),pts=sm=>sm.map((v,i)=>X(dd(rP[i].d))+','+Y(v)).join(' ');
+    tr.slice(0,24).forEach((t,ti)=>{const a=smo(t),b=smo(tr[(ti+12)%tr.length]),du=(15+(ti%7)*2.5).toFixed(1);
+      s+=`<polyline fill="none" stroke="${c}" stroke-width="1" opacity=".22" stroke-linejoin="round" points="${pts(a)}">${animate?`<animate attributeName="points" values="${pts(a)};${pts(b)};${pts(a)}" dur="${du}s" begin="${(1.8-ti*1.1).toFixed(2)}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/><animate attributeName="opacity" values=".1;.36;.1" dur="${(du*.6).toFixed(1)}s" begin="${(1.8-ti*.9).toFixed(2)}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`});
     s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".28" filter="url(#gl-${id})" points="${X(dd('2026-10-12'))},${Y(base)} ${cen}"/>`;
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${X(dd('2026-10-12'))},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="1.4s" repeatCount="indefinite"/>':''}</polyline>`;
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${X(dd('2026-10-12'))},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
     // nube de densidad el 29-N: cuántas de las 4.000 simulaciones acaban en cada número de escaños
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
-    s+=`<path d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.30;.46;.30','4.8s'):''}</path>`;
+    s+=`<path d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
     s+=`</g>`;
-    if(animate){s+=`<circle cx="${X(dd('2026-10-12'))}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;15;15" keyTimes="0;.35;1" dur="4.5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.35;1" dur="4.5s" repeatCount="indefinite"/></circle>`}
+    if(animate){s+=`<circle cx="${X(dd('2026-10-12'))}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
