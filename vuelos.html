@@ -60,7 +60,7 @@
       <h2 class="big">Pasajeros destacados, según falcondespega.es</h2>
       <p class="lead">Número de vuelos que la web de origen atribuye a cada persona, ordenados como en esa web. Son atribuciones suyas: el registro oficial de vuelos no indica quién viaja y la web no detalla cómo lo determina, así que no las hemos podido verificar.</p>
       <div class="pax" id="pax"></div>
-      <p class="sources" style="margin:10px 0 0">Fuente: <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a>, sección «Pasajeros destacados en el periodo» (captura aportada el 19-oct-2026; no consta el filtro de periodo que tenía aplicado). Un vuelo es un tramo y el mismo vuelo puede llevar a varias personas, así que las cifras no se suman. «Gobierno» y «Casa Real» son el uso con el que la web clasifica el vuelo. Cargos actuales según <a href="https://www.lamoncloa.gob.es/gobierno/composiciondelgobierno/paginas/index.aspx">La Moncloa</a> (Gobierno) y la Casa Real; de Nadia Calviño se indica también el que tenía hasta dic. 2023. Fotos: Wikipedia, enlazadas en cada tarjeta; si no cargan se muestran las iniciales.</p>
+      <p class="sources" style="margin:10px 0 0">Fuente: <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a>, sección «Pasajeros destacados en el periodo» (captura aportada el 19-oct-2026; no consta el filtro de periodo que tenía aplicado). Un vuelo es un tramo y el mismo vuelo puede llevar a varias personas, así que las cifras no se suman. «Gobierno» y «Casa Real» son el uso con el que la web clasifica el vuelo. Cargos actuales según <a href="https://www.lamoncloa.gob.es/gobierno/composiciondelgobierno/paginas/index.aspx">La Moncloa</a> (Gobierno) y la Casa Real; de Nadia Calviño se indica también el que tenía hasta dic. 2023. Fotos: Wikipedia (Wikimedia Commons); si no cargan se muestran las iniciales.</p>
     </div>
 
     <div class="exec" style="margin-top:16px">
@@ -88,7 +88,7 @@ const PAX=[
 ];
 const ini=n=>n.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 const el=document.getElementById('pax');if(!el)return;
-el.innerHTML=PAX.map((x,i)=>`<article class="px"><span class="av" id="av${i}" aria-hidden="true">${ini(x[0])}</span><div><b>${x[0]}</b><span class="cg">${x[4]}</span><small>${x[1]} · ${x[2]} vuelos</small><a class="ph" id="ph${i}" href="https://${x[5]||'es'}.wikipedia.org/wiki/${encodeURIComponent(x[3])}" target="_blank" rel="noopener">Wikipedia</a></div></article>`).join('');
+el.innerHTML=PAX.map((x,i)=>`<article class="px"><span class="av" id="av${i}" aria-hidden="true">${ini(x[0])}</span><div><b>${x[0]}</b><span class="cg">${x[4]}</span><small>${x[1]} · ${x[2]} vuelos</small></div></article>`).join('');
 PAX.forEach((x,i)=>{try{fetch('https://'+(x[5]||'es')+'.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(x[3])).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.type==='standard'&&j.thumbnail&&j.thumbnail.source){const a=document.getElementById('av'+i);if(a){a.innerHTML='';const im=new Image();im.alt='';im.referrerPolicy='no-referrer';im.src=j.thumbnail.source;im.onerror=()=>{a.textContent=ini(x[0])};a.appendChild(im)}}}).catch(()=>{})}catch(e){}});
 })();
 </script>
