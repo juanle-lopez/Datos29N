@@ -31,7 +31,22 @@ const STOPS=[[0,[190,50,190]],[.06,[150,18,60]],[.16,[200,32,36]],[.28,[236,84,2
 const LAND='#4b6684',LANDHI='#93a6ba';
 const lerpC=(p)=>{let a=STOPS[0],b=STOPS[STOPS.length-1];for(let i=1;i<STOPS.length;i++)if(p<=STOPS[i][0]){a=STOPS[i-1];b=STOPS[i];break}const k=b[0]===a[0]?0:(p-a[0])/(b[0]-a[0]),e=k*k*(3-2*k);return 'rgb('+[0,1,2].map(n=>Math.round(a[1][n]+(b[1][n]-a[1][n])*e)).join(',')+')'};
 // Color continuo: mezcla la posición del país en la lista y su valor (escala logarítmica); sin saltos bruscos.
-function mkSC(values){const vs=values.filter(x=>x>0),n=vs.length,mx=Math.max(1,...vs);return v=>{if(!v)return 'none';const gt=vs.filter(x=>x>v).length,pr=n>1?gt/(n-1):0,pv=1-Math.log(1+v)/Math.log(1+mx);return lerpC(Math.min(1,.65*pr+.35*pv))}}
+function mkP(values){const vs=values.filter(x=>x>0),n=vs.length,mx=Math.max(1,...vs);return v=>{const gt=vs.filter(x=>x>v).length,pr=n>1?gt/(n-1):0,pv=1-Math.log(1+v)/Math.log(1+mx);return Math.min(1,.65*pr+.35*pv)}}
+function mkSC(values){const f=mkP(values);return v=>v?lerpC(f(v)):'none'}
+// Campo de calor continuo: cada punto del mapa mezcla el valor de su país con el de los vecinos cercanos (gaussiana), como un mapa del tiempo.
+const HCACHE={};
+function heatField(items,W,H,scale,sigma){
+  const w=Math.round(W*scale),h=Math.round(H*scale),m=document.createElement('canvas');m.width=w;m.height=h;const mc=m.getContext('2d',{willReadFrequently:true});mc.scale(scale,scale);
+  items.forEach((it,i)=>{mc.fillStyle=`rgb(${(i+1)&255},${(i+1)>>8},0)`;it.ds.forEach(d=>mc.fill(new Path2D(d)))});
+  const md=mc.getImageData(0,0,w,h).data,out=document.createElement('canvas');out.width=w;out.height=h;const oc=out.getContext('2d'),od=oc.createImageData(w,h),o=od.data;
+  const T=24,tx=Math.ceil(W/T),ty=Math.ceil(H/T),R=3*sigma+T,tiles=[];
+  for(let a=0;a<ty;a++)for(let b=0;b<tx;b++){const cx=b*T+T/2,cy=a*T+T/2;tiles.push(items.map((it,i)=>[i,it]).filter(([i,it])=>Math.hypot(it.cx-cx,it.cy-cy)<=R).map(x=>x[0]))}
+  const k2=1/(2*sigma*sigma);
+  for(let y=0;y<h;y++){const wy=y/scale,tr=Math.floor(wy/T);for(let x=0;x<w;x++){const q=(y*w+x)*4,id=md[q]+(md[q+1]<<8);if(!id||md[q+3]<128)continue;const own=items[id-1];if(!own)continue;
+    const wx=x/scale,lst=tiles[tr*tx+Math.floor(wx/T)];let dx=wx-own.cx,dy=wy-own.cy,w0=1+3*Math.exp(-(dx*dx+dy*dy)*k2),num=w0*own.p,den=w0;
+    for(let n=0;n<lst.length;n++){const it=items[lst[n]];if(it===own)continue;dx=wx-it.cx;dy=wy-it.cy;const ww=2*Math.exp(-(dx*dx+dy*dy)*k2);num+=ww*it.p;den+=ww}
+    const c=lerpC(Math.min(1,num/den)).match(/\d+/g);o[q]=+c[0];o[q+1]=+c[1];o[q+2]=+c[2];o[q+3]=255}}
+  oc.putImageData(od,0,0);return out.toDataURL('image/png')}
 const SCGRAD='linear-gradient(90deg,'+STOPS.slice().reverse().map(x=>`rgb(${x[1].join(',')}) ${(1-x[0])*100}%`).join(',')+')';
 const PLANE='M7,0L2,-1.7L-1,-6L-2.8,-6L-1.4,-1.5L-5,-1.2L-6.2,-3L-7.6,-3L-6.6,0L-7.6,3L-6.2,3L-5,1.2L-1.4,1.5L-2.8,6L-1,6L2,1.7Z';
 function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
@@ -47,8 +62,10 @@ function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
 function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px;max-width:360px"><span style="display:block;height:8px;border-radius:4px;background:${SCGRAD}"></span><span style="display:flex;justify-content:space-between;font-size:11px"><span>1–2 visitas</span><span>Pocas</span><span>Frecuente</span><span>Los más visitados</span></span></span>`}
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),cf=mkSC(Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
-  const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?LANDHI:heat(W[k]||0,cf)}"/>`).join('');
-  const glow=Object.entries(G.world).filter(([k])=>W[k]&&k!=='ESP').map(([k,d])=>`<path d="${d}" fill="${heat(W[k],cf)}"/>`).join('');
+  const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?LANDHI:(W[k]?'rgba(0,0,0,0)':LAND)}"/>`).join('');
+  const pf=mkP(Object.values(W)),vis=Object.keys(W).filter(k=>W[k]&&k!=='ESP'&&G.world[k]&&G.cent[k]),hk='w|'+fy+'|'+fu;
+  if(!HCACHE[hk])HCACHE[hk]=heatField(vis.map(k=>({ds:[G.world[k]],cx:G.cent[k][0],cy:G.cent[k][1],p:pf(W[k])})),G.w,G.h,1.6,13);
+  const clip=vis.map(k=>`<path d="${G.world[k]}"/>`).join('');
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const EU=wz==='eu',inEU=([x,y])=>x>=425&&x<=612&&y>=30&&y<=158,
     lst=EU?Object.entries(W).filter(([k])=>G.cent[k]&&inEU(G.cent[k])):top.filter(([k])=>G.cent[k]),
@@ -57,7 +74,7 @@ function worldMap(W){
   if(EU){const used=[];lst.slice().sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{const [x,y]=G.cent[k],nm=(D.names[k]||k).replace('Estados Unidos de América','EE. UU.').replace('República Dominicana','R. Dominicana').replace('Emiratos Árabes Unidos','EAU'),t=nm+' '+v,wd=t.length*1.7,hit=b=>used.some(u=>b[0]<u[2]&&b[2]>u[0]&&b[1]<u[3]&&b[3]>u[1]);let yy=y,ok=false;for(const dy of [0,3.2,-3.2,6.4,-6.4]){const bx=[x-wd/2,y+dy-2.2,x+wd/2,y+dy+.6];if(!hit(bx)){used.push(bx);yy=y+dy;ok=true;break}}if(!ok)return;labels+=`<text x="${x}" y="${yy}" text-anchor="middle" style="font-size:2.6px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:.9px;pointer-events:none">${t}</text>`})}
   document.getElementById('vworld').classList.toggle('eu',EU);
   document.querySelectorAll('[data-wz]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wz===wz)));
-  document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><filter id="hglow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="${EU?.9:3.2}"/></filter></defs><g filter="url(#hglow)" opacity=".8" style="pointer-events:none">${glow}</g>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
+  document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><clipPath id="hclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.w}" height="${G.h}" preserveAspectRatio="none" clip-path="url(#hclip)" style="pointer-events:none"/>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
   document.querySelectorAll('#vworld .c').forEach(p=>p.addEventListener('click',()=>{const sc=document.querySelector('#vworld').parentNode.scrollLeft;selW=p.dataset.i;worldTip(W);worldMap(W);document.querySelector('#vworld').parentNode.scrollLeft=sc}));
   if(!window._vc&&!EU){window._vc=1;const c=document.querySelector('#vworld').parentNode;setTimeout(()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)},120)}
   document.getElementById('vleg').innerHTML=`<span>Menos visitados</span><i style="background:${SCGRAD}"></i><span>Más visitados (hasta ${fmt(mx)} veces)</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Líneas y aviones, mismos colores: '+tierLeg()+'</div>';
@@ -71,12 +88,22 @@ function worldTip(W){
 function spainMap(S){
   const mx=Math.max(1,...Object.values(S)),cf=mkSC(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid').map(x=>x[1]));
   const ca=k=>P2CA[k];
-  const glow=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return v?`<path d="${d}" fill="${heat(v,cf)}"/>`:''}).join(''),paths=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return `<path class="c${selS===c?' sel':''}" data-c="${c}" d="${d}" fill="${c==='Comunidad de Madrid'?LANDHI:heat(v,cf)}" stroke-width=".5"/>`}).join('');
-  document.getElementById('vspain').innerHTML=`<svg viewBox="0 0 ${G.sw} ${G.sh+70}" style="max-height:520px" role="img" aria-label="Mapa de calor de comunidades"><defs><filter id="sglow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3.5"/></filter></defs><g filter="url(#sglow)" opacity=".8" style="pointer-events:none">${glow}</g>${paths}</svg>`;
+  const paths=Object.entries(G.spain).map(([k,d])=>{const c=ca(k),v=c==='Comunidad de Madrid'?0:(S[c]||0);return `<path class="c${selS===c?' sel':''}" data-c="${c}" d="${d}" fill="${c==='Comunidad de Madrid'?LANDHI:(v?'rgba(0,0,0,0)':LAND)}" stroke-width=".5"/>`}).join('');
+  document.getElementById('vspain').innerHTML=`<svg viewBox="0 0 ${G.sw} ${G.sh+70}" style="max-height:520px" role="img" aria-label="Mapa de calor de comunidades">${paths}</svg>`;
+  spainHeat(S);
   spainArcs(S);
   spainCM(S,cf);
   const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Líneas y aviones: '+tierLeg();
   document.querySelectorAll('#vspain .c').forEach(p=>p.addEventListener('click',()=>{selS=p.dataset.c;spainTip(S);spainMap(S)}));
+}
+function spainHeat(S){
+  const svg=document.querySelector('#vspain svg');if(!svg)return;
+  const pf=mkP(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid'&&S[k]>0).map(x=>x[1])),g={};
+  svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(!c||c==='Comunidad de Madrid'||!S[c])return;const b=pt.getBBox(),r=g[c];if(!r)g[c]={ds:[pt.getAttribute('d')],x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height};else{r.ds.push(pt.getAttribute('d'));r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
+  const keys=Object.keys(g),hk='s|'+fy+'|'+fu,Hh=G.sh+70;
+  if(!HCACHE[hk])HCACHE[hk]=heatField(keys.map(k=>({ds:g[k].ds,cx:(g[k].x0+g[k].x1)/2,cy:(g[k].y0+g[k].y1)/2,p:pf(S[k])})),G.sw,Hh,1.2,60);
+  const clip=keys.map(k=>g[k].ds.map(d=>`<path d="${d}"/>`).join('')).join('');
+  svg.insertAdjacentHTML('afterbegin',`<defs><clipPath id="sclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.sw}" height="${Hh}" preserveAspectRatio="none" clip-path="url(#sclip)" style="pointer-events:none"/>`);
 }
 function spainCM(S,cf){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
