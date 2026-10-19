@@ -55,30 +55,6 @@
     <div class="sech"><span class="num">Falcon</span><h2>Los vuelos de los aviones oficiales</h2><p class="lead">Cada vuelo registrado de los 9 aviones del Grupo 45 del Ejército del Aire (5 Falcon 900, 2 A310 y 2 A330) desde el 1 de marzo de 2021. Filtra por año y por uso.</p></div>
     <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>El registro no indica quién iba a bordo</b> (la sección de pasajeros es una atribución de esa web, sin verificar aquí): clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
 
-    <div class="exec vhero" id="v_hero" style="margin-top:14px"></div>
-
-    <div class="exec" id="v_basico" style="margin-top:14px">
-      <h2 class="big">Lo básico, en un minuto</h2>
-      <div class="vq">
-        <details open><summary>¿Qué son estos aviones?</summary><p>Nueve aeronaves del Grupo 45 de las Fuerzas Aéreas: cinco Falcon 900, dos Airbus A310 y dos Airbus A330. Transportan sobre todo a miembros de la Casa Real y del Gobierno, pero también hacen traslados militares y vuelos de mantenimiento, que el registro cuenta aparte. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
-        <details><summary>¿Quién viaja en cada vuelo?</summary><p>No se sabe con el registro de vuelos: no identifica pasajeros ni el motivo del viaje. Por eso «uso Gobierno» no significa que fuera el presidente, y las cifras que se atribuyen a una persona concreta no se pueden verificar con este dato. La Administración no publica de forma proactiva quién viaja; se conoce por solicitudes de información pública. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
-        <details><summary>¿Qué significa «sin uso registrado»?</summary><p>Son vuelos que aparecen en el seguimiento pero que no encajan con la agenda oficial del Gobierno, según cuenta la prensa sobre cómo funciona la web de origen. Que no figuren en la agenda no quiere decir que fueran irregulares: solo que no se puede saber su propósito con estos datos. <span class="src">(<a href="https://www.vozpopuli.com/espana/pablo-banuelos-falcon-sanchez.html" target="_blank" rel="noopener">Vozpópuli</a>)</span></p></details>
-        <details><summary>¿Cuánto cuesta y cuánto contamina?</summary><p>Nadie publica una cifra oficial por vuelo. Las que ves aquí son estimaciones de falcondespega.es a partir de combustible, tasas, tripulación y otros conceptos; su propia metodología las llama «orientativas». <span class="src">(<a href="https://falcondespega.es/metodologia" target="_blank" rel="noopener">metodología de origen</a>)</span></p></details>
-        <details><summary>¿Es mucho o poco comparado con otros presidentes?</summary><p>Con otro dato, de viajes oficiales (no de vuelos) y de periodos distintos: según una solicitud de información pública de El Economista recogida por Maldita, Pedro Sánchez hizo 612 viajes oficiales entre junio de 2018 y septiembre de 2022, Zapatero 242, Aznar 240, Felipe González 164 y Rajoy 148. Los periodos de mandato son de duración distinta, así que no son comparables sin ajustar. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
-      </div>
-    </div>
-
-    <div class="exec" id="v_juego" style="margin-top:14px">
-      <h2 class="big">¿Cuántas veces han volado a tu zona?</h2>
-      <p class="lead">Elige una comunidad o un país, adivina y comprueba. Cuenta las veces que aparece como origen o destino en todo el registro (marzo de 2021 a octubre de 2026).</p>
-      <div class="vgame">
-        <label for="vgsel"><b>Lugar</b></label>
-        <select id="vgsel"></select>
-        <p id="vgq" class="note" style="margin:10px 0 6px">¿Cuántas veces crees que aparece?</p>
-        <div class="rowf" id="vgopt"></div>
-        <div id="vgres" class="vres" aria-live="polite"></div>
-      </div>
-    </div>
 
     <div class="exec" style="margin-top:14px">
       <div class="rowf" id="vy"><b>Año</b></div>
@@ -101,6 +77,30 @@
       <div class="gchart"><div id="vspain" class="vmap"></div></div>
       <div class="gtip" id="vtip2">Toca una comunidad.</div>
       <div class="vleg" id="vleg2" style="flex-wrap:wrap"></div>
+    </div>
+
+    <div class="exec vhero" id="v_hero" style="margin-top:14px"></div>
+    <div class="exec" id="v_basico" style="margin-top:14px">
+      <h2 class="big">Lo básico, en un minuto</h2>
+      <div class="vq">
+        <details open><summary>¿Qué son estos aviones?</summary><p>Nueve aeronaves del Grupo 45 de las Fuerzas Aéreas: cinco Falcon 900, dos Airbus A310 y dos Airbus A330. Transportan sobre todo a miembros de la Casa Real y del Gobierno, pero también hacen traslados militares y vuelos de mantenimiento, que el registro cuenta aparte. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+        <details><summary>¿Quién viaja en cada vuelo?</summary><p>No se sabe con el registro de vuelos: no identifica pasajeros ni el motivo del viaje. Por eso «uso Gobierno» no significa que fuera el presidente, y las cifras que se atribuyen a una persona concreta no se pueden verificar con este dato. La Administración no publica de forma proactiva quién viaja; se conoce por solicitudes de información pública. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+        <details><summary>¿Qué significa «sin uso registrado»?</summary><p>Son vuelos que aparecen en el seguimiento pero que no encajan con la agenda oficial del Gobierno, según cuenta la prensa sobre cómo funciona la web de origen. Que no figuren en la agenda no quiere decir que fueran irregulares: solo que no se puede saber su propósito con estos datos. <span class="src">(<a href="https://www.vozpopuli.com/espana/pablo-banuelos-falcon-sanchez.html" target="_blank" rel="noopener">Vozpópuli</a>)</span></p></details>
+        <details><summary>¿Cuánto cuesta y cuánto contamina?</summary><p>Nadie publica una cifra oficial por vuelo. Las que ves aquí son estimaciones de falcondespega.es a partir de combustible, tasas, tripulación y otros conceptos; su propia metodología las llama «orientativas». <span class="src">(<a href="https://falcondespega.es/metodologia" target="_blank" rel="noopener">metodología de origen</a>)</span></p></details>
+        <details><summary>¿Es mucho o poco comparado con otros presidentes?</summary><p>Con otro dato, de viajes oficiales (no de vuelos) y de periodos distintos: según una solicitud de información pública de El Economista recogida por Maldita, Pedro Sánchez hizo 612 viajes oficiales entre junio de 2018 y septiembre de 2022, Zapatero 242, Aznar 240, Felipe González 164 y Rajoy 148. Los periodos de mandato son de duración distinta, así que no son comparables sin ajustar. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+      </div>
+    </div>
+
+    <div class="exec" id="v_juego" style="margin-top:14px">
+      <h2 class="big">¿Cuántas veces han volado a tu zona?</h2>
+      <p class="lead">Elige una comunidad o un país, adivina y comprueba. Cuenta las veces que aparece como origen o destino en todo el registro (marzo de 2021 a octubre de 2026).</p>
+      <div class="vgame">
+        <label for="vgsel"><b>Lugar</b></label>
+        <select id="vgsel"></select>
+        <p id="vgq" class="note" style="margin:10px 0 6px">¿Cuántas veces crees que aparece?</p>
+        <div class="rowf" id="vgopt"></div>
+        <div id="vgres" class="vres" aria-live="polite"></div>
+      </div>
     </div>
 
     <div class="exec" style="margin-top:16px">
@@ -151,7 +151,7 @@
   <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=33"></script>
+<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=34"></script>
 <script>
 (function(){
 const PAX=[
