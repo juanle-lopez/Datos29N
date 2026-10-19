@@ -1,13 +1,41 @@
 {
- "actualizado": "2026-10-18",
+ "actualizado": "2026-10-19",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae",
+   "fecha": "19 oct",
+   "url": "https://www.infobae.com/espana/2026/10/19/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-la-ley-de-nietos-o-los-anuncios-sobre-pensiones/",
+   "titular": "Elecciones generales 29-N, en directo: última hora de los sondeos, la ley de nietos o los anuncios sobre pensiones",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Libertad Digital",
+   "fecha": "19 oct",
+   "url": "https://www.libertaddigital.com/espana/politica/2026-10-19/vox-esta-disparado-el-psoe-en-minimos-y-el-frente-amplio-sube-con-fuerza-segun-una-encuesta-7478143/",
+   "titular": "Vox está disparado, el PSOE en mínimos y el Frente Amplio sube con fuerza, según una encuesta",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Moncloa.com",
    "fecha": "16 oct",
    "url": "https://www.moncloa.com/2026/10/16/encuestas-29n-psoe-pp-vox-cis-3449630/",
    "titular": "Sánchez encara el 29-N con las encuestas en contra: PP y Vox suman 201 escaños y el CIS ve empate técnico",
    "tema": "Encuestas"
+  },
+  {
+   "medio": "Vozpópuli",
+   "fecha": "oct",
+   "url": "https://www.vozpopuli.com/espana/politica/elecciones-generales-del-29-n-en-directo-ultima-hora-de-pedro-sanchez-feijoo-abascal-y-frente-amplio.html",
+   "titular": "Elecciones generales del 29-N, en directo: última hora de Pedro Sánchez, Feijóo, Abascal y Frente Amplio",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "elEconomista",
+   "fecha": "oct",
+   "url": "https://www.eleconomista.es/actualidad/noticias/d8424/10/26/ultima-hora-del-adelanto-de-elecciones-generales-en-espana-20262027-en-directo-pedro-sanchez-convoca-elecciones-para-el-29-de-noviembre.html",
+   "titular": "Última hora de las elecciones generales en España 2026, en directo: encuestas, sondeos y plazos",
+   "tema": "Proceso"
   },
   {
    "medio": "Euronews",
@@ -31,39 +59,11 @@
    "tema": "Campaña"
   },
   {
-   "medio": "Diario de León",
-   "fecha": "5 oct",
-   "url": "https://www.diariodeleon.es/nacional/261005/2099326/elecciones-generales-2026-directo-todas-reacciones-adelanto-pedro-sanchez.html",
-   "titular": "Directo: todas las reacciones al adelanto electoral de Pedro Sánchez",
-   "tema": "Convocatoria"
-  },
-  {
-   "medio": "Libertad Digital",
-   "fecha": "5 oct",
-   "url": "https://www.libertaddigital.com/espana/2026-10-05/este-es-el-dia-en-que-sabras-si-te-ha-tocado-mesa-electoral-por-que-te-eligen-y-como-llega-la-notificacion-7470461/",
-   "titular": "Este es el día en que sabrás si te ha tocado mesa electoral",
-   "tema": "Proceso"
-  },
-  {
-   "medio": "Ara",
-   "fecha": "oct",
-   "url": "https://es.ara.cat/politica/dicen-encuestas-elecciones-espanolas-29-n_1_5874092.html",
-   "titular": "¿Qué dicen las encuestas de las elecciones españolas del 29-N?",
-   "tema": "Encuestas"
-  },
-  {
    "medio": "El Salto",
    "fecha": "oct",
    "url": "https://www.elsaltodiario.com/elecciones/sumar-tercera-fuerza-politica-generales-segun-cis",
    "titular": "Sumar, tercera fuerza política en las generales según el CIS",
    "tema": "Encuestas"
-  },
-  {
-   "medio": "Valencia Plaza",
-   "fecha": "oct",
-   "url": "https://valenciaplaza.com/valenciaplaza/feijoo-candidato-mas-patea-espana-frente-campana-medios-pedro-sanchez",
-   "titular": "Feijóo, el candidato que más «patea» España frente a la campaña en medios de Pedro Sánchez",
-   "tema": "Campaña"
   },
   {
    "medio": "La Comarca",
