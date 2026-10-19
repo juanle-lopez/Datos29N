@@ -64,7 +64,7 @@ function escenario(clave,trend,N=4000){
       K.forEach(k=>out.trayectorias[k].push(arr[k]));
     }
     // histograma de escaños el 29-N (de las 4.000 simulaciones), normalizado a 1
-    out.hist={};K.forEach(k=>{const v=f.dr[k],mn=Math.min(...v),mx=Math.max(...v),c=new Array(mx-mn+1).fill(0);v.forEach(x=>c[x-mn]++);const w=[1,2,3,4,3,2,1],sm=c.map((_,i)=>w.reduce((a,wi,j)=>{const t=i+j-3;return a+(t>=0&&t<c.length?wi*c[t]:0)},0)),m=Math.max(...sm);out.hist[k]={min:mn,c:sm.map(x=>round(x/m,3))}});
+    out.hist={};K.forEach(k=>{const v=f.dr[k].filter((x,_,A)=>true),mn=pct(f.dr[k],.025),mx=pct(f.dr[k],.975),c=new Array(mx-mn+1).fill(0);v.forEach(x=>{if(x>=mn&&x<=mx)c[x-mn]++});const w=[1,2,3,4,3,2,1],sm=c.map((_,i)=>w.reduce((a,wi,j)=>{const t=i+j-3;return a+(t>=0&&t<c.length?wi*c[t]:0)},0)),m=Math.max(...sm);out.hist[k]={min:mn,c:sm.map(x=>round(x/m,3))}});
   }
   K.forEach(k=>out.escanos[k]={c:f.cs[k],p10:pct(f.dr[k],.1),p50:pct(f.dr[k],.5),p90:pct(f.dr[k],.9)});
   // Sin probabilidad de mayoría: el modelo no recoge errores comunes ni de método (ver página).
