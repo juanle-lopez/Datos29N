@@ -48,6 +48,7 @@
       <div class="resc" style="display:flex;flex-direction:column;gap:20px;min-width:0">
         <section class="panel" aria-label="Resultado">
           <h2>Escaños en el Congreso</h2>
+          <p class="note" style="margin:0 0 10px"><b>Media encuestas:</b> media simple (sin ponderar) de 10 sondeos nacionales publicados del 9 al 12-oct-2026; sin el CIS. Esa media es solo el porcentaje de voto que se introduce en el simulador; los escaños los calcula el modelo.</p>
           <div class="hemibox" id="hemi2"></div><p class="hcap2">Disposición convencional de los escaños en el hemiciclo; no implica posición ideológica.</p>
           <div class="bar" id="bar" role="img" aria-label="Reparto de escaños"><div class="mark" id="mark"><span>176</span></div></div>
           <div class="scale"><span>0</span><span>350</span></div>
@@ -69,6 +70,7 @@
     </div>
     <div class="foot" style="margin-top:20px">
       <p><b>Método.</b> Cada partido nacional (PP, PSOE, Vox, Sumar) multiplica su porcentaje de 2023 en cada provincia por la razón entre su voto nacional elegido y el de 2023. Con los valores de 2023 el modelo reproduce exactamente los 350 escaños de las 52 circunscripciones.</p>
+      <p><b>Media y encuestas.</b> La "Media encuestas" es la media simple de la estimación de voto de cada partido en 10 encuestas nacionales publicadas: todas pesan igual, sin ponderar por tamaño de muestra, fecha ni empresa, y sin el CIS. No entrevista a nadie: promedia resultados ya publicados. Una encuesta, en cambio, es una muestra de personas a la que se pregunta su intención de voto, y cada empresa aplica su propia corrección. Los escaños no los dan las encuestas: los calcula este simulador a partir del porcentaje medio (voto de 2023 por provincia y reparto D'Hondt), por lo que pueden diferir de los que publica cada empresa o medio.</p>
       <p><b>Límites.</b> Es un escenario, no una previsión: no modela voto útil ni cambios en las listas. Resultados de 2023 tomados de las tablas por circunscripción de Wikipedia (los escaños coinciden con los oficiales). "Media encuestas": media simple de 10 sondeos publicados del 9 al 12-oct-2026 (Sigma Dos, GAD3, GESOP, SocioMétrica, Hamalgama, Target Point, InvyMark, 40dB, IMOP y DYM; recopilados en <a href="https://elecciones29noviembre.com/encuestas/">elecciones29noviembre.com</a>): PP 31,9 · PSOE 26,6 · Vox 18,8 · Sumar 6,3 + Podemos 2,8 agrupados. No incluye el CIS (estimación del 14-oct, trabajo de campo 1–6 oct: PSOE 34,0 · PP 22,2 · Vox 17,1 · Sumar 6,1 · Podemos 3,1), que es un organismo público con metodología distinta y se cita aparte. El cierre de campo no figura en todos los sondeos.</p>
     </div>
   </section>
