@@ -26,20 +26,22 @@ function kpis(){
   ].map(x=>`<div><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
   if(window.rvReady)rvScan();
 }
-function heat(v,mx){const a=v?Math.max(.12,Math.log(1+v)/Math.log(1+mx)):0;return v?`color-mix(in srgb,var(--hot) ${Math.round(a*100)}%,var(--panel))`:'color-mix(in srgb,var(--line) 55%,transparent)'}
-const TIER=r=>r>=.3?['#c0392b','Muy frecuente']:r>=.1?['#e67e22','Frecuente']:r>=.03?['#2e9e5b','Poco frecuente']:['#8b95a1','Muy puntual'];
+function heat(v,mx){return v?SC(v,mx):'color-mix(in srgb,var(--line) 55%,transparent)'}
+const STOPS=[[0,[154,164,174]],[.22,[191,227,200]],[.45,[79,174,114]],[.68,[240,160,48]],[.84,[232,100,28]],[1,[192,40,28]]];
+function SC(v,mx){const t=Math.max(0,Math.min(1,Math.log(1+v)/Math.log(1+mx)));let a=STOPS[0],b=STOPS[STOPS.length-1];for(let i=1;i<STOPS.length;i++)if(t<=STOPS[i][0]){a=STOPS[i-1];b=STOPS[i];break}const k=b[0]===a[0]?0:(t-a[0])/(b[0]-a[0]);return 'rgb('+[0,1,2].map(n=>Math.round(a[1][n]+(b[1][n]-a[1][n])*k)).join(',')+')'}
+const SCGRAD='linear-gradient(90deg,'+STOPS.map(x=>`rgb(${x[1].join(',')}) ${x[0]*100}%`).join(',')+')';
 const PLANE='M7,0L2,-1.7L-1,-6L-2.8,-6L-1.4,-1.5L-5,-1.2L-6.2,-3L-7.6,-3L-6.6,0L-7.6,3L-6.2,3L-5,1.2L-1.4,1.5L-2.8,6L-1,6L2,1.7Z';
 function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce){
   let lines='',pl='';
-  list.forEach(([x,y,v],ai)=>{const r=v/mx,[col]=TIER(r),dx=x-mx0,dy=y-my0,len=Math.hypot(dx,dy),cx=mx0+dx/2,cy=my0+dy/2-len*bend,w=Math.sqrt(r),
+  list.forEach(([x,y,v],ai)=>{const r=v/mx,col=SC(v,mx),dx=x-mx0,dy=y-my0,len=Math.hypot(dx,dy),cx=mx0+dx/2,cy=my0+dy/2-len*bend,w=Math.sqrt(r),
     d=`M${mx0.toFixed(1)},${my0.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`,dr=`M${x.toFixed(1)},${y.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`;
-    lines+=`<path class="arc" d="${d}" style="stroke:${col}" stroke-width="${(.6+w*3).toFixed(2)}"/>`;
+    lines+=`<path class="arc" d="${d}" style="stroke:${col};opacity:.95" stroke-width="${(.6+w*3).toFixed(2)}"/>`;
     if(reduce)return;
     const np=Math.min(4,1+Math.floor(w*4)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=(sc*(.75+w*.5)).toFixed(2);
     for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d;
       pl+=`<g opacity="0"><animateMotion dur="${dur.toFixed(1)}s" begin="-${bg}s" repeatCount="indefinite" path="${path}" rotate="auto"/><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.88;1" dur="${dur.toFixed(1)}s" begin="-${bg}s" repeatCount="indefinite"/><path d="${PLANE}" transform="scale(${s})" fill="${col}" stroke="#fff" stroke-width="1.1" paint-order="stroke"/></g>`}});
   return lines+pl}
-function tierLeg(){return `<span style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">${[.5,.15,.05,.01].map(r=>{const [c,l]=TIER(r);return `<span style="display:inline-flex;gap:5px;align-items:center"><i style="flex:0 0 16px;width:16px;height:4px;border-radius:2px;background:${c};display:inline-block"></i>${l}</span>`}).join('')}</span>`}
+function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px;max-width:360px"><span style="display:block;height:8px;border-radius:4px;background:${SCGRAD}"></span><span style="display:flex;justify-content:space-between;font-size:11px"><span>Muy puntual</span><span>Poco frecuente</span><span>Frecuente</span><span>Muy frecuente</span></span></span>`}
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
   const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?'color-mix(in srgb,var(--fg) 22%,var(--panel))':heat(W[k]||0,mx)}"/>`).join('');
@@ -48,7 +50,7 @@ function worldMap(W){
   document.getElementById('vworld').innerHTML=`<svg viewBox="0 0 ${G.w} ${G.h}" role="img" aria-label="Mapa de calor de destinos de los vuelos">${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="5" fill="var(--fg)" stroke="var(--panel)" stroke-width="1.5"/></svg>`;
   document.querySelectorAll('#vworld .c').forEach(p=>p.addEventListener('click',()=>{const sc=document.querySelector('#vworld').parentNode.scrollLeft;selW=p.dataset.i;worldTip(W);worldMap(W);document.querySelector('#vworld').parentNode.scrollLeft=sc}));
   if(!window._vc){window._vc=1;const c=document.querySelector('#vworld').parentNode;setTimeout(()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)},120)}
-  document.getElementById('vleg').innerHTML=`<span>1 visita</span><i></i><span>${fmt(mx)} visitas</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px">Líneas y aviones: '+tierLeg()+'</div>';
+  document.getElementById('vleg').innerHTML=`<span>1 visita</span><i style="background:${SCGRAD}"></i><span>${fmt(mx)} visitas</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Líneas y aviones, mismos colores: '+tierLeg()+'</div>';
 }
 function worldTip(W){
   const el=document.getElementById('vtip');if(!selW){return}
@@ -133,8 +135,26 @@ function waffle(){
   document.getElementById('vwl').innerHTML=D.usos.filter(u=>u!=='Otro').map(u=>`<span style="display:flex;gap:6px;align-items:center"><i style="width:10px;height:10px;border-radius:50%;background:${UC[u]};display:inline-block"></i>${u}</span>`).join('');
   if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();el.classList.add('on')}},{threshold:.15});io.observe(el)}else el.classList.add('on');
 }
+function juego(){
+  const ca={},pa={};D.vis.forEach(r=>{const [,,iso,c,n]=r;if(iso==='ESP'){if(c&&c!=='(sin precisar)'&&c!=='Comunidad de Madrid')ca[c]=(ca[c]||0)+n}else pa[iso]=(pa[iso]||0)+n});
+  // ca: nombres de comunidad tal cual vienen; pa: ISO
+  const lst=[...Object.keys(ca).sort((a,b)=>a.localeCompare(b,'es')).map(k=>['c|'+k,k]),...Object.keys(pa).sort((a,b)=>(D.names[a]||a).localeCompare(D.names[b]||b,'es')).map(k=>['p|'+k,D.names[k]||k])];
+  const sel=document.getElementById('vgsel');
+  sel.innerHTML='<optgroup label="Comunidades de España">'+lst.filter(x=>x[0][0]==='c').map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')+'</optgroup><optgroup label="Países">'+lst.filter(x=>x[0][0]==='p').map(x=>`<option value="${x[0]}">${x[1]}</option>`).join('')+'</optgroup>';
+  const B=[['Menos de 10',0,9],['De 10 a 49',10,49],['De 50 a 199',50,199],['200 o más',200,1e9]];
+  const opt=document.getElementById('vgopt'),res=document.getElementById('vgres');
+  const val=()=>{const [t,k]=sel.value.split('|');return t==='c'?[ca[k]||0,k,Object.values(ca),'comunidades']:[pa[k]||0,D.names[k]||k,Object.values(pa),'países']};
+  const draw=()=>{res.innerHTML='';opt.innerHTML=B.map((b,i)=>`<button type="button" class="chip" data-g="${i}">${b[0]}</button>`).join('');
+    opt.querySelectorAll('[data-g]').forEach(bt=>bt.addEventListener('click',()=>{const g=+bt.dataset.g,[v,nm,all,gr]=val(),ok=v>=B[g][1]&&v<=B[g][2],rank=all.filter(x=>x>v).length+1,mx=Math.max(...all);
+      const txt=`${nm}: ${fmt(v)} ${v===1?'vez':'veces'} como origen o destino en los vuelos de los aviones oficiales (mar-2021 a oct-2026, según falcondespega.es). Es el nº ${rank} de ${all.length} ${gr}.`;
+      res.innerHTML=`<div class="big1"><span id="vgn">0</span> veces</div><p style="margin:4px 0">${ok?'Has acertado.':'No era ese tramo.'} ${nm} es la ${gr==='países'?'posición':'posición'} nº <b>${rank}</b> de ${all.length} ${gr}.</p><div class="vbar"><i></i></div><p class="note" style="margin:0 0 10px">La barra se mide contra el lugar más visitado (${fmt(mx)} veces). Cuenta apariciones como origen o destino, no viajes de ida y vuelta.</p><button type="button" class="chip" id="vgsh">Compartir este dato</button> <button type="button" class="chip" id="vgre">Probar otro</button>`;
+      countUp(document.getElementById('vgn'),v,0);requestAnimationFrame(()=>requestAnimationFrame(()=>{res.querySelector('.vbar i').style.width=(v/mx*100)+'%'}));
+      document.getElementById('vgre').addEventListener('click',draw);
+      document.getElementById('vgsh').addEventListener('click',async e=>{const full=txt+' '+location.href.split('#')[0];try{if(navigator.share){await navigator.share({text:txt,url:location.href.split('#')[0]})}else{await navigator.clipboard.writeText(full);e.target.textContent='Copiado'}}catch(_){e.target.textContent='No se pudo copiar'}})}))};
+  sel.addEventListener('change',draw);draw();
+}
 function render(){chips();kpis();ritmo();const {W,S}=agg();worldMap(W);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
 document.addEventListener('click',e=>{if(e.target.id==='vplay'){playT?stopPlay():startPlay()}else if(playT&&e.target.closest&&e.target.closest('#vy,#vu')){stopPlay()}},true);
-Promise.all([fetch('assets/vuelos-data.json?v=16').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();hero();waffle();
+Promise.all([fetch('assets/vuelos-data.json?v=16').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();hero();waffle();juego();
  document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.666 tramos del 1-mar-2021 al 16-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
 }).catch(()=>{document.getElementById('vk').innerHTML='<p class="na">No se han podido cargar los datos.</p>'});

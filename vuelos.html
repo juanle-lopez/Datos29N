@@ -18,6 +18,17 @@
 .vhero .vh1 em{font-style:normal;color:var(--hot)}
 .vhero .vsub{color:var(--muted,#667);margin:0 0 12px;max-width:62ch}
 .vleg{flex-wrap:wrap}
+.vq details{border-top:1px solid var(--line);padding:10px 0}
+.vq details:first-child{border-top:0}
+.vq summary{cursor:pointer;font-weight:700}
+.vq p{margin:8px 0 0;max-width:70ch;line-height:1.5}
+.vq .src{font-size:12px;opacity:.8}
+.vgame select{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--fg);max-width:100%;margin-left:8px}
+.vres{margin-top:12px}
+.vres .big1{font-size:clamp(28px,8vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.vres .vbar{height:12px;border-radius:6px;background:color-mix(in srgb,var(--line) 70%,transparent);overflow:hidden;margin:10px 0}
+.vres .vbar i{display:block;height:100%;width:0;background:var(--hot);transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.vres button{font:inherit}
 .vcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
 .vcards div{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel)}
 .vcards b{display:block;font-size:clamp(22px,6vw,30px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
@@ -42,6 +53,29 @@
 
     <div class="exec vhero" id="v_hero" style="margin-top:14px"></div>
 
+    <div class="exec" id="v_basico" style="margin-top:14px">
+      <h2 class="big">Lo básico, en un minuto</h2>
+      <div class="vq">
+        <details open><summary>¿Qué son estos aviones?</summary><p>Nueve aeronaves del Grupo 45 de las Fuerzas Aéreas: cinco Falcon 900, dos Airbus A310 y dos Airbus A330. Transportan sobre todo a miembros de la Casa Real y del Gobierno, pero también hacen traslados militares y vuelos de mantenimiento, que el registro cuenta aparte. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+        <details><summary>¿Quién viaja en cada vuelo?</summary><p>No se sabe con el registro de vuelos: no identifica pasajeros ni el motivo del viaje. Por eso «uso Gobierno» no significa que fuera el presidente, y las cifras que se atribuyen a una persona concreta no se pueden verificar con este dato. La Administración no publica de forma proactiva quién viaja; se conoce por solicitudes de información pública. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+        <details><summary>¿Qué significa «sin uso registrado»?</summary><p>Son vuelos que aparecen en el seguimiento pero que no encajan con la agenda oficial del Gobierno, según cuenta la prensa sobre cómo funciona la web de origen. Que no figuren en la agenda no quiere decir que fueran irregulares: solo que no se puede saber su propósito con estos datos. <span class="src">(<a href="https://www.vozpopuli.com/espana/pablo-banuelos-falcon-sanchez.html" target="_blank" rel="noopener">Vozpópuli</a>)</span></p></details>
+        <details><summary>¿Cuánto cuesta y cuánto contamina?</summary><p>Nadie publica una cifra oficial por vuelo. Las que ves aquí son estimaciones de falcondespega.es a partir de combustible, tasas, tripulación y otros conceptos; su propia metodología las llama «orientativas». <span class="src">(<a href="https://falcondespega.es/metodologia" target="_blank" rel="noopener">metodología de origen</a>)</span></p></details>
+        <details><summary>¿Es mucho o poco comparado con otros presidentes?</summary><p>Con otro dato, de viajes oficiales (no de vuelos) y de periodos distintos: según una solicitud de información pública de El Economista recogida por Maldita, Pedro Sánchez hizo 612 viajes oficiales entre junio de 2018 y septiembre de 2022, Zapatero 242, Aznar 240, Felipe González 164 y Rajoy 148. Los periodos de mandato son de duración distinta, así que no son comparables sin ajustar. <span class="src">(<a href="https://maldita.es/malditateexplica/20230626/vuelos-falcon-pedro-sanchez/" target="_blank" rel="noopener">Maldita.es</a>)</span></p></details>
+      </div>
+    </div>
+
+    <div class="exec" id="v_juego" style="margin-top:14px">
+      <h2 class="big">¿Cuántas veces han volado a tu zona?</h2>
+      <p class="lead">Elige una comunidad o un país, adivina y comprueba. Cuenta las veces que aparece como origen o destino en todo el registro (marzo de 2021 a octubre de 2026).</p>
+      <div class="vgame">
+        <label for="vgsel"><b>Lugar</b></label>
+        <select id="vgsel"></select>
+        <p id="vgq" class="note" style="margin:10px 0 6px">¿Cuántas veces crees que aparece?</p>
+        <div class="rowf" id="vgopt"></div>
+        <div id="vgres" class="vres" aria-live="polite"></div>
+      </div>
+    </div>
+
     <div class="exec" style="margin-top:14px">
       <div class="rowf" id="vy"><b>Año</b></div>
       <div class="rowf" id="vu"><b>Uso</b></div>
@@ -50,7 +84,7 @@
 
     <div class="exec" style="margin-top:16px">
       <h2 class="big">Adónde han volado (mapa de calor)</h2>
-      <p class="lead">Cuanto más intenso el color, más veces ha aparecido ese país en un vuelo como origen o destino. Las líneas parten de Madrid, la base, y son más gruesas cuanto más vuelos. Toca un país para ver el detalle.</p>
+      <p class="lead">El color va de rojo (muy frecuentes) a naranja, verde cada vez más claro y gris (muy puntuales): cuántas veces ha aparecido ese país como origen o destino. Las líneas parten de Madrid, la base, y son más gruesas cuanto más vuelos. Toca un país para ver el detalle.</p>
       <div class="rowf" style="margin:8px 0"><button type="button" id="vplay" class="chip" aria-pressed="false">▶ Ver año a año</button><span id="vplst" class="note" style="margin:0 0 0 8px" aria-live="polite"></span></div>
       <div class="gchart"><div id="vworld" class="vmap"></div></div>
       <div class="gtip" id="vtip">Toca un país del mapa.</div>
@@ -59,7 +93,7 @@
 
     <div class="exec" style="margin-top:16px">
       <h2 class="big">Dentro de España</h2>
-      <p class="lead">Veces que cada comunidad aparece como origen o destino, sin contar Madrid (la base), que concentra casi todos los vuelos. Las líneas salen de Madrid hacia cada comunidad: rojo, las que más vuelos reciben; naranja, frecuentes; verde, poco frecuentes; gris, muy puntuales.</p>
+      <p class="lead">Veces que cada comunidad aparece como origen o destino, sin contar Madrid (la base), que concentra casi todos los vuelos. Las líneas salen de Madrid hacia cada comunidad: el color va de rojo (muy frecuentes) a naranja, verde cada vez más claro y gris (muy puntuales), igual en el mapa, las líneas y los aviones.</p>
       <div class="gchart"><div id="vspain" class="vmap"></div></div>
       <div class="gtip" id="vtip2">Toca una comunidad.</div>
       <div class="vleg" id="vleg2" style="flex-wrap:wrap"></div>
@@ -113,7 +147,7 @@
   <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=26"></script>
+<script src="assets/core.js?v=29"></script><script src="assets/vuelos.js?v=28"></script>
 <script>
 (function(){
 const PAX=[
