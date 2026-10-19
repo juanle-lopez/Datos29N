@@ -226,6 +226,31 @@ function renderFun(){
    [(rp>=0?'+':'')+fmt(rp*100,1)+'%','funcionamiento desde 2012, quitando la inflación']
   ].map(x=>`<div class="rv"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
 })();
+
+/* ---- 2 ter: reparto del gasto total por tipo económico (todas las Administraciones, 2018-2024) ---- */
+const RES=[
+ ['Personal (sueldos de empleados públicos)','var(--g10)',FD1.slice(6)],
+ ['Funcionamiento (compras corrientes; incluye dietas y viajes)','var(--g4)',FP2.slice(6)],
+ ['Pensiones y otras prestaciones en dinero','var(--g7)',[185279,196887,228021,227488,228485,251717,268813]],
+ ['Servicios concertados comprados (sanidad, educación…)','var(--g9)',[31451,32854,33604,36096,38293,40738,42511]],
+ ['Intereses de la deuda','var(--g1)',[29593,28231,25127,26170,31775,35551,38793]],
+ ['Subvenciones','var(--g6)',[12026,12699,21421,17604,26465,20456,18354]],
+ ['Inversión (obras, equipos)','var(--g5)',[25889,27206,29694,33591,37350,44696,43485]],
+ ['Otras transferencias (corrientes y de capital)','var(--g3)',[28443,28187,32867,48475,39327,37124,50162]]
+];
+(function(){
+  const sum=i=>RES.reduce((a,r)=>a+r[2][i],0);
+  RES.push(['Otros (impuestos pagados, ajustes…)','var(--g8)',TOT.map((t,i)=>t-sum(i))]);
+  const i=6,t=TOT[i],pf=RES[0][2][i]+RES[1][2][i],rest=t-pf,pf0=RES[0][2][0]+RES[1][2][0];
+  document.getElementById('grk').innerHTML=[
+   [mm(pf),'personal + funcionamiento en 2024 ('+fmt(pf/t*100,1)+' % del gasto)'],
+   [mm(rest),'queda para todo lo demás ('+fmt(rest/t*100,1)+' %)'],
+   [fmt(pf0/TOT[0]*100,1)+' % → '+fmt(pf/t*100,1)+' %','personal + funcionamiento sobre el gasto total, 2018 y 2024']
+  ].map(x=>`<div class="rv"><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
+  document.getElementById('grbar').innerHTML=`<div style="display:flex;height:38px;border-radius:8px;overflow:hidden;border:1px solid var(--line)" role="img" aria-label="Reparto del gasto público de 2024 por tipo">${RES.map(r=>`<div title="${r[0]}: ${fmt(r[2][i]/t*100,1)} %" style="flex:${r[2][i]};background:${r[1]}"></div>`).join('')}</div><div class="gl" style="margin-top:8px">${RES.map(r=>`<span style="display:flex;gap:6px;align-items:center"><i style="background:${r[1]}"></i>${r[0]}</span>`).join('')}</div>`;
+  document.getElementById('grtb').innerHTML='<tr><th style="text-align:left">Tipo de gasto</th><th>2024 (M€)</th><th>% del total 2024</th><th>% del total 2018</th><th>Cambio real 2018→2024</th></tr>'+RES.map(r=>{const c=real(r[2][6],6)/r[2][0]-1;return `<tr><td style="text-align:left;white-space:normal"><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${r[1]};margin-right:6px"></i>${r[0]}</td><td>${fmt(r[2][6])}</td><td>${fmt(r[2][6]/TOT[6]*100,1)} %</td><td>${fmt(r[2][0]/TOT[0]*100,1)} %</td><td>${c>=0?'+':''}${fmt(c*100,1)} %</td></tr>`}).join('')+`<tr><td style="text-align:left"><b>Total</b></td><td><b>${fmt(TOT[6])}</b></td><td>100 %</td><td>100 %</td><td>${(real(TOT[6],6)/TOT[0]-1)>=0?'+':''}${fmt((real(TOT[6],6)/TOT[0]-1)*100,1)} %</td></tr>`;
+  document.getElementById('grsrc').innerHTML=`Clasificación económica de todas las Administraciones (Estado, comunidades, ayuntamientos y Seguridad Social). «Cambio real» quita la inflación (euros de 2018). Fuente: ${LK(['Eurostat gov_10a_main (gasto por tipo)',SRC.main[1]])}; inflación: ${LK(SRC.hicp)}. «Otras transferencias» suma transferencias corrientes y de capital; «Otros» es lo que queda hasta el total.`;
+})();
 renderCtl();renderStack();renderDiv();renderFun();renderSal();renderCoste();renderFly();renderTax();renderPend();
 (function(){let w=GW(),t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{if(GW()!==w){w=GW();renderStack();renderFun();renderSal();renderTax()}},200)})})();
 if(window.rvReady)rvScan();
