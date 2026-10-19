@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Predicción hasta el 29-N · Datos 29N</title>
+<meta name="description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
+<meta property="og:title" content="Predicción hasta el 29-N · Datos 29N">
+<meta property="og:description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://juanle-lopez.github.io/Datos29N/prediccion.html">
+<link rel="canonical" href="https://juanle-lopez.github.io/Datos29N/prediccion.html">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="assets/style.css?v=26">
+<style>
+.pg{width:100%;height:auto;display:block}
+.pg text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+.pg .lab{font-weight:600}
+.leg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);margin:10px 0 0}
+.leg span{display:inline-flex;align-items:center;gap:7px}
+.leg svg{width:34px;height:10px;overflow:visible}
+.ptab th,.ptab td{white-space:normal}
+.ptab tr.sc td{font-weight:700;text-transform:none;background:transparent;color:var(--fg);border-bottom:2px solid var(--line);padding-top:16px}
+.pdet{margin:10px 0 0;border:1px solid var(--line);border-radius:6px;padding:0 14px;background:var(--panel)}
+.pdet summary{cursor:pointer;padding:12px 0;font-weight:700}
+.pdet p,.pdet li{font-size:14.5px;max-width:72ch}
+.pdet ol{padding-left:20px}
+#hid{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="prog" id="prog" aria-hidden="true"></div>
+  <header class="mini"><a class="brand" href="index.html">Datos <em>29N</em></a><span class="mcd" id="mcd"></span></header>
+  <nav class="tabs" aria-label="Apartados de la web"><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Simulador</span></a><a href="prediccion.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h6M9 12L20 5M9 12h11M9 12l11 7"/></svg><span>Predicción</span></a><a href="propuestas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/></svg><span>Propuestas</span></a><a href="promesas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><span>Promesas</span></a><a href="casos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/></svg><span>Casos</span></a><a href="gastos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.7a4 4 0 100 6.6M7.5 11h6M7.5 13.2h6"/></svg><span>Gastos</span></a><a href="vuelos.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c.9 0 1.5.8 1.5 1.8v4.6l7.5 4.4v2l-7.5-2.3v4.4l2 1.5v1.6L12 19.8l-3.5 1v-1.6l2-1.5v-4.4L3 15.6v-2l7.5-4.4V4.6c0-1 .6-1.8 1.5-1.8z"/></svg><span>Falcon</span></a><a href="noticias.html" class="x" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h12v14H6a2 2 0 01-2-2zM16 9h4v8a2 2 0 01-2 2h-2M7.5 9h5M7.5 12.5h5M7.5 16h3"/></svg><span>Noticias</span></a><a href="mesas.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/></svg><span>Mesas</span></a><a href="metodo.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Método</span></a><button type="button" class="more" id="morebtn" aria-expanded="false" aria-controls="moresheet" data-on="1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" style="stroke-width:3.4"/></svg><span>Más</span></button></nav>
+  <section class="sec" id="p_pred" aria-label="Predicción hasta el 29-N">
+    <div class="sech"><span class="num">Experimental</span><h2>Hacia el 29-N: predicción</h2><p class="lead">Cuántos escaños resultarían de las encuestas publicadas hasta hoy, con su margen de error y el modelo explicado paso a paso.</p></div>
+    <div class="exec">
+      <p class="banner"><b>Modelo experimental, no es una previsión oficial.</b> Aplica las mismas reglas a todos los partidos y no ordena a ninguno: el orden de las filas es el del simulador y no implica nada. Las cifras salen de encuestas publicadas, no de una opinión de esta web. El 24-nov esta sección se retira sola, porque la ley electoral prohíbe publicar encuestas en los cinco días previos a la votación.</p>
+      <div id="hid" class="banner" style="margin-top:14px"><b>Sección retirada.</b> Desde el 24-nov no se publican encuestas ni proyecciones basadas en ellas, a la espera de que se confirme el plazo exacto con la Junta Electoral Central.</div>
+      <div id="pbody">
+      <h3 style="margin:18px 0 6px">Escaños estimados hasta el 29-N</h3>
+      <p class="note" style="max-width:72ch">Un gráfico por partido, cada uno con su propia escala para que se vea el movimiento. A la izquierda de «hoy», los escaños que da el simulador a lo ya publicado por la misma empresa en el tiempo (así se mide un cambio sin mezclar empresas con sesgos distintos). A la derecha, la proyección: ahora mismo la línea central es casi plana porque las encuestas de la misma empresa se han movido poco, pero el tubo se abre con el tiempo porque la incertidumbre crece. Dentro del tubo, cada hilo fino es una trayectoria posible (suavizada para que se lea), y la nube del 29-N muestra en qué número de escaños acaban la mayoría. Pasa el cursor o toca el gráfico para ver el valor de cada fecha.</p>
+      <div class="panel" style="margin-top:12px;padding:12px"><div id="pgrid" style="display:grid;gap:12px"></div>
+      <div class="leg" id="leg"></div></div>
+      <p class="sources" id="psrc" style="margin:10px 0 0"></p>
+
+      <h3 style="margin:26px 0 6px">Escaños, partido a partido</h3>
+      <p class="note" style="max-width:72ch"><b>Cómo leer las cifras.</b> Todo está en <b>escaños de 350</b> (la mayoría absoluta es 176). «Escaños hoy» es lo que da el simulador de la portada con la media publicada; «Escaños 29-N» es lo que da con la proyección (la media más la tendencia amortiguada). Por eso la portada da 195 para PP + Vox y aquí salen 194: son dos fechas, no dos cálculos enfrentados. Los escaños se calculan provincia a provincia con D’Hondt a partir de los porcentajes de voto de cada encuesta, y pueden diferir de los que publica cada empresa (por ejemplo, Sigma Dos daba a Sumar y Podemos menos escaños que nuestro simulador con sus mismos porcentajes). El rango es el del 80 % de 4.000 simulaciones del error de las encuestas; <b>solo recoge ese error</b>, no el del modelo (ver abajo). No damos probabilidad de mayoría: con este modelo saldría una cifra falsamente segura.</p>
+      <div class="tw" style="margin-top:8px"><table class="ptab" id="ptab"></table></div>
+
+      <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
+      <details class="pdet" open><summary>Los cinco pasos</summary>
+        <ol>
+          <li><b>Datos de entrada.</b> Las encuestas nacionales publicadas del 9 al 12-oct-2026 (10 empresas, recopiladas en <a href="https://elecciones29noviembre.com/encuestas/">elecciones29noviembre.com</a>), el barómetro del CIS del 14-oct y, como historial, los del CIS de julio y septiembre y encuestas privadas de agosto y septiembre. Sumar y Podemos se agrupan, igual que en el simulador. El cierre de campo no figura en todas.</li>
+          <li><b>Media.</b> Media simple de las 10 encuestas privadas de octubre: todas pesan lo mismo, sin ponderar por muestra, fecha ni empresa. El CIS no entra en la media porque es un organismo público con metodología distinta; se muestra aparte como segundo escenario.</li>
+          <li><b>Tendencia (amortiguada).</b> Se mide el cambio por día entre las dos últimas encuestas de <i>la misma empresa</i>, para que no pese el sesgo de cada una: Sigma Dos (26-ago → 12-oct) y GAD3 solo para Vox (3-sep → 12-oct) en la media privada, y el CIS (sep → oct) en su escenario. Ese cambio se prolonga con una vida media de 14 días, porque una tendencia de pocas semanas no suele mantenerse. Es un supuesto, y con tan pocas encuestas por empresa la estimación es débil. <span id="ptend"></span></li>
+          <li><b>Margen de error.</b> En cada fecha futura la incertidumbre suma el error de la media actual (la desviación de las encuestas entre sí, dividida por la raíz de su número) y la deriva posible de la opinión, que estimamos en ±1,0 punto en 40 días (supuesto grueso). Al llegar al 29-N se añade el error histórico de las encuestas de la última semana frente al resultado: ±1,9 puntos, raíz del error cuadrático medio en nov-2019 y jul-2023 (ocho valores). El abanico dibujado es el intervalo del 80 %; la barra del 29-N incluye todo.</li>
+          <li><b>Escaños.</b> Partiendo del voto proyectado para el 29-N, en cada una de las 4.000 simulaciones se perturba el voto de cada partido con la incertidumbre total, se escala el voto de 2023 en cada provincia y se reparten los escaños con D’Hondt (mínimo del 3 % por circunscripción), como en el simulador. Se muestra el valor central y el rango del 80 %.</li>
+        </ol>
+      </details>
+      <details class="pdet"><summary>Cuánto acierta este método (prueba con 2019 y 2023)</summary>
+        <p>Aplicamos el mismo método a elecciones pasadas: se parte del voto provincial de la elección anterior, se escala con el porcentaje nacional y se reparten escaños con D’Hondt. Escaños: modelo / real.</p>
+        <div class="tw"><table>
+          <thead><tr><th>Elección</th><th>Entrada</th><th>PP</th><th>PSOE</th><th>Vox</th><th>PP + Vox</th></tr></thead>
+          <tbody>
+            <tr><td>Nov-2019 (desde abr-2019)</td><td>Encuestas de la última semana</td><td>95 / 89</td><td>119 / 120</td><td>40 / 52</td><td>135 / 141</td></tr>
+            <tr><td>Nov-2019</td><td>Porcentajes reales</td><td>89 / 89</td><td>119 / 120</td><td>51 / 52</td><td>140 / 141</td></tr>
+            <tr><td>Jul-2023 (desde nov-2019)</td><td>Encuestas de la última semana</td><td>138 / 137</td><td>96 / 121</td><td>34 / 33</td><td>172 / 170</td></tr>
+            <tr><td>Jul-2023</td><td>Porcentajes reales</td><td>125 / 137</td><td>114 / 121</td><td>31 / 33</td><td>156 / 170</td></tr>
+          </tbody></table></div>
+        <p><b>Qué muestra.</b> Con los porcentajes reales el reparto de escaños es bastante bueno en 2019 y peor en 2023, cuando Ciudadanos desapareció y el método lo mantenía fijo. Con encuestas, el error es mucho mayor y viene sobre todo de ellas: en 2023 subestimaron al PSOE en unos 4 puntos (25 escaños de error) y en noviembre de 2019 subestimaron a Vox en 2,5 puntos (12 escaños). El acierto de PP + Vox en 2023 (172 frente a 170) fue casual: se compensaron dos errores. Con solo dos elecciones no podemos medir con rigor la precisión.</p>
+        <p class="note">Prueba propia con resultados provinciales y encuestas tomados de Wikipedia (en inglés); los totales de escaños de 2019 coinciden con los oficiales, pero no se han contrastado todos los porcentajes provinciales. A las encuestas de noviembre de 2019 les faltaba la columna de Unidas Podemos: se probaron dos supuestos con resultado parecido. Sin revisión externa.</p>
+      </details>
+      <details class="pdet"><summary>Qué no incluye (límites)</summary>
+        <ol>
+          <li><b>Error del modelo.</b> El reparto por provincias escala el voto de 2023 por igual en todo el país; no recoge voto útil, cambios en las listas, partidos nuevos o escindidos, ni que unas provincias se muevan más que otras. En las pruebas, ese error fue de entre 2 y 12 escaños por partido.</li>
+          <li><b>Errores comunes de las encuestas.</b> Se simulan de forma independiente por partido. Si todas las encuestas se equivocan en la misma dirección, como pasó en 2023 con PP y Vox, el rango real es más ancho.</li>
+          <li><b>Campaña.</b> No se modelan acontecimientos concretos de la campaña (empieza el 13-nov) más allá de la deriva genérica.</li>
+          <li><b>El CIS.</b> Su diferencia con las encuestas privadas es de unos 7 puntos en el PSOE. No sabemos cuál se acercará más; por eso se muestran por separado.</li>
+          <li><b>Redes sociales.</b> No se usan: son una señal débil y muy sesgada de quién participa.</li>
+        </ol>
+      </details>
+      <p class="sources" style="margin:14px 0 0">Código: <code>tools/prediccion.mjs</code> y <code>assets/home.js</code> en el repositorio de la web. <span id="pgen"></span></p>
+      </div>
+    </div>
+  </section>
+  <a class="nextp" href="index.html"><small>Simulador</small><b>¿Cómo quedaría el Congreso?</b></a>
+  <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
+</div>
+<script src="assets/core.js?v=28"></script>
+<script src="assets/prediccion-data.js"></script>
+<script src="assets/prediccion.js"></script>
+<script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

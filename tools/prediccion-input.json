@@ -1,0 +1,193 @@
+{
+ "nota": "Entradas del modelo de proyección. Cada fila es una encuesta publicada; fechas de publicación según elecciones29noviembre.com (algunas fuentes difieren en un día: verificar Sigma Dos y SocioMétrica).",
+ "fuente": "https://elecciones29noviembre.com/encuestas/",
+ "sdError": 1.9,
+ "sdNota": "Raíz del error cuadrático medio de las medias de encuestas de la última semana frente al resultado real en nov-2019 (PP, PSOE, Vox, Cs) y jul-2023 (PP, PSOE, Vox, Sumar): 8 valores, mismos para todos los partidos.",
+ "privadas": [
+  {
+   "e": "InvyMark / laSexta",
+   "f": "2026-10-09",
+   "PP": 32.8,
+   "PSOE": 28.0,
+   "VOX": 18.8,
+   "SUMAR": 9.5
+  },
+  {
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-10-09",
+   "PP": 31.9,
+   "PSOE": 28.1,
+   "VOX": 18.9,
+   "SUMAR": 7.6
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-10-09",
+   "PP": 30.4,
+   "PSOE": 26.5,
+   "VOX": 19.0,
+   "SUMAR": 9.9
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-10-09",
+   "PP": 34.0,
+   "PSOE": 28.2,
+   "VOX": 18.2,
+   "SUMAR": 6.2
+  },
+  {
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-10-11",
+   "PP": 33.4,
+   "PSOE": 25.3,
+   "VOX": 19.6,
+   "SUMAR": 8.7
+  },
+  {
+   "e": "Target Point / El Debate",
+   "f": "2026-10-11",
+   "PP": 32.0,
+   "PSOE": 25.9,
+   "VOX": 18.7,
+   "SUMAR": 10.3
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-12",
+   "PP": 31.9,
+   "PSOE": 25.3,
+   "VOX": 19.1,
+   "SUMAR": 10.7
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-10-12",
+   "PP": 32.6,
+   "PSOE": 26.2,
+   "VOX": 18.8,
+   "SUMAR": 7.7
+  },
+  {
+   "e": "GAD3 / ABC",
+   "f": "2026-10-12",
+   "PP": 31.4,
+   "PSOE": 26.4,
+   "VOX": 18.2,
+   "SUMAR": 9.7
+  },
+  {
+   "e": "GESOP / Prensa Ibérica",
+   "f": "2026-10-12",
+   "PP": 28.7,
+   "PSOE": 26.1,
+   "VOX": 18.9,
+   "SUMAR": 10.6
+  }
+ ],
+ "cis": {
+  "e": "CIS (barómetro de octubre)",
+  "f": "2026-10-14",
+  "campo": "1–6 oct",
+  "PP": 22.2,
+  "PSOE": 34.0,
+  "VOX": 17.1,
+  "SUMAR": 9.2,
+  "url": "https://elecciones29noviembre.com/encuestas/"
+ },
+ "tau": 14,
+ "sdDeriva40": 1.0,
+ "sdDerivaNota": "Supuesto: desviación típica de la deriva real de la media en 40 días, tras descontar el ruido de muestreo de comparar dos encuestas (observado en cambios entre encuestas de la misma empresa: 1,7 puntos; ruido esperado ~1,4). Estimación gruesa.",
+ "sdMuestreoCIS": 0.7,
+ "historial": [
+  {
+   "e": "CIS",
+   "tipo": "cis",
+   "f": "2026-07-15",
+   "aprox": true,
+   "PP": 25.0,
+   "PSOE": 33.0,
+   "VOX": 15.3,
+   "SUMAR": 8.6,
+   "fuente": "https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html",
+   "nota": "Barómetro de julio; fecha exacta no figura (aproximada)."
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "tipo": "privada",
+   "f": "2026-08-26",
+   "PP": 33.1,
+   "PSOE": 25.4,
+   "VOX": 17.9,
+   "SUMAR": 9.4,
+   "fuente": "https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/",
+   "nota": "Campo 20–26 ago. Sumar 6,6 + Podemos 2,8."
+  },
+  {
+   "e": "Demoscopia y Servicios / OKDiario",
+   "tipo": "privada",
+   "f": "2026-08-27",
+   "PP": 34.3,
+   "PSOE": 25.4,
+   "VOX": 18.1,
+   "SUMAR": 9.9,
+   "fuente": "https://www.moncloa.com/2026/08/31/encuesta-vox-2026-pp-psoe-ceuta-3423745/",
+   "nota": "Campo 26–27 ago. Sumar 6,3 + Podemos 3,6."
+  },
+  {
+   "e": "CIS",
+   "tipo": "cis",
+   "f": "2026-09-04",
+   "PP": 25.5,
+   "PSOE": 31.0,
+   "VOX": 16.6,
+   "SUMAR": 9.4,
+   "fuente": "https://es.ara.cat/politica/psoe-cae-puntos-crisis-ceuta-pp-estanca-cis_1_5849470.html",
+   "nota": "Campo 1–4 sep. Sumar 5,7 + Podemos 3,7."
+  },
+  {
+   "e": "GAD3 / ABC",
+   "tipo": "privada",
+   "f": "2026-09-03",
+   "PP": null,
+   "PSOE": null,
+   "VOX": 19.2,
+   "SUMAR": null,
+   "fuente": "https://es.ara.cat/politica/dicen-encuestas-elecciones-espanolas-29-n_1_5874092.html",
+   "nota": "Campo 1–3 sep; solo se conoce el dato de Vox."
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "tipo": "privada",
+   "f": "2026-10-12",
+   "PP": 31.9,
+   "PSOE": 25.3,
+   "VOX": 19.1,
+   "SUMAR": 10.7,
+   "fuente": "https://elecciones29noviembre.com/encuestas/",
+   "nota": "Publicada 12-oct (cierre de campo no indicado)."
+  },
+  {
+   "e": "GAD3 / ABC",
+   "tipo": "privada",
+   "f": "2026-10-12",
+   "PP": 31.4,
+   "PSOE": 26.4,
+   "VOX": 18.2,
+   "SUMAR": 9.7,
+   "fuente": "https://elecciones29noviembre.com/encuestas/",
+   "nota": "Publicada 12-oct."
+  },
+  {
+   "e": "CIS",
+   "tipo": "cis",
+   "f": "2026-10-06",
+   "PP": 22.2,
+   "PSOE": 34.0,
+   "VOX": 17.1,
+   "SUMAR": 9.2,
+   "fuente": "https://elecciones29noviembre.com/encuestas/",
+   "nota": "Campo 1–6 oct, publicado 14-oct."
+  }
+ ]
+}
