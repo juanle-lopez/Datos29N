@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://juanle-lopez.github.io/Datos29N/vuelos.html">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=26"><link rel="stylesheet" href="assets/gastos.css?v=20">
+<link rel="stylesheet" href="assets/style.css?v=26"><link rel="stylesheet" href="assets/gastos.css?v=21">
 </head>
 <body>
 <div class="wrap">
@@ -21,7 +21,7 @@
   <nav class="tabs" aria-label="Apartados de la web"><a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Simulador</span></a><a href="propuestas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/></svg><span>Propuestas</span></a><a href="promesas.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><span>Promesas</span></a><a href="casos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/></svg><span>Casos</span></a><a href="gastos.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.7a4 4 0 100 6.6M7.5 11h6M7.5 13.2h6"/></svg><span>Gastos</span></a><a href="vuelos.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8c.9 0 1.5.8 1.5 1.8v4.6l7.5 4.4v2l-7.5-2.3v4.4l2 1.5v1.6L12 19.8l-3.5 1v-1.6l2-1.5v-4.4L3 15.6v-2l7.5-4.4V4.6c0-1 .6-1.8 1.5-1.8z"/></svg><span>Falcon</span></a><a href="noticias.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h12v14H6a2 2 0 01-2-2zM16 9h4v8a2 2 0 01-2 2h-2M7.5 9h5M7.5 12.5h5M7.5 16h3"/></svg><span>Noticias</span></a><a href="mesas.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/></svg><span>Mesas</span></a><a href="metodo.html" class="x"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>Método</span></a><button type="button" class="more" id="morebtn" aria-expanded="false" aria-controls="moresheet"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" style="stroke-width:3.4"/></svg><span>Más</span></button></nav>
   <section class="sec" id="v_top" aria-label="Vuelos oficiales">
     <div class="sech"><span class="num">Falcon</span><h2>Los vuelos de los aviones oficiales</h2><p class="lead">Cada vuelo registrado de los 9 aviones del Grupo 45 del Ejército del Aire (5 Falcon 900, 2 A310 y 2 A330) desde el 1 de marzo de 2021. Filtra por año y por uso.</p></div>
-    <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>No se sabe quién iba a bordo:</b> el registro solo clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
+    <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>El registro no indica quién iba a bordo</b> (la sección de pasajeros es una atribución de esa web, sin verificar aquí): clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
 
     <div class="exec" style="margin-top:14px">
       <div class="rowf" id="vy"><b>Año</b></div>
@@ -56,13 +56,20 @@
       <div class="gl" id="vbl"></div>
     </div>
 
+    <div class="exec" style="margin-top:16px" id="v_pax">
+      <h2 class="big">Pasajeros destacados, según falcondespega.es</h2>
+      <p class="lead">Número de vuelos que la web de origen atribuye a cada persona, ordenados como en esa web. Son atribuciones suyas: el registro oficial de vuelos no indica quién viaja y la web no detalla cómo lo determina, así que no las hemos podido verificar.</p>
+      <div class="pax" id="pax"></div>
+      <p class="sources" style="margin:10px 0 0">Fuente: <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a>, sección «Pasajeros destacados en el periodo» (captura aportada el 19-oct-2026; no consta el filtro de periodo que tenía aplicado). Un vuelo es un tramo y el mismo vuelo puede llevar a varias personas, así que las cifras no se suman. «Gobierno» y «Casa Real» son el uso con el que la web clasifica el vuelo. Fotos: Wikipedia, enlazadas en cada tarjeta; si no cargan se muestran las iniciales.</p>
+    </div>
+
     <div class="exec" style="margin-top:16px">
       <h2 class="big">Cómo leerlo y qué límites tiene</h2>
       <ul class="vul">
         <li><b>Origen y destino:</b> cada vuelo suma una visita al lugar de despegue y otra al de aterrizaje (una sola si coinciden). Madrid no se cuenta como destino: es la base.</li>
         <li><b>Coste y CO₂:</b> los calcula falcondespega.es con sus propias fórmulas (combustible, tasas, tripulación, catering, navegación). Son orientativos. Su fórmula de CO₂ divide por 907,185, que es el factor de toneladas cortas de EE. UU., así que la unidad puede no ser toneladas métricas.</li>
         <li><b>Uso «Militar»:</b> incluye traslados y misiones militares; «Mantenimiento» son vuelos técnicos. No todos son viajes de autoridades.</li>
-        <li><b>Quién viaja:</b> no consta. No se atribuyen vuelos a personas.</li>
+        <li><b>Quién viaja:</b> el registro de vuelos no lo indica. Las cifras por persona de «Pasajeros destacados» son atribuciones de falcondespega.es, sin método detallado y sin verificar aquí; no significan que esa persona decidiera o usara el vuelo para un fin concreto.</li>
         <li><b>Un vuelo es un tramo:</b> un viaje de ida y vuelta son dos vuelos.</li>
       </ul>
       <p class="sources" id="vsrc"></p>
@@ -72,5 +79,19 @@
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
 <script src="assets/core.js?v=26"></script><script src="assets/vuelos.js?v=18"></script>
+<script>
+(function(){
+const PAX=[
+ ['Felipe de Borbón y Grecia','Casa Real',417,'Felipe_VI'],['Pedro Sánchez','Gobierno',382,'Pedro_Sánchez'],['Margarita Robles','Gobierno',366,'Margarita_Robles'],['José Manuel Albares','Gobierno',309,'José_Manuel_Albares'],
+ ['Letizia Ortiz','Casa Real',214,'Letizia_Ortiz'],['Yolanda Díaz','Gobierno',79,'Yolanda_Díaz'],['Fernando Grande-Marlaska','Gobierno',67,'Fernando_Grande-Marlaska'],['Carlos Cuerpo','Gobierno',41,'Carlos_Cuerpo'],
+ ['Leonor de Borbón','Casa Real',37,'Leonor_de_Borbón'],['Nadia Calviño','Gobierno',29,'Nadia_Calviño'],['Félix Bolaños','Gobierno',28,'Félix_Bolaños'],['Sofía de Borbón','Casa Real',25,'Infanta_Sofía_de_España']
+];
+const ini=n=>n.split(' ').filter(w=>w.length>2).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const el=document.getElementById('pax');if(!el)return;
+el.innerHTML=PAX.map((x,i)=>`<article class="px"><span class="av" id="av${i}" aria-hidden="true">${ini(x[0])}</span><div><b>${x[0]}</b><small>${x[1]} · ${x[2]} vuelos</small><a class="ph" id="ph${i}" href="https://es.wikipedia.org/wiki/${encodeURIComponent(x[3])}" target="_blank" rel="noopener">Wikipedia</a></div></article>`).join('');
+PAX.forEach((x,i)=>{try{fetch('https://es.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(x[3])).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.type==='standard'&&j.thumbnail&&j.thumbnail.source){const a=document.getElementById('av'+i);if(a){a.innerHTML='';const im=new Image();im.alt='';im.referrerPolicy='no-referrer';im.src=j.thumbnail.source;im.onerror=()=>{a.textContent=ini(x[0])};a.appendChild(im)}}}).catch(()=>{})}catch(e){}});
+})();
+</script>
+
 </body>
 </html>
