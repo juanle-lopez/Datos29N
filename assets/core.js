@@ -98,12 +98,14 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     if(hl){hl.innerHTML='<div class="hlh"><span>Lo último</span><small>'+fl+'</small></div><ol>'+it.slice(0,3).map(card).join('')+'</ol><a class="hlm" href="noticias.html">Ver los 10 titulares →</a>';hl.hidden=false}
   }).catch(function(){if(list)list.innerHTML='<li class="nload">No se han podido cargar los titulares. Recarga la página.</li>'});
 })();
-/* compartir la web por WhatsApp (arriba a la derecha) */
+/* compartir por WhatsApp (arriba a la derecha): cada apartado comparte su propio enlace y título */
 (function(){
-  var url='https://juanle-lopez.github.io/Datos29N/';
-  var txt='Datos 29N: simulador del Congreso, propuestas, promesas, casos y gastos, con fuentes enlazadas. Elecciones del 29 de noviembre: '+url;
+  var can=document.querySelector('link[rel="canonical"]'),url=(can&&can.href)||(location.origin+location.pathname);
+  var og=document.querySelector('meta[property="og:title"]'),title=((og&&og.content)||document.title||'Datos 29N').trim();
+  var home=/\/(index\.html)?$/.test(url.replace(/[?#].*$/,''));
+  var txt=home?'Datos 29N: simulador del Congreso, propuestas, promesas, casos y gastos, con fuentes enlazadas. Elecciones del 29 de noviembre: '+url:title+'\n'+url;
   var a=document.createElement('a');a.className='wshare';a.href='https://wa.me/?text='+encodeURIComponent(txt);a.target='_blank';a.rel='noopener';
-  a.setAttribute('aria-label','Compartir la web por WhatsApp');
+  a.setAttribute('aria-label',home?'Compartir la web por WhatsApp':'Compartir «'+title+'» por WhatsApp');
   a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 01-11.8 7L4 20l1.4-4A8 8 0 1120 11.6z"/><path d="M12 8v6M9 11l3-3 3 3"/></svg><span>Compartir</span>';
   var hero=document.querySelector('.hero .hin'),mini=document.querySelector('header.mini');
   if(hero){a.classList.add('onhero');hero.appendChild(a)}else if(mini){mini.appendChild(a)}
