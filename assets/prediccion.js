@@ -14,6 +14,7 @@
   const MESL=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const fecha=d=>{const [y,m,dn]=d.split('-').map(Number);return dn+'-'+MESL[m-1]};
   const AN=(v,d)=>`<animate attributeName="opacity" values="${v}" dur="${d}" begin="1.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`;
+  const WA=(a,v)=>`<animate attributeName="${a}" values="${v}" keyTimes="0;.5;1" dur="32s" repeatCount="indefinite" calcMode="spline" keySplines=".3 .3 .6 .8;0 0 1 1"/>`;
   function panel(k,name,c,W,animate){
     const H=W<420?236:262,L=30,R=W<420?86:96,T=42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
     const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
@@ -21,7 +22,7 @@
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>L+(t-D0)/(D1-D0)*pw,Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
-    let s=`<defs><clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${animate?0:W}" height="${H}">${animate?`<animate attributeName="width" from="0" to="${W}" dur="1.8s" begin="0s" fill="freeze" calcMode="spline" keySplines=".2 .7 .2 1" keyTimes="0;1"/>`:''}</rect></clipPath><filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
+    let s=`<defs>${animate?`<linearGradient id="lg-${id}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-${id})">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}<filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
     s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="30" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
     for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
@@ -30,7 +31,7 @@
     const poly=(a,b)=>`${rP.map(r=>X(dd(r.d))+','+Y(r[b])).join(' ')} ${[...rP].reverse().map(r=>X(dd(r.d))+','+Y(r[a])).join(' ')}`;
     const cen=rP.map(r=>X(dd(r.d))+','+Y(r.esc)).join(' ');
     // Todo lo proyectado (tubo, hilos, resplandor, línea punteada) se descubre de izquierda a derecha
-    s+=`<g clip-path="url(#cp-${id})">`;
+    s+=`<g ${animate?`mask="url(#cp-${id})"`:`clip-path="url(#cp-${id})"`}>${animate?'<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.88;.96;1" dur="32s" repeatCount="indefinite"/>':''}`;
     s+=`<polygon points="${poly('lo95','hi95')}" fill="${c}" opacity=".12">${animate?AN('.09;.15;.09','22s'):''}</polygon><polygon points="${poly('lo','hi')}" fill="${c}" opacity=".2">${animate?AN('.16;.25;.16','17s'):''}</polygon><polygon points="${poly('lo50','hi50')}" fill="${c}" opacity=".32">${animate?AN('.26;.38;.26','13s'):''}</polygon>`;
     const smo=t=>t.map((v,i)=>i===0||i===t.length-1?v:(t[i-1]+v+t[i+1])/3),pts=sm=>sm.map((v,i)=>X(dd(rP[i].d))+','+Y(v)).join(' ');
     tr.slice(0,24).forEach((t,ti)=>{const a=smo(t),b=smo(tr[(ti+12)%tr.length]),du=(15+(ti%7)*2.5).toFixed(1);
