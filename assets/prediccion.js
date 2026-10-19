@@ -20,7 +20,7 @@
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>L+(t-D0)/(D1-D0)*pw,Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
-    let s=`<defs><clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${animate?0:W}" height="${H}">${animate?`<animate attributeName="width" from="0" to="${W}" dur="1.8s" begin="0s" fill="freeze" calcMode="spline" keySplines=".2 .7 .2 1" keyTimes="0;1"/>`:''}</rect></clipPath><filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
+    let s=`<defs><clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${animate?0:W}" height="${H}">${animate?`<animate attributeName="width" values="0;${W-x0+3};${W-x0+3}" keyTimes="0;.55;1" dur="9s" begin="0s" repeatCount="indefinite" calcMode="spline" keySplines=".35 .2 .5 1;0 0 1 1"/>`:''}</rect></clipPath><filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
     s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="30" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
     for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
@@ -38,6 +38,8 @@
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
     s+=`<path d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2"/>`;
     s+=`</g>`;
+    if(animate){const v=`${x0-3};${W};${W}`;s+=`<line y1="${T}" y2="${T+ph}" stroke="${c}" stroke-width="1.6" opacity="0"><animate attributeName="x1" values="${v}" keyTimes="0;.55;1" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines=".35 .2 .5 1;0 0 1 1"/><animate attributeName="x2" values="${v}" keyTimes="0;.55;1" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines=".35 .2 .5 1;0 0 1 1"/><animate attributeName="opacity" values="0;.8;.8;0;0" keyTimes="0;.03;.52;.58;1" dur="9s" repeatCount="indefinite"/></line>`;
+      s+=`<circle cx="${X(dd('2026-10-12'))}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;15;15" keyTimes="0;.35;1" dur="4.5s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.35;1" dur="4.5s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
@@ -78,7 +80,7 @@
   function draw(){
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
-    const an=!REDUCE&&!drawn;drawn=true;
+    const an=!REDUCE;drawn=true;
     box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}</div>`).join('');
     wire(box,W);
   }
