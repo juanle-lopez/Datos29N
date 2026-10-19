@@ -537,3 +537,4 @@ html.msopen{overflow:hidden}
 @media(max-width:480px){.mini{flex-wrap:nowrap}.mini .mcd{font-size:11.5px;padding:6px 10px;white-space:nowrap}.mcd .mlong{display:none}.mcd .mshort{display:inline}}
 .mini .brand{white-space:nowrap}@media(max-width:400px){.mcd .mshort{display:none}}
 @media(min-width:1150px){nav.tabs{flex-wrap:nowrap;gap:1px}nav.tabs a{padding:9px 9px;gap:6px;font-size:13px;white-space:nowrap}nav.tabs a svg{width:15px;height:15px}}
+@media(min-width:1000px){.foot{max-width:none;column-count:2;column-gap:48px}.foot p{break-inside:avoid}.credit{max-width:none}}
