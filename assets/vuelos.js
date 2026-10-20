@@ -228,9 +228,9 @@ function juego(){
       document.getElementById('vgsh').addEventListener('click',async e=>{const full=txt+' '+location.href.split('#')[0];try{if(navigator.share){await navigator.share({text:txt,url:location.href.split('#')[0]})}else{await navigator.clipboard.writeText(full);e.target.textContent='Copiado'}}catch(_){e.target.textContent='No se pudo copiar'}})}))};
   sel.addEventListener('change',draw);draw();
 }
-function render(){chips();kpis();ritmo();const {W,S}=agg();worldMap(W);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
+function render(){chips();kpis();ritmo();const {W,S}=agg();window.globoSet&&globoSet(W);worldMap(W);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
 document.addEventListener('click',e=>{const zb=e.target.closest&&e.target.closest('[data-wz]');if(zb){wz=zb.dataset.wz;selW=null;window._vc=0;const {W}=agg();worldMap(W);return}
   if(e.target.id==='vplay'){playT?stopPlay():startPlay()}else if(playT&&e.target.closest&&e.target.closest('#vy,#vu')){stopPlay()}},true);
-Promise.all([fetch('assets/vuelos-data.json?v=16').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();hero();waffle();juego();
+Promise.all([fetch('assets/vuelos-data.json?v=16').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;window.initGlobo&&initGlobo({G,D,mkSC,LAND});render();hero();waffle();juego();
  document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.666 tramos del 1-mar-2021 al 16-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
 }).catch(()=>{document.getElementById('vk').innerHTML='<p class="na">No se han podido cargar los datos.</p>'});
