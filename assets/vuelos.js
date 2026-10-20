@@ -100,6 +100,7 @@ function spainMap(S){
   spainHeat(S);
   spainArcs(S);
   spainCM(S,cf);
+  spainLabels(S);
   const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Color del mapa: '+tierLeg()+' <span style="margin-left:12px">Líneas y aviones en negro: más gruesas, más vuelos.</span>';
   document.querySelectorAll('#vspain .c').forEach(p=>p.addEventListener('click',()=>{selS=p.dataset.c;spainTip(S);spainMap(S)}));
 }
@@ -111,6 +112,16 @@ function spainHeat(S){
   if(!HCACHE[hk])HCACHE[hk]=heatField(keys.map(k=>({ds:g[k].ds,cx:(g[k].x0+g[k].x1)/2,cy:(g[k].y0+g[k].y1)/2,p:pf(S[k])})),G.sw,Hh,1.2,60);
   const clip=keys.map(k=>g[k].ds.map(d=>`<path d="${d}"/>`).join('')).join('');
   svg.insertAdjacentHTML('afterbegin',`<defs><clipPath id="sclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.sw}" height="${Hh}" preserveAspectRatio="none" clip-path="url(#sclip)" style="pointer-events:none"/>`);
+}
+function spainLabels(S){
+  const svg=document.querySelector('#vspain svg');if(!svg)return;
+  const SHORT={'Comunidad Valenciana':'C. Valenciana','Castilla-La Mancha':'C.-La Mancha','Región de Murcia':'Murcia','Islas Baleares':'Baleares','Comunidad de Madrid':'Madrid'},g={};
+  svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(!c||c==='Ceuta'||c==='Melilla')return;const b=pt.getBBox(),r=g[c];if(!r)g[c]={x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height};else{r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
+  const st='font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:3px;pointer-events:none;text-anchor:middle';
+  let t='';
+  Object.entries(g).forEach(([c,r])=>{const x=(r.x0+r.x1)/2,y=(r.y0+r.y1)/2,nm=SHORT[c]||c;
+    t+=c==='Comunidad de Madrid'?`<text x="${x}" y="${y+4}" style="font-size:11px;${st}">Madrid · base</text>`:`<text x="${x}" y="${y-2}" style="${st}"><tspan x="${x}" style="font-size:11px">${nm}</tspan><tspan x="${x}" dy="14" style="font-size:14px">${fmt(S[c]||0)}</tspan></text>`});
+  svg.insertAdjacentHTML('beforeend',t);
 }
 function spainCM(S,cf){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
