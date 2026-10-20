@@ -8,7 +8,7 @@
   const SEA='#c4dbee',SPAIN='#52657c',NS=440,R=NS/2-5,C=NS/2;
   const ll=(x,y)=>[(x-X0)/SX,(Y0-y)/SX];                                   // coordenadas del mapa plano → [lon, lat] en grados
   const vec=(lon,lat)=>{lon*=d2r;lat*=d2r;const c=Math.cos(lat);return [c*Math.sin(lon),Math.sin(lat),c*Math.cos(lon)]};
-  let cfg,cv,ctx,paths={},tex,tctx,arcs=[],planes=[],base,rowT,pix,img,out,lonC=-3.7,drag=null,t0=0,rot=0,run=false,vis=true,last=0,
+  let curUrl,cfg,cv,ctx,paths={},tex,tctx,arcs=[],planes=[],base,rowT,pix,img,out,lonC=-3.7,drag=null,t0=0,rot=0,run=false,vis=true,last=0,
       reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,madrid=vec(-3.7,40.4),grad;
   function pre(){   // píxel → (longitud relativa, fila de textura): con la inclinación fija, solo hay que sumar el giro en cada fotograma
     pix=[];const b=[],r=[];
@@ -17,16 +17,20 @@
       const nz=Math.sqrt(1-d2),yw=ny*cT+nz*sT,zw=-ny*sT+nz*cT,lat=Math.asin(yw)/d2r,lon=Math.atan2(nx,zw)/d2r;
       pix.push(py*NS+px);b.push(lon/360*TW);r.push(Math.min(TH-1,Math.max(0,Math.floor((Y0-SX*lat+TOFF)*TS)))*TW)}
     base=Float32Array.from(b);rowT=Int32Array.from(r);pix=Int32Array.from(pix)}
-  function buildTex(W){
-    const cf=cfg.mkSC(Object.values(W).filter(v=>v>0));
-    tctx.setTransform(1,0,0,1,0,0);tctx.fillStyle=SEA;tctx.fillRect(0,0,TW,TH);
-    // olitas muy suaves sobre el mar (se deforman con la esfera); la tierra se pinta encima
-    tctx.strokeStyle='rgba(255,255,255,.34)';tctx.lineWidth=1.3;tctx.lineCap='round';tctx.beginPath();
-    for(let y=10,r=0;y<TH;y+=17,r++)for(let x=(r%2)*14+4;x<TW;x+=30){tctx.moveTo(x,y);tctx.quadraticCurveTo(x+4,y-4,x+8,y);tctx.quadraticCurveTo(x+12,y+4,x+16,y)}
-    tctx.stroke();
-    tctx.setTransform(TS,0,0,TS,0,TOFF*TS);tctx.lineWidth=.3;tctx.strokeStyle='rgba(255,255,255,.8)';tctx.lineJoin='round';
-    for(const k in paths){const v=W[k];tctx.fillStyle=k==='ESP'?SPAIN:(v?cf(v):cfg.LAND);tctx.fill(paths[k]);tctx.stroke(paths[k])}
-    tex=new Uint32Array(tctx.getImageData(0,0,TW,TH).data.buffer)}
+  const imgs={};
+  function buildTex(W,url){   // mar liso + tierra gris + campo de calor difuminado dentro de los países visitados (como en el mapa plano)
+    const vis=Object.keys(W).filter(k=>W[k]>0&&paths[k]&&k!=='ESP');
+    const paint=im=>{
+      tctx.setTransform(1,0,0,1,0,0);tctx.fillStyle=SEA;tctx.fillRect(0,0,TW,TH);
+      tctx.setTransform(TS,0,0,TS,0,TOFF*TS);tctx.lineWidth=.3;tctx.strokeStyle='rgba(255,255,255,.8)';tctx.lineJoin='round';
+      for(const k in paths){tctx.fillStyle=k==='ESP'?SPAIN:cfg.LAND;tctx.fill(paths[k])}
+      if(im){tctx.save();const cl=new Path2D();vis.forEach(k=>cl.addPath(paths[k]));tctx.clip(cl);tctx.drawImage(im,0,0,cfg.G.w,cfg.G.h);tctx.restore()}
+      else{const cf=cfg.mkSC(vis.map(k=>W[k]));vis.forEach(k=>{tctx.fillStyle=cf(W[k]);tctx.fill(paths[k])})}
+      for(const k in paths)tctx.stroke(paths[k]);
+      tex=new Uint32Array(tctx.getImageData(0,0,TW,TH).data.buffer)};
+    paint(url&&imgs[url]&&imgs[url].complete?imgs[url]:null);
+    if(url&&!(imgs[url]&&imgs[url].complete)){const im=imgs[url]=new Image();im.onload=()=>{if(curUrl===url){paint(im);if(!run)frame(performance.now())}};im.src=url}
+    curUrl=url}
   function buildArcs(W){
     arcs=[];planes=[];const G=cfg.G,top=Object.entries(W).filter(([k,v])=>v>0&&k!=='ESP'&&G.cent[k]).sort((a,b)=>b[1]-a[1]).slice(0,45);
     if(!top.length)return;const mx=top[0][1],A=madrid;
@@ -87,5 +91,5 @@
     const up=()=>{drag=null;cv.style.cursor='grab'};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop()},{threshold:.05}).observe(cv);
     document.addEventListener('visibilitychange',()=>document.hidden?stop():start())};
-  window.globoSet=function(W){if(!cfg||!cv)return;buildTex(W);buildArcs(W);if(reduce||!run)frame(performance.now());start()};
+  window.globoSet=function(W,url){if(!cfg||!cv)return;buildTex(W,url);buildArcs(W);if(reduce||!run)frame(performance.now());start()};
 })();
