@@ -56,9 +56,10 @@ function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
     d=`M${mx0.toFixed(1)},${my0.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${x.toFixed(1)},${y.toFixed(1)}`,dr=`M${x.toFixed(1)},${y.toFixed(1)}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`,
     g=`M${mx0.toFixed(1)},${my0.toFixed(1)}L${x.toFixed(1)},${y.toFixed(1)}`,gro=`M${x.toFixed(1)},${y.toFixed(1)}L${mx0.toFixed(1)},${my0.toFixed(1)}`;
     gr+=`<path class="arc" d="${g}" style="stroke:#05090f;opacity:.28" stroke-width="${(wd*.9).toFixed(2)}" stroke-dasharray="${(2*wf).toFixed(2)} ${(1.6*wf).toFixed(2)}"/>`;
-    lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:.32" stroke-width="${(wd+1.3*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#10161f;opacity:1" stroke-width="${wd.toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#9fb0c4;opacity:.75" stroke-width="${Math.max(.2*wf,wd*.28).toFixed(2)}" transform="translate(0 ${(-wd*.22).toFixed(2)})"/>`;
+    const kk=Math.min(1,w*1.8),cc=[0,1,2].map(n=>Math.round([84,98,115][n]+([16,22,31][n]-[84,98,115][n])*kk)).join(','),lo=(.5+.5*kk).toFixed(2);
+    lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:${(.08+.24*kk).toFixed(2)}" stroke-width="${(wd+1.3*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:rgb(${cc});opacity:${lo}" stroke-width="${wd.toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#9fb0c4;opacity:.75" stroke-width="${Math.max(.2*wf,wd*.28).toFixed(2)}" transform="translate(0 ${(-wd*.22).toFixed(2)})"/>`;
     if(reduce)return;
-    const np=Math.min(4,1+Math.floor(w*4)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=sc*wf*(.75+w*.5),D=dur.toFixed(1);
+    const np=Math.min(7,1+Math.floor(w*7)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=sc*wf*(.75+w*.5),D=dur.toFixed(1);
     for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d,gpath=j%2?gro:g,op=`<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.88;1" dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/>`,
       sz=`calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1" keyTimes="0;.5;1"`;
       gr+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${gpath}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#05090f" opacity=".32"/></g>`;
