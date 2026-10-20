@@ -5,14 +5,14 @@
    Se llama a initGlobo({G,D,mkSC,LAND}) una vez y a globoSet(W,urlCalor) cuando cambian los filtros (W = {ISO: nº de vuelos}). */
 (function(){
   const SX=1000/360,X0=470.5,Y0=223,LON_L=-X0/SX,TOFF=27,TS=1.44,TW=1440,TH=720,KT=TW/360;   // textura 1.440 × 720 px, de 90° N a 90° S
-  const d2r=Math.PI/180,SEA='#86aac8',SPAIN='#52657c',NS=440,C=NS/2,R=178;                   // R: radio del globo (deja margen para el cielo)
+  const d2r=Math.PI/180,SEA='#3f86b4',SPAIN='#52657c',NS=440,C=NS/2,R=178;                   // R: radio del globo (deja margen para el cielo)
   // Islas y pequeños estados visitados que no tienen contorno en el mapa: se dibujan como punto [lat, lon]
   const EXTRA={CPV:[16,-24],MLT:[35.9,14.4],VGB:[18.4,-64.6],BMU:[32.3,-64.8],SYC:[-4.7,55.5],BHR:[26,50.55]};
   const pos=(G,k)=>EXTRA[k]?[EXTRA[k][1],EXTRA[k][0]]:(G.cent[k]?ll(...G.cent[k]):null);   // → [lon, lat]
   const ll=(x,y)=>[(x-X0)/SX,(Y0-y)/SX];                                                      // mapa plano → [lon, lat] en grados
   const vec=(lon,lat)=>{lon*=d2r;lat*=d2r;const c=Math.cos(lat);return [c*Math.sin(lon),Math.sin(lat),c*Math.cos(lon)]};
   let curUrl,cfg,cv,ctx,off,octx,paths={},tex,tctx,arcs=[],planes=[],NX,NY,NZ,pix,img,out,M,sky,glow,grad,stars=[],
-      drag=null,run=false,vis=true,last=0,clock=0,fr=0,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,madrid=vec(-3.7,40.4);
+      drag=null,vel=[0,0],run=false,vis=true,last=0,clock=0,fr=0,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,madrid=vec(-3.7,40.4);
   // Orientación: M (3×3, por filas) pasa de vectores del globo a vectores de la cámara (x derecha, y arriba, z hacia el observador)
   function setView(lon,tilt){const cL=Math.cos(lon*d2r),sL=Math.sin(lon*d2r),cT=Math.cos(tilt*d2r),sT=Math.sin(tilt*d2r);
     M=[cL,0,-sL, -sT*sL,cT,-sT*cL, cT*sL,sT,cT*cL]}
@@ -103,7 +103,9 @@
     if(!run)return;requestAnimationFrame(loop);
     if(ms-last<30)return;const dt=Math.min(.1,(ms-last)/1000);last=ms;clock+=dt;
     // giro automático en 360°: avance constante de oeste a este y un balanceo lento arriba-abajo que deja ver los polos y todas las caras
-    if(!drag&&!reduce)spin((6+3*Math.sin(clock*.17))*d2r*dt,(10*Math.sin(clock*.21)+4*Math.sin(clock*.07+1))*d2r*dt);
+    if(!drag&&!reduce){
+      const dec=Math.pow(.04,dt),k=1-dec;vel[0]*=dec;vel[1]*=dec;   // la inercia del arrastre se apaga en un par de segundos y vuelve el giro automático
+      spin((vel[0]+k*(6+3*Math.sin(clock*.17))*d2r)*dt,(vel[1]+k*(10*Math.sin(clock*.21)+4*Math.sin(clock*.07+1))*d2r)*dt)}
     frame(ms)}
   function start(){if(run||reduce||!vis||document.hidden)return;run=true;last=0;requestAnimationFrame(loop)}
   function stop(){run=false}
@@ -114,8 +116,8 @@
     const tc=document.createElement('canvas');tc.width=TW;tc.height=TH;tctx=tc.getContext('2d',{willReadFrequently:true});
     setView(-3.7,24);pre();img=octx.createImageData(NS,NS);out=new Uint32Array(img.data.buffer);sky_();
     grad=ctx.createRadialGradient(C-.35*R,C-.4*R,R*.15,C,C,R);grad.addColorStop(0,'rgba(255,255,255,.2)');grad.addColorStop(.65,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(5,12,35,.4)');
-    cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'});
-    cv.addEventListener('pointermove',e=>{if(!drag)return;const k=.45*d2r*(NS/cv.clientWidth);spin((e.clientX-drag.x)*k,(e.clientY-drag.y)*k);drag.x=e.clientX;drag.y=e.clientY;if(!run)frame(performance.now())});
+    cv.addEventListener('pointerdown',e=>{vel=[0,0];drag={x:e.clientX,y:e.clientY,t:performance.now()};cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'});
+    cv.addEventListener('pointermove',e=>{if(!drag)return;const now=performance.now(),dt=Math.max(.008,(now-drag.t)/1000),k=.45*d2r*(NS/cv.clientWidth),ay=(e.clientX-drag.x)*k,ax=(e.clientY-drag.y)*k;spin(ay,ax);vel=[.6*vel[0]+.4*ay/dt,.6*vel[1]+.4*ax/dt];drag.x=e.clientX;drag.y=e.clientY;drag.t=now;if(!run)frame(now)});
     const up=()=>{drag=null;cv.style.cursor='grab'};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop()},{threshold:.05}).observe(cv);
     document.addEventListener('visibilitychange',()=>document.hidden?stop():start())};

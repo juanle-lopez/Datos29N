@@ -76,7 +76,8 @@ function worldMap(W){
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const EU=wz==='eu',inEU=([x,y])=>x>=432&&x<=604&&y>=28&&y<=154,
     lst=EU?Object.entries(W).filter(([k])=>G.cent[k]&&inEU(G.cent[k])):top.filter(([k])=>G.cent[k]),
-    arcs=routes(lst.map(([k,v])=>[...G.cent[k],v]),mx0,my0,mx,EU?.12:.22,EU?.85:.85,EU?7:12,EU?16:30,EU?7:18,REDUCE,cf,EU?.2:1),planes='';
+    rest=EU?[]:Object.entries(W).filter(([k,v])=>v>0&&k!=='ESP'&&G.cent[k]&&!lst.some(t=>t[0]===k)).sort((a,b)=>b[1]-a[1]),   // el resto de países visitados también tienen ruta y avión (más finos)
+    arcs=routes(lst.map(([k,v])=>[...G.cent[k],v]),mx0,my0,mx,EU?.12:.22,EU?.85:.85,EU?12:12,EU?26:30,EU?4:18,REDUCE,cf,EU?.5:1)+(rest.length?routes(rest.map(([k,v])=>[...G.cent[k],v]),mx0,my0,mx,.22,.85,12,30,18,REDUCE,cf,.6):''),planes='';
   let labels='';
   if(EU){const used=[];lst.slice().sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{const [x,y]=G.cent[k],nm=(D.names[k]||k).replace('Estados Unidos de América','EE. UU.').replace('República Dominicana','R. Dominicana').replace('Emiratos Árabes Unidos','EAU'),t=nm+' '+v,wd=t.length*2.2,hit=b=>used.some(u=>b[0]<u[2]&&b[2]>u[0]&&b[1]<u[3]&&b[3]>u[1]);let yy=y,ok=false;for(const dy of [0,3.2,-3.2,6.4,-6.4]){const bx=[x-wd/2,y+dy-2.8,x+wd/2,y+dy+.8];if(!hit(bx)){used.push(bx);yy=y+dy;ok=true;break}}if(!ok)return;labels+=`<text x="${x}" y="${yy}" text-anchor="middle" style="font-size:3.4px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:1px;pointer-events:none">${t}</text>`})}
   if(selW&&G.cent[selW]){const [lx,ly]=G.cent[selW],nm=selW==='ESP'?'España':(({USA:'EE. UU.'})[selW]||D.names[selW]||selW),vv=W[selW]||0,f1=EU?3.1:10,f2=EU?4:13,sw=EU?.9:2.6;
