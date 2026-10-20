@@ -46,7 +46,8 @@ const sdl=(clave,k,c,varPuntosComun)=>{const p=k==='O'?null:c[k]/100,a=k==='O'?0
 // Bloque PSOE + Sumar + Podemos + socios de la investidura de 2023 (ERC, Junts, EH Bildu, PNV, BNG, CCa)
 const IZ=t=>t.PSOE+t.SUMAR+t.ERC+t.JUNTS+t.BILDU+t.PNV+t.BNG+t.CCa;
 // Error de las encuestas repartido poco a poco hasta el 29-N (errorGradual) en vez de sumarse de golpe el último día
-const eFt=(e,d)=>inp.errorGradual?e*Math.sqrt(d/T):(d===T?e:0);
+const PG=inp.errorPotencia||1;   // 1: varianza lineal en los días; 2: más concentrada al final
+const eFt=(e,d)=>inp.errorGradual?e*Math.pow(d/T,PG/2):(d===T?e:0);
 function escenario(clave,trend,N=4000){
   const trd=inp.usarTendencia?trend.tr:Object.fromEntries(K.map(k=>[k,0]));   // sin tendencia: la previsión central es la media de hoy
   const ruta={},fin={},sdFin={};[...K,'PV','IZ'].forEach(k=>{ruta[k]=[]});
@@ -56,7 +57,7 @@ function escenario(clave,trend,N=4000){
     const fin_=d===T, c={},sdv={};
     K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
-    const vc=volDay*d+(inp.errorGradual?inp.sdError**2*d/T:(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
+    const vc=volDay*d+(inp.errorGradual?inp.sdError**2*Math.pow(d/T,PG):(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
     for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t))}
     const cs=simulate(DATA,c).tot;
     K.forEach(k=>ruta[k].push({d:iso(D0+d),esc:cs[k],lo:pct(dr[k],.1),hi:pct(dr[k],.9),lo95:pct(dr[k],.025),hi95:pct(dr[k],.975),lo50:pct(dr[k],.25),hi50:pct(dr[k],.75),pv:fin_?{c:cs.PP+cs.VOX,p10:pct(dr.PV,.1),p50:pct(dr.PV,.5),p90:pct(dr.PV,.9)}:undefined}));

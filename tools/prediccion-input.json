@@ -151,6 +151,7 @@
  "errorLogit": true,
  "errorLogitNota": "Desde el 20-oct (método 3): el error se aplica en escala logit, proporcional a p(1-p), y los cuatro bloques más el resto se renormalizan a 100 (si uno sube, otro baja). Calibrado para que la media cuadrática del error en los 8 resultados de 2019 y 2023 siga siendo 1,9 puntos.",
  "errorGradual": true,
+ "errorPotencia": 2,
  "errorGradualNota": "El error histórico de las encuestas (1,9) se reparte poco a poco entre hoy y el 29-N (varianza proporcional a los días), en lugar de sumarse de golpe el último día. El rango final del 29-N no cambia.",
  "historial": [
   {
