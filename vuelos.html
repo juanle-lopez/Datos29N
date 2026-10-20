@@ -29,7 +29,8 @@
 #vspain .slab{position:absolute;transform:translate(-50%,-58%);text-align:center;pointer-events:none;line-height:1.05;white-space:nowrap;color:#fff;text-shadow:0 0 3px #0f1928,0 0 3px #0f1928,0 0 2px #0f1928,0 1px 1px #0f1928}
 #vspain .slab b{display:block;font-size:9.5px;font-weight:700}#vspain .slab i{display:block;font-style:normal;font-size:11.5px;font-weight:800}
 @media(min-width:700px){#vspain .slab b{font-size:11.5px}#vspain .slab i{font-size:14px}}
-#vworld,#vspain{position:relative;background:#fff;border:1px solid #e3e8ee;border-radius:12px}
+#vworld,#vspain{position:relative;background:transparent}
+.gchart:has(>.vmap){background:#fff;border:1px solid #e3e8ee;border-radius:12px}   /* el marco va en el contenedor que se desplaza, no en el mapa (que es más ancho) */
 .vmap .c{stroke:rgba(255,255,255,.3);stroke-width:.3}
 .vmap .c:hover{stroke:#fff;stroke-width:.9}
 .vmap .sel{stroke:#fff!important;stroke-width:1.6!important}

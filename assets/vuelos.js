@@ -85,7 +85,7 @@ function worldMap(W){
   document.querySelectorAll('[data-wz]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wz===wz)));
   document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'432 28 180 126':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><clipPath id="hclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.w}" height="${G.h}" preserveAspectRatio="none" clip-path="url(#hclip)" style="pointer-events:none"/>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
   document.querySelectorAll('#vworld .c').forEach(p=>p.addEventListener('click',()=>{const sc=document.querySelector('#vworld').parentNode.scrollLeft;selW=p.dataset.i;worldTip(W);worldMap(W);document.querySelector('#vworld').parentNode.scrollLeft=sc}));
-  if(!window._vc&&!EU){window._vc=1;const c=document.querySelector('#vworld').parentNode;setTimeout(()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)},120)}
+  if(!EU&&window._vc!==1){window._vc=1;const c=document.querySelector('#vworld').parentNode,ctr=()=>{c.scrollLeft=Math.max(0,(c.scrollWidth*mx0/G.w)-c.clientWidth/2)};ctr();requestAnimationFrame(()=>{ctr();setTimeout(ctr,150)})}   // España (Madrid) en el centro al abrir o al volver a «Mundo»
   document.getElementById('vleg').innerHTML=`<span>Menos visitados</span><i style="background:${SCGRAD}"></i><span>Más visitados (hasta ${fmt(mx)} veces)</span><span style="margin-left:auto">España en gris · punto = Madrid</span>`+'<div style="flex-basis:100%;margin-top:6px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">Color del mapa: '+tierLeg()+'<span>Líneas y aviones en negro: más gruesas, más vuelos.</span></div>';
 }
 function worldTip(W){
@@ -229,7 +229,7 @@ function juego(){
   sel.addEventListener('change',draw);draw();
 }
 function render(){chips();kpis();ritmo();const {W,S}=agg();worldMap(W);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
-document.addEventListener('click',e=>{const zb=e.target.closest&&e.target.closest('[data-wz]');if(zb){wz=zb.dataset.wz;selW=null;const {W}=agg();worldMap(W);return}
+document.addEventListener('click',e=>{const zb=e.target.closest&&e.target.closest('[data-wz]');if(zb){wz=zb.dataset.wz;selW=null;window._vc=0;const {W}=agg();worldMap(W);return}
   if(e.target.id==='vplay'){playT?stopPlay():startPlay()}else if(playT&&e.target.closest&&e.target.closest('#vy,#vu')){stopPlay()}},true);
 Promise.all([fetch('assets/vuelos-data.json?v=16').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;render();hero();waffle();juego();
  document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.666 tramos del 1-mar-2021 al 16-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
