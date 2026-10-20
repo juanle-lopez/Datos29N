@@ -109,13 +109,13 @@
   const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
   const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?120:132,sub=22+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
-    const hi=240,lo=80,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
+    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?140:156,sub=22+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const hi=240,lo=0,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
     const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
     // series de partes: historial (HD) y proyección (ruta)
     const hist=HD.map(h=>({t:dd(h.f),o:h.esc,h})),proj=E.ruta.PV.map((r,i)=>({t:dd(r.d),o:{PP:E.ruta.PP[i].esc,VOX:E.ruta.VOX[i].esc,PSOE:E.ruta.PSOE[i].esc,SUMAR:E.ruta.SUMAR[i].esc,IZ:E.ruta.IZ[i].esc}}));
     let s=`<defs>${animate?`<linearGradient id="lg-may" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-may" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-may)">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-may"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}</defs>`;
-    s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido · eje desde 80</text>`;
+    s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido; altura = escaños</text>`;
     const halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round';
     BL.forEach(([tk,nm,c],bi)=>{
       const hy=34+bi*sub+(bi?0:8),T=hy+22,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
