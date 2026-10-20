@@ -79,6 +79,8 @@ function worldMap(W){
     arcs=routes(lst.map(([k,v])=>[...G.cent[k],v]),mx0,my0,mx,EU?.12:.22,EU?.85:.85,EU?7:12,EU?16:30,EU?7:18,REDUCE,cf,EU?.2:1),planes='';
   let labels='';
   if(EU){const used=[];lst.slice().sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{const [x,y]=G.cent[k],nm=(D.names[k]||k).replace('Estados Unidos de América','EE. UU.').replace('República Dominicana','R. Dominicana').replace('Emiratos Árabes Unidos','EAU'),t=nm+' '+v,wd=t.length*1.7,hit=b=>used.some(u=>b[0]<u[2]&&b[2]>u[0]&&b[1]<u[3]&&b[3]>u[1]);let yy=y,ok=false;for(const dy of [0,3.2,-3.2,6.4,-6.4]){const bx=[x-wd/2,y+dy-2.2,x+wd/2,y+dy+.6];if(!hit(bx)){used.push(bx);yy=y+dy;ok=true;break}}if(!ok)return;labels+=`<text x="${x}" y="${yy}" text-anchor="middle" style="font-size:2.6px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:.9px;pointer-events:none">${t}</text>`})}
+  if(selW&&G.cent[selW]){const [lx,ly]=G.cent[selW],nm=selW==='ESP'?'España':(({USA:'EE. UU.'})[selW]||D.names[selW]||selW),vv=W[selW]||0,f1=EU?3.1:10,f2=EU?4:13,sw=EU?.9:2.6;
+    labels+=`<text text-anchor="middle" style="font-weight:800;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.95);stroke-width:${sw}px;pointer-events:none"><tspan x="${lx}" y="${ly-(EU?.4:1)}" style="font-size:${f1}px">${nm}</tspan><tspan x="${lx}" dy="${f2*1.05}" style="font-size:${f2}px">${selW==='ESP'?'base':fmt(vv)}</tspan></text>`}
   document.getElementById('vworld').classList.toggle('eu',EU);
   document.querySelectorAll('[data-wz]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.wz===wz)));
   document.getElementById('vworld').innerHTML=`<svg viewBox="${EU?'425 30 187 128':`0 0 ${G.w} ${G.h}`}" role="img" aria-label="Mapa de calor de destinos de los vuelos"><defs><clipPath id="hclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.w}" height="${G.h}" preserveAspectRatio="none" clip-path="url(#hclip)" style="pointer-events:none"/>${paths}${arcs}${planes}<circle cx="${mx0}" cy="${my0}" r="${EU?1.3:5}" fill="#fff" stroke="#14202e" stroke-width="${EU?.4:1.8}"/>${labels}</svg>`;
@@ -88,7 +90,7 @@ function worldMap(W){
 }
 function worldTip(W){
   const el=document.getElementById('vtip');if(!selW){return}
-  const nm=selW==='ESP'?'España':(D.names[selW]||selW),v=W[selW]||0;
+  const nm=selW==='ESP'?'España':(({USA:'EE. UU.'})[selW]||D.names[selW]||selW),v=W[selW]||0;
   const t=rows(D.vis).filter(r=>r[2]===selW),byU={};t.forEach(r=>byU[D.usos[r[1]]]=(byU[D.usos[r[1]]]||0)+r[4]);
   el.innerHTML=selW==='ESP'?'<b>España</b>: ver el mapa de abajo.':`<b>${nm}</b>: ${fmt(v)} visitas${v?' — '+Object.entries(byU).sort((a,b)=>b[1]-a[1]).map(([u,n])=>`${u} ${n}`).join(' · '):' (ninguna con los filtros actuales)'}.`;
 }
@@ -117,10 +119,11 @@ function spainLabels(S){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
   const SHORT={'Comunidad Valenciana':'C. Valenciana','Castilla-La Mancha':'C.-La Mancha','Región de Murcia':'Murcia','Islas Baleares':'Baleares','Comunidad de Madrid':'Madrid'},g={};
   svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(!c||c==='Ceuta'||c==='Melilla')return;const b=pt.getBBox(),r=g[c];if(!r)g[c]={x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height};else{r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
-  const st='font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:3px;pointer-events:none;text-anchor:middle';
+  const rc=svg.getBoundingClientRect(),sc=Math.min(rc.width/G.sw,rc.height/(G.sh+70))||1,k=Math.min(2.4,Math.max(1,7.5/(11*sc)));
+  const st=`font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.95);stroke-width:${3*k}px;pointer-events:none;text-anchor:middle`;
   let t='';
   Object.entries(g).forEach(([c,r])=>{const x=(r.x0+r.x1)/2,y=(r.y0+r.y1)/2,nm=SHORT[c]||c;
-    t+=c==='Comunidad de Madrid'?`<text x="${x}" y="${y+4}" style="font-size:11px;${st}">Madrid · base</text>`:`<text x="${x}" y="${y-2}" style="${st}"><tspan x="${x}" style="font-size:11px">${nm}</tspan><tspan x="${x}" dy="14" style="font-size:14px">${fmt(S[c]||0)}</tspan></text>`});
+    t+=c==='Comunidad de Madrid'?`<text x="${x}" y="${y+4}" style="font-size:${11*k}px;${st}">Madrid · base</text>`:`<text x="${x}" y="${y-2}" style="${st}"><tspan x="${x}" style="font-size:${11*k}px">${nm}</tspan><tspan x="${x}" dy="${14*k}" style="font-size:${14*k}px">${fmt(S[c]||0)}</tspan></text>`});
   svg.insertAdjacentHTML('beforeend',t);
 }
 function spainCM(S,cf){

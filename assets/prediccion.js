@@ -110,6 +110,7 @@
     blk('Media de las 14 encuestas privadas (hoy: la media del 24-sep al 19-oct)',PRED.escPrivadas,PRED.escBase.priv)+blk('Solo CIS (hoy: el barómetro de octubre)',PRED.escCIS,PRED.escBase.cis)+`</tbody>`;
   const [y,m,d]=PRED.generado.split('-').map(Number);
   document.getElementById('pgen').textContent=`Calculado el ${d} de ${['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'][m-1]} de ${y}.`;
+  const ua=document.getElementById('pupd');if(ua)ua.textContent=`Actualizado: ${d} ${['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][m-1]} ${y}`;
   const df=(sc,bs)=>K.map(([k,n])=>{const x=sc.escanos[k].c-bs[k];return n+' '+(x>0?'+':x<0?'−':'')+Math.abs(x)}).join(', ');
   if(window.rvReady&&typeof rvScan==='function')rvScan();
 })();
