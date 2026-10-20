@@ -77,7 +77,7 @@
       g+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`;
       g+=ch?`<circle cx="${x}" cy="${y}" r="3.6" fill="var(--bg)" stroke="${c}" stroke-width="1.6"/>`:`<circle cx="${x}" cy="${y}" r="1.8" fill="${c}" opacity=".9"/>`;
       });
-    const xa=X(dd(HD[0].f))-8,xb=X(TH)+8;
+    const xa=X(dd(HD[0].f))-8,xb=X(TH)+5;
     return g+`<rect class="hzone" data-k="${k}" x="${xa}" y="0" width="${xb-xa}" height="${T+ph}" fill="transparent" style="cursor:pointer"/></g>`;
   }
   function hdetail(k,name,f){
@@ -86,7 +86,7 @@
       sal=(ch.salen||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)}, ${name} ${pc(e.voto[k])}) sale de la media por tener más de 30 días.</li>`).join('');
     return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>${name} · ${fecha(f)}</b>: ${a.esc[k]} → ${h.esc[k]} escaños${dE?` (${nf(dE,0)})`:' (sin cambio)'}</p>`+
       `<p>Media de voto: ${pc(a.voto[k])} → ${pc(h.voto[k])} (${nf(ch.dVoto[k],2)} puntos). Margen del 80 % ese día: ${h.lo[k]}–${h.hi[k]} escaños, con ${h.n} encuestas.</p>`+
-      (ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+
+      (!ents&&!sal?`<p>Ese día no entró ni salió ninguna encuesta, así que la media no se movió.</p>`:'')+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+
       (()=>{const all=(h.ctx||[]).filter(x=>!x.p||x.p===k||x.p==='general'),li=x=>`<li>${x.p==='general'?'<i>General</i> · ':''}${x.tipo?x.tipo.charAt(0).toUpperCase()+x.tipo.slice(1)+': ':''}${x.t}${x.hecho&&x.hecho!==f?` (${fecha(x.hecho)})`:''}${x.u?` <a href="${x.u}" rel="noopener">${x.medio||'fuente'}</a>`:''}${x.pos?`<br><span style="color:var(--muted)">Posible relación (hipótesis, no demostrada): ${x.pos}</span>`:''}</li>`,
       ant=all.filter(x=>(x.fase||'antes')==='antes'),des=all.filter(x=>x.fase==='despues');
       return (ant.length?`<p style="margin-bottom:2px">Posibles factores de los días previos (contexto, no demuestra causa):</p><ul>${ant.map(li).join('')}</ul>`:'')+(des.length?`<p style="margin-bottom:2px">Después del cambio: reacciones y cobertura (no demuestra que sea consecuencia):</p><ul>${des.map(li).join('')}</ul>`:'')})()+
@@ -121,11 +121,13 @@
     const an=!REDUCE;drawn=true;
     box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('');
     wire(box,W);
-    const cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
-    const abrir=(cell,k,f)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],i=cambios.indexOf(f);d.innerHTML=hdetail(k,nm,f)+`<div class="hnav"><button type="button" class="hp"${i<1?' disabled':''}>‹ Cambio anterior</button><button type="button" class="hs"${i>=cambios.length-1?' disabled':''}>Cambio siguiente ›</button></div>`;d.hidden=false;
-      d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true});d.querySelector('.hp').addEventListener('click',()=>abrir(cell,k,cambios[i-1]));d.querySelector('.hs').addEventListener('click',()=>abrir(cell,k,cambios[i+1]))};
-    box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!cambios.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,t=TH+(px-(+svg.dataset.x0))/(+svg.dataset.pw)*(D1-D0);
-      let bf=cambios[0],bd=1e18;cambios.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
+    box.querySelectorAll('.hzone').forEach(z=>z.ownerSVGElement.appendChild(z));
+    const dias=HD.slice(1).map(h=>h.f),cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
+    const abrir=(cell,k,f)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
+      d.innerHTML=hdetail(k,nm,f)+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;
+      d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
+    box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,t=TH+(px-(+svg.dataset.x0))/(+svg.dataset.pw)*(D1-D0);
+      let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
   }
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;
