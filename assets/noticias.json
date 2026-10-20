@@ -1,5 +1,5 @@
 {
- "actualizado": "2026-10-19",
+ "actualizado": "2026-10-20",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
   {
@@ -17,13 +17,6 @@
    "tema": "Encuestas"
   },
   {
-   "medio": "Moncloa.com",
-   "fecha": "16 oct",
-   "url": "https://www.moncloa.com/2026/10/16/encuestas-29n-psoe-pp-vox-cis-3449630/",
-   "titular": "Sánchez encara el 29-N con las encuestas en contra: PP y Vox suman 201 escaños y el CIS ve empate técnico",
-   "tema": "Encuestas"
-  },
-  {
    "medio": "RTVC",
    "fecha": "19 oct",
    "url": "https://rtvc.es/partidos-aceleran-precampana-poco-mas-40-dias-elecciones-19-octubre-2026/",
@@ -31,25 +24,46 @@
    "tema": "Campaña"
   },
   {
-   "medio": "elEconomista",
-   "fecha": "oct",
-   "url": "https://www.eleconomista.es/actualidad/noticias/d8424/10/26/ultima-hora-del-adelanto-de-elecciones-generales-en-espana-20262027-en-directo-pedro-sanchez-convoca-elecciones-para-el-29-de-noviembre.html",
-   "titular": "Última hora de las elecciones generales en España 2026, en directo: encuestas, sondeos y plazos",
-   "tema": "Proceso"
-  },
-  {
-   "medio": "Euronews",
-   "fecha": "9 oct",
-   "url": "https://es.euronews.com/2026/10/09/encuesta-preve-cambio-gobierno-espana-pp-vox-consolidarian-mayoria-frente-psoe",
-   "titular": "Una encuesta prevé cambio de Gobierno: PP y Vox se consolidarían con mayoría frente al PSOE",
+   "medio": "Moncloa.com",
+   "fecha": "16 oct",
+   "url": "https://www.moncloa.com/2026/10/16/encuestas-29n-psoe-pp-vox-cis-3449630/",
+   "titular": "Sánchez encara el 29-N con las encuestas en contra: PP y Vox suman 201 escaños y el CIS ve empate técnico",
    "tema": "Encuestas"
   },
   {
-   "medio": "Euronews",
-   "fecha": "6 oct",
-   "url": "https://es.euronews.com/2026/10/06/calendario-elecciones-generales-29n-fechas-clave-voto-correo-campana",
-   "titular": "Calendario de las elecciones generales del 29-N: fechas clave, voto por correo y campaña",
+   "medio": "Que.es",
+   "fecha": "14 oct",
+   "url": "https://www.que.es/2026/10/14/huelga-medicos-madrid-otono/",
+   "titular": "La huelga médicos Madrid: cuatro jornadas de paro desde finales de octubre por la falta de negociación",
+   "tema": "Huelgas"
+  },
+  {
+   "medio": "Moncloa.com",
+   "fecha": "14 oct",
+   "url": "https://www.moncloa.com/2026/10/14/cis-octubre-hunde-pp-psoe-34-3448290/",
+   "titular": "El CIS de octubre hunde al PP al 22,2% y dispara al PSOE al 34% a mes y medio del 29-N",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "RTVC",
+   "fecha": "12 oct",
+   "url": "https://rtvc.es/supremo-mantiene-suspendido-voto-nacionalizados-ley-nietos-12-octubre-2026/",
+   "titular": "El Supremo mantiene suspendido el voto de los nacionalizados por la ley de nietos",
    "tema": "Proceso"
+  },
+  {
+   "medio": "RTVC",
+   "fecha": "9 oct",
+   "url": "https://rtvc.es/feijoo-acepta-un-cara-a-cara-con-sanchez-el-16-de-noviembre-9-octubre-2026/",
+   "titular": "Feijóo acepta un cara a cara con Sánchez el 16 de noviembre",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Moncloa.com",
+   "fecha": "7 oct",
+   "url": "https://moncloa.com/2026/10/07/huelga-general-11n-3443931",
+   "titular": "CCOO y UGT ponen la fecha del 11 de noviembre para la huelga general",
+   "tema": "Huelgas"
   },
   {
    "medio": "Artículo 14",
@@ -57,20 +71,6 @@
    "url": "https://www.articulo14.es/politica/el-doble-reto-de-feijoo-evitar-lios-en-campana-y-su-relacion-con-abascal-20261006.html",
    "titular": "El doble reto de Feijóo: evitar líos en campaña y su relación con Abascal",
    "tema": "Campaña"
-  },
-  {
-   "medio": "El Salto",
-   "fecha": "oct",
-   "url": "https://www.elsaltodiario.com/elecciones/sumar-tercera-fuerza-politica-generales-segun-cis",
-   "titular": "Sumar, tercera fuerza política en las generales según el CIS",
-   "tema": "Encuestas"
-  },
-  {
-   "medio": "La Comarca",
-   "fecha": "oct",
-   "url": "https://www.lacomarca.net/como-hasta-cuando-puede-pedir-voto-por-correo-elecciones-generales-29-n/amp/",
-   "titular": "¿Cómo y hasta cuándo se puede pedir el voto por correo para el 29-N?",
-   "tema": "Proceso"
   }
  ]
 }
