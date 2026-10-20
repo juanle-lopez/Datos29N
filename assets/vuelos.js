@@ -94,6 +94,9 @@ function worldTip(W){
   const t=rows(D.vis).filter(r=>r[2]===selW),byU={};t.forEach(r=>byU[D.usos[r[1]]]=(byU[D.usos[r[1]]]||0)+r[4]);
   el.innerHTML=selW==='ESP'?'<b>España</b>: ver el mapa de abajo.':`<b>${nm}</b>: ${fmt(v)} visitas${v?' — '+Object.entries(byU).sort((a,b)=>b[1]-a[1]).map(([u,n])=>`${u} ${n}`).join(' · '):' (ninguna con los filtros actuales)'}.`;
 }
+let SPL=[];
+function placeSL(){const sv=document.querySelector('#vspain svg'),box=document.getElementById('vspain');if(!sv||!SPL.length)return;const r=sv.getBoundingClientRect(),bx=box.getBoundingClientRect(),vb=sv.viewBox.baseVal,sc=Math.min(r.width/vb.width,r.height/vb.height),ox=r.left-bx.left+(r.width-vb.width*sc)/2,oy=r.top-bx.top+(r.height-vb.height*sc)/2;SPL.forEach(([d,x,y])=>{d.style.left=(ox+x*sc)+'px';d.style.top=(oy+y*sc)+'px'})}
+addEventListener('resize',placeSL);
 function spainMap(S){
   const mx=Math.max(1,...Object.values(S)),cf=mkSC(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid').map(x=>x[1]));
   const ca=k=>P2CA[k];
@@ -103,8 +106,10 @@ function spainMap(S){
   spainArcs(S);
   spainCM(S,cf);
   spainLabels(S);
-  {const sv=document.querySelector('#vspain svg'),ov=document.createElementNS('http://www.w3.org/2000/svg','svg');ov.setAttribute('viewBox',sv.getAttribute('viewBox'));ov.setAttribute('class','slabs');ov.setAttribute('aria-hidden','true');ov.setAttribute('style','position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;max-height:none');
-    sv.querySelectorAll('text').forEach(t=>ov.appendChild(t));document.getElementById('vspain').appendChild(ov)}
+  {const sv=document.querySelector('#vspain svg'),box=document.getElementById('vspain');box.querySelectorAll('.slab').forEach(e=>e.remove());SPL=[];
+    sv.querySelectorAll('text').forEach(t=>{const ts=t.querySelectorAll('tspan'),x=+(t.getAttribute('x')||(ts[0]&&ts[0].getAttribute('x'))),y=+t.getAttribute('y');
+      const d=document.createElement('div');d.className='slab';d.innerHTML=ts.length?`<b>${ts[0].textContent}</b><i>${ts[1]?ts[1].textContent:''}</i>`:`<b>${t.textContent}</b>`;box.appendChild(d);SPL.push([d,x,y]);t.remove()});
+    placeSL()}
   const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Color del mapa: '+tierLeg()+' <span style="margin-left:12px">Líneas y aviones en negro: más gruesas, más vuelos.</span>';
   document.querySelectorAll('#vspain .c').forEach(p=>p.addEventListener('click',()=>{selS=p.dataset.c;spainTip(S);spainMap(S)}));
 }
