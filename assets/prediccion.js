@@ -86,7 +86,7 @@
     return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>${name} · ${fecha(f)}</b>: ${a.esc[k]} → ${h.esc[k]} escaños${dE?` (${nf(dE,0)})`:' (sin cambio)'}</p>`+
       `<p>Media de voto: ${pc(a.voto[k])} → ${pc(h.voto[k])} (${nf(ch.dVoto[k],2)} puntos). Margen del 80 % ese día: ${h.lo[k]}–${h.hi[k]} escaños, con ${h.n} encuestas.</p>`+
       (ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+
-      (h.ctx&&h.ctx.length?`<p style="margin-bottom:2px">Ese día:</p><ul>${h.ctx.map(x=>`<li>${x.t}${x.u?` <a href="${x.u}">fuente</a>`:''}</li>`).join('')}</ul>`:'')+
+      (()=>{const cx=(h.ctx||[]).filter(x=>!x.p||x.p===k||x.p==='general');return cx.length?`<p style="margin-bottom:2px">Posibles factores de esos días (contexto, no demuestra causa):</p><ul>${cx.map(x=>`<li>${x.p==='general'?'<i>General</i> · ':''}${x.tipo?x.tipo.charAt(0).toUpperCase()+x.tipo.slice(1)+': ':''}${x.t}${x.hecho&&x.hecho!==f?` (${fecha(x.hecho)})`:''}${x.u?` <a href="${x.u}" rel="noopener">${x.medio||'fuente'}</a>`:''}${x.pos?`<br><span style="color:var(--muted)">Posible relación (hipótesis, no demostrada): ${x.pos}</span>`:''}</li>`).join('')}</ul>`:''})()+
       `<p class="hn">La media es la de la última encuesta de cada empresa de los últimos 30 días, así que solo se mueve cuando entra o sale una encuesta.${h.t==='x'?' Día reconstruido con las encuestas conocidas entonces.':''}</p>`;
   }
   // interacción: al pasar el cursor o tocar, valor central y rangos de esa fecha
