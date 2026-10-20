@@ -32,6 +32,8 @@
 .steps span{max-width:64ch}
 @media(max-width:520px){.steps li{grid-template-columns:1fr;gap:2px}}
 #hid{display:none}
+.howto{margin:12px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:14px;line-height:1.5}
+.howto ul{margin:6px 0 0;padding-left:18px}.howto li{margin:0 0 4px;max-width:none}
 .hdet{position:relative;margin-top:6px;padding:10px 34px 8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;line-height:1.45}
 .hdet p{margin:0 0 6px;max-width:none}.hdet ul{margin:0 0 6px;padding-left:18px}.hdet .ht{font-size:14px}.hdet .hn{color:var(--muted);font-size:12px;margin:4px 0 0}
 .hdet .hx{position:absolute;top:4px;right:6px;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px}
@@ -56,6 +58,12 @@
       <div id="pbody">
       <h3 style="margin:18px 0 6px">Escaños estimados hasta el 29-N</h3>
       <p class="note">Un gráfico por partido, con su propia escala. Pasa el cursor o toca para ver cada fecha. El movimiento es solo visual; no son datos en directo.</p>
+      <div class="howto" id="howto"><b>Cómo usar los gráficos</b>
+        <ul>
+          <li><b>Hacia la derecha de «hoy»:</b> la proyección hasta el 29-N. Pasa el cursor o toca para ver cada fecha, con su margen de error.</li>
+          <li><b>Hacia la izquierda (desde el 1-oct):</b> el historial diario de la media. Toca para ver <b>qué cambió ese día</b>: qué encuesta entra o sale y qué pasó esos días. Los aros son los días con cambio de escaños; «‹ ›» pasa de uno a otro.</li>
+          <li><b>Lo que pasó cada día es contexto, no prueba de causa.</b></li>
+        </ul></div>
       <div style="margin-top:10px"><div id="pgrid" style="display:grid;gap:12px"></div>
       <div class="leg" id="leg"></div></div>
       <p class="sources" id="psrc" style="margin:10px 0 0"></p>
