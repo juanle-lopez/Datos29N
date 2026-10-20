@@ -35,6 +35,14 @@ const trP=tendencia('privada'),trC=tendencia('cis');
 const priv=inp.privadas;
 const base={priv:{},cis:{}};K.forEach(k=>{base.priv[k]=round(mean(priv.map(p=>p[k])),2);base.cis[k]=inp.cis[k]});
 const s0={priv:{},cis:{}};K.forEach(k=>{s0.priv[k]=sdev(priv.map(p=>p[k]))/Math.sqrt(priv.length);s0.cis[k]=inp.sdMuestreoCIS});
+// Errores en escala logit y como composición (método 3, 20-oct): el error en puntos es proporcional a p(1-p), así que un partido
+// grande tiene más margen en puntos que uno pequeño; y PP, PSOE, Vox, Sumar+Podemos y «resto» se renormalizan para sumar 100,
+// lo que hace que si uno sube otro baje. REF = media cuadrática de p(1-p) en los 8 resultados con los que se midió sdError (1,9).
+const REF=Math.sqrt([20.82,28.00,15.08,6.79,33.05,31.68,12.38,12.31].map(x=>(x/100*(1-x/100))**2).reduce((a,b)=>a+b)/8);
+const lg=p=>Math.log(p/(1-p)),ex=x=>1/(1+Math.exp(-x));
+function compon(c,e){const p={},keys=[...K,'O'];let o=100;K.forEach(k=>{p[k]=c[k]/100;o-=c[k]});p.O=Math.max(0.01,o/100);
+  const q={};let S=0;keys.forEach(k=>{q[k]=ex(lg(p[k])+(e[k]||0));S+=q[k]});const v={};K.forEach(k=>v[k]=Math.max(0.5,100*q[k]/S));return v}
+const sdl=(clave,k,c,varPuntosComun)=>{const p=k==='O'?null:c[k]/100,a=k==='O'?0:(s0[clave][k]/(100*p*(1-p)))**2;return Math.sqrt(a+varPuntosComun/(100*REF)**2)};
 function escenario(clave,trend,N=4000){
   const trd=inp.usarTendencia?trend.tr:Object.fromEntries(K.map(k=>[k,0]));   // sin tendencia: la previsión central es la media de hoy
   const ruta={},fin={},sdFin={};K.forEach(k=>{ruta[k]=[]});
@@ -44,7 +52,8 @@ function escenario(clave,trend,N=4000){
     const fin_=d===T, c={},sdv={};
     K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[]};
-    for(let j=0;j<n;j++){const v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()));const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX)}
+    const vc=volDay*d+(fin_?inp.sdError**2:0),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
+    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX)}
     const cs=simulate(DATA,c).tot;
     K.forEach(k=>ruta[k].push({d:iso(D0+d),esc:cs[k],lo:pct(dr[k],.1),hi:pct(dr[k],.9),lo95:pct(dr[k],.025),hi95:pct(dr[k],.975),lo50:pct(dr[k],.25),hi50:pct(dr[k],.75),pv:fin_?{c:cs.PP+cs.VOX,p10:pct(dr.PV,.1),p50:pct(dr.PV,.5),p90:pct(dr.PV,.9)}:undefined}));
     if(fin_){K.forEach(k=>{fin[k]=c[k];sdFin[k]=sdv[k]});ruta._fin={c,dr,cs}}
@@ -55,12 +64,12 @@ function escenario(clave,trend,N=4000){
   if(clave==='priv'){
     const NP=40;out.trayectorias={PP:[],PSOE:[],VOX:[],SUMAR:[]};
     for(let i=0;i<NP;i++){
-      const z0={},W={};K.forEach(k=>{z0[k]=s0[clave][k]*gauss();W[k]=0});
-      const eF={};K.forEach(k=>eF[k]=inp.sdError*gauss());
+      const L=inp.errorLogit,cb={};K.forEach(k=>cb[k]=base[clave][k]);const z0={},W={O:0};K.forEach(k=>{z0[k]=(L?s0[clave][k]/(100*cb[k]/100*(1-cb[k]/100)):s0[clave][k])*gauss();W[k]=0});
+      const eF={};[...K,'O'].forEach(k=>eF[k]=(L?inp.sdError/(100*REF):inp.sdError)*gauss());
       const arr={PP:[],PSOE:[],VOX:[],SUMAR:[]};let prev=0;
       ds.forEach((d,j)=>{
-        const dt=d-prev;prev=d;K.forEach(k=>{W[k]+=Math.sqrt(volDay*dt)*gauss()});
-        const v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+(d===T?eF[k]:0)));
+        const dt=d-prev;prev=d;[...K,'O'].forEach(k=>{W[k]+=Math.sqrt(volDay*dt)/(L?100*REF:1)*gauss()});
+        let v;if(L){const cc={},e={O:W.O+(d===T?eF.O:0)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d);e[k]=z0[k]+W[k]+(d===T?eF[k]:0)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+(d===T?eF[k]:0)))}
         const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));
       });
       K.forEach(k=>out.trayectorias[k].push(arr[k]));

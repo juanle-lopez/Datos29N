@@ -148,6 +148,8 @@
  "podemosFrac": 0.35,
  "podemosNota": "Podemos concurre por separado de Sumar/Frente Amplio salvo en Canarias y C. Valenciana, y dentro de las listas de ERC en Cataluña (Infobae, 17-oct-2026). Fracción de Podemos dentro de «Sumar + Podemos»: media de las 7 encuestas privadas con desglose (Sigma Dos 26-ago, 4-oct y 12-oct; Demoscopia 27-ago; NC Report 7-sep; DYM 24-sep; SocioMétrica 4-oct) = 0,35. Se reparte por provincia en proporción al voto de Sumar en 2023 (supuesto).",
  "podemosFuente": "https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/",
+ "errorLogit": true,
+ "errorLogitNota": "Desde el 20-oct (método 3): el error se aplica en escala logit, proporcional a p(1-p), y los cuatro bloques más el resto se renormalizan a 100 (si uno sube, otro baja). Calibrado para que la media cuadrática del error en los 8 resultados de 2019 y 2023 siga siendo 1,9 puntos.",
  "historial": [
   {
    "e": "CIS",

@@ -14,14 +14,16 @@
   const MESL=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const fecha=d=>{const [y,m,dn]=d.split('-').map(Number);return dn+'-'+MESL[m-1]};
   const fs_=PRED.privadas.map(q=>q.f).sort(),RNG=fecha(fs_[0])+' al '+fecha(fs_[fs_.length-1]);
+  // Eje de tiempo en dos tramos: el historial (1-oct → hoy) ocupa al menos el 45 % del ancho, aunque sea más corto que la proyección
+  const FH=Math.max(.45,(TH-D0)/(D1-D0)),xs=(t,L,pw)=>t<=TH?L+(t-D0)/Math.max(1,TH-D0)*pw*FH:L+pw*FH+(t-TH)/(D1-TH)*pw*(1-FH);
   const AN=(v,d)=>`<animate attributeName="opacity" values="${v}" dur="${d}" begin="1.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`;
   const WA=(a,v)=>{const q=v.split(";");return `<animate attributeName="${a}" from="${q[0]}" to="${q[1]}" dur="14s" begin="0s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".3 .3 .55 .9"/>`};
   function panel(k,name,c,W,animate){
-    const H=W<420?236:262,L=30,R=W<420?86:96,T=42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
+    const H=W<420?246:262,L=30,R=W<420?86:96,T=W<420?52:42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
     const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
-    const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];hc.concat(hs).forEach(h=>vals.push(h.esc[k]));dots.forEach(p=>vals.push(p.esc[k]));rC.forEach(r=>vals.push(r.esc));rP.forEach(r=>vals.push(r.lo95,r.hi95));
+    const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];hs.forEach(h=>vals.push(h.esc[k]));dots.forEach(p=>vals.push(p.esc[k]));rP.forEach(r=>vals.push(r.lo95,r.hi95));
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
-    const X=t=>L+(t-D0)/(D1-D0)*pw,Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
+    const X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
     let s=`<defs>${animate?`<linearGradient id="lg-${id}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-${id})">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}<filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
     s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="30" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
@@ -39,21 +41,24 @@
     const smo=t=>t.map((v,i)=>i===0||i===t.length-1?v:(t[i-1]+v+t[i+1])/3),pts=sm=>sm.map((v,i)=>X(dd(rP[i].d))+','+Y(v)).join(' ');
     tr.slice(0,30).forEach((t,ti)=>{const a=smo(t),b=smo(tr[(ti+13)%tr.length]),du=(9+(ti%7)*1.8).toFixed(1),bg=(1.8-ti*.7).toFixed(2);
       const mv=`<animate attributeName="points" values="${pts(a)};${pts(b)};${pts(a)}" dur="${du}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/>`;
-      s+=`<polyline fill="none" stroke="${c}" stroke-width="1.3" opacity=".34" stroke-linejoin="round" points="${pts(a)}">${animate?`${mv}<animate attributeName="opacity" values=".16;.62;.16" dur="${(du*.6).toFixed(1)}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`;
+      s+=`<polyline class="trj" fill="none" stroke="${c}" stroke-width="1.3" opacity=".34" stroke-linejoin="round" points="${pts(a)}">${animate?`${mv}<animate attributeName="opacity" values=".16;.62;.16" dur="${(du*.6).toFixed(1)}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`;
       if(animate&&ti<14){const xe0=X(D1)+5,ex=sm=>{const v=Math.round(sm[sm.length-1]),i=v-hg.min,d=i>=0&&i<hg.c.length?hg.c[i]:0;return (xe0+Math.max(2,d*DW*.8))+','+Y(sm[sm.length-1])},pe=sm=>pts(sm)+' '+(X(D1)+2)+','+Y(sm[sm.length-1])+' '+ex(sm);
-        s+=`<polyline fill="none" stroke="${c}" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" opacity=".95" stroke-dasharray="0.01 77.99" points="${pe(a)}"><animate attributeName="points" values="${pe(a)};${pe(b)};${pe(a)}" dur="${du}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/><animate attributeName="stroke-dashoffset" from="0" to="-78" dur="${(4.2+(ti%5)*.7).toFixed(1)}s" repeatCount="indefinite"/></polyline>`}});
+        s+=`<polyline class="trj" fill="none" stroke="${c}" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" opacity=".95" stroke-dasharray="0.01 77.99" points="${pe(a)}"><animate attributeName="points" values="${pe(a)};${pe(b)};${pe(a)}" dur="${du}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/><animate attributeName="stroke-dashoffset" from="0" to="-78" dur="${(4.2+(ti%5)*.7).toFixed(1)}s" repeatCount="indefinite"/></polyline>`}});
     s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".28" filter="url(#gl-${id})" points="${X(TH)},${Y(base)} ${cen}"/>`;
     s+=`<polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${X(TH)},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
     // nube de densidad el 29-N: cuántas de las 4.000 simulaciones acaban en cada número de escaños
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
-    s+=`<path d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
+    s+=`<path class="cloud" d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
+    // El escenario CIS no marca la escala: si se sale, se dibuja pegado al borde con su valor y una flecha
+    const cY=v=>Y(Math.max(lo,Math.min(hi,v)));
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+cY(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="9 5" opacity=".9" points="${X(dd(lc.f))},${Y(lc.esc[k])} ${rC.map(r=>X(dd(r.d))+','+Y(r.esc)).join(' ')}"/>`;
-    hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${Y(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${Y(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
+    s+=`<polyline fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="9 5" opacity=".9" points="${X(dd(lc.f))},${cY(lc.esc[k])} ${rC.map(r=>X(dd(r.d))+','+cY(r.esc)).join(' ')}"/>`;
+    hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${cY(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${cY(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
+    {const ve=rC[rC.length-1].esc;if(ve<lo||ve>hi)s+=`<text x="${X(D1)-4}" y="${ve<lo?Y(lo)-5:Y(hi)+12}" text-anchor="end" style="fill:${c};font-size:10.5px;font-weight:600">CIS: ${ve} ${ve<lo?'↓':'↑'}</text>`}
     s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" points="${hs.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
     s+=histG(k,c,X,Y,T,ph);
@@ -100,8 +105,8 @@
       const x0=+svg.dataset.x0,pw=+svg.dataset.pw,tT=dd(rP[0].d),tE=dd(rP[rP.length-1].d);
       const mv=e=>{
         const r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width;
-        const t=tT+(px-x0)/pw*(D1-D0);let bi=0,bd=1e18;rP.forEach((q,i)=>{const dx=Math.abs(dd(q.d)-t);if(dx<bd){bd=dx;bi=i}});
-        const q=rP[bi],X=x0+(dd(q.d)-tT)/(D1-D0)*pw,Yv=+hit.getAttribute('y'),h=+hit.getAttribute('height');
+        const t=TH+Math.max(0,px-x0)/(pw*(1-FH))*(D1-TH);let bi=0,bd=1e18;rP.forEach((q,i)=>{const dx=Math.abs(dd(q.d)-t);if(dx<bd){bd=dx;bi=i}});
+        const q=rP[bi],X=x0+(dd(q.d)-TH)/(D1-TH)*pw*(1-FH),Yv=+hit.getAttribute('y'),h=+hit.getAttribute('height');
         const lo=Math.max(0,Math.floor((Math.min(...rP.map(a=>a.lo95),PRED.escPrivadas.hist[k].min)-4)/10)*10);
         g.style.display='';l.setAttribute('x1',X);l.setAttribute('x2',X);
         const ys=[...svg.querySelectorAll('text')].filter(a=>/^\d+$/.test(a.textContent)&&a.getAttribute('text-anchor')==='end');
@@ -126,9 +131,13 @@
     const abrir=(cell,k,f)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
       d.innerHTML=hdetail(k,nm,f)+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;
       d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
-    box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,t=TH+(px-(+svg.dataset.x0))/(+svg.dataset.pw)*(D1-D0);
+    box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
   }
+  {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
+    if(ps)ps.innerHTML=`<b>29-N, según la media de las encuestas</b> (valor central y rango del 80 %):<br>`+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span>`).join(' · ')+
+      `<span class="maj">PP + Vox: <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span> · mayoría absoluta: 176</span>`;
+    const bt=document.getElementById('psimple');if(bt)bt.addEventListener('click',()=>{const on=bt.getAttribute('aria-pressed')!=='true';bt.setAttribute('aria-pressed',String(on));document.getElementById('pgrid').classList.toggle('simple',on)})}
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;
   document.getElementById('leg').innerHTML=

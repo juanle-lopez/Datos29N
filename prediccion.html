@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://juanle-lopez.github.io/Datos29N/prediccion.html">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=29">
+<link rel="stylesheet" href="assets/style.css?v=30">
 <style>
 .pg{width:100%;height:auto;display:block}
 .pg text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
@@ -32,6 +32,12 @@
 .steps span{max-width:64ch}
 @media(max-width:520px){.steps li{grid-template-columns:1fr;gap:2px}}
 #hid{display:none}
+.psum{margin:12px 0 0;padding:12px 14px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-size:14.5px;line-height:1.55}
+.psum b.n{font-family:var(--mono);font-variant-numeric:tabular-nums}.psum .r{color:var(--muted);font-size:12.5px}.psum .maj{display:block;margin-top:4px;font-weight:700}
+.pbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
+.pbar button{font:inherit;font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--fg);cursor:pointer}
+.pbar button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+#pgrid.simple .trj,#pgrid.simple .cloud{display:none}
 .howto{margin:12px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:14px;line-height:1.5}
 .howto ul{margin:6px 0 0;padding-left:18px}.howto li{margin:0 0 4px;max-width:none}
 .hdet{position:relative;margin-top:6px;padding:10px 34px 8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;line-height:1.45}
@@ -58,12 +64,14 @@
       <div id="pbody">
       <h3 style="margin:18px 0 6px">Escaños estimados hasta el 29-N</h3>
       <p class="note">Un gráfico por partido, con su propia escala. Pasa el cursor o toca para ver cada fecha. El movimiento es solo visual; no son datos en directo.</p>
+      <div class="psum" id="psum"></div>
       <div class="howto" id="howto"><b>Cómo usar los gráficos</b>
         <ul>
           <li><b>Hacia la derecha de «hoy»:</b> la proyección hasta el 29-N. Pasa el cursor o toca para ver cada fecha, con su margen de error.</li>
           <li><b>Hacia la izquierda (desde el 1-oct):</b> el historial diario de la media. Toca para ver <b>qué cambió ese día</b>: qué encuesta entra o sale y qué pasó esos días. Los aros son los días con cambio de escaños; «‹ ›» pasa de uno a otro.</li>
           <li><b>Lo que pasó cada día es contexto, no prueba de causa.</b></li>
         </ul></div>
+      <div class="pbar"><button type="button" id="psimple" aria-pressed="false">Vista simple</button><span class="note" style="margin:0">Oculta las trayectorias y la nube para ver solo la línea central y su margen.</span></div>
       <div style="margin-top:10px"><div id="pgrid" style="display:grid;gap:12px"></div>
       <div class="leg" id="leg"></div></div>
       <p class="sources" id="psrc" style="margin:10px 0 0"></p>
@@ -85,9 +93,9 @@
           <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 19-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las 14 privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Sin tendencia.</b><span>La previsión central para el 29-N es la media de hoy: no se prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
-          <li><b>Error.</b><span>Crece con los días e incluye el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos) el día de la votación.</span></li>
+          <li><b>Error.</b><span>Crece con los días e incluye el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media) el día de la votación. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
-          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia y Podemos va en lista propia. Todo el historial diario se ha recalculado con este método.</span></li>
+          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
         </ol>
       </details>
       <details class="pdet"><summary>La fórmula, paso a paso</summary>
@@ -102,10 +110,11 @@
         <div class="frm">V(k,t) = M(k)</div>
         <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
         <p><b>4. Incertidumbre.</b></p>
-        <div class="frm">σ(k,t)² = s(k)² + 1,0² × t / 40
-en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
+        <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40) / (100·R)²
+en el 29-N se suma además 1,9² / (100·R)²</div>
         <p>s(k) es el error de la media actual (la desviación de las 14 encuestas entre sí, dividida por √14; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana, y solo se suma el día de la votación.</p>
-        <p><b>5. Simulaciones.</b> 4.000 veces: se sortea V(k) con distribución normal de media V(k,29-N) y desviación σ(k), se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
+        <p>Este σ está en escala logit: p es la fracción de voto del partido, y R = 0,161 es la media cuadrática de p(1−p) en los 8 resultados de 2019 y 2023 con los que se midió el 1,9, de modo que el error medio en puntos sigue siendo 1,9 pero un partido grande tiene más margen en puntos que uno pequeño.</p>
+        <p><b>5. Simulaciones.</b> 4.000 veces: se sortea, en escala logit, el voto de cada partido y del resto, se vuelve a porcentajes y se reescala para que todo sume 100 (así, si uno sube, otro baja); se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
       </details>
       <details class="pdet"><summary>Cuánto acierta este método (prueba con 2019 y 2023)</summary>
         <p>Aplicamos el mismo método a elecciones pasadas: se parte del voto provincial de la elección anterior, se escala con el porcentaje nacional y se reparten escaños con D’Hondt. Escaños: modelo / real.</p>
@@ -123,7 +132,7 @@ en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
       <details class="pdet"><summary>Qué no incluye (límites)</summary>
         <ol>
           <li><b>Error del modelo.</b> El reparto por provincias escala el voto de 2023 por igual en todo el país; no recoge voto útil, cambios en las listas, partidos nuevos o escindidos, ni que unas provincias se muevan más que otras. En las pruebas, ese error fue de entre 2 y 12 escaños por partido.</li>
-          <li><b>Errores comunes de las encuestas.</b> Se simulan de forma independiente por partido. Si todas las encuestas se equivocan en la misma dirección, como pasó en 2023 con PP y Vox, el rango real es más ancho.</li>
+          <li><b>Errores comunes de las encuestas.</b> Los partidos se compensan entre sí (suman 100), pero no se simula un error de bloque. Si todas las encuestas se equivocan a la vez a favor de un bloque, como pasó en 2023 con PP y Vox, el rango real es más ancho: con un error de bloque de 1 punto, el de PP + Vox pasaría de 188–214 a 185–216 escaños.</li>
           <li><b>Campaña.</b> No se modelan acontecimientos concretos de la campaña (empieza el 13-nov) más allá de la deriva genérica.</li>
           <li><b>El CIS.</b> Su diferencia con las encuestas privadas es de unos 7 puntos en el PSOE. No sabemos cuál se acercará más; por eso se muestran por separado.</li>
           <li><b>Redes sociales.</b> No se usan: son una señal débil y muy sesgada de quién participa.</li>
@@ -137,9 +146,9 @@ en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
 <script src="assets/core.js?v=30"></script>
-<script src="assets/prediccion-data.js?v=15"></script>
+<script src="assets/prediccion-data.js?v=16"></script>
 <script src="assets/historial-data.js?v=3"></script>
-<script src="assets/prediccion.js?v=25"></script>
+<script src="assets/prediccion.js?v=26"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

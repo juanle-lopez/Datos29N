@@ -18,7 +18,8 @@ function simulate(data,nat,opt){
     let lastQ=0,lastP=null;
     for(let k=0;k<c.s;k++){let best=null,bv=-1;for(const p of el){const x=sh[p]/(seats[p]+1);if(x>bv){bv=x;best=p}}if(best){seats[best]++;lastQ=bv;lastP=best;}}
     let nq=0,np=null;for(const p of el){const x=sh[p]/(seats[p]+1);if(x>nq){nq=x;np=p}}
-    PP_.forEach(p=>tot[p]+=seats[p]);prov.push({n:c.n,s:c.s,seats,sh,marg:{win:lastP,lose:np,ratio:lastQ?nq/lastQ:0}});
+    if(q){seats.FA=seats.SUMAR;seats.SUMAR+=seats.POD;sh.FA=sh.SUMAR;sh.SUMAR+=sh.POD}
+    PP_.forEach(p=>tot[p]+=(p==='SUMAR'&&q?seats.FA:seats[p]));prov.push({n:c.n,s:c.s,seats,sh,marg:{win:lastP,lose:np,ratio:lastQ?nq/lastQ:0}});
   }
   if(q){tot.FA=tot.SUMAR;tot.SUMAR=tot.FA+tot.POD}
   return {tot,prov};
@@ -132,7 +133,7 @@ MAIN.forEach(p=>{
 const rctls=document.getElementById('rctls');
 // Voto nacional que hace falta para que un partido regional saque k escaños, con el resto como está
 function solveSeats(p,k){
-  const at=x=>simulate(DATA,{...nat,[p]:x}).tot[p];
+  const at=x=>simulate(DATA,{...nat,[p]:x},OPTP()).tot[p];
   let lo=0,hi=REGB[p]*12;if(at(hi)<k)return hi;
   for(let i=0;i<18;i++){const m=(lo+hi)/2;if(at(m)>=k)hi=m;else lo=m}
   return hi;
@@ -143,15 +144,17 @@ if(rctls)REGL.forEach(p=>{
   rctls.appendChild(d);
   d.querySelector('input').addEventListener('input',e=>{nat[p]=solveSeats(p,parseInt(e.target.value,10));setPressed(null);render()});
 });
+const PODQ=0.35,OPTP=()=>{const c=document.getElementById('podsep');return c&&c.checked?{podemos:PODQ}:undefined};
 function setPressed(k){document.querySelectorAll('[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===k)))}
-document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{nat={...PRESETS[b.dataset.p]};setPressed(b.dataset.p);render()}));
+document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{nat={...PRESETS[b.dataset.p]};const c=document.getElementById('podsep');if(c)c.checked=b.dataset.p!=='2023';setPressed(b.dataset.p);render()}));
+{const c=document.getElementById('podsep');if(c)c.addEventListener('change',()=>render())}
 const fmt=n=>n.toFixed(1).replace('.',',');
 function bloc(title,seats,list){
   const n=list.reduce((a,p)=>a+seats[p],0);
   return `<div class="bloc"><span>${title}</span><b>${n}</b><span class="${n>=176?'ok':'no'}">${n>=176?'Mayoría absoluta':'Faltan '+(176-n)}</span></div>`;
 }
 function render(){
-  const r=simulate(DATA,nat), t=r.tot;
+  const r=simulate(DATA,nat,OPTP()), t=r.tot;
   const s23=simulate(DATA,PRESETS['2023']).tot;
   ALLC.forEach(p=>{const el=document.getElementById('r_'+p);if(!el)return;
     if(REGL.includes(p)){el.value=t[p];document.getElementById('o_'+p).textContent=t[p]+(t[p]===1?' escaño':' escaños');const d=t[p]-s23[p],f2=n=>n.toFixed(2).replace('.',','),dp=nat[p]-PRESETS['2023'][p];
@@ -165,10 +168,14 @@ function render(){
   mark.style.left=(176/350*100)+'%';
   const total=Object.values(t).reduce((a,b)=>a+b,0);
   bar.setAttribute('aria-label','Reparto de escaños: '+order.filter(p=>t[p]).map(p=>NAMES[p]+' '+t[p]).join(', '));
+  const pe=document.getElementById('pseats');if(pe)pe.innerHTML=order.filter(p=>t[p]).sort((x,y)=>t[y]-t[x]).map(p=>`<span class="pchip"><i style="background:${COL[p]||REG}"></i>${p==='SUMAR'?'Sumar + Podemos':NAMES[p]}<b>${t[p]}</b></span>`).join('');
   document.getElementById('blocs').innerHTML=
     bloc('PP + Vox',t,['PP','VOX'])+
     bloc('PP + Vox + UPN + CCa',t,['PP','VOX','UPN','CCa'])+
-    bloc('PSOE + Sumar + socios 2023',t,['PSOE','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa']);
+    bloc('PP + PSOE',t,['PP','PSOE'])+
+    bloc('PSOE + Sumar + Podemos',t,['PSOE','SUMAR'])+
+    bloc('PSOE + Sumar + Podemos + socios 2023',t,['PSOE','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa'])+
+    bloc('PSOE + Sumar + Podemos + socios 2023 sin Junts',t,['PSOE','SUMAR','ERC','BILDU','PNV','BNG','CCa']);
   const base=PRESETS['2023'];
   const A23={PP:137,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1,UPN:1};
   document.getElementById('tp').innerHTML='<tr><th>Partido</th><th>Escaños</th><th>23-J</th><th>Cambio</th></tr>'+
@@ -183,7 +190,7 @@ render();
 /* hero: hemiciclo 2023 -> encuestas */
 (function(){
   const box=document.getElementById('hemi1');if(!box)return;
-  const old={PP:137,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1,UPN:1},poll=simulate(DATA,PRESETS.poll).tot;
+  const old={PP:137,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1,UPN:1},poll=simulate(DATA,PRESETS.poll,{podemos:PODQ}).tot;
   const lab=document.getElementById('hlab'),hs=document.getElementById('hstats');
   const P=['PP','PSOE','VOX','SUMAR'];
   hs.innerHTML=P.map(p=>`<div class="hs" style="--c:${COL[p]}"><span class="hn">${NAMES[p]}</span><b id="hn_${p}">${old[p]}</b><small id="hd_${p}">23-J</small></div>`).join('');
