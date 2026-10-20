@@ -4,7 +4,8 @@ import fs from 'fs';
 const root=new URL('..',import.meta.url).pathname;
 const inp=JSON.parse(fs.readFileSync(root+'tools/prediccion-input.json','utf8'));
 const src=fs.readFileSync(root+'assets/home.js','utf8');
-const {DATA,simulate}=new Function(src.split('\n')[0]+'\n'+src.slice(src.indexOf('const PARTIES'),src.indexOf('const SITE_URL'))+'\nreturn {DATA,simulate}')();
+const {DATA,simulate:sim0}=new Function(src.split('\n')[0]+'\n'+src.slice(src.indexOf('const PARTIES'),src.indexOf('const SITE_URL'))+'\nreturn {DATA,simulate}')();
+const OPT={podemos:inp.podemosFrac||0},simulate=(d,v)=>sim0(d,v,OPT);   // Podemos en lista propia (ver tools/prediccion-input.json)
 const K=['PP','PSOE','VOX','SUMAR'];
 const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
 const sdev=a=>{const m=mean(a);return Math.sqrt(a.reduce((s,x)=>s+(x-m)**2,0)/(a.length-1))};
@@ -35,12 +36,13 @@ const priv=inp.privadas;
 const base={priv:{},cis:{}};K.forEach(k=>{base.priv[k]=round(mean(priv.map(p=>p[k])),2);base.cis[k]=inp.cis[k]});
 const s0={priv:{},cis:{}};K.forEach(k=>{s0.priv[k]=sdev(priv.map(p=>p[k]))/Math.sqrt(priv.length);s0.cis[k]=inp.sdMuestreoCIS});
 function escenario(clave,trend,N=4000){
+  const trd=inp.usarTendencia?trend.tr:Object.fromEntries(K.map(k=>[k,0]));   // sin tendencia: la previsión central es la media de hoy
   const ruta={},fin={},sdFin={};K.forEach(k=>{ruta[k]=[]});
   const ds=[];for(let d=0;d<=T;d+=(d+2>T?T-d||1:2))ds.push(d);
   const sdAt=(k,d,final)=>Math.sqrt(s0[clave][k]**2+volDay*d+(final?inp.sdError**2:0));
   ds.forEach((d,i)=>{
     const fin_=d===T, c={},sdv={};
-    K.forEach(k=>{c[k]=base[clave][k]+trend.tr[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
+    K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[]};
     for(let j=0;j<n;j++){const v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()));const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX)}
     const cs=simulate(DATA,c).tot;
@@ -58,7 +60,7 @@ function escenario(clave,trend,N=4000){
       const arr={PP:[],PSOE:[],VOX:[],SUMAR:[]};let prev=0;
       ds.forEach((d,j)=>{
         const dt=d-prev;prev=d;K.forEach(k=>{W[k]+=Math.sqrt(volDay*dt)*gauss()});
-        const v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trend.tr[k]*damp(d)+z0[k]+W[k]+(d===T?eF[k]:0)));
+        const v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+(d===T?eF[k]:0)));
         const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));
       });
       K.forEach(k=>out.trayectorias[k].push(arr[k]));

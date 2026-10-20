@@ -82,24 +82,25 @@
       <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
       <details class="pdet" open><summary>Los cinco pasos</summary>
         <ol class="steps">
-          <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 19-oct</span>) y el CIS del 14-oct, con su historial. Sumar y Podemos van juntos, como en el simulador.</span></li>
-          <li><b>Media.</b><span>Media simple de las 10 privadas. El CIS no entra: se muestra aparte como segundo escenario.</span></li>
-          <li><b>Tendencia.</b><span>Cambio por día entre las dos últimas encuestas de la misma empresa, que se apaga con una vida media de 14 días. Es un supuesto débil.</span></li>
+          <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 19-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
+          <li><b>Media.</b><span>Media simple de las 14 privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
+          <li><b>Sin tendencia.</b><span>La previsión central para el 29-N es la media de hoy: no se prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
           <li><b>Error.</b><span>Crece con los días e incluye el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos) el día de la votación.</span></li>
-          <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %.</span></li>
+          <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
+          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia y Podemos va en lista propia. Todo el historial diario se ha recalculado con este método.</span></li>
         </ol>
       </details>
       <details class="pdet"><summary>La fórmula, paso a paso</summary>
         <p>Es el cálculo completo, sin atajos. Cada línea corresponde a uno de los cinco pasos.</p>
         <p><b>1. Voto en cada provincia.</b> Para PP, PSOE, Vox y Sumar + Podemos (k), en cada provincia (p):</p>
         <div class="frm">voto'(p,k) = voto2023(p,k) × V(k) / V2023(k)</div>
-        <p>V(k) es el porcentaje nacional de la proyección y V2023(k) el de 2023. Los demás partidos mantienen su voto de 2023. Después se reescala para que cada provincia sume 100.</p>
+        <p>V(k) es el porcentaje nacional de la proyección y V2023(k) el de 2023. Los demás partidos mantienen su voto de 2023. Podemos se separa de Sumar con el 35 % de su voto (salvo en Canarias y la C. Valenciana, donde van juntos; en Cataluña ese voto pasa a ERC). Después se reescala para que cada provincia sume 100.</p>
         <p><b>2. Escaños en cada provincia.</b> Con n escaños, se reparten de uno en uno al partido con mayor cociente:</p>
         <div class="frm">cociente(k) = voto'(p,k) / (escaños ya asignados a k + 1)</div>
         <p>Solo compiten los partidos con al menos un 3 % del voto de esa provincia (método D’Hondt).</p>
         <p><b>3. Voto proyectado en la fecha t.</b></p>
-        <div class="frm">V(k,t) = M(k) + b(k) × 14 × (1 − e^(−t/14))</div>
-        <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario) y b(k) la tendencia diaria, medida entre las dos últimas encuestas de la misma empresa. El 14 es la vida media, en días, con la que se amortigua la tendencia.</p>
+        <div class="frm">V(k,t) = M(k)</div>
+        <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = s(k)² + 1,0² × t / 40
 en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
@@ -136,9 +137,9 @@ en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
 <script src="assets/core.js?v=30"></script>
-<script src="assets/prediccion-data.js?v=14"></script>
-<script src="assets/historial-data.js?v=2"></script>
-<script src="assets/prediccion.js?v=24"></script>
+<script src="assets/prediccion-data.js?v=15"></script>
+<script src="assets/historial-data.js?v=3"></script>
+<script src="assets/prediccion.js?v=25"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
