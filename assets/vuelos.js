@@ -59,11 +59,12 @@ function routes(list,mx0,my0,mx,bend,sc,dmin,dmax,dk,reduce,cf,wf){wf=wf||1;
     const kk=Math.min(1,w*1.8),cc=[0,1,2].map(n=>Math.round([84,98,115][n]+([16,22,31][n]-[84,98,115][n])*kk)).join(','),lo=(.5+.5*kk).toFixed(2);
     lines+=`<path class="arc" d="${d}" style="stroke:#fff;opacity:${(.08+.24*kk).toFixed(2)}" stroke-width="${(wd+1.3*wf).toFixed(2)}"/><path class="arc" d="${d}" style="stroke:rgb(${cc});opacity:${lo}" stroke-width="${wd.toFixed(2)}"/><path class="arc" d="${d}" style="stroke:#9fb0c4;opacity:.75" stroke-width="${Math.max(.2*wf,wd*.28).toFixed(2)}" transform="translate(0 ${(-wd*.22).toFixed(2)})"/>`;
     if(reduce)return;
-    const np=Math.min(7,1+Math.floor(w*7)),dur=Math.max(dmin,Math.min(dmax,len/dk)),s=sc*wf*(.75+w*.5),D=dur.toFixed(1);
-    for(let j=0;j<np;j++){const bg=((ai*1.7+j*dur/np)%dur).toFixed(1),path=j%2?dr:d,gpath=j%2?gro:g,op=`<animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.88;1" dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/>`,
-      sz=`calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1" keyTimes="0;.5;1"`;
-      gr+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${gpath}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#05090f" opacity=".32"/></g>`;
-      pl+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${path}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#10161f" stroke="#fff" stroke-width="1.3" paint-order="stroke"><animateTransform attributeName="transform" type="scale" values="${(s*.62).toFixed(2)};${(s*1.35).toFixed(2)};${(s*.62).toFixed(2)}" ${sz} dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/></path></g>`}});
+    // Un solo avión por ruta: va al destino y vuelve a Madrid.
+    const dur=2*Math.max(dmin,Math.min(dmax,len/dk)),s=sc*wf*(.75+w*.5),D=dur.toFixed(1),bg=((ai*1.7)%dur).toFixed(1),
+      full=`${d}Q${cx.toFixed(1)},${cy.toFixed(1)} ${mx0.toFixed(1)},${my0.toFixed(1)}`,gfull=`${g}L${mx0.toFixed(1)},${my0.toFixed(1)}`,
+      op=`<animate attributeName="opacity" values="0;1;1;.45;1;1;0" keyTimes="0;.05;.45;.5;.55;.95;1" dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/>`;
+    gr+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${gfull}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#05090f" opacity=".32"/></g>`;
+    pl+=`<g opacity="0"><animateMotion dur="${D}s" begin="-${bg}s" repeatCount="indefinite" path="${full}" rotate="auto"/>${op}<path d="${PLANE}" transform="scale(${(s*.7).toFixed(2)})" fill="#10161f" stroke="#fff" stroke-width="1.3" paint-order="stroke"><animateTransform attributeName="transform" type="scale" values="${(s*.62).toFixed(2)};${(s*1.35).toFixed(2)};${(s*.62).toFixed(2)};${(s*1.35).toFixed(2)};${(s*.62).toFixed(2)}" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1;.4 0 .6 1;.4 0 .6 1" keyTimes="0;.25;.5;.75;1" dur="${D}s" begin="-${bg}s" repeatCount="indefinite"/></path></g>`});
   return gr+lines+pl}
 function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:230px;max-width:360px"><span style="display:block;height:8px;border-radius:4px;background:${SCGRAD}"></span><span style="display:flex;justify-content:space-between;font-size:11px"><span>1–2 visitas</span><span>Pocas</span><span>Frecuente</span><span>Los más visitados</span></span></span>`}
 function worldMap(W){
