@@ -72,7 +72,8 @@
     <div class="sech"><span class="num">Falcon</span><h2>Los vuelos de los aviones oficiales</h2><p class="lead">Cada vuelo registrado de los 9 aviones del Grupo 45 del Ejército del Aire (5 Falcon 900, 2 A310 y 2 A330) desde el 1 de marzo de 2021. Filtra por año y por uso.</p></div>
     <div class="exec" id="v_globo" style="margin-top:14px;text-align:center">
       <canvas id="globo" role="img" aria-label="Globo terráqueo giratorio con los aviones oficiales volando desde Madrid a los países que han visitado" style="display:block;width:90%;max-width:480px;aspect-ratio:1;height:auto;margin:0 auto;cursor:grab;touch-action:none;border-radius:14px"></canvas>
-      <p class="note" style="margin:6px auto 0;max-width:62ch">Los aviones salen de Madrid (punto con anillo) hacia todos los países que han visitado, y vuelven. Los países se colorean como en el mapa de calor de abajo, con los mismos filtros de año y uso. Arrastra el globo con el dedo o el ratón para girarlo en cualquier dirección; para seguir bajando por la página, desliza fuera del globo.</p>
+      <button type="button" id="globo-centrar" class="chip" style="margin:8px auto 0">⌖ Centrar en España</button>
+      <p class="note" style="margin:6px auto 0;max-width:62ch">Los aviones salen de Madrid (punto con anillo) hacia todos los países que han visitado, y vuelven. Los países se colorean como en el mapa de calor de abajo, con los mismos filtros de año y uso. Arrastra el globo con el dedo o el ratón para girarlo (doble toque: centrar en España); para seguir bajando por la página, desliza fuera del globo.</p>
     </div>
 
     <div class="gnote"><b>Lee esto primero.</b> Los datos vienen del registro de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (Pablo Bañuelos), que documenta los vuelos de forma pública. <b>El registro no indica quién iba a bordo</b> (la sección de pasajeros es una atribución de esa web, sin verificar aquí): clasifica cada vuelo por uso (Gobierno, Casa Real, Militar, Mantenimiento) y una parte, sobre todo de 2021 y 2022, figura como «Sin registrar». «Uso Gobierno» no significa que fuera el presidente. Costes y emisiones son <b>estimaciones de esa web</b>, no cifras oficiales.</div>
@@ -173,7 +174,7 @@
   <a class="nextp" href="gastos.html"><small>Volver · 05</small><b>Gastos públicos</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
-<script src="assets/core.js?v=31"></script><script src="assets/vuelos.js?v=56"></script><script src="assets/globo.js?v=6"></script>
+<script src="assets/core.js?v=31"></script><script src="assets/vuelos.js?v=56"></script><script src="assets/globo.js?v=7"></script>
 <script>
 (function(){
 const PAX=[

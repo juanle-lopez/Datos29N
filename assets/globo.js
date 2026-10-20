@@ -12,18 +12,10 @@
   const ll=(x,y)=>[(x-X0)/SX,(Y0-y)/SX];                                                      // mapa plano → [lon, lat] en grados
   const vec=(lon,lat)=>{lon*=d2r;lat*=d2r;const c=Math.cos(lat);return [c*Math.sin(lon),Math.sin(lat),c*Math.cos(lon)]};
   let curUrl,cfg,cv,ctx,off,octx,paths={},tex,tctx,arcs=[],planes=[],NX,NY,NZ,pix,img,out,M,sky,glow,grad,stars=[],
-      drag=null,vel=[0,0],run=false,vis=true,last=0,clock=0,fr=0,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,madrid=vec(-3.7,40.4);
+      lon=-3.7,tilt=24,vLon=0,vTilt=0,home=false,hold=0,tap=0,drag=null,run=false,vis=true,last=0,clock=0,reduce=matchMedia('(prefers-reduced-motion:reduce)').matches,madrid=vec(-3.7,40.4);
   // Orientación: M (3×3, por filas) pasa de vectores del globo a vectores de la cámara (x derecha, y arriba, z hacia el observador)
   function setView(lon,tilt){const cL=Math.cos(lon*d2r),sL=Math.sin(lon*d2r),cT=Math.cos(tilt*d2r),sT=Math.sin(tilt*d2r);
     M=[cL,0,-sL, -sT*sL,cT,-sT*cL, cT*sL,sT,cT*cL]}
-  function mul(A,B){const o=new Array(9);for(let i=0;i<3;i++)for(let j=0;j<3;j++)o[i*3+j]=A[i*3]*B[j]+A[i*3+1]*B[3+j]+A[i*3+2]*B[6+j];return o}
-  function spin(ay,ax){   // giro en el espacio de la cámara: ay alrededor del eje vertical (izquierda-derecha), ax alrededor del horizontal (arriba-abajo)
-    const cy=Math.cos(ay),sy=Math.sin(ay),cx=Math.cos(ax),sx=Math.sin(ax);
-    M=mul([1,0,0,0,cx,-sx,0,sx,cx],mul([cy,0,sy,0,1,0,-sy,0,cy],M));
-    if(++fr%240===0){   // corrige la deriva numérica (Gram-Schmidt)
-      let r0=M.slice(0,3),r1=M.slice(3,6);const n=v=>{const l=Math.hypot(v[0],v[1],v[2]);return [v[0]/l,v[1]/l,v[2]/l]};
-      r0=n(r0);const d=r1[0]*r0[0]+r1[1]*r0[1]+r1[2]*r0[2];r1=n([r1[0]-d*r0[0],r1[1]-d*r0[1],r1[2]-d*r0[2]]);
-      M=[...r0,...r1,r0[1]*r1[2]-r0[2]*r1[1],r0[2]*r1[0]-r0[0]*r1[2],r0[0]*r1[1]-r0[1]*r1[0]]}}
   function pre(){   // vector de cámara de cada píxel del disco (no cambia)
     const a=[],b=[],c=[],p=[];
     for(let py=0;py<NS;py++)for(let px=0;px<NS;px++){const nx=(px+.5-C)/R,ny=(C-(py+.5))/R,d2=nx*nx+ny*ny;if(d2>1)continue;a.push(nx);b.push(ny);c.push(Math.sqrt(1-d2));p.push(py*NS+px)}
@@ -62,6 +54,7 @@
     const h=ctx.createRadialGradient(C,C,R*.96,C,C,R*1.12);h.addColorStop(0,'rgba(120,170,255,.38)');h.addColorStop(1,'rgba(120,170,255,0)');glow=h;
     let s=7;const rnd=()=>(s=(s*16807)%2147483647)/2147483647;stars=[];for(let i=0;i<110;i++)stars.push([rnd()*NS,rnd()*NS,.4+rnd()*.9,.25+rnd()*.6])}
   function frame(ms){
+    setView(lon,tilt);
     // 1) superficie: cada píxel del disco busca su longitud y latitud (giro libre) y lee el color de la textura
     const m0=M[0],m1=M[1],m2=M[2],m3=M[3],m4=M[4],m5=M[5],m6=M[6],m7=M[7],m8=M[8],kk=-LON_L*KT;
     for(let i=0;i<pix.length;i++){const x=NX[i],y=NY[i],z=NZ[i],
@@ -102,10 +95,12 @@
   function loop(ms){
     if(!run)return;requestAnimationFrame(loop);
     if(ms-last<30)return;const dt=Math.min(.1,(ms-last)/1000);last=ms;clock+=dt;
-    // giro automático en 360°: avance constante de oeste a este y un balanceo lento arriba-abajo que deja ver los polos y todas las caras
+    // Giro tipo mesa giratoria (nunca se pone boca abajo): la longitud avanza siempre y la inclinación oscila para dejar ver los polos.
     if(!drag&&!reduce){
-      const dec=Math.pow(.04,dt),k=1-dec;vel[0]*=dec;vel[1]*=dec;   // la inercia del arrastre se apaga en un par de segundos y vuelve el giro automático
-      spin((vel[0]+k*(6+3*Math.sin(clock*.17))*d2r)*dt,(vel[1]+k*(10*Math.sin(clock*.21)+4*Math.sin(clock*.07+1))*d2r)*dt)}
+      if(home){const dl=((-3.7-lon+540)%360)-180,dtl=24-tilt,f=1-Math.exp(-dt*5);lon+=dl*f;tilt+=dtl*f;vLon=vTilt=0;if(Math.abs(dl)<.3&&Math.abs(dtl)<.3){home=false;hold=clock+4}}
+      else{const dec=Math.pow(.03,dt);vLon*=dec;vTilt*=dec;lon+=vLon*dt;tilt+=vTilt*dt;
+        if(clock>hold){lon+=(6+3*Math.sin(clock*.17))*dt;tilt+=((22+32*Math.sin(clock*.21))-tilt)*Math.min(1,dt*.6)}}
+      tilt=Math.max(-85,Math.min(85,tilt))}
     frame(ms)}
   function start(){if(run||reduce||!vis||document.hidden)return;run=true;last=0;requestAnimationFrame(loop)}
   function stop(){run=false}
@@ -116,10 +111,14 @@
     const tc=document.createElement('canvas');tc.width=TW;tc.height=TH;tctx=tc.getContext('2d',{willReadFrequently:true});
     setView(-3.7,24);pre();img=octx.createImageData(NS,NS);out=new Uint32Array(img.data.buffer);sky_();
     grad=ctx.createRadialGradient(C-.35*R,C-.4*R,R*.15,C,C,R);grad.addColorStop(0,'rgba(255,255,255,.2)');grad.addColorStop(.65,'rgba(255,255,255,0)');grad.addColorStop(1,'rgba(5,12,35,.4)');
-    cv.addEventListener('pointerdown',e=>{vel=[0,0];drag={x:e.clientX,y:e.clientY,t:performance.now()};cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'});
-    cv.addEventListener('pointermove',e=>{if(!drag)return;const now=performance.now(),dt=Math.max(.008,(now-drag.t)/1000),k=.45*d2r*(NS/cv.clientWidth),ay=(e.clientX-drag.x)*k,ax=(e.clientY-drag.y)*k;spin(ay,ax);vel=[.6*vel[0]+.4*ay/dt,.6*vel[1]+.4*ax/dt];drag.x=e.clientX;drag.y=e.clientY;drag.t=now;if(!run)frame(now)});
-    const up=()=>{drag=null;cv.style.cursor='grab'};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+    cv.addEventListener('pointerdown',e=>{vLon=vTilt=0;home=false;drag={x:e.clientX,y:e.clientY,t:performance.now(),m:0};cv.setPointerCapture(e.pointerId);cv.style.cursor='grabbing'});
+    cv.addEventListener('pointermove',e=>{if(!drag)return;const now=performance.now(),dt=Math.max(.008,(now-drag.t)/1000),k=.45*(NS/cv.clientWidth),dl=-(e.clientX-drag.x)*k,dtl=(e.clientY-drag.y)*k;
+      drag.m+=Math.abs(e.clientX-drag.x)+Math.abs(e.clientY-drag.y);lon+=dl;tilt=Math.max(-85,Math.min(85,tilt+dtl));vLon=.6*vLon+.4*dl/dt;vTilt=.6*vTilt+.4*dtl/dt;
+      drag.x=e.clientX;drag.y=e.clientY;drag.t=now;if(!run)frame(now)});
+    const up=()=>{if(drag&&drag.m<8){const n=performance.now();if(n-tap<350){window.globoCentrar()}tap=n}drag=null;cv.style.cursor='grab'};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',()=>{drag=null;cv.style.cursor='grab'});
+    const bt=document.getElementById('globo-centrar');if(bt)bt.addEventListener('click',()=>window.globoCentrar());
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;vis?start():stop()},{threshold:.05}).observe(cv);
     document.addEventListener('visibilitychange',()=>document.hidden?stop():start())};
+  window.globoCentrar=function(){home=true;vLon=vTilt=0;if(reduce||!run){lon=-3.7;tilt=24;home=false;frame(performance.now())}};   // vuelve a centrar España
   window.globoSet=function(W,url){if(!cfg||!cv)return;buildTex(W,url);buildArcs(W);if(reduce||!run)frame(performance.now());start()};
 })();
