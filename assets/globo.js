@@ -5,7 +5,7 @@
    Se llama a initGlobo({G,D,mkSC,LAND}) una vez y a globoSet(W,urlCalor) cuando cambian los filtros (W = {ISO: nº de vuelos}). */
 (function(){
   const SX=1000/360,X0=470.5,Y0=223,LON_L=-X0/SX,TOFF=27,TS=1.44,TW=1440,TH=720,KT=TW/360;   // textura 1.440 × 720 px, de 90° N a 90° S
-  const d2r=Math.PI/180,SEA='#3f86b4',SPAIN='#52657c',NS=440,C=NS/2,R=178;                   // R: radio del globo (deja margen para el cielo)
+  const d2r=Math.PI/180,SEA='#3a8fd2',SPAIN='#52657c',NS=440,C=NS/2,R=178;                   // R: radio del globo (deja margen para el cielo)
   // Islas y pequeños estados visitados que no tienen contorno en el mapa: se dibujan como punto [lat, lon]
   const EXTRA={CPV:[16,-24],MLT:[35.9,14.4],VGB:[18.4,-64.6],BMU:[32.3,-64.8],SYC:[-4.7,55.5],BHR:[26,50.55]};
   const pos=(G,k)=>EXTRA[k]?[EXTRA[k][1],EXTRA[k][0]]:(G.cent[k]?ll(...G.cent[k]):null);   // → [lon, lat]
