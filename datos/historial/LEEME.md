@@ -9,11 +9,15 @@ Cada día puede llevar apuntes de lo que pasó alrededor de los cambios del mode
 Se añaden con:
 
 ```sh
-node tools/contexto.mjs 2026-10-12 --partido PP --tipo declaración \
+node tools/contexto.mjs 2026-10-12 --partido PP --tipo declaración --fase antes \
   --texto "Feijóo anuncia en un acto en … que …" --url https://… --medio "Europa Press" --hecho 2026-10-11
 ```
 
 Formato de cada apunte: `{p, tipo, t, medio, u, hecho}`. `p` = PP, PSOE, VOX, SUMAR o general (afecta a todos). `tipo` = evento, noticia, declaración, anuncio, propuesta (nueva propuesta o programa) o resolución. `pos` = posible relación (opcional).
+
+### Antes y después
+
+Cada apunte lleva `fase`: `antes` (hechos de los días previos a la encuesta, «posibles factores») o `despues` (reacciones y cobertura en los 1-3 días siguientes: cómo cuentan la encuesta los medios, declaraciones de los partidos sobre esos datos, cambios de mensaje o de campaña). Por defecto es `antes`. Los de `despues` se muestran como «reacciones y cobertura», sin afirmar que sean consecuencia del cambio. Se completan en los días siguientes, cuando la revisión diaria vuelve a mirar cada cambio de los últimos 5 días.
 
 ### Cuándo se investiga
 
