@@ -107,6 +107,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
   var a=document.createElement('a');a.className='wshare';a.href='https://wa.me/?text='+encodeURIComponent(txt);a.target='_blank';a.rel='noopener';
   a.setAttribute('aria-label',home?'Compartir la web por WhatsApp':'Compartir «'+title+'» por WhatsApp');
   a.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 01-11.8 7L4 20l1.4-4A8 8 0 1120 11.6z"/><path d="M12 8v6M9 11l3-3 3 3"/></svg><span>Compartir</span>';
+  if(navigator.share)a.addEventListener('click',function(e){e.preventDefault();navigator.share({title:title,text:home?'Datos 29N: simulador del Congreso y datos de las elecciones del 29-N':title,url:url}).catch(function(){})});
   var hero=document.querySelector('.hero .hin'),mini=document.querySelector('header.mini');
   if(hero){a.classList.add('onhero');hero.appendChild(a)}else if(mini){mini.appendChild(a)}
 })();
