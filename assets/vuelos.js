@@ -103,6 +103,8 @@ function spainMap(S){
   spainArcs(S);
   spainCM(S,cf);
   spainLabels(S);
+  {const sv=document.querySelector('#vspain svg'),ov=document.createElementNS('http://www.w3.org/2000/svg','svg');ov.setAttribute('viewBox',sv.getAttribute('viewBox'));ov.setAttribute('class','slabs');ov.setAttribute('aria-hidden','true');ov.setAttribute('style','position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;max-height:none');
+    sv.querySelectorAll('text').forEach(t=>ov.appendChild(t));document.getElementById('vspain').appendChild(ov)}
   const l2=document.getElementById('vleg2');if(l2)l2.innerHTML='Color del mapa: '+tierLeg()+' <span style="margin-left:12px">Líneas y aviones en negro: más gruesas, más vuelos.</span>';
   document.querySelectorAll('#vspain .c').forEach(p=>p.addEventListener('click',()=>{selS=p.dataset.c;spainTip(S);spainMap(S)}));
 }
