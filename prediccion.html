@@ -32,6 +32,11 @@
 .steps span{max-width:64ch}
 @media(max-width:520px){.steps li{grid-template-columns:1fr;gap:2px}}
 #hid{display:none}
+.hdet{position:relative;margin-top:6px;padding:10px 34px 8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;line-height:1.45}
+.hdet p{margin:0 0 6px;max-width:none}.hdet ul{margin:0 0 6px;padding-left:18px}.hdet .ht{font-size:14px}.hdet .hn{color:var(--muted);font-size:12px;margin:4px 0 0}
+.hdet .hx{position:absolute;top:4px;right:6px;border:0;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:4px 8px}
+.hdet[hidden]{display:none}
+.hdet .hnav{display:flex;gap:8px;margin-top:8px}.hdet .hnav button{flex:1;font:inherit;font-size:12.5px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--fg);cursor:pointer}.hdet .hnav button:disabled{opacity:.35;cursor:default}
 #p_pred .sech{padding-top:6px}
 #p_pred{padding-top:0}
 .frm{font-family:var(--mono);font-size:13px;line-height:1.75;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin:8px 0 12px;white-space:pre-wrap;overflow-wrap:anywhere}
@@ -124,7 +129,8 @@ en el 29-N: σ(k)² = s(k)² + 1,0² × 41 / 40 + 1,9²</div>
 </div>
 <script src="assets/core.js?v=30"></script>
 <script src="assets/prediccion-data.js?v=13"></script>
-<script src="assets/prediccion.js?v=14"></script>
+<script src="assets/historial-data.js?v=1"></script>
+<script src="assets/prediccion.js?v=17"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

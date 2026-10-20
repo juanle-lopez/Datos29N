@@ -1,0 +1,202 @@
+{
+ "fecha": "2026-10-10",
+ "t": "reconstruido",
+ "n": 10,
+ "voto": {
+  "PP": 33.03,
+  "PSOE": 26.69,
+  "VOX": 18.51,
+  "SUMAR": 8.89
+ },
+ "esc": {
+  "PP": 138,
+  "PSOE": 104,
+  "VOX": 61,
+  "SUMAR": 17
+ },
+ "lo": {
+  "PP": 133,
+  "PSOE": 102,
+  "VOX": 61,
+  "SUMAR": 15
+ },
+ "hi": {
+  "PP": 140,
+  "PSOE": 107,
+  "VOX": 64,
+  "SUMAR": 18
+ },
+ "encuestas": [
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-10-09"
+  },
+  {
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-10-09"
+  },
+  {
+   "e": "InvyMark / laSexta",
+   "f": "2026-10-09"
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-10-09"
+  },
+  {
+   "e": "NC Report / La Razón",
+   "f": "2026-10-08"
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-10-05"
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-10-04"
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-04"
+  },
+  {
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-03"
+  },
+  {
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-09-24"
+  }
+ ],
+ "encDetalle": [
+  {
+   "h": "IMOP",
+   "e": "IMOP / El Confidencial",
+   "f": "2026-10-09",
+   "voto": {
+    "PP": 30.4,
+    "PSOE": 26.5,
+    "VOX": 19,
+    "SUMAR": 9.9
+   }
+  },
+  {
+   "h": "40dB",
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-10-09",
+   "voto": {
+    "PP": 31.9,
+    "PSOE": 28.1,
+    "VOX": 18.9,
+    "SUMAR": 7.6
+   }
+  },
+  {
+   "h": "InvyMark",
+   "e": "InvyMark / laSexta",
+   "f": "2026-10-09",
+   "voto": {
+    "PP": 32.8,
+    "PSOE": 28,
+    "VOX": 18.8,
+    "SUMAR": 9.5
+   }
+  },
+  {
+   "h": "DYM",
+   "e": "DYM / 20minutos",
+   "f": "2026-10-09",
+   "voto": {
+    "PP": 34,
+    "PSOE": 28.2,
+    "VOX": 18.2,
+    "SUMAR": 6.2
+   }
+  },
+  {
+   "h": "NC Report",
+   "e": "NC Report / La Razón",
+   "f": "2026-10-08",
+   "voto": {
+    "PP": 34.1,
+    "PSOE": 25,
+    "VOX": 18.2,
+    "SUMAR": 9.2
+   }
+  },
+  {
+   "h": "Data10",
+   "e": "Data10 / OKDiario",
+   "f": "2026-10-05",
+   "voto": {
+    "PP": 34,
+    "PSOE": 26.1,
+    "VOX": 18.6,
+    "SUMAR": 9.5
+   }
+  },
+  {
+   "h": "SocioMétrica",
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-10-04",
+   "voto": {
+    "PP": 33.4,
+    "PSOE": 26.5,
+    "VOX": 18.1,
+    "SUMAR": 8.4
+   }
+  },
+  {
+   "h": "Sigma Dos",
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-04",
+   "voto": {
+    "PP": 32.6,
+    "PSOE": 25.6,
+    "VOX": 18.3,
+    "SUMAR": 9.9
+   }
+  },
+  {
+   "h": "Ateneo del Dato",
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-03",
+   "voto": {
+    "PP": 33.2,
+    "PSOE": 27.5,
+    "VOX": 19.2,
+    "SUMAR": 10.3
+   }
+  },
+  {
+   "h": "Celeste-Tel",
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-09-24",
+   "voto": {
+    "PP": 33.9,
+    "PSOE": 25.4,
+    "VOX": 17.8,
+    "SUMAR": 8.4
+   }
+  }
+ ],
+ "proy": null,
+ "contexto": [],
+ "cambio": {
+  "entran": [],
+  "salen": [],
+  "dVoto": {
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0
+  },
+  "dEsc": {
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0
+  },
+  "huboCambio": false
+ }
+}

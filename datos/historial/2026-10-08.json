@@ -1,0 +1,178 @@
+{
+ "fecha": "2026-10-08",
+ "t": "reconstruido",
+ "n": 7,
+ "voto": {
+  "PP": 33.7,
+  "PSOE": 26.06,
+  "VOX": 18.21,
+  "SUMAR": 9.13
+ },
+ "esc": {
+  "PP": 140,
+  "PSOE": 101,
+  "VOX": 61,
+  "SUMAR": 18
+ },
+ "lo": {
+  "PP": 139,
+  "PSOE": 100,
+  "VOX": 61,
+  "SUMAR": 16
+ },
+ "hi": {
+  "PP": 141,
+  "PSOE": 102,
+  "VOX": 61,
+  "SUMAR": 18
+ },
+ "encuestas": [
+  {
+   "e": "NC Report / La Razón",
+   "f": "2026-10-08"
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-10-05"
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-10-04"
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-04"
+  },
+  {
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-03"
+  },
+  {
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-09-24"
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-09-24"
+  }
+ ],
+ "encDetalle": [
+  {
+   "h": "NC Report",
+   "e": "NC Report / La Razón",
+   "f": "2026-10-08",
+   "voto": {
+    "PP": 34.1,
+    "PSOE": 25,
+    "VOX": 18.2,
+    "SUMAR": 9.2
+   }
+  },
+  {
+   "h": "Data10",
+   "e": "Data10 / OKDiario",
+   "f": "2026-10-05",
+   "voto": {
+    "PP": 34,
+    "PSOE": 26.1,
+    "VOX": 18.6,
+    "SUMAR": 9.5
+   }
+  },
+  {
+   "h": "SocioMétrica",
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-10-04",
+   "voto": {
+    "PP": 33.4,
+    "PSOE": 26.5,
+    "VOX": 18.1,
+    "SUMAR": 8.4
+   }
+  },
+  {
+   "h": "Sigma Dos",
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-04",
+   "voto": {
+    "PP": 32.6,
+    "PSOE": 25.6,
+    "VOX": 18.3,
+    "SUMAR": 9.9
+   }
+  },
+  {
+   "h": "Ateneo del Dato",
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-03",
+   "voto": {
+    "PP": 33.2,
+    "PSOE": 27.5,
+    "VOX": 19.2,
+    "SUMAR": 10.3
+   }
+  },
+  {
+   "h": "Celeste-Tel",
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-09-24",
+   "voto": {
+    "PP": 33.9,
+    "PSOE": 25.4,
+    "VOX": 17.8,
+    "SUMAR": 8.4
+   }
+  },
+  {
+   "h": "DYM",
+   "e": "DYM / 20minutos",
+   "f": "2026-09-24",
+   "voto": {
+    "PP": 34.7,
+    "PSOE": 26.3,
+    "VOX": 17.3,
+    "SUMAR": 8.2
+   }
+  }
+ ],
+ "proy": null,
+ "contexto": [],
+ "cambio": {
+  "entran": [
+   {
+    "e": "NC Report / La Razón",
+    "f": "2026-10-08",
+    "voto": {
+     "PP": 34.1,
+     "PSOE": 25,
+     "VOX": 18.2,
+     "SUMAR": 9.2
+    },
+    "antes": {
+     "e": "NC Report / La Razón",
+     "f": "2026-09-07",
+     "voto": {
+      "PP": 34.4,
+      "PSOE": 24.9,
+      "VOX": 18.3,
+      "SUMAR": 9.1
+     }
+    }
+   }
+  ],
+  "salen": [],
+  "dVoto": {
+   "PP": -0.04,
+   "PSOE": 0.02,
+   "VOX": -0.02,
+   "SUMAR": 0.02
+  },
+  "dEsc": {
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0
+  },
+  "huboCambio": true
+ }
+}

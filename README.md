@@ -42,8 +42,10 @@ assets/
   gastos.js, vuelos.js, …        Un script por apartado
   *.json                         Datos de noticias, vuelos y mapas
 datos/gastos-politicos/          Fuentes y lista de pendientes de gastos políticos
+datos/historial/                 Un archivo por día con la media de encuestas, los escaños y qué cambió (lo escribe tools/historial.mjs)
 tools/
   prediccion.mjs                 Genera la proyección (assets/prediccion-data.js)
+  historial.mjs                  Guarda el día en datos/historial/ y regenera assets/historial-data.js
   prediccion-input.json          Encuestas y parámetros del modelo
   sellar-fecha.sh                Actualiza la fecha de «Actualizado el…» de la portada
 ```
@@ -68,6 +70,7 @@ Para recalcular la proyección tras actualizar `tools/prediccion-input.json`:
 ```sh
 node tools/prediccion.mjs        # usa la fecha de hoy
 node tools/prediccion.mjs 2026-10-19
+node tools/historial.mjs 2026-10-19   # después: guarda el día (los anteriores se reconstruyen; un día ya registrado no se pisa)
 ```
 
 Antes de cada publicación se actualiza la fecha de la portada:
