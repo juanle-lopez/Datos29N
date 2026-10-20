@@ -35,7 +35,7 @@ function mkP(values){const vs=values.filter(x=>x>0),n=vs.length,mx=Math.max(1,..
 function mkSC(values){const f=mkP(values);return v=>v?lerpC(f(v)):'none'}
 // Campo de calor continuo: cada punto del mapa mezcla el valor de su país con el de los vecinos cercanos (gaussiana), como un mapa del tiempo.
 const HCACHE={};
-function heatField(items,W,H,scale,sigma){
+function heatField(items,W,H,scale,sigma,ob){ob=ob==null?3:ob;
   const w=Math.round(W*scale),h=Math.round(H*scale),m=document.createElement('canvas');m.width=w;m.height=h;const mc=m.getContext('2d',{willReadFrequently:true});mc.scale(scale,scale);
   items.forEach((it,i)=>{mc.fillStyle=`rgb(${(i+1)&255},${(i+1)>>8},0)`;it.ds.forEach(d=>mc.fill(new Path2D(d)))});
   const md=mc.getImageData(0,0,w,h).data,out=document.createElement('canvas');out.width=w;out.height=h;const oc=out.getContext('2d'),od=oc.createImageData(w,h),o=od.data;
@@ -43,7 +43,7 @@ function heatField(items,W,H,scale,sigma){
   for(let a=0;a<ty;a++)for(let b=0;b<tx;b++){const cx=b*T+T/2,cy=a*T+T/2;tiles.push(items.map((it,i)=>[i,it]).filter(([i,it])=>Math.hypot(it.cx-cx,it.cy-cy)<=R).map(x=>x[0]))}
   const k2=1/(2*sigma*sigma);
   for(let y=0;y<h;y++){const wy=y/scale,tr=Math.floor(wy/T);for(let x=0;x<w;x++){const q=(y*w+x)*4,id=md[q]+(md[q+1]<<8);if(!id||md[q+3]<128)continue;const own=items[id-1];if(!own)continue;
-    const wx=x/scale,lst=tiles[tr*tx+Math.floor(wx/T)];let dx=wx-own.cx,dy=wy-own.cy,w0=1+3*Math.exp(-(dx*dx+dy*dy)*k2),num=w0*own.p,den=w0;
+    const wx=x/scale,lst=tiles[tr*tx+Math.floor(wx/T)];let dx=wx-own.cx,dy=wy-own.cy,w0=1+ob*Math.exp(-(dx*dx+dy*dy)*k2),num=w0*own.p,den=w0;
     for(let n=0;n<lst.length;n++){const it=items[lst[n]];if(it===own)continue;dx=wx-it.cx;dy=wy-it.cy;const ww=2*Math.exp(-(dx*dx+dy*dy)*k2);num+=ww*it.p;den+=ww}
     const c=lerpC(Math.min(1,num/den)).match(/\d+/g);o[q]=+c[0];o[q+1]=+c[1];o[q+2]=+c[2];o[q+3]=255}}
   oc.putImageData(od,0,0);return out.toDataURL('image/png')}
@@ -70,8 +70,8 @@ function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),cf=mkSC(Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
   const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?LANDHI:(W[k]?'rgba(0,0,0,0)':LAND)}"/>`).join('');
-  const pf=mkP(Object.values(W)),vis=Object.keys(W).filter(k=>W[k]&&k!=='ESP'&&G.world[k]&&G.cent[k]),hk='w|'+fy+'|'+fu;
-  if(!HCACHE[hk])HCACHE[hk]=heatField(vis.map(k=>({ds:[G.world[k]],cx:G.cent[k][0],cy:G.cent[k][1],p:pf(W[k])})),G.w,G.h,1.6,13);
+  const pf=mkP(Object.values(W)),vis=Object.keys(W).filter(k=>W[k]&&k!=='ESP'&&G.world[k]&&G.cent[k]),hk='w2|'+fy+'|'+fu;
+  if(!HCACHE[hk])HCACHE[hk]=heatField(vis.map(k=>({ds:[G.world[k]],cx:G.cent[k][0],cy:G.cent[k][1],p:pf(W[k])})),G.w,G.h,1.6,19,2);
   const clip=vis.map(k=>`<path d="${G.world[k]}"/>`).join('');
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const EU=wz==='eu',inEU=([x,y])=>x>=425&&x<=612&&y>=30&&y<=158,
@@ -110,8 +110,8 @@ function spainHeat(S){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
   const pf=mkP(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid'&&S[k]>0).map(x=>x[1])),g={};
   svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(!c||c==='Comunidad de Madrid'||!S[c])return;const b=pt.getBBox(),r=g[c];if(!r)g[c]={ds:[pt.getAttribute('d')],x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height};else{r.ds.push(pt.getAttribute('d'));r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
-  const keys=Object.keys(g),hk='s|'+fy+'|'+fu,Hh=G.sh+70;
-  if(!HCACHE[hk])HCACHE[hk]=heatField(keys.map(k=>({ds:g[k].ds,cx:(g[k].x0+g[k].x1)/2,cy:(g[k].y0+g[k].y1)/2,p:pf(S[k])})),G.sw,Hh,1.2,60);
+  const keys=Object.keys(g),hk='s2|'+fy+'|'+fu,Hh=G.sh+70;
+  if(!HCACHE[hk])HCACHE[hk]=heatField(keys.map(k=>({ds:g[k].ds,cx:(g[k].x0+g[k].x1)/2,cy:(g[k].y0+g[k].y1)/2,p:pf(S[k])})),G.sw,Hh,1.2,90,2);
   const clip=keys.map(k=>g[k].ds.map(d=>`<path d="${d}"/>`).join('')).join('');
   svg.insertAdjacentHTML('afterbegin',`<defs><clipPath id="sclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.sw}" height="${Hh}" preserveAspectRatio="none" clip-path="url(#sclip)" style="pointer-events:none"/>`);
 }
