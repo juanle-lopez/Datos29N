@@ -1,6 +1,6 @@
 {
  "fecha": "2026-10-04",
- "metodo": 2,
+ "metodo": 3,
  "t": "reconstruido",
  "n": 6,
  "voto": {
@@ -13,19 +13,25 @@
   "PP": 143,
   "PSOE": 104,
   "VOX": 61,
-  "SUMAR": 10
+  "SUMAR": 10,
+  "PV": 204,
+  "IZ": 145
  },
  "lo": {
   "PP": 142,
   "PSOE": 101,
   "VOX": 61,
-  "SUMAR": 9
+  "SUMAR": 9,
+  "PV": 203,
+  "IZ": 142
  },
  "hi": {
   "PP": 145,
   "PSOE": 104,
   "VOX": 62,
-  "SUMAR": 11
+  "SUMAR": 11,
+  "PV": 207,
+  "IZ": 146
  },
  "encuestas": [
   {

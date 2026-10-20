@@ -31,6 +31,7 @@
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
     s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text>`;
     s+=`<line x1="${X(D1)}" x2="${X(D1)}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/><text x="${X(D1)}" y="${T-5}" text-anchor="middle">29-N</text>`;
+    if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:${c};font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:${c};font-size:10.5px">toca aquí →</text>`;
     const poly=(a,b)=>`${rP.map(r=>X(dd(r.d))+','+Y(r[b])).join(' ')} ${[...rP].reverse().map(r=>X(dd(r.d))+','+Y(r[a])).join(' ')}`;
     const cen=rP.map(r=>X(dd(r.d))+','+Y(r.esc)).join(' ');
     // Todo lo proyectado (tubo, hilos, resplandor, línea punteada) se descubre de izquierda a derecha
@@ -49,6 +50,8 @@
     // nube de densidad el 29-N: cuántas de las 4.000 simulaciones acaban en cada número de escaños
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
     s+=`<path class="cloud" d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
+    {const q=rP[rP.length-1],tx=X(D1)-6,halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;font-size:10px',yA=Math.max(T+9,Y(q.hi)-3),yB=Math.max(T+9,Math.min(Y(q.hi95)-3,yA-12));
+      s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">8 de cada 10</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">19 de cada 20</text>`}
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
@@ -61,7 +64,7 @@
     {const ve=rC[rC.length-1].esc;if(ve<lo||ve>hi)s+=`<text x="${X(D1)-4}" y="${ve<lo?Y(lo)-5:Y(hi)+12}" text-anchor="end" style="fill:${c};font-size:10.5px;font-weight:600">CIS: ${ve} ${ve<lo?'↓':'↑'}</text>`}
     s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" points="${hs.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
-    s+=histG(k,c,X,Y,T,ph);
+    s+=histG(k,c,X,Y,T,ph,L);
     const m12=TH;
     s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="4.4" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/><text x="${X(m12)}" y="${Y(base)-9}" text-anchor="middle" style="fill:${c};font-size:10.5px">${base}</text>`;
     // marcador del valor central del 29-N y rango del 80 %
@@ -74,7 +77,7 @@
   const HD=(typeof HIST!=='undefined'&&HIST.dias)?HIST.dias:[];
   const nf=(x,d)=>(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d).replace('.',',');
   const pc=x=>x.toFixed(2).replace('.',',')+' %';
-  function histG(k,c,X,Y,T,ph){
+  function histG(k,c,X,Y,T,ph,L){
     if(!HD.length)return '';
     const pts=HD.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ');
     let g=`<g class="hist"><polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" stroke-linejoin="round" points="${pts}"/>`;
@@ -82,7 +85,9 @@
       g+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`;
       g+=ch?`<circle cx="${x}" cy="${y}" r="3.6" fill="var(--bg)" stroke="${c}" stroke-width="1.6"/>`:`<circle cx="${x}" cy="${y}" r="1.8" fill="${c}" opacity=".9"/>`;
       });
-    const xa=X(dd(HD[0].f))-8,xb=X(TH)+5;
+    {const lc=HD.slice(1).filter(h=>h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0).pop();
+      if(lc&&!REDUCE)g+=`<circle class="hint" cx="${X(dd(lc.f))}" cy="${Y(lc.esc[k])}" r="4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4;14;14" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/></circle>`}
+    const xa=L-4,xb=X(TH)+5;
     return g+`<rect class="hzone" data-k="${k}" x="${xa}" y="0" width="${xb-xa}" height="${T+ph}" fill="transparent" style="cursor:pointer"/></g>`;
   }
   function hdetail(k,name,f){
@@ -97,9 +102,58 @@
       return (ant.length?`<p style="margin-bottom:2px">Posibles factores de los días previos (contexto, no demuestra causa):</p><ul>${ant.map(li).join('')}</ul>`:'')+(des.length?`<p style="margin-bottom:2px">Después del cambio: reacciones y cobertura (no demuestra que sea consecuencia):</p><ul>${des.map(li).join('')}</ul>`:'')})()+
       `<p class="hn">La media es la de la última encuesta de cada empresa de los últimos 30 días, así que solo se mueve cuando entra o sale una encuesta.${h.t==='x'?' Día reconstruido con las encuestas conocidas entonces.':''}</p>`;
   }
+
+  // Quinto gráfico: la pregunta clave, ¿quién llega a la mayoría absoluta (176)? Dos bloques sumados, con el mismo tubo y el mismo historial.
+  const BL=[['PV','PP + Vox','var(--pp)'],['IZ','PSOE + Sumar + Podemos + socios 2023','var(--psoe)']];
+  function panelMay(W,animate){
+    const H=W<420?290:300,L=30,R=W<420?46:56,T=W<420?72:64,B=24,pw=W-L-R,ph=H-T-B;
+    const E=PRED.escPrivadas,vals=[176];BL.forEach(([k])=>{E.ruta[k].forEach(r=>vals.push(r.lo95,r.hi95));HD.forEach(h=>vals.push(h.esc[k]));vals.push(PRED.escCIS.ruta[k][PRED.escCIS.ruta[k].length-1].esc)});
+    const lo=Math.max(0,Math.floor((Math.min(...vals)-6)/20)*20),hi=Math.ceil((Math.max(...vals)+6)/20)*20,X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,x0=X(TH),xe=X(D1),cY=v=>Y(Math.max(lo,Math.min(hi,v)));
+    let s=`<defs>${animate?`<linearGradient id="lg-may" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-may" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-may)">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-may"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}</defs>`;
+    s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text>`;
+    BL.forEach(([k,n,c],i)=>{const e=k==='PV'?E.ppVox:E.izq;s+=`<text x="0" y="${30+i*14}" style="fill:${c};font-size:${W<420?10.5:11.5}px;font-weight:600">${W<420&&k==='IZ'?'PSOE + Sumar + Podemos + socios':n}: ${e.c} (${e.p10}–${e.p90})</text>`});
+    const step=(hi-lo)>120?40:20;
+    for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
+    MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
+    s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text><line x1="${xe}" x2="${xe}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/><text x="${xe}" y="${T-5}" text-anchor="middle">29-N</text>`;
+    if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:var(--muted);font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:var(--muted);font-size:10.5px">toca aquí →</text>`;
+    s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;paint-order:stroke;stroke:var(--bg);stroke-width:3px">176 = mayoría absoluta</text>`;
+    s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`;
+    BL.forEach(([k,n,c])=>{const r=E.ruta[k],poly=(a,b)=>r.map(q=>X(dd(q.d))+','+Y(q[b])).join(' ')+' '+[...r].reverse().map(q=>X(dd(q.d))+','+Y(q[a])).join(' ');
+      s+=`<polygon points="${poly('lo95','hi95')}" fill="${c}" opacity=".14"/><polygon points="${poly('lo','hi')}" fill="${c}" opacity=".24"/><polygon points="${poly('lo50','hi50')}" fill="${c}" opacity=".38"/>`;
+      const cen=r.map(q=>X(dd(q.d))+','+Y(q.esc)).join(' '),base=PRED.escBaseBloq.priv[k];
+      s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".25" points="${x0},${Y(base)} ${cen}"/><polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${x0},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
+      const q=r[r.length-1],halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;font-size:10px',up=k==='PV';
+      s+=`<text x="${xe-6}" y="${up?Math.max(T+9,Y(q.hi)-3):Y(q.lo)+11}" text-anchor="end" style="fill:${c};${halo}">8 de cada 10 simulaciones</text>`;
+      s+=`<line x1="${xe-3}" x2="${xe+8}" y1="${Y(q.esc)}" y2="${Y(q.esc)}" stroke="${c}" stroke-width="2.4"/><text class="lab" x="${xe+11}" y="${Y(q.esc)+4}" style="fill:${c};font-size:12.5px">${q.esc}</text>`});
+    s+=`</g>`;
+    BL.forEach(([k,n,c])=>{const rC=PRED.escCIS.ruta[k],hgh=E.ruta[k];
+      s+=`<polyline fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="9 5" opacity=".9" points="${x0},${cY(PRED.escBaseBloq.cis[k])} ${rC.map(r=>X(dd(r.d))+','+cY(r.esc)).join(' ')}"/>`;
+      const ve=rC[rC.length-1].esc;if(ve<lo||ve>hi)s+=`<text x="${xe-4}" y="${ve<lo?Y(lo)-5:Y(hi)+12}" text-anchor="end" style="fill:${c};font-size:10.5px;font-weight:600">CIS: ${ve} ${ve<lo?'↓':'↑'}</text>`;
+      if(HD.length){s+=`<polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" points="${HD.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
+        HD.forEach(h=>{const x=X(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`+(ch?`<circle cx="${x}" cy="${Y(h.esc[k])}" r="3.6" fill="var(--bg)" stroke="${c}" stroke-width="1.6"/>`:`<circle cx="${x}" cy="${Y(h.esc[k])}" r="1.8" fill="${c}" opacity=".9"/>`)})}
+      s+=`<circle cx="${x0}" cy="${Y(PRED.escBaseBloq.priv[k])}" r="4.4" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/><text x="${x0}" y="${Y(PRED.escBaseBloq.priv[k])+(k==='PV'?-9:16)}" text-anchor="middle" style="fill:${c};font-size:10.5px">${PRED.escBaseBloq.priv[k]}</text>`});
+    s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T}" y2="${T+ph}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T}" width="${xe-x0}" height="${ph}" fill="transparent"/>`;
+    if(HD.length)s+=`<rect class="hzone" data-k="MAY" x="${L-4}" y="0" width="${x0+5-L+4}" height="${T+ph}" fill="transparent" style="cursor:pointer"/>`;
+    return `<svg class="pg" data-k="MAY" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mayoría absoluta el 29-N: PP más Vox ${E.ppVox.c} escaños (${E.ppVox.p10} a ${E.ppVox.p90}); PSOE, Sumar, Podemos y socios de 2023 ${E.izq.c} (${E.izq.p10} a ${E.izq.p90}); la mayoría absoluta es 176"><title>Mayoría absoluta</title>${s}</svg>`;
+  }
+  function hdetailM(f){
+    const i=HD.findIndex(h=>h.f===f),h=HD[i],a=HD[i-1];if(!h||!a)return '';const ch=h.cambio,dv=BL.map(([k,n,c])=>`<li style="color:${c}"><b>${n}</b>: ${a.esc[k]} → ${h.esc[k]} escaños${h.cambio.dEsc&&h.cambio.dEsc[k]?` (${nf(h.cambio.dEsc[k],0)})`:' (sin cambio)'} · margen del 80 %: ${h.lo[k]}–${h.hi[k]}</li>`).join('');
+    const ents=(ch.entran||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)})</li>`).join(''),sal=(ch.salen||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)}) sale por tener más de 30 días</li>`).join('');
+    return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>Mayoría · ${fecha(f)}</b> (176 = mayoría absoluta)</p><ul style="list-style:none;padding-left:0">${dv}</ul>`+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+(!ents&&!sal?`<p>Ese día no entró ni salió ninguna encuesta.</p>`:'')+`<p class="hn">Los detalles por partido y el contexto de cada día están en los gráficos de arriba. Con ${h.n} encuestas en la media.</p>`;
+  }
+  function wireMay(svg){
+    const E=PRED.escPrivadas,r0=E.ruta.PV,hit=svg.querySelector('.hit'),g=svg.querySelector('.tt'),l=g.querySelector('.ttl'),bx=g.querySelector('.ttb'),t1=g.querySelector('.tt1'),t2=g.querySelector('.tt2'),t3=g.querySelector('.tt3'),x0=+svg.dataset.x0,pw=+svg.dataset.pw;
+    const mv=e=>{const r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,t=TH+Math.max(0,px-x0)/(pw*(1-FH))*(D1-TH);let bi=0,bd=1e18;r0.forEach((q,i)=>{const dx=Math.abs(dd(q.d)-t);if(dx<bd){bd=dx;bi=i}});
+      const q=r0[bi],z=E.ruta.IZ[bi],X=x0+(dd(q.d)-TH)/(D1-TH)*pw*(1-FH),Yv=+hit.getAttribute('y');g.style.display='';l.setAttribute('x1',X);l.setAttribute('x2',X);
+      t1.textContent=`${fecha(q.d)}: PP + Vox ${q.esc} (${q.lo}–${q.hi})`;t2.textContent=`PSOE + Sumar + Podemos + socios: ${z.esc} (${z.lo}–${z.hi})`;t3.textContent=`Rangos del 80 %. Mayoría: 176`;t3.style.fill='var(--muted)';t2.style.fill='var(--fg)';
+      const wd=Math.max(t1.getComputedTextLength(),t2.getComputedTextLength(),t3.getComputedTextLength())+14,bxx=Math.min(Math.max(X-wd/2,2),vb.width-wd-2);
+      bx.setAttribute('x',bxx);bx.setAttribute('width',wd);bx.setAttribute('y',Yv+4);[t1,t2,t3].forEach((t,i)=>{t.setAttribute('x',bxx+7);t.setAttribute('y',Yv+18+i*13)})};
+    hit.addEventListener('pointermove',mv);hit.addEventListener('pointerdown',mv);hit.addEventListener('pointerleave',()=>{g.style.display='none'});
+  }
   // interacción: al pasar el cursor o tocar, valor central y rangos de esa fecha
   function wire(box,W){
-    box.querySelectorAll('svg.pg').forEach(svg=>{
+    box.querySelectorAll('svg.pg:not([data-k=MAY])').forEach(svg=>{
       const k=svg.dataset.k,rP=PRED.escPrivadas.ruta[k],hit=svg.querySelector('.hit'),g=svg.querySelector('.tt');
       const l=g.querySelector('.ttl'),ci=g.querySelector('.ttc'),bx=g.querySelector('.ttb'),t1=g.querySelector('.tt1'),t2=g.querySelector('.tt2');
       const x0=+svg.dataset.x0,pw=+svg.dataset.pw,tT=dd(rP[0].d),tE=dd(rP[rP.length-1].d);
@@ -124,12 +178,12 @@
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
     const an=!REDUCE;drawn=true;
-    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('');
-    wire(box,W);
+    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('')+`<div class="pcell pmay" style="grid-column:1/-1">${panelMay(Math.min(W*(cols),w),an)}<div class="hdet" hidden></div></div>`;
+    wire(box,W);wireMay(box.querySelector('svg[data-k=MAY]'));
     box.querySelectorAll('.hzone').forEach(z=>z.ownerSVGElement.appendChild(z));
     const dias=HD.slice(1).map(h=>h.f),cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
     const abrir=(cell,k,f)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
-      d.innerHTML=hdetail(k,nm,f)+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;
+      box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;
       d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
     box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));

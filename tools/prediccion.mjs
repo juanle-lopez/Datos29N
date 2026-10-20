@@ -43,19 +43,24 @@ const lg=p=>Math.log(p/(1-p)),ex=x=>1/(1+Math.exp(-x));
 function compon(c,e){const p={},keys=[...K,'O'];let o=100;K.forEach(k=>{p[k]=c[k]/100;o-=c[k]});p.O=Math.max(0.01,o/100);
   const q={};let S=0;keys.forEach(k=>{q[k]=ex(lg(p[k])+(e[k]||0));S+=q[k]});const v={};K.forEach(k=>v[k]=Math.max(0.5,100*q[k]/S));return v}
 const sdl=(clave,k,c,varPuntosComun)=>{const p=k==='O'?null:c[k]/100,a=k==='O'?0:(s0[clave][k]/(100*p*(1-p)))**2;return Math.sqrt(a+varPuntosComun/(100*REF)**2)};
+// Bloque PSOE + Sumar + Podemos + socios de la investidura de 2023 (ERC, Junts, EH Bildu, PNV, BNG, CCa)
+const IZ=t=>t.PSOE+t.SUMAR+t.ERC+t.JUNTS+t.BILDU+t.PNV+t.BNG+t.CCa;
+// Error de las encuestas repartido poco a poco hasta el 29-N (errorGradual) en vez de sumarse de golpe el último día
+const eFt=(e,d)=>inp.errorGradual?e*Math.sqrt(d/T):(d===T?e:0);
 function escenario(clave,trend,N=4000){
   const trd=inp.usarTendencia?trend.tr:Object.fromEntries(K.map(k=>[k,0]));   // sin tendencia: la previsión central es la media de hoy
-  const ruta={},fin={},sdFin={};K.forEach(k=>{ruta[k]=[]});
+  const ruta={},fin={},sdFin={};[...K,'PV','IZ'].forEach(k=>{ruta[k]=[]});
   const ds=[];for(let d=0;d<=T;d+=(d+2>T?T-d||1:2))ds.push(d);
   const sdAt=(k,d,final)=>Math.sqrt(s0[clave][k]**2+volDay*d+(final?inp.sdError**2:0));
   ds.forEach((d,i)=>{
     const fin_=d===T, c={},sdv={};
     K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
-    const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[]};
-    const vc=volDay*d+(fin_?inp.sdError**2:0),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
-    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX)}
+    const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
+    const vc=volDay*d+(inp.errorGradual?inp.sdError**2*d/T:(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
+    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t))}
     const cs=simulate(DATA,c).tot;
     K.forEach(k=>ruta[k].push({d:iso(D0+d),esc:cs[k],lo:pct(dr[k],.1),hi:pct(dr[k],.9),lo95:pct(dr[k],.025),hi95:pct(dr[k],.975),lo50:pct(dr[k],.25),hi50:pct(dr[k],.75),pv:fin_?{c:cs.PP+cs.VOX,p10:pct(dr.PV,.1),p50:pct(dr.PV,.5),p90:pct(dr.PV,.9)}:undefined}));
+    [['PV',cs.PP+cs.VOX],['IZ',IZ(cs)]].forEach(([b,cv])=>ruta[b].push({d:iso(D0+d),esc:cv,lo:pct(dr[b],.1),hi:pct(dr[b],.9),lo95:pct(dr[b],.025),hi95:pct(dr[b],.975),lo50:pct(dr[b],.25),hi50:pct(dr[b],.75)}));
     if(fin_){K.forEach(k=>{fin[k]=c[k];sdFin[k]=sdv[k]});ruta._fin={c,dr,cs}}
   });
   const f=ruta._fin;delete ruta._fin;
@@ -69,7 +74,7 @@ function escenario(clave,trend,N=4000){
       const arr={PP:[],PSOE:[],VOX:[],SUMAR:[]};let prev=0;
       ds.forEach((d,j)=>{
         const dt=d-prev;prev=d;[...K,'O'].forEach(k=>{W[k]+=Math.sqrt(volDay*dt)/(L?100*REF:1)*gauss()});
-        let v;if(L){const cc={},e={O:W.O+(d===T?eF.O:0)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d);e[k]=z0[k]+W[k]+(d===T?eF[k]:0)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+(d===T?eF[k]:0)))}
+        let v;if(L){const cc={},e={O:W.O+eFt(eF.O,d)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d);e[k]=z0[k]+W[k]+eFt(eF[k],d)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+eFt(eF[k],d)))}
         const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));
       });
       K.forEach(k=>out.trayectorias[k].push(arr[k]));
@@ -79,6 +84,7 @@ function escenario(clave,trend,N=4000){
   }
   K.forEach(k=>out.escanos[k]={c:f.cs[k],p10:pct(f.dr[k],.1),p50:pct(f.dr[k],.5),p90:pct(f.dr[k],.9)});
   // Sin probabilidad de mayoría: el modelo no recoge errores comunes ni de método (ver página).
+  out.izq={c:IZ(f.cs),p10:pct(f.dr.IZ,.1),p50:pct(f.dr.IZ,.5),p90:pct(f.dr.IZ,.9)};
   out.ppVox={c:f.cs.PP+f.cs.VOX,p10:pct(f.dr.PV,.1),p50:pct(f.dr.PV,.5),p90:pct(f.dr.PV,.9)};
   out.votoFin=Object.fromEntries(K.map(k=>[k,round(fin[k])]));
   return out;
@@ -88,10 +94,11 @@ const completo=h=>K.every(k=>h[k]!=null);
 const seatsOf=h=>simulate(DATA,Object.fromEntries(K.map(k=>[k,h[k]]))).tot;
 const escHist=inp.historial.filter(completo).map(h=>({e:h.e,tipo:h.tipo,f:h.f,aprox:!!h.aprox,esc:Object.fromEntries(K.map(k=>[k,seatsOf(h)[k]]))}));
 const escPriv=inp.privadas.map(p=>({e:p.e,f:p.f,esc:Object.fromEntries(K.map(k=>[k,seatsOf(p)[k]]))}));
+const escBaseBloq={priv:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.priv)),cis:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.cis))};
 const escBase={priv:Object.fromEntries(K.map(k=>[k,seatsOf(base.priv)[k]])),cis:Object.fromEntries(K.map(k=>[k,seatsOf(base.cis)[k]]))};
 const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv.length,privadas:priv,historial:inp.historial,cis:inp.cis,
   base,tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
-  escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase};
+  escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq};
 fs.writeFileSync(root+'assets/prediccion-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nconst PRED='+JSON.stringify(out)+';\n');
 const show=e=>({esc:Object.fromEntries(K.map(k=>[k,`${e.escanos[k].c} (${e.escanos[k].p10}-${e.escanos[k].p90})`])),ppVox:e.ppVox});
 console.log(JSON.stringify({escBase,priv:show(out.escPrivadas),cis:show(out.escCIS),hist:escHist.map(h=>h.e+' '+h.f+' '+JSON.stringify(h.esc))},null,1));

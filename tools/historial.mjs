@@ -17,7 +17,7 @@ const iso=n=>new Date(n*864e5).toISOString().slice(0,10);
 const pct=(a,p)=>{const s=[...a].sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.max(0,Math.round(p*(s.length-1))))]};
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const hoy=process.argv[2]||new Date().toISOString().slice(0,10);
-const METODO=2;   // 2 (20-oct-2026): sin tendencia y con Podemos en lista propia. Los días de un método anterior se recalculan (quedan como reconstruidos).
+const METODO=3;   // 2 (20-oct-2026): sin tendencia y con Podemos en lista propia; 3: añade los bloques PV (PP+Vox) e IZ (PSOE+Sumar+Podemos+socios 2023). Los días de un método anterior se recalculan (quedan como reconstruidos).
 const START='2026-10-04';   // primer día con 7 empresas distintas (antes hay muy pocas para una media fiable)
 const stem=e=>e.split(' /')[0].trim();
 const completo=p=>K.every(k=>p[k]!=null);
@@ -28,10 +28,11 @@ const VENTANA=30;   // como en el modelo: solo cuentan las encuestas de los últ
 function conocidas(D){const m={};polls.forEach(p=>{if(p.f<=D&&day(D)-day(p.f)<=VENTANA)m[stem(p.e)]=p});return m}
 function estimar(D){
   const m=conocidas(D),L=Object.values(m),n=L.length,voto={};K.forEach(k=>voto[k]=r2(mean(L.map(p=>p[k]))));
-  const esc=simulate(DATA,voto).tot,rand=rng(+D.replace(/-/g,'')),g=()=>{let u=0;while(!u)u=rand();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*rand())};
-  const s0=Object.fromEntries(K.map(k=>[k,sdev(L.map(p=>p[k]))/Math.sqrt(n)])),dr={PP:[],PSOE:[],VOX:[],SUMAR:[]};
-  for(let j=0;j<1500;j++){const v={};K.forEach(k=>v[k]=Math.max(.5,voto[k]+s0[k]*g()));const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]))}
-  return {n,voto,esc:Object.fromEntries(K.map(k=>[k,esc[k]])),lo:Object.fromEntries(K.map(k=>[k,pct(dr[k],.1)])),hi:Object.fromEntries(K.map(k=>[k,pct(dr[k],.9)])),
+  const IZ=t=>t.PSOE+t.SUMAR+t.ERC+t.JUNTS+t.BILDU+t.PNV+t.BNG+t.CCa,KB=[...K,'PV','IZ'],bl=t=>({...t,PV:t.PP+t.VOX,IZ:IZ(t)});
+  const esc=bl(simulate(DATA,voto).tot),rand=rng(+D.replace(/-/g,'')),g=()=>{let u=0;while(!u)u=rand();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*rand())};
+  const s0=Object.fromEntries(K.map(k=>[k,sdev(L.map(p=>p[k]))/Math.sqrt(n)])),dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
+  for(let j=0;j<1500;j++){const v={};K.forEach(k=>v[k]=Math.max(.5,voto[k]+s0[k]*g()));const t=bl(simulate(DATA,v).tot);KB.forEach(k=>dr[k].push(t[k]))}
+  return {n,voto,esc:Object.fromEntries(KB.map(k=>[k,esc[k]])),lo:Object.fromEntries(KB.map(k=>[k,pct(dr[k],.1)])),hi:Object.fromEntries(KB.map(k=>[k,pct(dr[k],.9)])),
     enc:Object.entries(m).map(([h,p])=>({h,e:p.e,f:p.f,voto:Object.fromEntries(K.map(k=>[k,p[k]]))})).sort((a,b)=>a.f<b.f?1:-1)};
 }
 fs.mkdirSync(dir,{recursive:true});
@@ -46,7 +47,7 @@ for(let d=day(START);d<=day(hoy);d++){
     // Qué cambió respecto al día anterior: encuestas que entran (y la de la misma empresa a la que sustituyen) y variación de la media y de los escaños
     if(prev){const pm=Object.fromEntries(prev.encDetalle.map(x=>[x.h,x])),entran=e.enc.filter(x=>!pm[x.h]||pm[x.h].f!==x.f).map(x=>({e:x.e,f:x.f,voto:x.voto,antes:pm[x.h]?{e:pm[x.h].e,f:pm[x.h].f,voto:pm[x.h].voto}:null}));
       const hs=new Set(e.enc.map(x=>x.h)),salen=prev.encDetalle.filter(x=>!hs.has(x.h)).map(x=>({e:x.e,f:x.f,voto:x.voto}));
-      const dV=Object.fromEntries(K.map(k=>[k,r2(e.voto[k]-prev.voto[k])])),dE=Object.fromEntries(K.map(k=>[k,e.esc[k]-prev.esc[k]]));
+      const dV=Object.fromEntries(K.map(k=>[k,r2(e.voto[k]-prev.voto[k])])),dE=Object.fromEntries([...K,'PV','IZ'].map(k=>[k,e.esc[k]-prev.esc[k]]));
       s.cambio={entran,salen,dVoto:dV,dEsc:dE,huboCambio:entran.length>0||salen.length>0||K.some(k=>dE[k]!==0)}}
     else s.cambio={entran:[],salen:[],dVoto:null,dEsc:null,huboCambio:false,inicio:true};
     fs.writeFileSync(dir+D+'.json',JSON.stringify(s,null,1)+'\n')}
