@@ -94,7 +94,7 @@
           <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 19-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las 14 privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Sin tendencia.</b><span>La previsión central para el 29-N es la media de hoy: no se prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
-          <li><b>Error.</b><span>Crece poco a poco con los días y llega entero el día de la votación, con el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media); por eso el tubo se ensancha de forma gradual, sin saltos al final. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
+          <li><b>Error.</b><span>Crece con los días (deriva de la opinión) y el día de la votación se suma el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media); por eso el tubo se abre más en los últimos días. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
           <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
         </ol>
@@ -112,8 +112,8 @@
         <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40) / (100·R)²
-+ (1,9² × (t / T)²) / (100·R)²   (T = días que faltan hasta el 29-N)</div>
-        <p>s(k) es el error de la media actual (la desviación de las 14 encuestas entre sí, dividida por √14; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; su varianza se reparte en proporción al cuadrado de los días transcurridos (t/T)², con T los días hasta el 29-N: casi no pesa al principio y se alcanza entera el día de la votación, sin salto brusco.</p>
++ en el 29-N se suma además 1,9² / (100·R)²</div>
+        <p>s(k) es el error de la media actual (la desviación de las 14 encuestas entre sí, dividida por √14; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; y solo se suma el día de la votación.</p>
         <p>Este σ está en escala logit: p es la fracción de voto del partido, y R = 0,161 es la media cuadrática de p(1−p) en los 8 resultados de 2019 y 2023 con los que se midió el 1,9, de modo que el error medio en puntos sigue siendo 1,9 pero un partido grande tiene más margen en puntos que uno pequeño.</p>
         <p><b>5. Simulaciones.</b> 4.000 veces: se sortea, en escala logit, el voto de cada partido y del resto, se vuelve a porcentajes y se reescala para que todo sume 100 (así, si uno sube, otro baja); se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
       </details>
@@ -147,8 +147,8 @@
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario.</footer>
 </div>
 <script src="assets/core.js?v=30"></script>
-<script src="assets/prediccion-data.js?v=18"></script>
-<script src="assets/historial-data.js?v=5"></script>
+<script src="assets/prediccion-data.js?v=19"></script>
+<script src="assets/historial-data.js?v=6"></script>
 <script src="assets/prediccion.js?v=27"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
