@@ -105,36 +105,49 @@
 
   // Quinto gráfico: la pregunta clave, ¿quién llega a la mayoría absoluta (176)? Dos bloques sumados, con el mismo tubo y el mismo historial.
   const BL=[['PV','PP + Vox','var(--pp)'],['IZ','PSOE + Sumar + Podemos + socios 2023','var(--psoe)']];
+  // Cada bloque se dibuja apilado, con el color de cada partido que lo forma; el tubo del total va encima.
+  const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
+  const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const H=W<420?290:300,L=30,R=W<420?46:56,T=W<420?72:64,B=24,pw=W-L-R,ph=H-T-B;
-    const E=PRED.escPrivadas,vals=[176];BL.forEach(([k])=>{E.ruta[k].forEach(r=>vals.push(r.lo95,r.hi95));HD.forEach(h=>vals.push(h.esc[k]));vals.push(PRED.escCIS.ruta[k][PRED.escCIS.ruta[k].length-1].esc)});
-    const lo=Math.max(0,Math.floor((Math.min(...vals)-6)/20)*20),hi=Math.ceil((Math.max(...vals)+6)/20)*20,X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,x0=X(TH),xe=X(D1),cY=v=>Y(Math.max(lo,Math.min(hi,v)));
+    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?120:132,sub=22+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const hi=240,lo=80,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
+    const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
+    // series de partes: historial (HD) y proyección (ruta)
+    const hist=HD.map(h=>({t:dd(h.f),o:h.esc,h})),proj=E.ruta.PV.map((r,i)=>({t:dd(r.d),o:{PP:E.ruta.PP[i].esc,VOX:E.ruta.VOX[i].esc,PSOE:E.ruta.PSOE[i].esc,SUMAR:E.ruta.SUMAR[i].esc,IZ:E.ruta.IZ[i].esc}}));
     let s=`<defs>${animate?`<linearGradient id="lg-may" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-may" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-may)">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-may"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}</defs>`;
-    s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text>`;
-    BL.forEach(([k,n,c],i)=>{const e=k==='PV'?E.ppVox:E.izq;s+=`<text x="0" y="${30+i*14}" style="fill:${c};font-size:${W<420?10.5:11.5}px;font-weight:600">${W<420&&k==='IZ'?'PSOE + Sumar + Podemos + socios':n}: ${e.c} (${e.p10}–${e.p90})</text>`});
-    const step=(hi-lo)>120?40:20;
-    for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
-    MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
-    s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text><line x1="${xe}" x2="${xe}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/><text x="${xe}" y="${T-5}" text-anchor="middle">29-N</text>`;
-    if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:var(--muted);font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:var(--muted);font-size:10.5px">toca aquí →</text>`;
-    s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;paint-order:stroke;stroke:var(--bg);stroke-width:3px">176 = mayoría absoluta</text>`;
-    s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`;
-    BL.forEach(([k,n,c])=>{const r=E.ruta[k],poly=(a,b)=>r.map(q=>X(dd(q.d))+','+Y(q[b])).join(' ')+' '+[...r].reverse().map(q=>X(dd(q.d))+','+Y(q[a])).join(' ');
-      s+=`<polygon points="${poly('lo95','hi95')}" fill="${c}" opacity=".14"/><polygon points="${poly('lo','hi')}" fill="${c}" opacity=".24"/><polygon points="${poly('lo50','hi50')}" fill="${c}" opacity=".38"/>`;
-      const cen=r.map(q=>X(dd(q.d))+','+Y(q.esc)).join(' '),base=PRED.escBaseBloq.priv[k];
-      s+=`<polyline fill="none" stroke="${c}" stroke-width="7" opacity=".25" points="${x0},${Y(base)} ${cen}"/><polyline fill="none" stroke="${c}" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7" points="${x0},${Y(base)} ${cen}">${animate?'<animate attributeName="stroke-dashoffset" from="0" to="-7.1" dur="5s" repeatCount="indefinite"/>':''}</polyline>`;
-      const q=r[r.length-1],halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;font-size:10px',up=k==='PV';
-      s+=`<text x="${xe-6}" y="${up?Math.max(T+9,Y(q.hi)-3):Y(q.lo)+11}" text-anchor="end" style="fill:${c};${halo}">8 de cada 10 simulaciones</text>`;
-      s+=`<line x1="${xe-3}" x2="${xe+8}" y1="${Y(q.esc)}" y2="${Y(q.esc)}" stroke="${c}" stroke-width="2.4"/><text class="lab" x="${xe+11}" y="${Y(q.esc)+4}" style="fill:${c};font-size:12.5px">${q.esc}</text>`});
-    s+=`</g>`;
-    BL.forEach(([k,n,c])=>{const rC=PRED.escCIS.ruta[k],hgh=E.ruta[k];
-      s+=`<polyline fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="9 5" opacity=".9" points="${x0},${cY(PRED.escBaseBloq.cis[k])} ${rC.map(r=>X(dd(r.d))+','+cY(r.esc)).join(' ')}"/>`;
-      const ve=rC[rC.length-1].esc;if(ve<lo||ve>hi)s+=`<text x="${xe-4}" y="${ve<lo?Y(lo)-5:Y(hi)+12}" text-anchor="end" style="fill:${c};font-size:10.5px;font-weight:600">CIS: ${ve} ${ve<lo?'↓':'↑'}</text>`;
-      if(HD.length){s+=`<polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" points="${HD.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
-        HD.forEach(h=>{const x=X(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`+(ch?`<circle cx="${x}" cy="${Y(h.esc[k])}" r="3.6" fill="var(--bg)" stroke="${c}" stroke-width="1.6"/>`:`<circle cx="${x}" cy="${Y(h.esc[k])}" r="1.8" fill="${c}" opacity=".9"/>`)})}
-      s+=`<circle cx="${x0}" cy="${Y(PRED.escBaseBloq.priv[k])}" r="4.4" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/><text x="${x0}" y="${Y(PRED.escBaseBloq.priv[k])+(k==='PV'?-9:16)}" text-anchor="middle" style="fill:${c};font-size:10.5px">${PRED.escBaseBloq.priv[k]}</text>`});
-    s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T}" y2="${T+ph}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T}" width="${xe-x0}" height="${ph}" fill="transparent"/>`;
-    if(HD.length)s+=`<rect class="hzone" data-k="MAY" x="${L-4}" y="0" width="${x0+5-L+4}" height="${T+ph}" fill="transparent" style="cursor:pointer"/>`;
+    s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido · eje desde 80</text>`;
+    const halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round';
+    BL.forEach(([tk,nm,c],bi)=>{
+      const hy=34+bi*sub+(bi?0:8),T=hy+22,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
+      s+=`<text x="0" y="${hy+8}" style="fill:${c};font-size:${mob?10.5:11.5}px;font-weight:700">${mob&&tk==='IZ'?'PSOE + Sumar + Podemos + socios':nm}: ${e.c} (${e.p10}–${e.p90})</text>`;
+      for(let v=lo;v<=hi;v+=40)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
+      if(bi)MES.forEach(([d,l])=>{s+=`<text x="${xs_(dd(d))}" y="${T+ph+16}">${l}</text>`});
+      s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><line x1="${xe}" x2="${xe}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/>`;
+      if(!bi){s+=`<text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text><text x="${xe}" y="${T-5}" text-anchor="middle">29-N</text>`;
+        if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:var(--muted);font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:var(--muted);font-size:10.5px">toca aquí →</text>`}
+      // pila: de abajo arriba, cada parte entre su acumulado anterior y el suyo
+      const stack=(ser,op)=>{let o='';pr.forEach(([k,n,pc_],i)=>{const up=ser.map(q=>xs_(q.t)+','+Y(pr.slice(0,i+1).reduce((a,[kk])=>a+pval(q.o,kk),0))),dn=[...ser].reverse().map(q=>xs_(q.t)+','+Y(pr.slice(0,i).reduce((a,[kk])=>a+pval(q.o,kk),0)));o+=`<polygon points="${up.join(' ')} ${dn.join(' ')}" fill="${pc_}" opacity="${op}"/>`});return o};
+      s+=`<clipPath id="pc-${bi}"><rect x="${L}" y="${T}" width="${pw+2}" height="${ph}"/></clipPath>`;
+      if(hist.length)s+=`<g clip-path="url(#pc-${bi})">${stack(hist,.9)}</g>`;
+      const base={t:TH,o:{PP:today('PP'),VOX:today('VOX'),PSOE:today('PSOE'),SUMAR:today('SUMAR'),IZ:bl.IZ}};
+      s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.62)}</g>`;
+      const poly=(a,b2)=>r.map(q=>xs_(dd(q.d))+','+Y(q[b2])).join(' ')+' '+[...r].reverse().map(q=>xs_(dd(q.d))+','+Y(q[a])).join(' ');
+      s+=`<polygon points="${poly('lo95','hi95')}" fill="var(--fg)" opacity=".10"/><polygon points="${poly('lo','hi')}" fill="var(--fg)" opacity=".14"/><polygon points="${poly('lo50','hi50')}" fill="var(--fg)" opacity=".18"/>`;
+      s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="2" points="${x0},${Y(bl[tk])} ${r.map(q=>xs_(dd(q.d))+','+Y(q.esc)).join(' ')}"/>`;
+      const q=r[r.length-1];s+=`<text x="${xe-6}" y="${tk==='PV'?Math.max(T+10,Y(q.hi)-4):Y(q.lo)+13}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">8 de cada 10 simulaciones</text></g>`;
+      // línea de la mayoría y escenario CIS
+      s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;${halo}">176</text>`;
+      const rC=PRED.escCIS.ruta[tk],cy=v=>Y(Math.max(lo,Math.min(hi,v)));
+      s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="2 4" opacity=".8" points="${x0},${cy(PRED.escBaseBloq.cis[tk])} ${rC.map(z=>xs_(dd(z.d))+','+cy(z.esc)).join(' ')}"/><text x="${xe-6}" y="${cy(rC[rC.length-1].esc)-4}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">solo CIS: ${rC[rC.length-1].esc}</text>`;
+      if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/><circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?3.6:1.8}" fill="${ch?'var(--bg)':'var(--fg)'}" stroke="var(--fg)" stroke-width="${ch?1.6:0}"/>`});
+      // etiquetas por partido al final (separadas para que no se pisen)
+      let acc=0;const lb=pr.map(([k,n,pc_])=>{const v=pval(proj[proj.length-1].o,k),y=Y((Math.max(acc,lo)+acc+v)/2);acc+=v;return{n,v,c:pc_,y}});
+      for(let i=1;i<lb.length;i++)if(lb[i].y>lb[i-1].y-12)lb[i].y=lb[i-1].y-12;
+      lb.forEach(l=>{s+=`<text class="lab" x="${xe+8}" y="${l.y+4}" style="fill:${l.c==='var(--muted)'?'var(--fg)':l.c};font-size:${mob?10.5:11.5}px">${l.n} ${l.v}</text>`});
+    });
+    const T1=34+8+22,TB=34+sub+22+ph;
+    s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T1}" y2="${TB}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T1}" width="${xe-x0}" height="${TB-T1}" fill="transparent"/>`;
+    if(HD.length)s+=`<rect class="hzone" data-k="MAY" x="${L-4}" y="0" width="${x0+5-L+4}" height="${TB}" fill="transparent" style="cursor:pointer"/>`;
     return `<svg class="pg" data-k="MAY" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mayoría absoluta el 29-N: PP más Vox ${E.ppVox.c} escaños (${E.ppVox.p10} a ${E.ppVox.p90}); PSOE, Sumar, Podemos y socios de 2023 ${E.izq.c} (${E.izq.p10} a ${E.izq.p90}); la mayoría absoluta es 176"><title>Mayoría absoluta</title>${s}</svg>`;
   }
   function hdetailM(f){
@@ -143,7 +156,7 @@
     return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>Mayoría · ${fecha(f)}</b> (176 = mayoría absoluta)</p><ul style="list-style:none;padding-left:0">${dv}</ul>`+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+(!ents&&!sal?`<p>Ese día no entró ni salió ninguna encuesta.</p>`:'')+`<p class="hn">Los detalles por partido y el contexto de cada día están en los gráficos de arriba. Con ${h.n} encuestas en la media.</p>`;
   }
   function wireMay(svg){
-    const E=PRED.escPrivadas,r0=E.ruta.PV,hit=svg.querySelector('.hit'),g=svg.querySelector('.tt'),l=g.querySelector('.ttl'),bx=g.querySelector('.ttb'),t1=g.querySelector('.tt1'),t2=g.querySelector('.tt2'),t3=g.querySelector('.tt3'),x0=+svg.dataset.x0,pw=+svg.dataset.pw;
+    const E=PRED.escPrivadas,r0=E.ruta.PV,hit=svg.querySelector('.hit'),g=svg.querySelector('.tt:has(.ttl)'),l=g.querySelector('.ttl'),bx=g.querySelector('.ttb'),t1=g.querySelector('.tt1'),t2=g.querySelector('.tt2'),t3=g.querySelector('.tt3'),x0=+svg.dataset.x0,pw=+svg.dataset.pw;
     const mv=e=>{const r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,t=TH+Math.max(0,px-x0)/(pw*(1-FH))*(D1-TH);let bi=0,bd=1e18;r0.forEach((q,i)=>{const dx=Math.abs(dd(q.d)-t);if(dx<bd){bd=dx;bi=i}});
       const q=r0[bi],z=E.ruta.IZ[bi],X=x0+(dd(q.d)-TH)/(D1-TH)*pw*(1-FH),Yv=+hit.getAttribute('y');g.style.display='';l.setAttribute('x1',X);l.setAttribute('x2',X);
       t1.textContent=`${fecha(q.d)}: PP + Vox ${q.esc} (${q.lo}–${q.hi})`;t2.textContent=`PSOE + Sumar + Podemos + socios: ${z.esc} (${z.lo}–${z.hi})`;t3.textContent=`Rangos del 80 %. Mayoría: 176`;t3.style.fill='var(--muted)';t2.style.fill='var(--fg)';
