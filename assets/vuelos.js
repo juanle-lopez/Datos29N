@@ -122,16 +122,17 @@ function spainLabels(S){
   const rc=svg.getBoundingClientRect(),sc=Math.min(rc.width/G.sw,rc.height/(G.sh+70))||1,k=Math.min(2.4,Math.max(1,7.5/(11*sc)));
   const st=`font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(15,25,40,.95);stroke-width:${3*k}px;pointer-events:none;text-anchor:middle`;
   let t='';
-  Object.entries(g).forEach(([c,r])=>{const x=(r.x0+r.x1)/2,y=(r.y0+r.y1)/2,nm=SHORT[c]||c;
+  const NUD={'Asturias':[-26,-4],'Cantabria':[-6,-12],'País Vasco':[16,-14],'Navarra':[34,2],'La Rioja':[6,22]};
+  Object.entries(g).forEach(([c,r])=>{const nu=NUD[c]||[0,0],x=(r.x0+r.x1)/2+nu[0]*k,y=(r.y0+r.y1)/2+nu[1]*k,nm=SHORT[c]||c;
     t+=c==='Comunidad de Madrid'?`<text x="${x}" y="${y+4}" style="font-size:${11*k}px;${st}">Madrid · base</text>`:`<text x="${x}" y="${y-2}" style="${st}"><tspan x="${x}" style="font-size:${11*k}px">${nm}</tspan><tspan x="${x}" dy="${14*k}" style="font-size:${14*k}px">${fmt(S[c]||0)}</tspan></text>`});
   svg.insertAdjacentHTML('beforeend',t);
 }
 function spainCM(S,cf){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
-  let add='';
+  let add='';const rc=svg.getBoundingClientRect(),sc0=Math.min(rc.width/G.sw,rc.height/(G.sh+70))||1,k=Math.min(2.4,Math.max(1,7.5/(11*sc0)));
   ['Ceuta','Melilla'].forEach(n=>{const pt=svg.querySelector(`path[data-c="${n}"]`);if(!pt)return;const b=pt.getBBox(),cx=b.x+b.width/2,cy=b.y+b.height/2,v=S[n]||0;
     pt.setAttribute('transform',`translate(${cx} ${cy}) scale(7) translate(${-cx} ${-cy})`);pt.setAttribute('fill',v?cf(v):LANDHI);pt.setAttribute('stroke','#fff');pt.setAttribute('stroke-width','.35');
-    add+=`<text x="${cx}" y="${cy+b.height*3.5+9}" text-anchor="middle" style="font-size:10px;font-weight:700;fill:#fff;pointer-events:none;paint-order:stroke;stroke:rgba(15,25,40,.92);stroke-width:2.4px">${n}${v?' '+v:''}</text>`});
+    add+=`<text x="${cx}" y="${cy+b.height*3.5+9*k}" text-anchor="middle" style="font-size:${11*k}px;font-weight:700;fill:#fff;pointer-events:none;paint-order:stroke;stroke:rgba(15,25,40,.95);stroke-width:${3*k}px"><tspan x="${cx}">${n}</tspan><tspan x="${cx}" dy="${14*k}" style="font-size:${14*k}px">${v}</tspan></text>`});
   svg.insertAdjacentHTML('beforeend',add);
 }
 function spainArcs(S){
