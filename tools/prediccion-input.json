@@ -287,5 +287,40 @@
    "fuente": "https://www.electografica.com/2026/10/encuesta-nc-report-261008.html",
    "nota": "Publicada 7-sep. Sumar 5,7 + Podemos 3,4. Fuente secundaria."
   }
- ]
+ ],
+ "sesgo": {
+  "nota": "Error de la media de encuestas de la última semana frente al resultado (resultado − media, en puntos de voto). El centro de la proyección se corrige con la media de estos errores contraída hacia 0 según su dispersión entre elecciones (solo con ≥2 elecciones; Sumar+Podemos, con 1, no se corrige). Se incorpora linealmente desde hoy hasta el 29-N.",
+  "elecciones": [
+   "23-J 2023 (14 encuestas)",
+   "10-N 2019 (6 encuestas)",
+   "28-A 2019 (11 encuestas)"
+  ],
+  "err": {
+   "PP": [
+    -0.73,
+    0.53,
+    -3.38
+   ],
+   "PSOE": [
+    3.06,
+    0.92,
+    0.17
+   ],
+   "VOX": [
+    -0.66,
+    -0.37,
+    -1.05
+   ],
+   "SUMAR": [
+    -1.04
+   ]
+  },
+  "fuentes": [
+   "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_Spanish_general_election",
+   "https://en.wikipedia.org/wiki/Opinion_polling_for_the_November_2019_Spanish_general_election",
+   "https://en.wikipedia.org/wiki/Opinion_polling_for_the_April_2019_Spanish_general_election"
+  ],
+  "limites": "Muestras incompletas y no contrastadas con las fuentes originales; 2019 sin Unidas Podemos; solo tres elecciones."
+ },
+ "usarSesgo": true
 }

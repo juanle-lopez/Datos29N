@@ -33,6 +33,9 @@ function tendencia(tipo){
 }
 const trP=tendencia('privada'),trC=tendencia('cis');
 const priv=inp.privadas;
+// Corrección por el error histórico de las encuestas (media de errores contraída: peso m²/(m²+var/n); solo con ≥2 elecciones)
+const delta={};K.forEach(k=>{const e=(inp.sesgo&&inp.usarSesgo?inp.sesgo.err[k]:null)||[];if(e.length<2){delta[k]=0;return}const m=mean(e),v=sdev(e)**2/e.length;delta[k]=m*m/(m*m+v)*m});
+const sesgoAt=(clave,k,d)=>clave==='priv'?delta[k]*Math.min(1,d/T):0;   // entra linealmente: 0 hoy, completa el 29-N
 const base={priv:{},cis:{}};K.forEach(k=>{base.priv[k]=round(mean(priv.map(p=>p[k])),2);base.cis[k]=inp.cis[k]});
 const s0={priv:{},cis:{}};K.forEach(k=>{s0.priv[k]=sdev(priv.map(p=>p[k]))/Math.sqrt(priv.length);s0.cis[k]=inp.sdMuestreoCIS});
 // Errores en escala logit y como composición (método 3, 20-oct): el error en puntos es proporcional a p(1-p), así que un partido
@@ -55,7 +58,7 @@ function escenario(clave,trend,N=4000){
   const sdAt=(k,d,final)=>Math.sqrt(s0[clave][k]**2+volDay*d+(final?inp.sdError**2:0));
   ds.forEach((d,i)=>{
     const fin_=d===T, c={},sdv={};
-    K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d);sdv[k]=sdAt(k,d,fin_)});
+    K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
     const vc=volDay*d+(inp.errorGradual?inp.sdError**2*Math.pow(d/T,PG):(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
     for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const t=simulate(DATA,v).tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t))}
@@ -75,7 +78,7 @@ function escenario(clave,trend,N=4000){
       const arr={PP:[],PSOE:[],VOX:[],SUMAR:[]};let prev=0;
       ds.forEach((d,j)=>{
         const dt=d-prev;prev=d;[...K,'O'].forEach(k=>{W[k]+=Math.sqrt(volDay*dt)/(L?100*REF:1)*gauss()});
-        let v;if(L){const cc={},e={O:W.O+eFt(eF.O,d)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d);e[k]=z0[k]+W[k]+eFt(eF[k],d)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+z0[k]+W[k]+eFt(eF[k],d)))}
+        let v;if(L){const cc={},e={O:W.O+eFt(eF.O,d)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d);e[k]=z0[k]+W[k]+eFt(eF[k],d)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d)+z0[k]+W[k]+eFt(eF[k],d)))}
         const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));
       });
       K.forEach(k=>out.trayectorias[k].push(arr[k]));
@@ -98,7 +101,7 @@ const escPriv=inp.privadas.map(p=>({e:p.e,f:p.f,esc:Object.fromEntries(K.map(k=>
 const escBaseBloq={priv:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.priv)),cis:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.cis))};
 const escBase={priv:Object.fromEntries(K.map(k=>[k,seatsOf(base.priv)[k]])),cis:Object.fromEntries(K.map(k=>[k,seatsOf(base.cis)[k]]))};
 const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv.length,privadas:priv,historial:inp.historial,cis:inp.cis,
-  base,tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
+  base,sesgo:{delta:Object.fromEntries(K.map(k=>[k,round(delta[k],2)])),err:inp.sesgo?inp.sesgo.err:null,elecciones:inp.sesgo?inp.sesgo.elecciones:null},tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
   escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq};
 fs.writeFileSync(root+'assets/prediccion-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nconst PRED='+JSON.stringify(out)+';\n');
 const show=e=>({esc:Object.fromEntries(K.map(k=>[k,`${e.escanos[k].c} (${e.escanos[k].p10}-${e.escanos[k].p90})`])),ppVox:e.ppVox});

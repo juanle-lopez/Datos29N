@@ -101,10 +101,11 @@
         <ol class="steps">
           <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 19-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las 14 privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
-          <li><b>Sin tendencia.</b><span>La previsión central para el 29-N es la media de hoy: no se prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
+          <li><b>Corrección histórica (20-oct).</b><span>Las medias de encuestas de la última semana se equivocaron en 2019 (abril y noviembre) y 2023 casi siempre en la misma dirección para PSOE y Vox. El centro del 29-N se corrige con la media de esos errores, reducida según lo mucho que varían entre elecciones, y entra poco a poco: hoy es la media de las encuestas. Hoy: PSOE +1,0, PP −0,6, Vox −0,6 puntos; Sumar + Podemos no se corrige (solo hay una elección con dato). Es una apuesta apoyada en tres elecciones.</span></li>
+          <li><b>Sin tendencia.</b><span>Esa corrección aparte, la previsión central no prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
           <li><b>Error.</b><span>Crece con los días (deriva de la opinión) y el día de la votación se suma el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media); por eso el tubo se abre más en los últimos días. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
-          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
+          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, se añade la corrección histórica, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
         </ol>
       </details>
       <details class="pdet"><summary>La fórmula, paso a paso</summary>
@@ -116,8 +117,9 @@
         <div class="frm">cociente(k) = voto'(p,k) / (escaños ya asignados a k + 1)</div>
         <p>Solo compiten los partidos con al menos un 3 % del voto de esa provincia (método D’Hondt).</p>
         <p><b>3. Voto proyectado en la fecha t.</b></p>
-        <div class="frm">V(k,t) = M(k)</div>
+        <div class="frm">V(k,t) = M(k) + δ(k) × t / T</div>
         <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
+        <p>δ(k) es la corrección histórica: la media de los errores de las medias de encuestas de la última semana (resultado menos media) en abril de 2019, noviembre de 2019 y julio de 2023, multiplicada por m²/(m²+v/n), con m esa media y v/n la varianza de la media entre elecciones. Se corrige más lo que se repite con el mismo signo (PSOE y Vox) y menos lo que cambia de signo (PP). T es el número de días hasta el 29-N. Los errores salen de las tablas de encuestas de Wikipedia (<a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_Spanish_general_election">2023</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_November_2019_Spanish_general_election">nov. 2019</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_April_2019_Spanish_general_election">abr. 2019</a>), con muestras incompletas y sin contrastar con las fuentes originales.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40) / (100·R)²
 + en el 29-N se suma además 1,9² / (100·R)²</div>
@@ -141,6 +143,7 @@
       <details class="pdet"><summary>Qué no incluye (límites)</summary>
         <ol>
           <li><b>Error del modelo.</b> El reparto por provincias escala el voto de 2023 por igual en todo el país; no recoge voto útil, cambios en las listas, partidos nuevos o escindidos, ni que unas provincias se muevan más que otras. En las pruebas, ese error fue de entre 2 y 12 escaños por partido.</li>
+          <li><b>La corrección histórica.</b> Se apoya en solo tres elecciones y en encuestas tomadas de Wikipedia. Si esta vez las encuestas aciertan, la corrección empeora la proyección. Favorece al PSOE y resta a PP y Vox porque así fueron los errores pasados, no por una preferencia nuestra.</li>
           <li><b>Errores comunes de las encuestas.</b> Los partidos se compensan entre sí (suman 100), pero no se simula un error de bloque. Si todas las encuestas se equivocan a la vez a favor de un bloque, como pasó en 2023 con PP y Vox, el rango real es más ancho: con un error de bloque de 1 punto, el de PP + Vox pasaría de 188–214 a 185–216 escaños.</li>
           <li><b>Campaña.</b> No se modelan acontecimientos concretos de la campaña (empieza el 13-nov) más allá de la deriva genérica.</li>
           <li><b>El CIS.</b> Su diferencia con las encuestas privadas es de unos 7 puntos en el PSOE. No sabemos cuál se acercará más; por eso se muestran por separado.</li>
