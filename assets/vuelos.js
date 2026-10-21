@@ -1,4 +1,5 @@
 /* ================= VUELOS ================= */
+let RK='',RD={},BASE=null,DIAS=null;
 let D,G,fy='all',fu='all',selW=null,selS=null,wz='world';
 const fmt=(n,d=0)=>n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:'always'});
 const UC={'Gobierno':'var(--g9)','Casa Real':'var(--g6)','Militar':'var(--g2)','Mantenimiento':'var(--g3)','Sin registrar':'var(--reg)','Otro':'var(--g8)'};
@@ -11,18 +12,18 @@ function agg(){
 }
 function chips(){
   const ys=['all',2021,2022,2023,2024,2025,2026];
-  document.getElementById('vy').innerHTML='<b>Año</b>'+ys.map(y=>chipBtn('data-y',y,y==='all'?'Todos':y+(y===2026?' (hasta 21-oct)':''),fy==y)).join('');
+  document.getElementById('vy').innerHTML='<b>Año</b>'+ys.map(y=>chipBtn('data-y',y,y==='all'?'Todos':y+(y===2026?' (hasta 21-oct)':''),fy==y&&!RK)).join('');
   document.getElementById('vu').innerHTML='<b>Uso</b>'+['all','Gobierno','Casa Real','Militar','Mantenimiento','Sin registrar'].map(u=>chipBtn('data-u',u,u==='all'?'Todos':u,fu===u)).join('');
-  document.querySelectorAll('[data-y]').forEach(b=>b.addEventListener('click',()=>{fy=b.dataset.y==='all'?'all':+b.dataset.y;render()}));
+  document.querySelectorAll('[data-y]').forEach(b=>b.addEventListener('click',()=>{fy=b.dataset.y==='all'?'all':+b.dataset.y;if(RK)clearRange(true);render()}));
   document.querySelectorAll('[data-u]').forEach(b=>b.addEventListener('click',()=>{fu=b.dataset.u;render()}));
 }
 const YD={2021:306,2022:365,2023:365,2024:366,2025:365,2026:294};
 function kpis(){
-  const dias=(fy==='all'?Object.values(YD).reduce((a,b)=>a+b,0):YD[fy]);
+  const dias=RK?Object.values(RD).reduce((a,b)=>a+b,0):(fy==='all'?Object.values(YD).reduce((a,b)=>a+b,0):YD[fy]);
   const t=rows(D.tot),n=t.reduce((a,r)=>a+r[2],0),h=t.reduce((a,r)=>a+r[3],0),c=t.reduce((a,r)=>a+r[4],0),co=t.reduce((a,r)=>a+r[5],0);
   const all=D.tot.filter(r=>(fy==='all'||r[0]==fy)),tn=all.reduce((a,r)=>a+r[2],0),sr=all.filter(r=>D.usos[r[1]]==='Sin registrar').reduce((a,r)=>a+r[2],0);
   document.getElementById('vk').innerHTML=[
-   [fmt(n),'vuelos (tramos)'],[fmt(dias?n/dias:0,1),'vuelos al día de media ('+fmt(dias)+' días)'],[fmt(h),'horas de vuelo'],[fmt(c/1e6,1)+' M€','coste estimado por falcondespega.es'],[fmt(co/1000,1)+' mil t','CO₂ según su cálculo (ver límites)'],[fmt(tn?sr/tn*100:0,0)+'%','de los vuelos del periodo sin uso registrado']
+   [fmt(n),'vuelos (tramos)'],[fmt(dias?n/dias:0,1),'vuelos al día de media ('+fmt(dias)+(dias===1?' día)':' días)')],[fmt(h,h<100?1:0),'horas de vuelo'],[c>=1e6?fmt(c/1e6,1)+' M€':fmt(c/1e3,0)+' mil €','coste estimado por falcondespega.es'],[co>=1000?fmt(co/1000,1)+' mil t':fmt(co,0)+' t','CO₂ según su cálculo (ver límites)'],[fmt(tn?sr/tn*100:0,0)+'%','de los vuelos del periodo sin uso registrado']
   ].map(x=>`<div><b>${x[0]}</b><small>${x[1]}</small></div>`).join('');
   if(window.rvReady)rvScan();
 }
@@ -70,7 +71,7 @@ function tierLeg(){return `<span style="display:flex;flex-direction:column;gap:3
 function worldMap(W){
   const mx=Math.max(1,...Object.values(W)),cf=mkSC(Object.values(W)),top=Object.entries(W).sort((a,b)=>b[1]-a[1]).slice(0,45),[mx0,my0]=G.madrid;
   const paths=Object.entries(G.world).filter(([k])=>k!=='ATA').map(([k,d])=>`<path class="c${selW===k?' sel':''}" data-i="${k}" d="${d}" fill="${k==='ESP'?LANDHI:(W[k]?'rgba(0,0,0,0)':LAND)}"/>`).join('');
-  const pf=mkP(Object.values(W)),vis=Object.keys(W).filter(k=>W[k]&&k!=='ESP'&&G.world[k]&&G.cent[k]),hk='w2|'+fy+'|'+fu;
+  const pf=mkP(Object.values(W)),vis=Object.keys(W).filter(k=>W[k]&&k!=='ESP'&&G.world[k]&&G.cent[k]),hk='w2|'+fy+'|'+fu+'|'+RK;
   if(!HCACHE[hk])HCACHE[hk]=heatField(vis.map(k=>({ds:[G.world[k]],cx:G.cent[k][0],cy:G.cent[k][1],p:pf(W[k])})),G.w,G.h,1.6,19,2);
   const clip=vis.map(k=>`<path d="${G.world[k]}"/>`).join('');
   const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -118,7 +119,7 @@ function spainHeat(S){
   const svg=document.querySelector('#vspain svg');if(!svg)return;
   const pf=mkP(Object.entries(S).filter(([k])=>k!=='Comunidad de Madrid'&&S[k]>0).map(x=>x[1])),g={};
   svg.querySelectorAll('path.c').forEach(pt=>{const c=pt.dataset.c;if(!c||c==='Comunidad de Madrid'||!S[c])return;const b=pt.getBBox(),r=g[c];if(!r)g[c]={ds:[pt.getAttribute('d')],x0:b.x,y0:b.y,x1:b.x+b.width,y1:b.y+b.height};else{r.ds.push(pt.getAttribute('d'));r.x0=Math.min(r.x0,b.x);r.y0=Math.min(r.y0,b.y);r.x1=Math.max(r.x1,b.x+b.width);r.y1=Math.max(r.y1,b.y+b.height)}});
-  const keys=Object.keys(g),hk='s2|'+fy+'|'+fu,Hh=G.sh+70;
+  const keys=Object.keys(g),hk='s2|'+fy+'|'+fu+'|'+RK,Hh=G.sh+70;
   if(!HCACHE[hk])HCACHE[hk]=heatField(keys.map(k=>({ds:g[k].ds,cx:(g[k].x0+g[k].x1)/2,cy:(g[k].y0+g[k].y1)/2,p:pf(S[k])})),G.sw,Hh,1.2,90,2);
   const clip=keys.map(k=>g[k].ds.map(d=>`<path d="${d}"/>`).join('')).join('');
   svg.insertAdjacentHTML('afterbegin',`<defs><clipPath id="sclip">${clip}</clipPath></defs><image href="${HCACHE[hk]}" x="0" y="0" width="${G.sw}" height="${Hh}" preserveAspectRatio="none" clip-path="url(#sclip)" style="pointer-events:none"/>`);
@@ -174,18 +175,58 @@ function ritmo(){
   const ys=[2021,2022,2023,2024,2025,2026],FAM=a=>a<5?'Falcon 900':a<7?'A310':'A330';
   const R=ys.map(y=>{const t=D.tot.filter(r=>r[0]===y&&(fu==='all'||D.usos[r[1]]===fu)),n=t.reduce((a,r)=>a+r[2],0),h=t.reduce((a,r)=>a+r[3],0),c=t.reduce((a,r)=>a+r[4],0),co=t.reduce((a,r)=>a+r[5],0);
     const ac=D.ac.filter(r=>r[0]===y&&(fu==='all'||D.usos[r[1]]===fu));let big=0,tn=0;ac.forEach(r=>{tn+=r[3];if(FAM(r[2])!=='Falcon 900')big+=r[3]});
-    return {y,n,h,c,co,dia:n/YD[y],hv:n?h/n:0,ch:h?c/h:0,big:tn?big/tn*100:0}});
+    return {y,n,h,c,co,dia:n/((RK?RD[y]:YD[y])||1),hv:n?h/n:0,ch:h?c/h:0,big:tn?big/tn*100:0}});
+  if(RK){for(let i=R.length-1;i>=0;i--)if(!RD[R[i].y])R.splice(i,1)}
   const mxN=Math.max(...R.map(r=>r.n),1);
   document.getElementById('vyt').innerHTML='<thead><tr><th>Año</th><th>Vuelos</th><th>Por día</th><th>Horas por vuelo</th><th>Coste estimado</th><th>€ por hora</th><th>CO₂ est. (t)</th><th>% en A310/A330</th></tr></thead><tbody>'+
    R.map(r=>`<tr><td>${r.y}${r.y===2026?'*':''}</td><td class="m"><span style="display:inline-block;height:8px;border-radius:4px;background:var(--hot);width:${(r.n/mxN*70).toFixed(0)}px;margin-right:6px;vertical-align:middle"></span>${fmt(r.n)}</td><td class="m">${fmt(r.dia,1)}</td><td class="m">${fmt(r.hv,1)}</td><td class="m">${fmt(r.c/1e6,1)} M€</td><td class="m">${fmt(r.ch)}</td><td class="m">${fmt(r.co/1000,1)} mil</td><td class="m">${fmt(r.big,0)} %</td></tr>`).join('')+'</tbody>';
   const p=R.reduce((a,r)=>r.n>a.n?r:a,R[0]),l=R.filter(r=>r.y<2026).slice(-1)[0];
-  document.getElementById('vyn').innerHTML=`<b>Cómo leerlo.</b> El año con más vuelos del filtro actual es ${p.y} (${fmt(p.n)}). 2026* llega solo hasta el 21-oct, por eso las ratios por día son comparables y los totales no. «€ por hora» y «CO₂» son estimaciones de falcondespega.es, no cifras oficiales. Los datos de esta página son totales por año, sin fecha de cada vuelo: no se pueden ver meses ni relacionar vuelos con acontecimientos concretos.`;
+  document.getElementById('vyn').innerHTML=`<b>Cómo leerlo.</b> El año con más vuelos del filtro actual es ${p.y} (${fmt(p.n)}). 2026* llega solo hasta el 21-oct, por eso las ratios por día son comparables y los totales no. «€ por hora» y «CO₂» son estimaciones de falcondespega.es, no cifras oficiales. Con el filtro «Fechas» de arriba puedes ver un día concreto o cualquier tramo de días.`;
+}
+
+/* ===== Filtro por fechas (un día o varios) ===== */
+const E0=Date.UTC(2021,2,1),DAY=864e5,MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const iso=d=>new Date(E0+d*DAY).toISOString().slice(0,10),off=s=>Math.round((Date.parse(s+'T00:00:00Z')-E0)/DAY);
+const largo=s=>{const [y,m,d]=s.split('-');return (+d)+' de '+MESES[+m-1]+' de '+y};
+function loadDias(){return DIAS?Promise.resolve(DIAS):fetch('assets/vuelos-dias.json?v=58').then(r=>r.json()).then(j=>(DIAS=j))}
+function applyRange(a,b){
+  return loadDias().then(J=>{
+    if(!BASE)BASE={tot:D.tot,vis:D.vis,ac:D.ac};
+    const lo=off(a),hi=off(b),T={},V={},AC={};RD={};
+    for(let d=lo;d<=hi;d++){const y=new Date(E0+d*DAY).getUTCFullYear();RD[y]=(RD[y]||0)+1}
+    J.f.forEach(f=>{if(f[0]<lo||f[0]>hi)return;const y=new Date(E0+f[0]*DAY).getUTCFullYear(),u=f[1];
+      const t=T[y+'|'+u]||(T[y+'|'+u]=[y,u,0,0,0,0]);t[2]++;t[3]+=f[4];t[4]+=f[5];t[5]+=f[6];
+      const k=y+'|'+u+'|'+f[2];AC[k]=AC[k]||[y,u,f[2],0];AC[k][3]++;
+      f[3].forEach(p=>{const pl=J.pl[p],kk=y+'|'+u+'|'+pl[0]+'|'+pl[1];V[kk]=V[kk]||[y,u,pl[0],pl[1],0];V[kk][4]++})});
+    D.tot=Object.values(T);D.vis=Object.values(V);D.ac=Object.values(AC);
+    RK=a+'_'+b;fy='all';selW=null;selS=null;render();
+  });
+}
+function clearRange(silent){if(BASE){D.tot=BASE.tot;D.vis=BASE.vis;D.ac=BASE.ac}RK='';RD={};const a=document.getElementById('vda'),b=document.getElementById('vdb');if(a)a.value='';if(b)b.value='';if(!silent)render()}
+function rangeUI(){
+  const el=document.getElementById('vd');if(!el)return;
+  if(!el.dataset.ok){el.dataset.ok='1';
+    el.innerHTML='<b>Fechas</b><label class="vdl"><span>Desde</span><input type="date" id="vda" min="2021-03-01" max="2026-10-21"></label><label class="vdl"><span>Hasta</span><input type="date" id="vdb" min="2021-03-01" max="2026-10-21"></label>'+
+      '<button type="button" data-q="1">Último día</button><button type="button" data-q="7">Últimos 7 días</button><button type="button" data-q="30">Últimos 30 días</button><button type="button" data-q="0" id="vdx">Quitar fechas</button><p class="vdst" id="vdst" aria-live="polite"></p>';
+    const A=document.getElementById('vda'),B=document.getElementById('vdb');
+    const go=()=>{let a=A.value,b=B.value||A.value;if(!a&&b)a=b;if(!a)return;if(b<a){const t=a;a=b;b=t;A.value=a;B.value=b}applyRange(a,b)};
+    A.addEventListener('change',go);B.addEventListener('change',go);
+    el.querySelectorAll('[data-q]').forEach(bt=>bt.addEventListener('click',()=>{const q=+bt.dataset.q;if(!q){clearRange();return}
+      loadDias().then(J=>{const fin=J.fin||'2026-10-21',hi=off(fin),lo=hi-q+1;A.value=iso(lo);B.value=fin;applyRange(iso(lo),fin)})}));
+    loadDias().then(J=>{if(J.fin){A.max=B.max=J.fin}});
+  }
+  const st=document.getElementById('vdst'),x=document.getElementById('vdx');
+  x.hidden=!RK;
+  if(!RK){st.textContent='Elige un día (solo «Desde») o un tramo. Al elegir fechas, el filtro de año se desactiva.';st.classList.remove('on');return}
+  const [a,b]=RK.split('_'),n=D.tot.reduce((s,r)=>s+((fu==='all'||D.usos[r[1]]===fu)?r[2]:0),0);
+  st.innerHTML=(a===b?'Día <strong>'+largo(a)+'</strong>':'Del <strong>'+largo(a)+'</strong> al <strong>'+largo(b)+'</strong>')+': <strong>'+fmt(n)+'</strong> '+(n===1?'vuelo':'vuelos')+(fu!=='all'?' de uso «'+fu+'»':'')+(n?'':'. No hay vuelos registrados en esas fechas.');
+  st.classList.add('on');
 }
 let playT=null;
 function stopPlay(){if(playT){clearInterval(playT);playT=null}const b=document.getElementById('vplay');if(b){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}}
 function startPlay(){
   const ys=[2021,2022,2023,2024,2025,2026],b=document.getElementById('vplay');let i=0;b.textContent='❚❚ Parar';b.setAttribute('aria-pressed','true');
-  const step=()=>{fy=ys[i];render();document.getElementById('vplst').textContent='Año '+fy+(fy===2026?' (hasta 21-oct)':'');i++;if(i>=ys.length){clearInterval(playT);playT=null;setTimeout(()=>{if(!playT){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}},2200)}};
+  const step=()=>{if(RK)clearRange(true);fy=ys[i];render();document.getElementById('vplst').textContent='Año '+fy+(fy===2026?' (hasta 21-oct)':'');i++;if(i>=ys.length){clearInterval(playT);playT=null;setTimeout(()=>{if(!playT){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}},2200)}};
   step();playT=setInterval(step,2400);
 }
 function countUp(el,to,dec){const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;if(REDUCE){el.textContent=fmt(to,dec);return}const t0=performance.now(),dur=1600;(function s(now){const k=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e,dec);if(k<1)requestAnimationFrame(s)})(t0)}
@@ -229,7 +270,7 @@ function juego(){
       document.getElementById('vgsh').addEventListener('click',async e=>{const full=txt+' '+location.href.split('#')[0];try{if(navigator.share){await navigator.share({text:txt,url:location.href.split('#')[0]})}else{await navigator.clipboard.writeText(full);e.target.textContent='Copiado'}}catch(_){e.target.textContent='No se pudo copiar'}})}))};
   sel.addEventListener('change',draw);draw();
 }
-function render(){chips();kpis();ritmo();const {W,S}=agg();worldMap(W);window.globoSet&&globoSet(W,HCACHE['w2|'+fy+'|'+fu]);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
+function render(){chips();rangeUI();kpis();ritmo();const {W,S}=agg();worldMap(W);window.globoSet&&globoSet(W,HCACHE['w2|'+fy+'|'+fu+'|'+RK]);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
 document.addEventListener('click',e=>{const zb=e.target.closest&&e.target.closest('[data-wz]');if(zb){wz=zb.dataset.wz;selW=null;window._vc=0;const {W}=agg();worldMap(W);return}
   if(e.target.id==='vplay'){playT?stopPlay():startPlay()}else if(playT&&e.target.closest&&e.target.closest('#vy,#vu')){stopPlay()}},true);
 Promise.all([fetch('assets/vuelos-data.json?v=57').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;window.initGlobo&&initGlobo({G,D,mkSC,LAND});render();hero();waffle();juego();
