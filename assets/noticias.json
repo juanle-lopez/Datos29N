@@ -1,7 +1,56 @@
 {
- "actualizado": "2026-10-20",
+ "actualizado": "2026-10-21",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Moncloa.com",
+   "fecha": "21 oct",
+   "url": "https://www.moncloa.com/2026/10/21/plazo-listas-29n-registro-candidaturas-3452548/",
+   "titular": "El plazo para las listas del 29N ya está abierto: los partidos tienen hasta el lunes 26 a medianoche",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "elDiario.es",
+   "fecha": "21 oct",
+   "url": "https://www.eldiario.es/politica/constitucional-rechaza-peticion-defensor-pueblo-reactivar-voto-160-000-nacionalizados_1_13597189.html",
+   "titular": "El Constitucional rechaza la petición del Defensor del Pueblo de reactivar el voto de 160.000 nacionalizados",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "21 oct",
+   "url": "https://www.infobae.com/espana/2026/10/21/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-las-propuestas-y-la-visita-de-milei-a-espana/",
+   "titular": "Elecciones generales 29-N, en directo: Ayuso recibe a Javier Milei en el Canal de Isabel II",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "OKDiario",
+   "fecha": "21 oct",
+   "url": "https://okdiario.com/espana/ultima-hora-huelgas-elecciones-generales-del-29-n-actualidad-politica-hoy-comienza-plazo-presentar-candidaturas-20596020",
+   "titular": "Última hora de las huelgas, elecciones generales del 29-N y actualidad política hoy: comienza el plazo para presentar las candidaturas",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Electomanía",
+   "fecha": "20 oct",
+   "url": "https://electomania.es/encuesta-al-senado-sigma-dos-20oct-pp-y-vox-a-6-escanos-del-control-total/",
+   "titular": "Encuesta al Senado (Sigma Dos, 20 oct): PP y Vox, a 6 escaños del control total",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "20 oct",
+   "url": "https://www.infobae.com/espana/2026/10/20/asi-estan-los-sondeos-de-las-elecciones-generales-de-espana-2026/",
+   "titular": "Así están los sondeos de las elecciones generales de España 2026",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "El Generacional",
+   "fecha": "19 oct",
+   "url": "https://elgeneracionalpost.com/politica/2026/1019/287369/estos-son-los-candidatos-de-los-partidos-para-el-29-n.html",
+   "titular": "Estos son los candidatos de los partidos para el 29-N",
+   "tema": "Campaña"
+  },
   {
    "medio": "Infobae",
    "fecha": "19 oct",
@@ -21,55 +70,6 @@
    "fecha": "19 oct",
    "url": "https://rtvc.es/partidos-aceleran-precampana-poco-mas-40-dias-elecciones-19-octubre-2026/",
    "titular": "Los partidos aceleran la precampaña a poco más de 40 días de las elecciones",
-   "tema": "Campaña"
-  },
-  {
-   "medio": "Moncloa.com",
-   "fecha": "16 oct",
-   "url": "https://www.moncloa.com/2026/10/16/encuestas-29n-psoe-pp-vox-cis-3449630/",
-   "titular": "Sánchez encara el 29-N con las encuestas en contra: PP y Vox suman 201 escaños y el CIS ve empate técnico",
-   "tema": "Encuestas"
-  },
-  {
-   "medio": "Que.es",
-   "fecha": "14 oct",
-   "url": "https://www.que.es/2026/10/14/huelga-medicos-madrid-otono/",
-   "titular": "La huelga médicos Madrid: cuatro jornadas de paro desde finales de octubre por la falta de negociación",
-   "tema": "Huelgas"
-  },
-  {
-   "medio": "Moncloa.com",
-   "fecha": "14 oct",
-   "url": "https://www.moncloa.com/2026/10/14/cis-octubre-hunde-pp-psoe-34-3448290/",
-   "titular": "El CIS de octubre hunde al PP al 22,2% y dispara al PSOE al 34% a mes y medio del 29-N",
-   "tema": "Encuestas"
-  },
-  {
-   "medio": "RTVC",
-   "fecha": "12 oct",
-   "url": "https://rtvc.es/supremo-mantiene-suspendido-voto-nacionalizados-ley-nietos-12-octubre-2026/",
-   "titular": "El Supremo mantiene suspendido el voto de los nacionalizados por la ley de nietos",
-   "tema": "Proceso"
-  },
-  {
-   "medio": "RTVC",
-   "fecha": "9 oct",
-   "url": "https://rtvc.es/feijoo-acepta-un-cara-a-cara-con-sanchez-el-16-de-noviembre-9-octubre-2026/",
-   "titular": "Feijóo acepta un cara a cara con Sánchez el 16 de noviembre",
-   "tema": "Campaña"
-  },
-  {
-   "medio": "Moncloa.com",
-   "fecha": "7 oct",
-   "url": "https://moncloa.com/2026/10/07/huelga-general-11n-3443931",
-   "titular": "CCOO y UGT ponen la fecha del 11 de noviembre para la huelga general",
-   "tema": "Huelgas"
-  },
-  {
-   "medio": "Artículo 14",
-   "fecha": "6 oct",
-   "url": "https://www.articulo14.es/politica/el-doble-reto-de-feijoo-evitar-lios-en-campana-y-su-relacion-con-abascal-20261006.html",
-   "titular": "El doble reto de Feijóo: evitar líos en campaña y su relación con Abascal",
    "tema": "Campaña"
   }
  ]
