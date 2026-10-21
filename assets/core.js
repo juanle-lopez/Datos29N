@@ -64,6 +64,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     ['vuelos.html','Falcon','Cada vuelo registrado de los aviones oficiales, con fuentes','<path d="M12 2.8c.9 0 1.5.8 1.5 1.8v4.6l7.5 4.4v2l-7.5-2.3v4.4l2 1.5v1.6L12 19.8l-3.5 1v-1.6l2-1.5v-4.4L3 15.6v-2l7.5-4.4V4.6c0-1 .6-1.8 1.5-1.8z"/>'],
     ['noticias.html','Últimas noticias','Diez titulares del 29-N con enlace a la fuente','<path d="M4 5h12v14H6a2 2 0 01-2-2zM16 9h4v8a2 2 0 01-2 2h-2M7.5 9h5M7.5 12.5h5M7.5 16h3"/>'],
     ['mesas.html','Mesas electorales','Si te toca: plazos, causas para no ir y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
+    ['guia.html','Cómo leer Datos 29N','Qué puedes concluir con cada apartado y qué no','<path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5zM12 6v13.5"/>'],
     ['metodo.html','Método y fuentes','Cómo se hace y de dónde sale cada dato','<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>']];
   var sh=document.createElement('div');sh.className='msheet';sh.id='moresheet';sh.hidden=true;
   sh.innerHTML='<div class="msbg" data-close></div><div class="msp" role="dialog" aria-modal="true" aria-label="Más apartados"><div class="msh"><b>Más en Datos 29N</b><button type="button" class="msx" data-close aria-label="Cerrar">✕</button></div>'+
