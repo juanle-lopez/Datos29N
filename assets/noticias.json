@@ -1,7 +1,35 @@
 {
- "actualizado": "2026-10-21",
+ "actualizado": "2026-10-22",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae",
+   "fecha": "22 oct",
+   "url": "https://www.infobae.com/espana/2026/10/22/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-propuestas-de-los-partidos-y-actos-de-los-candidatos/",
+   "titular": "Elecciones generales 29-N, en directo: El PSOE acepta el cara a cara entre Sánchez y Feijóo propuesto para el 16 de noviembre",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Moncloa.com",
+   "fecha": "22 oct",
+   "url": "https://www.moncloa.com/2026/10/22/elecciones-generales-29n-guia-censo-calendario-3453357",
+   "titular": "El Ministerio del Interior publica la guía electoral del 29N: 38.728.356 votantes y calendario oficial",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "Euronews",
+   "fecha": "22 oct",
+   "url": "https://es.euronews.com/2026/10/22/29n-listas-candidatos-partidos-generales",
+   "titular": "Quién es quién en el 29N: estos son los candidatos de los partidos para las elecciones generales en España",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "El Español",
+   "fecha": "22 oct",
+   "url": "https://www.elespanol.com/espana/20261022/elecciones-generales-espana-ultima-hora-directo-encuestas-electorales-pedro-sanchez-listas-actos-pp-psoe-vox-frente-amplio/1003744430302_10.html",
+   "titular": "Elecciones generales en España, 29-N, en directo",
+   "tema": "Campaña"
+  },
   {
    "medio": "Moncloa.com",
    "fecha": "21 oct",
