@@ -13,9 +13,11 @@ function agg(){
 function chips(){
   const ys=['all',2021,2022,2023,2024,2025,2026];
   document.getElementById('vy').innerHTML='<b>Año</b>'+ys.map(y=>chipBtn('data-y',y,y==='all'?'Todos':y+(y===2026?' (hasta 22-oct)':''),fy==y&&!RK)).join('');
-  document.getElementById('vu').innerHTML='<b>Uso</b>'+['all','Gobierno','Casa Real','Militar','Mantenimiento','Sin registrar'].map(u=>chipBtn('data-u',u,u==='all'?'Todos':u,fu===u)).join('');
+  const UL={all:'Todos los vuelos',Gobierno:'Gobierno',"Casa Real":'Casa Real',Militar:'Ejército (militar)',Mantenimiento:'Mantenimiento','Sin registrar':'Sin registrar'};
+  const cnt=u=>D.tot.filter(r=>(fy==='all'||r[0]==fy)&&(u==='all'||D.usos[r[1]]===u)).reduce((t,r)=>t+r[2],0);
+  document.getElementById('vu').innerHTML='<b>Uso</b><select id="vsel" class="vsel" aria-label="Quién usa el avión">'+Object.keys(UL).map(u=>'<option value="'+u+'"'+(fu===u?' selected':'')+'>'+UL[u]+' ('+fmt(cnt(u))+')</option>').join('')+'</select>';
+  document.getElementById('vsel').addEventListener('change',e=>{fu=e.target.value;render()});
   document.querySelectorAll('[data-y]').forEach(b=>b.addEventListener('click',()=>{fy=b.dataset.y==='all'?'all':+b.dataset.y;if(RK)clearRange(true);render()}));
-  document.querySelectorAll('[data-u]').forEach(b=>b.addEventListener('click',()=>{fu=b.dataset.u;render()}));
 }
 const YD={2021:306,2022:365,2023:365,2024:366,2025:365,2026:294};
 function kpis(){

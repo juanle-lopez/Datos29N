@@ -91,3 +91,6 @@ nav.tabs.six{}
 .rowf.vdate{flex-wrap:wrap!important;overflow:visible!important;row-gap:8px}
 .rowf.vdate>b{flex-basis:100%}
 @media(min-width:700px){.rowf.vdate>b{flex-basis:auto}}
+
+.vsel{flex:1 1 15rem;max-width:22rem;min-height:44px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg);padding:0 12px;font:inherit;font-weight:600;cursor:pointer}
+.vsel:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}
