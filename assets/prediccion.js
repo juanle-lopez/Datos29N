@@ -186,26 +186,33 @@
       hit.addEventListener('pointermove',mv);hit.addEventListener('pointerdown',mv);hit.addEventListener('pointerleave',()=>{g.style.display='none'});
     });
   }
-  let drawn=false;
+  let drawn=false,lastW=0;const OPEN={};
   function draw(){
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
-    const an=!REDUCE;drawn=true;
+    const an=!REDUCE&&!Object.keys(OPEN).length;drawn=true;lastW=w;
     box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('')+`<div class="pcell pmay" style="grid-column:1/-1">${panelMay(Math.min(W*(cols),w),an)}<div class="hdet" hidden></div></div>`;
     wire(box,W);wireMay(box.querySelector('svg[data-k=MAY]'));
     box.querySelectorAll('.hzone').forEach(z=>z.ownerSVGElement.appendChild(z));
     const dias=HD.slice(1).map(h=>h.f),cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
-    const abrir=(cell,k,f)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
-      box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;
-      d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
+    const marca=(cell,k,f)=>{const svg=cell.querySelector('svg.pg');if(!svg)return;svg.querySelectorAll('.sel').forEach(n=>n.remove());if(!f)return;
+      const vb=svg.viewBox.baseVal,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=dd(f),px=t>=TH?x0+(t-TH)/(D1-TH)*pw*(1-FH):x0-(TH-t)*pw*FH/(TH-D0);
+      const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','sel');g.setAttribute('pointer-events','none');
+      g.innerHTML=`<line x1="${px}" x2="${px}" y1="0" y2="${vb.height}" stroke="var(--fg)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".6"/><rect x="${px-22}" y="0" width="44" height="14" rx="7" fill="var(--fg)"/><text x="${px}" y="10.5" text-anchor="middle" style="fill:var(--bg);font-size:9.5px;font-weight:700">${fecha(f).replace(/ de .*/,'')}</text>`;
+      svg.insertBefore(g,svg.querySelector('.hzone'))};
+    const abrir=(cell,k,f,restore)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
+      box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;OPEN[k]=f;marca(cell,k,f);
+      if(!restore){const r=d.getBoundingClientRect();if(r.bottom>innerHeight-70||r.top<0)d.scrollIntoView({block:'nearest',behavior:REDUCE?'auto':'smooth'})}
+      d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true;delete OPEN[k];marca(cell,k,null)});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
     box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
+    Object.entries(OPEN).forEach(([k,f])=>{const sv=box.querySelector('svg.pg[data-k="'+k+'"]');if(sv)abrir(sv.closest('.pcell'),k,f,true)});
   }
   {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
     if(ps)ps.innerHTML=`<b>29-N, según la media de las encuestas</b> (valor central y rango del 80 %):<br>`+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span>`).join(' · ')+
       `<span class="maj">PP + Vox: <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span> · mayoría absoluta: 176</span>`;
     const bt=document.getElementById('psimple');if(bt)bt.addEventListener('click',()=>{const on=bt.getAttribute('aria-pressed')!=='true';bt.setAttribute('aria-pressed',String(on));document.getElementById('pgrid').classList.toggle('simple',on)})}
-  draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(draw,150)});
+  draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const b=document.getElementById('pgrid');if(b&&(b.clientWidth||720)===lastW)return;draw()},150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;
   document.getElementById('leg').innerHTML=
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="2.4"/>')}Sigma Dos (misma empresa, desde el 1-oct)</span>`+
