@@ -1,7 +1,21 @@
 {
- "actualizado": "2026-10-22",
+ "actualizado": "2026-10-23",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae",
+   "fecha": "23 oct",
+   "url": "https://www.infobae.com/espana/2026/10/23/elecciones-generales-en-espana-29-n-en-directo-ultima-hora-de-los-sondeos-los-debates-y-las-entrevistas-a-pedro-sanchez-y-feijoo/",
+   "titular": "Elecciones generales en España 29-N, en directo: última hora de los sondeos, los debates y las entrevistas a Pedro Sánchez y Feijóo",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Demócrata",
+   "fecha": "23 oct",
+   "url": "https://democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-imop-psoe-frente-amplio-vox-pp-octubre-2026",
+   "titular": "Encuesta elecciones generales: el PP baja al 28,5% y el PSOE recorta distancias hasta el 27,1%, según IMOP",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Infobae",
    "fecha": "22 oct",
@@ -84,20 +98,6 @@
    "fecha": "19 oct",
    "url": "https://www.infobae.com/espana/2026/10/19/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-la-ley-de-nietos-o-los-anuncios-sobre-pensiones/",
    "titular": "Elecciones generales 29-N, en directo: última hora de los sondeos, la ley de nietos o los anuncios sobre pensiones",
-   "tema": "Campaña"
-  },
-  {
-   "medio": "Libertad Digital",
-   "fecha": "19 oct",
-   "url": "https://www.libertaddigital.com/espana/politica/2026-10-19/vox-esta-disparado-el-psoe-en-minimos-y-el-frente-amplio-sube-con-fuerza-segun-una-encuesta-7478143/",
-   "titular": "Vox está disparado, el PSOE en mínimos y el Frente Amplio sube con fuerza, según una encuesta",
-   "tema": "Encuestas"
-  },
-  {
-   "medio": "RTVC",
-   "fecha": "19 oct",
-   "url": "https://rtvc.es/partidos-aceleran-precampana-poco-mas-40-dias-elecciones-19-octubre-2026/",
-   "titular": "Los partidos aceleran la precampaña a poco más de 40 días de las elecciones",
    "tema": "Campaña"
   }
  ]

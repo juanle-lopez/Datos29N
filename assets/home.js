@@ -195,7 +195,7 @@ render();
   const P=['PP','PSOE','VOX','SUMAR'];
   hs.innerHTML=P.map(p=>`<div class="hs" style="--c:${COL[p]}"><span class="hn">${NAMES[p]}</span><b id="hn_${p}">${old[p]}</b><small id="hd_${p}">23-J</small></div>`).join('');
   renderHemi('hemi1',old);
-  const L1='Resultado del 23-J de 2023',L2='Escenario con la media de 14 sondeos (publicados del 24-sep al 19-oct) sobre las provincias de 2023. No es una previsión.';
+  const L1='Resultado del 23-J de 2023',L2='Escenario con la media de 14 sondeos (publicados del 24-sep al 23-oct) sobre las provincias de 2023. No es una previsión.';
   lab.textContent=L1;
   const start=()=>box.classList.add('on');
   if(REDUCE){start();renderHemi('hemi1',poll);lab.textContent=L2;P.forEach(p=>{document.getElementById('hn_'+p).textContent=poll[p];const d=poll[p]-old[p];document.getElementById('hd_'+p).textContent=(d>0?'+':'')+d+' vs 2023'});return}

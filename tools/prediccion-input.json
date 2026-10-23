@@ -22,11 +22,13 @@
   },
   {
    "e": "IMOP / El Confidencial",
-   "f": "2026-10-09",
-   "PP": 30.4,
-   "PSOE": 26.5,
-   "VOX": 19.0,
-   "SUMAR": 9.9
+   "f": "2026-10-23",
+   "PP": 28.5,
+   "PSOE": 27.1,
+   "VOX": 20.0,
+   "SUMAR": 10.8,
+   "nota": "Publicada 23-oct (07:28 según Demócrata); campo y muestra no indicados en la fuente. Frente Amplio 8,9 + Podemos 1,9. Escaños según la fuente: PP 123, PSOE 113, Vox 72, Frente Amplio 14, Podemos 1.",
+   "fuente": "https://democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-imop-psoe-frente-amplio-vox-pp-octubre-2026"
   },
   {
    "e": "DYM / 20minutos",
@@ -286,6 +288,17 @@
    "SUMAR": 9.1,
    "fuente": "https://www.electografica.com/2026/10/encuesta-nc-report-261008.html",
    "nota": "Publicada 7-sep. Sumar 5,7 + Podemos 3,4. Fuente secundaria."
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "tipo": "privada",
+   "f": "2026-10-09",
+   "PP": 30.4,
+   "PSOE": 26.5,
+   "VOX": 19.0,
+   "SUMAR": 9.9,
+   "fuente": "https://elecciones29noviembre.com/encuestas/",
+   "nota": "Oleada anterior de IMOP (9-oct)."
   }
  ],
  "sesgo": {

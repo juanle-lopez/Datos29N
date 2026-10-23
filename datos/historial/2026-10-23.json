@@ -4,36 +4,40 @@
  "t": "registrado",
  "n": 14,
  "voto": {
-  "PP": 32.42,
-  "PSOE": 26.43,
-  "VOX": 18.74,
-  "SUMAR": 9.11
+  "PP": 32.29,
+  "PSOE": 26.47,
+  "VOX": 18.81,
+  "SUMAR": 9.18
  },
  "esc": {
-  "PP": 136,
-  "PSOE": 106,
+  "PP": 135,
+  "PSOE": 107,
   "VOX": 65,
   "SUMAR": 10,
-  "PV": 201,
-  "IZ": 148
+  "PV": 200,
+  "IZ": 149
  },
  "lo": {
-  "PP": 134,
+  "PP": 133,
   "PSOE": 104,
-  "VOX": 63,
+  "VOX": 64,
   "SUMAR": 9,
-  "PV": 199,
+  "PV": 198,
   "IZ": 146
  },
  "hi": {
-  "PP": 139,
-  "PSOE": 108,
+  "PP": 138,
+  "PSOE": 109,
   "VOX": 67,
   "SUMAR": 11,
   "PV": 203,
-  "IZ": 150
+  "IZ": 151
  },
  "encuestas": [
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-10-23"
+  },
   {
    "e": "Sigma Dos / El Mundo",
    "f": "2026-10-19"
@@ -57,10 +61,6 @@
   {
    "e": "Hamalgama Métrica / Vozpópuli",
    "f": "2026-10-11"
-  },
-  {
-   "e": "IMOP / El Confidencial",
-   "f": "2026-10-09"
   },
   {
    "e": "40dB / EL PAÍS–SER",
@@ -92,6 +92,17 @@
   }
  ],
  "encDetalle": [
+  {
+   "h": "IMOP",
+   "e": "IMOP / El Confidencial",
+   "f": "2026-10-23",
+   "voto": {
+    "PP": 28.5,
+    "PSOE": 27.1,
+    "VOX": 20,
+    "SUMAR": 10.8
+   }
+  },
   {
    "h": "Sigma Dos",
    "e": "Sigma Dos / El Mundo",
@@ -156,17 +167,6 @@
     "PSOE": 25.3,
     "VOX": 19.6,
     "SUMAR": 8.7
-   }
-  },
-  {
-   "h": "IMOP",
-   "e": "IMOP / El Confidencial",
-   "f": "2026-10-09",
-   "voto": {
-    "PP": 30.4,
-    "PSOE": 26.5,
-    "VOX": 19,
-    "SUMAR": 9.9
    }
   },
   {
@@ -252,17 +252,17 @@
    "PP": {
     "c": 132,
     "p10": 118,
-    "p90": 148
+    "p90": 147
    },
    "PSOE": {
     "c": 111,
     "p10": 97,
-    "p90": 123
+    "p90": 124
    },
    "VOX": {
     "c": 64,
     "p10": 53,
-    "p90": 73
+    "p90": 74
    },
    "SUMAR": {
     "c": 10,
@@ -296,27 +296,48 @@
    "c": 196,
    "p10": 184,
    "p50": 196,
-   "p90": 210
+   "p90": 209
   }
  },
  "contexto": [],
  "cambio": {
-  "entran": [],
+  "entran": [
+   {
+    "e": "IMOP / El Confidencial",
+    "f": "2026-10-23",
+    "voto": {
+     "PP": 28.5,
+     "PSOE": 27.1,
+     "VOX": 20,
+     "SUMAR": 10.8
+    },
+    "antes": {
+     "e": "IMOP / El Confidencial",
+     "f": "2026-10-09",
+     "voto": {
+      "PP": 30.4,
+      "PSOE": 26.5,
+      "VOX": 19,
+      "SUMAR": 9.9
+     }
+    }
+   }
+  ],
   "salen": [],
   "dVoto": {
-   "PP": 0,
-   "PSOE": 0,
-   "VOX": 0,
-   "SUMAR": 0
+   "PP": -0.13,
+   "PSOE": 0.04,
+   "VOX": 0.07,
+   "SUMAR": 0.07
   },
   "dEsc": {
-   "PP": 0,
-   "PSOE": 0,
+   "PP": -1,
+   "PSOE": 1,
    "VOX": 0,
    "SUMAR": 0,
-   "PV": 0,
-   "IZ": 0
+   "PV": -1,
+   "IZ": 1
   },
-  "huboCambio": false
+  "huboCambio": true
  }
 }
