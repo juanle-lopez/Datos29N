@@ -3,6 +3,13 @@
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
   {
+   "medio": "El Español",
+   "fecha": "22 oct",
+   "url": "https://elespanol.com/espana/politica/20261022/feijoo-completa-plan-vivienda-medidas-jovenes-emancipen-lograr-espana-propietarios/1003744429961_0.amp.html",
+   "titular": "Feijóo completa un plan de vivienda con 23 medidas para que los jóvenes se emancipen y lograr la España de propietarios",
+   "tema": "Propuestas"
+  },
+  {
    "medio": "Infobae",
    "fecha": "23 oct",
    "url": "https://www.infobae.com/espana/2026/10/23/elecciones-generales-en-espana-29-n-en-directo-ultima-hora-de-los-sondeos-los-debates-y-las-entrevistas-a-pedro-sanchez-y-feijoo/",
@@ -91,13 +98,6 @@
    "fecha": "19 oct",
    "url": "https://elgeneracionalpost.com/politica/2026/1019/287369/estos-son-los-candidatos-de-los-partidos-para-el-29-n.html",
    "titular": "Estos son los candidatos de los partidos para el 29-N",
-   "tema": "Campaña"
-  },
-  {
-   "medio": "Infobae",
-   "fecha": "19 oct",
-   "url": "https://www.infobae.com/espana/2026/10/19/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-la-ley-de-nietos-o-los-anuncios-sobre-pensiones/",
-   "titular": "Elecciones generales 29-N, en directo: última hora de los sondeos, la ley de nietos o los anuncios sobre pensiones",
    "tema": "Campaña"
   }
  ]
