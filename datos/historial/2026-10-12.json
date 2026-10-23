@@ -248,7 +248,48 @@
   }
  ],
  "proy": null,
- "contexto": [],
+ "contexto": [
+  {
+   "p": "PP",
+   "tipo": "declaración",
+   "t": "Feijóo acepta el cara a cara con Sánchez, que propone para el lunes 16-nov, y los debates de Atresmedia (26-nov) y RTVE (23-nov). Condiciona una entrevista en RTVE a que la produzca la plantilla de la corporación.",
+   "fase": "antes",
+   "pos": "",
+   "medio": "Euronews",
+   "u": "https://es.euronews.com/2026/10/09/feijoo-propone-16-de-noviembre-para-cara-a-cara-sanchez-mediaset",
+   "hecho": "2026-10-09"
+  },
+  {
+   "p": "PSOE",
+   "tipo": "declaración",
+   "t": "El PSOE confirma su presencia en todos los debates y sostiene que deben ser las cadenas, y no los partidos, quienes fijen reglas y participantes.",
+   "fase": "antes",
+   "pos": "",
+   "medio": "Euronews",
+   "u": "https://es.euronews.com/2026/10/09/feijoo-propone-16-de-noviembre-para-cara-a-cara-sanchez-mediaset",
+   "hecho": "2026-10-09"
+  },
+  {
+   "p": "PSOE",
+   "tipo": "evento",
+   "t": "Sánchez abre la campaña en Dos Hermanas (Sevilla) con la vivienda como eje: pide convalidar dos nuevos decretos de 21 medidas y menciona una línea ICO de 10.000 M€ en préstamos a coste cero (hasta 50.000 €) para primera vivienda. El PSOE cifra la asistencia en unas 5.000 personas.",
+   "fase": "antes",
+   "pos": "Coincide con sondeos de esos días que sitúan al PSOE ligeramente al alza; no se puede establecer relación.",
+   "medio": "Euronews",
+   "u": "https://es.euronews.com/2026/10/10/sanchez-abre-la-campana-electoral-del-29n-en-su-ciudad-talisman-con-la-vivienda-como-eje-p",
+   "hecho": "2026-10-10"
+  },
+  {
+   "p": "SUMAR",
+   "tipo": "anuncio",
+   "t": "Frente Amplio (IU, Más Madrid, Movimiento Sumar y los comunes) acuerda designar a Ada Colau como candidata a la Presidencia; mantiene abierta la puerta a Podemos. Comunicado del lunes 12-oct.",
+   "fase": "antes",
+   "pos": "",
+   "medio": "RTVC",
+   "u": "https://rtvc.es/frente-amplio-acuerda-designar-a-ada-colau-como-cabeza-de-lista-12-octubre-2026/",
+   "hecho": "2026-10-12"
+  }
+ ],
  "cambio": {
   "entran": [
    {

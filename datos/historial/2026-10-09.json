@@ -188,7 +188,38 @@
   }
  ],
  "proy": null,
- "contexto": [],
+ "contexto": [
+  {
+   "p": "general",
+   "tipo": "anuncio",
+   "t": "Mediaset España propone un cara a cara Sánchez–Feijóo moderado por Carlos Franganillo y Alba Lago, en Telecinco y Noticias Cuatro; sin fecha fijada. Ha trasladado la oferta a Ferraz y Génova.",
+   "fase": "antes",
+   "pos": "",
+   "medio": "Moncloa.com",
+   "u": "https://www.moncloa.com/2026/10/07/mediaset-cara-a-cara-sanchez-feijoo-3444238/",
+   "hecho": "2026-10-07"
+  },
+  {
+   "p": "PP",
+   "tipo": "anuncio",
+   "t": "Feijóo convoca la Junta Directiva Nacional del PP para movilizar al partido y aprobar el equipo de campaña. Fuentes del PP citan a Alma Ezcurra para el programa y a Ester Muñoz como portavoz de campaña (la dirección de campaña no está confirmada).",
+   "fase": "antes",
+   "pos": "",
+   "medio": "Diario de León",
+   "u": "https://www.diariodeleon.es/nacional/261007/2099607/feijoo-convoca-junta-directiva-pp-movilizar-partido-aprobar-equipo-campana.html",
+   "hecho": "2026-10-07"
+  },
+  {
+   "p": "SUMAR",
+   "tipo": "anuncio",
+   "t": "Movimiento Sumar, IU, Más Madrid y Comuns fijan el 17-oct para presentar el Frente Amplio, su marca para las generales; la candidatura aún no está decidida. Podemos no ha confirmado si se integra.",
+   "fase": "antes",
+   "pos": "",
+   "medio": "Orain",
+   "u": "https://orain.eus/es/politica/2026/10/04/sumar-fija-el-17-octubre-lanzar-el-frente-amplio-su-candidatura/",
+   "hecho": "2026-10-04"
+  }
+ ],
  "cambio": {
   "entran": [
    {
