@@ -12,6 +12,13 @@
   const HD=(typeof HIST!=='undefined'&&HIST.dias)?HIST.dias:[];
   const MAJ=176;
 
+  // Portada, cabecera: la cifra clave (PP + Vox con la media de hoy) sobre una barra de 350 escaños
+  {const el=$('hkey');if(el){const B=PRED.escBase.priv,pv=PRED.escBaseBloq.priv.PV,E=PRED.escPriv||[],si=E.filter(p=>p.PV>=MAJ).length,w=x=>(x/350*100).toFixed(2)+'%';
+    el.innerHTML=`<div class="hk1"><span class="hkl">PP + Vox con la media de las encuestas</span><span class="hkr"><b class="hkn">${pv}</b><span class="hkm">escaños de 350 ·<br>mayoría: 176</span></span></div>`+
+      `<div class="hkbar" role="img" aria-label="PP ${B.PP} y Vox ${B.VOX} escaños; mayoría absoluta 176"><i style="--w:${w(B.PP)};background:var(--pp)"></i><i style="--w:${w(B.VOX)};background:var(--vox)"></i><em style="left:${w(MAJ)}"><span>176</span></em></div>`+
+      `<div class="hkleg"><span><i style="background:var(--pp)"></i>PP ${B.PP}</span><span><i style="background:var(--vox)"></i>Vox ${B.VOX}</span>${E.length?`<span class="hks">${si} de ${E.length} encuestas les dan mayoría</span>`:''}</div>`;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('go')));}}
+
   // Portada: escaños hoy y proyectados al 29-N
   {const el=$('phoy');if(el){const E=PRED.escPrivadas,B=PRED.escBase.priv,pv=E.ppVox;
     el.innerHTML=P.map(([k,nm,c])=>`<div class="hoyc" style="--c:${c}"><div class="hn">${nm}</div><div class="hv"><b>${B[k]}</b><span>→ ${E.escanos[k].c}</span></div><small>hoy → 29‑N (${E.escanos[k].p10}–${E.escanos[k].p90})</small></div>`).join('')+

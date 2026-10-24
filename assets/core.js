@@ -6,7 +6,7 @@ const chipBtn=(attr,val,label,on)=>`<button type="button" ${attr}="${val}" aria-
 /* ===== Dinamismo: reveal, nav, progreso, hero ===== */
 const REDUCE=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.documentElement.classList.add('js');
-const RV_SEL='.sech,.exec,.banner,.dt>h2,.dt .rowf,.panel,.star,.pc,.cc,.sr2,.meth details,.foot,.bars>div,.stg,.pos,.bloc,.credit,.gcard,.gk>div';
+const RV_SEL='.sech,.exec,.banner,.dt>h2,.dt .rowf,.panel,.star,.pc,.cc,.sr2,.meth details,.foot,.bars>div,.stg,.pos,.bloc,.credit,.gcard,.gk>div,.kcard,.hoyc,.hoym,.tile2,.dlist li';
 let rvIO=null;
 if('IntersectionObserver' in window&&!REDUCE){
   rvIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvIO.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});

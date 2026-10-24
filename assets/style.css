@@ -600,3 +600,41 @@ html.msopen{overflow:hidden}
 .etab .ok{color:var(--vox);font-weight:700}.etab .ko{color:var(--psoe);font-weight:700}
 .etab th small{display:block;font-weight:400;margin:0}
 #ntab td,#ntab th{padding:6px 5px}#ntab td:first-child{white-space:normal}#ntab td small{display:block}
+
+/* ===== portada v2: cifra clave, bandas y barra del simulador ===== */
+.hkey:empty{display:none}
+.hkey{max-width:640px;padding:16px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:10px}
+.hk1{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.hkl{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#c9d3e8;max-width:20ch}
+.hkr{display:flex;align-items:flex-end;gap:10px}.hkn{font:800 clamp(52px,14vw,84px)/.85 var(--mono);color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 0 30px rgba(120,170,255,.4)}
+.hkm{font-size:12.5px;color:#a9b3c7;line-height:1.3;padding-bottom:4px}
+.hkbar{position:relative;margin-top:16px;height:14px;border-radius:7px;background:rgba(255,255,255,.12);display:flex}
+.hkbar i{display:block;height:100%;width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}.hkbar i:first-child{border-radius:7px 0 0 7px}
+.hkey.go .hkbar i{width:var(--w)}
+.hkbar em{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed #fff;font-style:normal}
+.hkbar em span{position:absolute;top:-17px;left:-12px;font:700 11px var(--mono);color:#fff}
+.hkleg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:#c9d3e8}.hkleg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+.hkleg .hks{margin-left:auto;font-weight:700;color:#fff}
+.hero .cdg b{font-size:clamp(24px,7vw,40px)}.hero .cd{padding-block:10px}
+.hmesa{max-width:640px;margin:0;padding:10px 14px;border-width:1px;font-size:14px}.hmesa b{font-size:14.5px}
+.band{position:relative;border-radius:22px;padding:4px clamp(16px,4vw,36px) clamp(20px,4vw,36px);overflow:hidden}
+.band.soft{background:linear-gradient(160deg,color-mix(in srgb,var(--pp) 10%,var(--bg)) 0%,color-mix(in srgb,var(--sumar) 7%,var(--bg)) 55%,color-mix(in srgb,var(--vox) 8%,var(--bg)) 100%);border:1px solid var(--line)}
+.band.soft .kcard,.band.soft .hoyc,.band.soft .hoym{box-shadow:0 1px 2px rgba(10,20,40,.05),0 6px 20px -12px rgba(10,20,40,.25)}
+.band.plain{padding:0;overflow:visible}
+.band.dark{color:#f2f5fb;background:radial-gradient(120% 90% at 80% 0%,#16213f 0%,#0b1020 55%,#070a14 100%)}
+.band.dark .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;pointer-events:none}
+.band.dark .b1{width:300px;height:300px;background:var(--pp);left:-80px;bottom:-120px}.band.dark .b2{width:260px;height:260px;background:var(--psoe);right:-60px;top:-80px}
+.band.dark .sech,.band.dark .tiles{position:relative}.band.dark .sech .num{color:#a9b3c7}.band.dark .sech h2{color:#fff}
+.band.dark .tile2{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#f2f5fb;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.band.dark .tile2:hover{background:rgba(255,255,255,.1)}.band.dark .tile2 .d{color:#c9d3e8}
+.band.dark .tiles3 .tile2 .ti{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#fff}
+.band.dark .tiles3 .t-mesas{border-color:var(--mid);box-shadow:inset 0 0 0 1px var(--mid)}.band.dark .tiles3 .t-mesas .ti{background:var(--mid)}
+.simbar{display:none}
+@media(max-width:760px){
+  .simbar{display:flex;position:fixed;left:8px;right:64px;flex-wrap:nowrap!important;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:29;gap:8px;justify-content:space-between;padding:9px 10px;border-radius:14px;background:color-mix(in srgb,var(--panel) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:0 8px 24px -10px rgba(10,20,40,.35);font-size:12.5px;transform:translateY(140%);opacity:0;transition:transform .35s cubic-bezier(.2,.7,.2,1),opacity .35s;pointer-events:none}
+  .simbar.on{transform:none;opacity:1}
+  .simbar span{white-space:nowrap}.simbar i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}.simbar b{font-family:var(--mono)}
+  .simbar .sbm{font-weight:700;color:var(--psoe)}.simbar .sbm.ok{color:var(--vox)}
+  .hkl{max-width:none}.hkleg .hks{margin-left:0;flex-basis:100%}
+}
+.band .kcard{margin-top:0}

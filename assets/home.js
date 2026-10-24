@@ -168,6 +168,7 @@ function render(){
   mark.style.left=(176/350*100)+'%';
   const total=Object.values(t).reduce((a,b)=>a+b,0);
   bar.setAttribute('aria-label','Reparto de escaños: '+order.filter(p=>t[p]).map(p=>NAMES[p]+' '+t[p]).join(', '));
+  {const sb=document.getElementById('simbar');if(sb){const pv=t.PP+t.VOX;sb.innerHTML=['PP','PSOE','VOX','SUMAR'].map(p=>`<span><i style="background:${COL[p]}"></i><b>${t[p]}</b></span>`).join('')+`<span class="sbm${pv>=176?' ok':''}">PP+Vox <b>${pv}</b></span>`}}
   const pe=document.getElementById('pseats');if(pe)pe.innerHTML=order.filter(p=>t[p]).sort((x,y)=>t[y]-t[x]).map(p=>`<span class="pchip"><i style="background:${COL[p]||REG}"></i>${p==='SUMAR'?'Sumar + Podemos':NAMES[p]}<b>${t[p]}</b></span>`).join('');
   document.getElementById('blocs').innerHTML=
     bloc('PP + Vox',t,['PP','VOX'])+
@@ -208,3 +209,7 @@ render();
       if(k<1)requestAnimationFrame(step);else P.forEach(p=>{const d=poll[p]-old[p];document.getElementById('hd_'+p).textContent=(d>0?'+':'')+d+' vs 2023'})})(t0);
   },2200);
 })();
+
+/* barra fija del simulador en móvil: visible mientras se ven los controles */
+(function(){const sb=document.getElementById('simbar'),g=document.querySelector('#p_sim .grid');if(!sb||!g||!('IntersectionObserver' in window))return;
+  new IntersectionObserver(es=>es.forEach(e=>sb.classList.toggle('on',e.isIntersecting)),{rootMargin:'-30% 0px -30% 0px'}).observe(g)})();
