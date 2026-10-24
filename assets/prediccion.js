@@ -66,9 +66,9 @@
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
     s+=histG(k,c,X,Y,T,ph,L);
     const m12=TH;
-    s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="6.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${X(m12)}" y="${Y(base)-12}" text-anchor="middle" style="fill:${c};font-size:15px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">${base}</text>`;
+    s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="6.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${X(m12)}" y="${Y(base)-12}" text-anchor="middle" style="fill:${c};font-size:14px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">${base}</text>`;
     // marcador del valor central del 29-N y rango del 80 %
-    s+=`<line x1="${xe-3}" x2="${xe+DW+3}" y1="${Y(ev.c)}" y2="${Y(ev.c)}" stroke="${c}" stroke-width="2.2"/><text class="lab" x="${xe+DW+6}" y="${Y(ev.c)+4}" style="fill:${c};font-size:12.5px">${ev.c}</text>`;
+    s+=`<line x1="${xe-3}" x2="${xe+DW+3}" y1="${Y(ev.c)}" y2="${Y(ev.c)}" stroke="${c}" stroke-width="2.2"/><text class="lab" x="${xe+DW+6}" y="${Y(ev.c)+4}" style="fill:${c};font-size:14px;font-weight:800">${ev.c}</text>`;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T}" y2="${T+ph}" stroke="${c}" stroke-width="1"/><circle class="ttc" r="4.5" fill="var(--bg)" stroke="${c}" stroke-width="2"/><rect class="ttb" rx="5" height="34" fill="var(--panel)" stroke="${c}" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T}" width="${X(D1)-x0}" height="${ph}" fill="transparent"/>`;
     return `<svg class="pg" data-k="${k}" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${name}: ${ev.c} escaños proyectados el 29-N, rango del 80 % de ${ev.p10} a ${ev.p90}, y del 95 % de ${rP[rP.length-1].lo95} a ${rP[rP.length-1].hi95}"><title>${name}</title>${s}</svg>`;
   }
