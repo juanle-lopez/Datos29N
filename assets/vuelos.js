@@ -10,14 +10,20 @@ function agg(){
   rows(D.vis).forEach(r=>{const [,,iso,ca,n]=r;if(iso==='ESP'){if(ca&&ca!=='(sin precisar)')S[ca]=(S[ca]||0)+n}else W[iso]=(W[iso]||0)+n});
   return {W,S};
 }
+let PM='';
 function chips(){
-  const ys=['all',2021,2022,2023,2024,2025,2026];
-  document.getElementById('vy').innerHTML='<b>Año</b>'+ys.map(y=>chipBtn('data-y',y,y==='all'?'Todos':y+(y===2026?' (hasta 23-oct)':''),fy==y&&!RK)).join('');
-  const UL={all:'Todos los vuelos',Gobierno:'Gobierno',"Casa Real":'Casa Real',Militar:'Ejército (militar)',Mantenimiento:'Mantenimiento','Sin registrar':'Sin registrar'};
+  const ys=[2021,2022,2023,2024,2025,2026];
+  const PL=[['all','Todos los años'],...ys.map(y=>[String(y),y===2026?'2026 (hasta 23-oct)':String(y)]),['q1','Último día'],['q7','Últimos 7 días'],['q30','Últimos 30 días'],['c','Elegir fechas…']];
+  const cur=PM||String(fy);
+  document.getElementById('vy').innerHTML='<b>Periodo</b><select id="vper" class="vsel" aria-label="Periodo">'+PL.map(([v,l])=>'<option value="'+v+'"'+(cur===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';
+  const UL={all:'Todos',Gobierno:'Gobierno',"Casa Real":'Casa Real',Militar:'Ejército (militar)',Mantenimiento:'Mantenimiento','Sin registrar':'Sin registrar'};
   const cnt=u=>D.tot.filter(r=>(fy==='all'||r[0]==fy)&&(u==='all'||D.usos[r[1]]===u)).reduce((t,r)=>t+r[2],0);
   document.getElementById('vu').innerHTML='<b>Uso</b><select id="vsel" class="vsel" aria-label="Quién usa el avión">'+Object.keys(UL).map(u=>'<option value="'+u+'"'+(fu===u?' selected':'')+'>'+UL[u]+' ('+fmt(cnt(u))+')</option>').join('')+'</select>';
   document.getElementById('vsel').addEventListener('change',e=>{fu=e.target.value;render()});
-  document.querySelectorAll('[data-y]').forEach(b=>b.addEventListener('click',()=>{fy=b.dataset.y==='all'?'all':+b.dataset.y;if(RK)clearRange(true);render()}));
+  document.getElementById('vper').addEventListener('change',e=>{const v=e.target.value;
+    if(/^\d{4}$/.test(v)||v==='all'){if(RK)clearRange(true);PM='';fy=v==='all'?'all':+v;render();return}
+    if(v==='c'){PM='c';if(RK){render();return}}
+    loadDias().then(J=>{const fin=J.fin||'2026-10-23',hi=off(fin),q=v==='q1'?1:v==='q7'?7:30,lo=hi-q+1;PM=v;applyRange(iso(lo),fin)})});
 }
 const YD={2021:306,2022:365,2023:365,2024:366,2025:365,2026:294};
 function kpis(){
@@ -204,22 +210,21 @@ function applyRange(a,b){
     RK=a+'_'+b;fy='all';selW=null;selS=null;render();
   });
 }
-function clearRange(silent){if(BASE){D.tot=BASE.tot;D.vis=BASE.vis;D.ac=BASE.ac}RK='';RD={};const a=document.getElementById('vda'),b=document.getElementById('vdb');if(a)a.value='';if(b)b.value='';if(!silent)render()}
+function clearRange(silent){if(BASE){D.tot=BASE.tot;D.vis=BASE.vis;D.ac=BASE.ac}RK='';RD={};PM='';const a=document.getElementById('vda'),b=document.getElementById('vdb');if(a)a.value='';if(b)b.value='';if(!silent)render()}
 function rangeUI(){
   const el=document.getElementById('vd');if(!el)return;
   if(!el.dataset.ok){el.dataset.ok='1';
-    el.innerHTML='<b>Fechas</b><label class="vdl"><span>Desde</span><input type="date" id="vda" min="2021-03-01" max="2026-10-21"></label><label class="vdl"><span>Hasta</span><input type="date" id="vdb" min="2021-03-01" max="2026-10-21"></label>'+
-      '<button type="button" data-q="1">Último día</button><button type="button" data-q="7">Últimos 7 días</button><button type="button" data-q="30">Últimos 30 días</button><button type="button" data-q="0" id="vdx">Quitar fechas</button><p class="vdst" id="vdst" aria-live="polite"></p>';
+    el.innerHTML='<div class="vdin" id="vdin"><label class="vdl"><span>Desde</span><input type="date" id="vda" min="2021-03-01" max="2026-10-23"></label><label class="vdl"><span>Hasta</span><input type="date" id="vdb" min="2021-03-01" max="2026-10-23"></label></div><p class="vdst" id="vdst" aria-live="polite"></p>';
     const A=document.getElementById('vda'),B=document.getElementById('vdb');
-    const go=()=>{let a=A.value,b=B.value||A.value;if(!a&&b)a=b;if(!a)return;if(b<a){const t=a;a=b;b=t;A.value=a;B.value=b}applyRange(a,b)};
+    const go=()=>{let a=A.value,b=B.value||A.value;if(!a&&b)a=b;if(!a)return;if(b<a){const t=a;a=b;b=t;A.value=a;B.value=b}PM='c';applyRange(a,b)};
     A.addEventListener('change',go);B.addEventListener('change',go);
-    el.querySelectorAll('[data-q]').forEach(bt=>bt.addEventListener('click',()=>{const q=+bt.dataset.q;if(!q){clearRange();return}
-      loadDias().then(J=>{const fin=J.fin||'2026-10-21',hi=off(fin),lo=hi-q+1;A.value=iso(lo);B.value=fin;applyRange(iso(lo),fin)})}));
     loadDias().then(J=>{if(J.fin){A.max=B.max=J.fin}});
   }
-  const st=document.getElementById('vdst'),x=document.getElementById('vdx');
-  x.hidden=!RK;
-  if(!RK){st.textContent='Elige un día (solo «Desde») o un tramo. Al elegir fechas, el filtro de año se desactiva.';st.classList.remove('on');return}
+  const st=document.getElementById('vdst'),din=document.getElementById('vdin');
+  din.hidden=PM!=='c';el.hidden=!RK&&PM!=='c';
+  if(RK){const [a,b]=RK.split('_');document.getElementById('vda').value=a;document.getElementById('vdb').value=b}
+  if(!RK){st.textContent='';st.classList.remove('on');st.hidden=true;return}
+  st.hidden=false;
   const [a,b]=RK.split('_'),n=D.tot.reduce((s,r)=>s+((fu==='all'||D.usos[r[1]]===fu)?r[2]:0),0);
   st.innerHTML=(a===b?'Día <strong>'+largo(a)+'</strong>':'Del <strong>'+largo(a)+'</strong> al <strong>'+largo(b)+'</strong>')+': <strong>'+fmt(n)+'</strong> '+(n===1?'vuelo':'vuelos')+(fu!=='all'?' de uso «'+fu+'»':'')+(n?'':'. No hay vuelos registrados en esas fechas.');
   st.classList.add('on');
