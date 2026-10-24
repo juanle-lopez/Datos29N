@@ -804,3 +804,13 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .tvdet>summary.tvpn>span{grid-column:2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px}
 .tvdet>summary.tvpn>b{font-size:13.5px}
 .tvlink{margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.5}.tvlink a{white-space:nowrap}
+/* Guía «ponla en tu móvil» */
+.cm4 .cmnav{grid-template-columns:repeat(4,minmax(0,1fr))}
+@keyframes cmfout{to{opacity:0;visibility:hidden}}
+.fout{animation:cmfout .5s ease both}
+@keyframes cmtap{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.7);opacity:0}}
+.tapring{transform-box:fill-box;transform-origin:center;animation:cmtap 1.3s ease-out infinite}
+.cmsvg .tapdot{transform-box:fill-box;transform-origin:center}
+@media(prefers-reduced-motion:reduce){.tapring{animation:none;opacity:.8}}
+.cm4 .cmsel button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.cm4 .cmsel button{font-size:14px;padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--fg);font-weight:700}
