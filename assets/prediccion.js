@@ -77,16 +77,17 @@
   const HD=(typeof HIST!=='undefined'&&HIST.dias)?HIST.dias:[];
   const nf=(x,d)=>(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d).replace('.',',');
   const pc=x=>x.toFixed(2).replace('.',',')+' %';
+  const RC=innerWidth<640?6.2:5,RD=innerWidth<640?2.3:1.9;   // puntos de los días con cambio: más grandes en el móvil
   function histG(k,c,X,Y,T,ph,L){
     if(!HD.length)return '';
     const pts=HD.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ');
     let g=`<g class="hist"><polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" stroke-linejoin="round" points="${pts}"/>`;
     HD.forEach(h=>{const x=X(dd(h.f)),y=Y(h.esc[k]),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0;
       g+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`;
-      g+=ch?`<circle cx="${x}" cy="${y}" r="3.6" fill="var(--bg)" stroke="${c}" stroke-width="1.6"/>`:`<circle cx="${x}" cy="${y}" r="1.8" fill="${c}" opacity=".9"/>`;
+      g+=ch?`<circle cx="${x}" cy="${y}" r="${RC+3.5}" fill="${c}" opacity=".2"/><circle cx="${x}" cy="${y}" r="${RC}" fill="${c}" stroke="var(--bg)" stroke-width="2"/>`:`<circle cx="${x}" cy="${y}" r="${RD}" fill="${c}" opacity=".9"/>`;
       });
     {const lc=HD.slice(1).filter(h=>h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0).pop();
-      if(lc&&!REDUCE)g+=`<circle class="hint" cx="${X(dd(lc.f))}" cy="${Y(lc.esc[k])}" r="4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4;14;14" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/></circle>`}
+      if(lc&&!REDUCE)g+=`<circle class="hint" cx="${X(dd(lc.f))}" cy="${Y(lc.esc[k])}" r="${RC}" fill="none" stroke="${c}" stroke-width="1.8"><animate attributeName="r" values="${RC};${RC+13};${RC+13}" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/></circle>`}
     const xa=L-4,xb=X(TH)+5;
     return g+`<rect class="hzone" data-k="${k}" x="${xa}" y="0" width="${xb-xa}" height="${T+ph}" fill="transparent" style="cursor:pointer"/></g>`;
   }
@@ -140,7 +141,7 @@
       s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;${halo}">176</text>`;
       const rC=PRED.escCIS.ruta[tk],cy=v=>Y(Math.max(lo,Math.min(hi,v)));
       s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="2 4" opacity=".8" points="${x0},${cy(PRED.escBaseBloq.cis[tk])} ${rC.map(z=>xs_(dd(z.d))+','+cy(z.esc)).join(' ')}"/><text x="${xe-6}" y="${cy(rC[rC.length-1].esc)-4}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">solo CIS: ${rC[rC.length-1].esc}</text>`;
-      if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/><circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?3.6:1.8}" fill="${ch?'var(--bg)':'var(--fg)'}" stroke="var(--fg)" stroke-width="${ch?1.6:0}"/>`});
+      if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/>${ch?`<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${RC+3.5}" fill="var(--fg)" opacity=".18"/>`:''}<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?RC:RD}" fill="var(--fg)" stroke="var(--bg)" stroke-width="${ch?2:0}"/>`});
       // etiquetas por partido al final (separadas para que no se pisen)
       let acc=0;const lb=pr.map(([k,n,pc_])=>{const v=pval(proj[proj.length-1].o,k),y=Y((Math.max(acc,lo)+acc+v)/2);acc+=v;return{n,v,c:pc_,y}});
       for(let i=1;i<lb.length;i++)if(lb[i].y>lb[i-1].y-12)lb[i].y=lb[i-1].y-12;
