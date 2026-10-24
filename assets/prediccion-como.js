@@ -15,8 +15,8 @@
   const REF=0.161;
   const sdv=k=>{const v=pol[k],m=v.reduce((a,b)=>a+b,0)/v.length,s0=Math.sqrt(v.reduce((a,b)=>a+(b-m)**2,0)/(v.length-1))/Math.sqrt(v.length),p=fin[k]/100,f=p*(1-p)/REF;
     return Math.sqrt(s0*s0+(PRED.sdDeriva40**2*dias/40+PRED.sdError**2)*f*f)};
-  let step=0,tm=[],auto=false,seen=false,dem=1;
-  const clear=()=>{tm.forEach(t=>{clearTimeout(t);clearInterval(t)});tm=[]};
+  let step=0,tm=[],stops=[],auto=false,seen=false,dem=1;
+  const clear=()=>{tm.forEach(t=>{clearTimeout(t);clearInterval(t)});tm=[];stops.forEach(f=>f());stops=[]};
   const later=(f,ms)=>{const t=setTimeout(f,ms);tm.push(t);return t};
   const every=(f,ms)=>{const t=setInterval(f,ms);tm.push(t);return t};
 
@@ -54,8 +54,8 @@
     dur:null,go(){return `<div class="cmdh"><div class="cmsel" role="group" aria-label="Provincia">${E.demo.map((d,i)=>`<button type="button" data-d="${i}" aria-pressed="${i===dem}">${d.n}</button>`).join('')}</div><div id="cmdh"></div></div>`},
     after(){runDh()}});
   // 5. Simulaciones
-  S.push({t:'Repetimos 4.000 elecciones posibles',p:`Sorteamos 4.000 resultados dentro de esas campanas y repartimos los 350 escaños de cada uno. Arriba, algunas simulaciones; abajo, cada punto es una simulación de <b>PP + Vox</b> (mostramos 300 de las 4.000). Se agrupan, pero se abren.`,
-    dur:9500,go(){return `<svg class="cmsvg" viewBox="0 0 ${W} ${H}" role="img" aria-label="Simulaciones de escaños de PP más Vox"><g id="cmpar"></g><g id="cmhist"></g></svg>`},
+  S.push({t:'Repetimos 4.000 elecciones posibles',p:`Sorteamos <b>4.000 resultados</b> dentro de esas campanas y repartimos los 350 escaños de cada uno. Cada bola es una simulación y cae sobre los escaños que suman <b>PP + Vox</b> en ella; su color depende de lo que saca el PSOE. Se agrupan, pero se abren.`,
+    dur:11000,go(){return `<canvas id="cmcv" class="cmcv" role="img" aria-label="Animación de 4.000 simulaciones de escaños de PP más Vox"></canvas>`},
     after(){runSims()}});
   // 6. Resultado
   S.push({t:'Y esto es lo que sale',p:`Para cada partido, el <b>valor central</b> y el rango donde caen 8 de cada 10 simulaciones. PP + Vox: <b>${E.ppVox.c}</b> escaños (${E.ppVox.p10}–${E.ppVox.p90}); la mayoría absoluta está en 176. <b>No es una probabilidad:</b> es lo que dicen las encuestas de hoy con los errores de siempre.`,
@@ -92,29 +92,57 @@
     if(reduce){while(next());return}
     later(()=>{const t=every(()=>{if(!next())clearInterval(t)},fast)},500);
   }
-  // ---- simulaciones
+  // ---- simulaciones: 4.000 bolas reales (una por simulación) sobre un lienzo
+  let SIMS=null;
+  const sims=()=>{if(SIMS)return SIMS;const bin=atob(E.sims),n=bin.length/4|0;SIMS=new Array(n);for(let i=0;i<n;i++)SIMS[i]=[bin.charCodeAt(4*i),bin.charCodeAt(4*i+1),bin.charCodeAt(4*i+2),bin.charCodeAt(4*i+3)];return SIMS};
   function runSims(){
-    const par=document.getElementById('cmpar'),hist=document.getElementById('cmhist');if(!par)return;const sims=E.sims;
-    const seg=[['PP','var(--pp)'],['VOX','var(--vox)'],['SUMAR','var(--sumar)'],['PSOE','var(--psoe)']];
-    // orden: PP, Vox | resto | Sumar, PSOE (izquierda a derecha), la línea 176 marca la mayoría
-    const bx=14,bw=W-28,bar=s=>{const v={PP:s[0],PSOE:s[1],VOX:s[2],SUMAR:s[3]},o=350-s[0]-s[1]-s[2]-s[3];let x=bx,h='';
-      [['PP','var(--pp)',v.PP],['VOX','var(--vox)',v.VOX],['OTR','var(--reg)',o],['SUMAR','var(--sumar)',v.SUMAR],['PSOE','var(--psoe)',v.PSOE]].forEach(([k,c,n])=>{const w=n/350*bw;h+=`<rect x="${x.toFixed(1)}" y="34" width="${w.toFixed(1)}" height="26" fill="${c}"/>`;x+=w});
-      return h+`<line x1="${bx+176/350*bw}" x2="${bx+176/350*bw}" y1="28" y2="66" stroke="var(--fg)" stroke-width="2" stroke-dasharray="3 3"/>`};
-    const head=(i,pv)=>`<text x="${bx}" y="18" class="cmv" style="fill:var(--fg);font-weight:700">Simulación ${i+1} de 4.000 · PP + Vox ${pv}</text><text x="${bx+176/350*bw+4}" y="78" class="cmv" style="fill:var(--fg)">176</text><text x="${bx}" y="78" class="cmv">PP · Vox</text><text x="${W-bx}" y="78" text-anchor="end" class="cmv">Sumar · PSOE</text>`;
-    const lo=150,hi=230,hx=v=>20+(v-lo)/(hi-lo)*(W-40),by=268,step=5.4,cntBin={};
-    let dots='';const base_=`<line x1="20" x2="${W-20}" y1="${by+4}" y2="${by+4}" stroke="var(--line)"/>`+[150,175,200,225].map(v=>`<text x="${hx(v)}" y="290" text-anchor="middle" class="cmv">${v}</text>`).join('')+`<line x1="${hx(176)}" x2="${hx(176)}" y1="102" y2="${by+4}" stroke="var(--fg)" stroke-dasharray="3 3"/>`;
-    const pvs=sims.map(s=>s[0]+s[2]);
-    const draw=(i,showBar)=>{par.innerHTML=(showBar?bar(sims[i])+head(i,pvs[i]):'')};
-    const addDot=i=>{const v=pvs[i],b=Math.round((v-lo)/2);cntBin[b]=(cntBin[b]||0)+1;dots+=`<circle class="cmd pop" cx="${(hx(lo+b*2)).toFixed(1)}" cy="${(by-2.8-(cntBin[b]-1)*step).toFixed(1)}" r="2.6" style="fill:var(--fg);opacity:.75"/>`;hist.innerHTML=base_+dots};
-    hist.innerHTML=base_;
-    const fin_=()=>{const q=PRED.escPrivadas.ppVox;par.innerHTML=`<text x="${bx}" y="18" class="cmv" style="fill:var(--fg);font-weight:700">Rango del 80 %: PP + Vox entre ${q.p10} y ${q.p90} escaños</text>`;
-      hist.innerHTML=base_+dots+`<rect x="${hx(q.p10)}" y="96" width="${hx(q.p90)-hx(q.p10)}" height="${by-96}" fill="var(--fg)" opacity=".08"/><line x1="${hx(q.p10)}" x2="${hx(q.p10)}" y1="96" y2="${by+4}" stroke="var(--fg)" opacity=".5"/><line x1="${hx(q.p90)}" x2="${hx(q.p90)}" y1="96" y2="${by+4}" stroke="var(--fg)" opacity=".5"/>`};
-    if(reduce){for(let i=0;i<sims.length;i++)addDot(i);fin_();return}
-    let j=0;const tick=()=>{if(j>=sims.length){fin_();return}
-      const slow=j<14,burst=slow?1:8;draw(Math.min(j,sims.length-1),true);
-      for(let b=0;b<burst&&j<sims.length;b++){addDot(j);j++}
-      later(tick,slow?230:55)};
-    later(tick,300);
+    const cv=document.getElementById('cmcv');if(!cv)return;const ctx=cv.getContext('2d'),sm=sims(),N=sm.length,cs=getComputedStyle(cv);
+    const cc=n=>cs.getPropertyValue(n).trim()||'#888',C={pp:cc('--pp'),psoe:cc('--psoe'),vox:cc('--vox'),sumar:cc('--sumar'),reg:cc('--reg'),fg:cc('--fg'),mu:cc('--muted'),line:cc('--line')};
+    const W0=420,H0=300,dpr=Math.min(2,window.devicePixelRatio||1),LO=150,HI=230,NB=HI-LO+1,bx=14,bw=W0-28,hx0=20,hw=W0-40,by=270,top=100;
+    const pv=sm.map(s=>s[0]+s[2]),bin=pv.map(v=>Math.max(0,Math.min(NB-1,v-LO))),cnt=new Array(NB).fill(0);bin.forEach(b=>cnt[b]++);
+    const mx=Math.max(...cnt),unit=(by-top-6)/mx,binW=hw/NB;
+    const ps=sm.map(s=>s[1]),pmin=Math.min(...ps),pmax=Math.max(...ps);
+    const col=i=>`hsl(${Math.round(8+(ps[i]-pmin)/(pmax-pmin||1)*330)} 88% 56%)`;
+    const colors=sm.map((_,i)=>col(i));
+    const landed=Array.from({length:NB},()=>[]),res=new Array(NB).fill(0),fl=[];
+    const D=7800,t0=performance.now();let spawned=0,raf=0,done=false;
+    const q=E.ppVox;
+    function size(){const w=Math.round(cv.clientWidth*dpr),h=Math.round(cv.clientWidth*H0/W0*dpr);if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}cv.style.height=(cv.clientWidth*H0/W0)+'px';return cv.width/W0}
+    function bar(s){const v=[[C.pp,s[0]],[C.vox,s[2]],[C.reg,350-s[0]-s[1]-s[2]-s[3]],[C.sumar,s[3]],[C.psoe,s[1]]];let x=bx;v.forEach(([c,n])=>{const w=n/350*bw;ctx.fillStyle=c;ctx.fillRect(x,30,w+.4,24);x+=w});
+      ctx.strokeStyle=C.fg;ctx.lineWidth=1.6;ctx.setLineDash([3,3]);const m=bx+176/350*bw;ctx.beginPath();ctx.moveTo(m,25);ctx.lineTo(m,60);ctx.stroke();ctx.setLineDash([])}
+    function frame(now){
+      const k=size(),el=Math.min(now-t0,D),f=el/D;ctx.setTransform(k,0,0,k,0,0);ctx.clearRect(0,0,W0,H0);
+      const target=Math.min(N,Math.floor(N*Math.pow(f,1.55)));
+      while(spawned<target){const i=spawned++,b=bin[i],r=res[b]++,tx=hx0+(b+.5)*binW,ty=by-(r+.5)*unit,sx=hx0+Math.random()*hw,sy=76+Math.random()*10;
+        fl.push({i,b,r,sx,sy,tx,ty,s:now,d:380+Math.random()*420,c:colors[i]})}
+      // simulación en curso (barra de escaños)
+      const cur=Math.max(0,spawned-1);ctx.font='700 11px "IBM Plex Mono",monospace';ctx.fillStyle=C.fg;ctx.textAlign='left';
+      ctx.fillText(`Simulación ${(spawned).toLocaleString('es-ES')} de ${N.toLocaleString('es-ES')} · PP + Vox ${pv[cur]||''}`,bx,18);
+      if(spawned)bar(sm[cur]);
+      ctx.font='11px "IBM Plex Mono",monospace';ctx.fillStyle=C.mu;ctx.fillText('PP · Vox',bx,70);ctx.textAlign='right';ctx.fillText('Sumar · PSOE',W0-bx,70);ctx.textAlign='left';ctx.fillStyle=C.fg;ctx.fillText('176',bx+176/350*bw+4,70);
+      // eje
+      ctx.strokeStyle=C.line;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(hx0,by+2);ctx.lineTo(hx0+hw,by+2);ctx.stroke();
+      ctx.textAlign='center';ctx.fillStyle=C.mu;[150,175,200,225].forEach(v=>ctx.fillText(v,hx0+(v-LO+.5)*binW,by+18));
+      ctx.strokeStyle=C.fg;ctx.setLineDash([3,3]);ctx.beginPath();const lx=hx0+(176-LO+.5)*binW;ctx.moveTo(lx,top-4);ctx.lineTo(lx,by+2);ctx.stroke();ctx.setLineDash([]);
+      // bolas en vuelo y columnas aterrizadas
+      for(let j=fl.length-1;j>=0;j--){const o=fl[j],u=(now-o.s)/o.d;
+        if(u>=1){landed[o.b][o.r]=o.c;fl.splice(j,1);continue}
+        const e=u*u*(3-2*u),x=o.sx+(o.tx-o.sx)*e+Math.sin(u*9+o.i)*(1-u)*6,y=o.sy+(o.ty-o.sy)*u*u;
+        ctx.globalAlpha=Math.min(1,u*5);ctx.fillStyle=o.c;ctx.beginPath();ctx.arc(x,y,3.2-u*1.2,0,6.283);ctx.fill();ctx.globalAlpha=1}
+      for(let b=0;b<NB;b++){const L=landed[b],x=hx0+b*binW;for(let r=0;r<L.length;r++){if(!L[r])continue;ctx.fillStyle=L[r];ctx.fillRect(x+.3,by-(r+1)*unit,binW-.6,unit+.4)}}
+      if(el>=D&&!fl.length){done=true;
+        ctx.fillStyle='rgba(120,120,120,.10)';const a=hx0+(q.p10-LO)*binW,b=hx0+(q.p90-LO+1)*binW;ctx.fillRect(a,top-4,b-a,by-top+6);
+        ctx.strokeStyle=C.fg;ctx.globalAlpha=.6;[a,b].forEach(x=>{ctx.beginPath();ctx.moveTo(x,top-4);ctx.lineTo(x,by+2);ctx.stroke()});ctx.globalAlpha=1;
+        ctx.fillStyle='rgba(0,0,0,0)';ctx.font='700 11px "IBM Plex Mono",monospace';ctx.fillStyle=C.fg;ctx.textAlign='left';
+        ctx.clearRect(0,0,W0,22);ctx.fillText(`4.000 simulaciones · 80 %: PP + Vox entre ${q.p10} y ${q.p90}`,bx,18);
+        return}
+      raf=requestAnimationFrame(frame)}
+    if(reduce){while(spawned<N){const i=spawned++,b=bin[i],r=res[b]++;landed[b][r]=colors[i]}fl.length=0;const t=performance.now()-D-1;ctx.canvas&&0;
+      const k=size();ctx.setTransform(k,0,0,k,0,0);
+      // pinta el estado final de golpe
+      spawned=N;frame(t0+D+2000);return}
+    raf=requestAnimationFrame(frame);
+    stops.push(()=>cancelAnimationFrame(raf));
   }
 
   // ---- estructura y navegación

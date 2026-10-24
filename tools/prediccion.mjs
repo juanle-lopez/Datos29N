@@ -62,14 +62,14 @@ function escenario(clave,trend,N=4000){
     K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
     const vc=volDay*d+(inp.errorGradual?inp.sdError**2*Math.pow(d/T,PG):(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
-    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const sv=simulate(DATA,v),t=sv.tot;if(fin_&&clave==='priv'&&j<300)simsOut.push([t.PP,t.PSOE,t.VOX,t.SUMAR]);K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t));if(fin_&&clave==='priv')provSims.push(sv.prov)}
+    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const sv=simulate(DATA,v),t=sv.tot;if(fin_&&clave==='priv')simsOut.push([t.PP,t.PSOE,t.VOX,t.SUMAR]);K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t));if(fin_&&clave==='priv')provSims.push(sv.prov)}
     const cs=simulate(DATA,c).tot;
     K.forEach(k=>ruta[k].push({d:iso(D0+d),esc:cs[k],lo:pct(dr[k],.1),hi:pct(dr[k],.9),lo95:pct(dr[k],.025),hi95:pct(dr[k],.975),lo50:pct(dr[k],.25),hi50:pct(dr[k],.75),pv:fin_?{c:cs.PP+cs.VOX,p10:pct(dr.PV,.1),p50:pct(dr.PV,.5),p90:pct(dr.PV,.9)}:undefined}));
     [['PV',cs.PP+cs.VOX],['IZ',IZ(cs)]].forEach(([b,cv])=>ruta[b].push({d:iso(D0+d),esc:cv,lo:pct(dr[b],.1),hi:pct(dr[b],.9),lo95:pct(dr[b],.025),hi95:pct(dr[b],.975),lo50:pct(dr[b],.25),hi50:pct(dr[b],.75)}));
     if(fin_){K.forEach(k=>{fin[k]=c[k];sdFin[k]=sdv[k]});ruta._fin={c,dr,cs}}
   });
   const f=ruta._fin;delete ruta._fin;
-  const out={ruta,escanos:{}};if(clave==='priv')out.sims=simsOut;
+  const out={ruta,escanos:{}};if(clave==='priv')out.sims=Buffer.from(simsOut.flat()).toString('base64');   // N simulaciones finales × (PP,PSOE,Vox,Sumar), 1 byte cada una
   // Provincias en disputa: en cuántas de las simulaciones finales el reparto de una provincia cambia respecto al central, y entre qué partidos
   if(clave==='priv'){const cen=simulate(DATA,f.c).prov;
     out.demo=['Madrid','Sevilla','Valencia','Valladolid','Albacete','Soria'].map(nm=>{const cp=cen.find(x=>x.n===nm),dd=DATA.find(x=>x.n===nm);return {n:nm,s:cp.s,sh:Object.fromEntries(Object.entries(cp.sh).filter(([k])=>k!=='FA').map(([k,v])=>[k,round(k==='SUMAR'?v-(cp.sh.POD||0):v,3)])),seats:Object.fromEntries(Object.entries(cp.seats).filter(([k,v])=>k!=='FA'&&v)),v23:Object.fromEntries(['PP','PSOE','VOX','SUMAR'].map(k=>[k,dd.p[k]]))}});

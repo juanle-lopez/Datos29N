@@ -651,3 +651,4 @@ html.msopen{overflow:hidden}
 .cmmsg{margin:10px 0 2px;font-size:13.5px;min-height:42px;line-height:1.45}
 @media(max-width:520px){.cmr,.cmh{grid-template-columns:56px minmax(0,1fr) 50px 40px 28px;gap:4px;font-size:11.5px}.cmh{font-size:9.5px;letter-spacing:0}.cmstage{min-height:230px}.cmctl button{flex:1;padding:9px 6px;font-size:13px}.cmsvg text{font-size:10.5px}.cmsvg .cmv{font-size:10.5px}}
 @media (prefers-reduced-motion:reduce){.drop,.fade,.grow,.mv,.slide,.pop{animation-duration:.01s!important;animation-delay:0s!important}.cmseats i{transition:none}}
+.cmcv{display:block;width:100%;max-width:560px;margin:0 auto;height:auto;aspect-ratio:420/300}
