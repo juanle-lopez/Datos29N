@@ -38,11 +38,8 @@
       `<p class="note" style="margin:2px 0 6px">Cada punto es una encuesta (la última de cada empresa), con sus escaños calculados con nuestro D’Hondt provincial: PP + Vox entre <b>${Math.min(...vs)}</b> y <b>${Math.max(...vs)}</b>. El bloque PSOE + Sumar + Podemos + socios de 2023 llega a 176 en ${iz} de ${n}. Es un recuento de encuestas, no una probabilidad.</p>`+
       `<div class="tw">${svg}</div><div class="kleg">${leg}</div>`;
     const sel=i=>{el.querySelectorAll('.kd').forEach(d=>{d.style.opacity=i==null||d.dataset.i===i?1:.18;d.setAttribute('r',d.dataset.i===i?R0+2:R0)});el.querySelectorAll('.kc').forEach(c=>c.classList.toggle('on',i!=null&&c.dataset.i===i))};
-    // Los puntos caen y se apilan al entrar en pantalla (se repite al tocar el gráfico)
-    {const ds=[...el.querySelectorAll('.kd')],svgEl=el.querySelector('.kstrip');
-      const play=()=>{if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;ds.forEach((d,k)=>{d.classList.remove('kdrop');void d.getBoundingClientRect();d.style.animationDelay=(k*70)+'ms';d.classList.add('kdrop')})};
-      if(svgEl){svgEl.addEventListener('click',e=>{if(!e.target.closest('.kd'))play()});
-        if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){ds.forEach(d=>d.style.opacity=0);const io=new IntersectionObserver(en=>{if(en[0].isIntersecting){io.disconnect();ds.forEach(d=>d.style.opacity='');play()}},{threshold:.5});io.observe(svgEl)}}}
+    // Los puntos se mecen muy suavemente, cada uno a su ritmo
+    el.querySelectorAll('.kd').forEach((d,k)=>{const r=(k*7919%97)/97,q=(k*104729%89)/89;d.style.setProperty('--fx',(1.2+r*1.6).toFixed(2)+'px');d.style.setProperty('--fy',(1.2+q*1.6).toFixed(2)+'px');d.style.animationDuration=(5+r*4).toFixed(2)+'s';d.style.animationDelay=(-q*8).toFixed(2)+'s'});
     let cur=null;el.querySelectorAll('.kc').forEach(c=>c.addEventListener('click',()=>{cur=cur===c.dataset.i?null:c.dataset.i;sel(cur)}));
     el.querySelectorAll('.kd').forEach(d=>d.addEventListener('click',()=>{cur=cur===d.dataset.i?null:d.dataset.i;sel(cur)}));}}
 
