@@ -825,3 +825,8 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .rfbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .rfbtn.spin svg{animation:rfspin .8s linear infinite}
 @keyframes rfspin{to{transform:rotate(360deg)}}
+
+.kstrip .kd{transition:opacity .2s}
+.kstrip .kdrop{animation:kdrop .7s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes kdrop{0%{transform:translateY(-70px);opacity:0}25%{opacity:1}100%{transform:translateY(0);opacity:1}}
+@media (prefers-reduced-motion:reduce){.kstrip .kdrop{animation:none}}
