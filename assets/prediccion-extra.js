@@ -26,6 +26,7 @@
     svg+=`<rect x="${X(lo)}" y="${yb-1}" width="${X(MAJ)-X(lo)}" height="2" fill="var(--line)"/><rect x="${X(MAJ)}" y="${yb-1}" width="${X(hi)-X(MAJ)}" height="2" fill="var(--vox)" opacity=".5"/>`;
     for(let v=lo;v<=hi;v+=10)svg+=`<text x="${X(v)}" y="${H-6}" text-anchor="middle">${v}</text>`;
     svg+=`<line x1="${X(MAJ)}" x2="${X(MAJ)}" y1="8" y2="${yb+12}" stroke="var(--fg)" stroke-dasharray="3 3"/><text x="${X(MAJ)+5}" y="16" style="font-weight:700;fill:var(--fg)">mayoría 176</text>`;
+    svg+=`<text x="${X(MAJ)-6}" y="${yb+19}" text-anchor="end" style="fill:var(--muted,#667);font-size:10px">← sin mayoría</text><text x="${X(MAJ)+6}" y="${yb+19}" style="fill:var(--muted,#667);font-size:10px">con mayoría →</text>`;
     const PAL=['#2f6fb5','#d9534f','#2e9e5b','#e08a1e','#8a5bc4','#17a2b8','#c2487f','#7a8b2c','#b5651d','#4a5fc1','#d4a017','#1f8a8a','#a04040','#6b7280'];
     const order=[...E].map((p,i)=>i).sort((i,j)=>E[i].e.localeCompare(E[j].e,'es')),col={};order.forEach((i,k)=>col[i]=PAL[k%PAL.length]);
     const R0=6,placed=[];
@@ -36,7 +37,7 @@
     const leg=items.map(({p,i})=>`<button type="button" class="kc" data-i="${i}"><i style="background:${col[i]}"></i>${p.e.split(' / ')[0]}<b>${p.PV}</b></button>`).join('');
     el.innerHTML=`<p class="kh"><b class="kn">${si} de ${n}</b> encuestas dan mayoría absoluta a PP + Vox</p>`+
       `<p class="note" style="margin:2px 0 6px">Cada punto es una encuesta (la última de cada empresa), con sus escaños calculados con nuestro D’Hondt provincial: PP + Vox entre <b>${Math.min(...vs)}</b> y <b>${Math.max(...vs)}</b>. El bloque PSOE + Sumar + Podemos + socios de 2023 llega a 176 en ${iz} de ${n}. Es un recuento de encuestas, no una probabilidad.</p>`+
-      `<div class="tw">${svg}</div><div class="kleg">${leg}</div>`;
+      `<p class="note" style="margin:0 0 2px"><b>Escaños de PP + Vox sumados</b> en cada encuesta. A la derecha de la línea, suman 176 o más.</p><div class="tw">${svg}</div><div class="kleg">${leg}</div>`;
     const sel=i=>{el.querySelectorAll('.kd').forEach(d=>{d.style.opacity=i==null||d.dataset.i===i?1:.18;d.setAttribute('r',d.dataset.i===i?R0+2:R0)});el.querySelectorAll('.kc').forEach(c=>c.classList.toggle('on',i!=null&&c.dataset.i===i))};
     // Los puntos se mecen muy suavemente, cada uno a su ritmo
     el.querySelectorAll('.kd').forEach((d,k)=>{const r=(k*7919%97)/97,q=(k*104729%89)/89;d.style.setProperty('--fx',(1.2+r*1.6).toFixed(2)+'px');d.style.setProperty('--fy',(1.2+q*1.6).toFixed(2)+'px');d.style.animationDuration=(5+r*4).toFixed(2)+'s';d.style.animationDelay=(-q*8).toFixed(2)+'s'});
