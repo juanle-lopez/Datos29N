@@ -166,7 +166,7 @@ function render(){
   const mark=document.getElementById('mark');
   order.forEach(p=>{if(!t[p])return;const s=document.createElement('div');s.className='seg';s.style.width=(t[p]/350*100)+'%';s.style.background=COL[p]||REG;s.title=NAMES[p]+': '+t[p];bar.insertBefore(s,mark)});
   mark.style.left=(176/350*100)+'%';
-  const total=Object.values(t).reduce((a,b)=>a+b,0);
+  const total=order.reduce((a,p)=>a+(t[p]||0),0);
   bar.setAttribute('aria-label','Reparto de escaños: '+order.filter(p=>t[p]).map(p=>NAMES[p]+' '+t[p]).join(', '));
   const pe=document.getElementById('pseats');if(pe)pe.innerHTML=order.filter(p=>t[p]).sort((x,y)=>t[y]-t[x]).map(p=>`<span class="pchip"><i style="background:${COL[p]||REG}"></i>${p==='SUMAR'?'Sumar + Podemos':NAMES[p]}<b>${t[p]}</b></span>`).join('');
   document.getElementById('blocs').innerHTML=
