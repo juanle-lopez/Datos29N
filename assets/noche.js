@@ -1,4 +1,4 @@
-// Noche electoral: previsión congelada frente al escrutinio oficial (datos/resultados.json, se rellena la noche del 29-N).
+// Día electoral: previsión congelada frente al escrutinio oficial (datos/resultados.json, se rellena el 29-N).
 (function(){
   const $=id=>document.getElementById(id);
   const NM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos',POD:'Podemos',OTROS:'Otros',ERC:'ERC',JUNTS:'Junts',BILDU:'EH Bildu',PNV:'PNV',BNG:'BNG',CCa:'CC',UPN:'UPN'};
@@ -37,7 +37,7 @@
     drawHemi(has?R:null);
     $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Datos oficiales provisionales; la página se actualiza cada pocos minutos.`:
       VEDA?`<b>Veda electoral.</b> Desde el 24-nov la ley no permite publicar encuestas ni proyecciones basadas en ellas; nuestra previsión vuelve a aparecer aquí a las 20:00 del 29-N, junto a los primeros resultados.`:
-      PRE?`<b>Esta página se activa la noche del 29 de noviembre.</b> Hasta entonces muestra la previsión de hoy; los resultados oficiales aparecerán al lado en cuanto el Ministerio del Interior empiece a publicar el escrutinio.`:
+      PRE?`<b>Esta página se activa el día de las elecciones, el 29 de noviembre.</b> Hasta entonces muestra la previsión de hoy; los resultados oficiales aparecerán al lado en cuanto el Ministerio del Interior empiece a publicar el escrutinio.`:
       `<b>Esperando los primeros datos oficiales.</b> Esta página se actualiza sola.`;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
     const showP=P&&!VEDA,cell=k=>{if(!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k];return `<td class="m"><b>${e.c}</b><small>${e.p10}–${e.p90}</small></td>`};

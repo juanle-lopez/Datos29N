@@ -119,7 +119,7 @@ const D=[
  ['Enseña tu documento','DNI, pasaporte o permiso de conducir (con foto). En la mesa lo comprueban y dicen tu nombre en voz alta.'],
  ['Elige papeleta y sobre','Un sobre para el Congreso y otro, de distinto color, para el Senado. Las papeletas están en el colegio o puedes llevarlas de casa. La cabina es voluntaria.'],
  ['Deposita en la urna','Cada sobre en su urna. Hasta ese momento puedes cambiar de opinión.'],
- ['Recuento','A las 20:00 se cierran las urnas y se cuenta en el mismo colegio. Esa noche sale el resultado: <a href="noche.html">noche electoral</a>.']
+ ['Recuento','A las 20:00 se cierran las urnas y se cuenta en el mismo colegio. El resultado sale ese mismo día: <a href="noche.html">día electoral</a>.']
 ];
 $('tvstep').innerHTML='<ol class="tvdia">'+D.map((d,i)=>`<li><span class="n">${i+1}</span><div><b>${d[0]}</b> <span>${d[1]}</span></div></li>`).join('')+'</ol>';
 const CK=['Documento con foto','Sé cuál es mi colegio','Sé a qué hora voy','Sé qué hago con mi voto (a una lista, en blanco… o no ir): es solo mío'];
@@ -153,7 +153,7 @@ const F=[
  ['¿Para qué sirve el Senado?','Es la otra cámara de las Cortes. Se vota en una papeleta distinta y, en la mayoría de provincias, puedes marcar hasta tres candidatos. Tiene un papel distinto al del Congreso: no es el que elige al presidente.'],
  ['¿Qué pasa si nadie llega a 176?','Los partidos pactan. En la investidura se necesita mayoría absoluta en la primera votación o más síes que noes en la segunda. Si en dos meses nadie logra la confianza del Congreso, se disuelven las Cortes y hay nuevas elecciones.'],
  ['¿Es obligatorio votar?','No. En España el voto es un derecho, no una obligación.'],
- ['¿Cuándo sé el resultado?','El mismo domingo por la noche, tras cerrar los colegios a las 20:00. En la <a href="noche.html">página de la noche electoral</a> lo seguimos escaño a escaño.']
+ ['¿Cuándo sé el resultado?','El mismo domingo, tras cerrar los colegios a las 20:00. En la <a href="noche.html">página del día electoral</a> lo seguimos escaño a escaño.']
 ];
 $('tvfaq').innerHTML=F.map(f=>`<details><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
 })();
