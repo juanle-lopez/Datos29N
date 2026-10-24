@@ -301,7 +301,8 @@ html{scroll-behavior:auto}
 /* ---------- navegación sticky ---------- */
 nav.tabs a[aria-current="page"]{color:var(--fg);background:var(--bg)}
 @media(min-width:641px){
-  nav.tabs{position:sticky;top:10px;z-index:40;justify-content:center;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px;gap:4px;width:fit-content;max-width:100%;margin-inline:auto;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+  body{padding-top:84px}
+  nav.tabs{position:fixed;top:max(10px,env(safe-area-inset-top,0px));left:0;right:0;margin-inline:auto;z-index:40;justify-content:center;border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--panel) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:5px;gap:4px;width:fit-content;max-width:calc(100vw - 32px);box-shadow:0 6px 24px rgba(0,0,0,.08)}
   nav.tabs a{border:0;border-radius:999px;padding:9px 16px;display:flex;gap:7px;align-items:center}
   nav.tabs a svg{display:block;width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   nav.tabs a[aria-current="page"]{background:var(--fg);color:var(--bg)}
@@ -652,3 +653,4 @@ html.msopen{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.drop,.fade,.grow,.mv,.slide,.pop{animation-duration:.01s!important;animation-delay:0s!important}.cmseats i{transition:none}}
 .cmcv{display:block;width:100%;max-width:560px;margin:0 auto;height:auto;aspect-ratio:420/300}
 .hero .hemi{color:var(--fg)}.hero .hemi .hmajt{opacity:1}
+@media(min-width:641px) and (max-width:979px){nav.tabs{flex-wrap:nowrap}nav.tabs a,nav.tabs .more{padding:9px 11px;gap:5px;white-space:nowrap}nav.tabs a svg,nav.tabs .more svg{display:none}}
