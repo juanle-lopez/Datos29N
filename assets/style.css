@@ -794,3 +794,13 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .ncards .hs small{display:block;font-size:11.5px;color:var(--muted)}
 .ncards .hs.emp{background:var(--panel)}.ncards .hs.emp b{color:var(--muted)}
 @media(max-width:760px){.nhm{grid-template-columns:1fr}.ncards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Tu voto: bloque de propuestas reducido */
+.tvsel{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.tvsel label{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:700;color:var(--muted);flex:1 1 130px;min-width:0}
+.tvsel select{font:inherit;font-size:15px;font-weight:600;color:var(--fg);padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--panel);min-height:42px;width:100%}
+.tvparts{gap:6px}
+.tvdet>summary.tvpn{padding:8px 12px;gap:0 10px;grid-template-columns:auto 1fr}
+.tvdet>summary.tvpn::after{content:"▾";grid-column:auto;grid-row:1;grid-column:3;font-size:12px}.tvdet[open]>summary.tvpn::after{content:"▴"}
+.tvdet>summary.tvpn{grid-template-columns:76px 1fr auto;align-items:center}
+.tvdet>summary.tvpn>span{grid-column:2;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:13px}
+.tvdet>summary.tvpn>b{font-size:13.5px}
+.tvlink{margin:10px 0 0;font-size:13px;color:var(--muted);line-height:1.5}.tvlink a{white-space:nowrap}
