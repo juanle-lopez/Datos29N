@@ -19,14 +19,14 @@
   const AN=(v,d)=>`<animate attributeName="opacity" values="${v}" dur="${d}" begin="1.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`;
   const WA=(a,v)=>{const q=v.split(";");return `<animate attributeName="${a}" from="${q[0]}" to="${q[1]}" dur="14s" begin="0s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".3 .3 .55 .9"/>`};
   function panel(k,name,c,W,animate){
-    const H=W<420?246:262,L=30,R=W<420?86:96,T=W<420?52:42,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
+    const H=W<420?246:270,L=30,R=W<420?86:96,T=W<420?52:50,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
     const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
     const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];hs.forEach(h=>vals.push(h.esc[k]));dots.forEach(p=>vals.push(p.esc[k]));rP.forEach(r=>vals.push(r.lo95,r.hi95));
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
     let s=`<defs>${animate?`<linearGradient id="lg-${id}" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-${id}" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-${id})">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-${id}"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}<filter id="gl-${id}" x="-10%" y="-60%" width="120%" height="220%"><feGaussianBlur stdDeviation="3.2"/></filter></defs>`;
-    s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="30" style="fill:${c};font-size:11.5px;font-weight:600">29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
+    s+=`<text x="0" y="14" class="lab" style="fill:${c};font-size:14px">${name}</text><text x="0" y="31" style="fill:${c};font-size:11.5px;font-weight:600"><tspan style="font-size:14px;font-weight:800">Hoy ${base}</tspan>  →  29-N: ${ev.c} escaños (${ev.p10}–${ev.p90})</text>`;
     for(let v=lo;v<=hi;v+=step)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
     s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text>`;
@@ -66,7 +66,7 @@
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
     s+=histG(k,c,X,Y,T,ph,L);
     const m12=TH;
-    s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="4.4" fill="${c}" stroke="var(--bg)" stroke-width="1.5"/><text x="${X(m12)}" y="${Y(base)-9}" text-anchor="middle" style="fill:${c};font-size:10.5px">${base}</text>`;
+    s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="6.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${X(m12)}" y="${Y(base)-12}" text-anchor="middle" style="fill:${c};font-size:15px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">${base}</text>`;
     // marcador del valor central del 29-N y rango del 80 %
     s+=`<line x1="${xe-3}" x2="${xe+DW+3}" y1="${Y(ev.c)}" y2="${Y(ev.c)}" stroke="${c}" stroke-width="2.2"/><text class="lab" x="${xe+DW+6}" y="${Y(ev.c)+4}" style="fill:${c};font-size:12.5px">${ev.c}</text>`;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T}" y2="${T+ph}" stroke="${c}" stroke-width="1"/><circle class="ttc" r="4.5" fill="var(--bg)" stroke="${c}" stroke-width="2"/><rect class="ttb" rx="5" height="34" fill="var(--panel)" stroke="${c}" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T}" width="${X(D1)-x0}" height="${ph}" fill="transparent"/>`;
@@ -129,6 +129,7 @@
       const stack=(ser,op)=>{let o='';pr.forEach(([k,n,pc_],i)=>{const up=ser.map(q=>xs_(q.t)+','+Y(pr.slice(0,i+1).reduce((a,[kk])=>a+pval(q.o,kk),0))),dn=[...ser].reverse().map(q=>xs_(q.t)+','+Y(pr.slice(0,i).reduce((a,[kk])=>a+pval(q.o,kk),0)));o+=`<polygon points="${up.join(' ')} ${dn.join(' ')}" fill="${pc_}" opacity="${op}"/>`});return o};
       s+=`<clipPath id="pc-${bi}"><rect x="${L}" y="${T}" width="${pw+2}" height="${ph}"/></clipPath>`;
       if(hist.length)s+=`<g clip-path="url(#pc-${bi})">${stack(hist,.9)}</g>`;
+      {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${x0-9}" y="${Math.max(T+12,Y(tv)-8)}" text-anchor="end" style="fill:${c};font-size:14px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">hoy ${tv}</text>`}
       const base={t:TH,o:{PP:today('PP'),VOX:today('VOX'),PSOE:today('PSOE'),SUMAR:today('SUMAR'),IZ:bl.IZ}};
       s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.62)}</g>`;
       const poly=(a,b2)=>r.map(q=>xs_(dd(q.d))+','+Y(q[b2])).join(' ')+' '+[...r].reverse().map(q=>xs_(dd(q.d))+','+Y(q[a])).join(' ');
