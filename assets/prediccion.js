@@ -8,7 +8,6 @@
   const DI='2026-10-01',D0=dd(DI),D1=dd('2026-11-29'),TH=dd(PRED.generado);
   const MES=[['2026-10-01','oct'],['2026-11-01','nov']];
   const hc=PRED.escHist.filter(h=>h.tipo==='cis'&&h.f>=DI).sort((a,b)=>a.f<b.f?-1:1);
-  const hs=PRED.escHist.filter(h=>h.e.startsWith('Sigma Dos')&&h.f>=DI).sort((a,b)=>a.f<b.f?-1:1);
   const dots=PRED.escPriv.concat(PRED.escHist.filter(h=>h.tipo==='privada'&&!PRED.escPriv.some(p=>p.e===h.e&&p.f===h.f))).filter(h=>h.f>=DI);
   const REDUCE=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const MESL=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -21,7 +20,7 @@
   function panel(k,name,c,W,animate){
     const H=W<420?246:270,L=30,R=W<420?86:96,T=W<420?52:50,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
     const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
-    const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];hs.forEach(h=>vals.push(h.esc[k]));dots.forEach(p=>vals.push(p.esc[k]));rP.forEach(r=>vals.push(r.lo95,r.hi95));
+    const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];dots.forEach(p=>vals.push(p.esc[k]));rP.forEach(r=>vals.push(r.lo95,r.hi95));
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
     const x0=X(TH),id=k;
@@ -54,12 +53,11 @@
       s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">8 de cada 10</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">19 de cada 20</text>`}
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
-    // histórico: CIS (rombos), Sigma Dos (línea gruesa) y otras encuestas (puntos). Un valor fuera de escala se dibuja pegado al borde
+    // histórico: CIS (rombos) y otras encuestas (puntos). Un valor fuera de escala se dibuja pegado al borde
     const cY=v=>Y(Math.max(lo,Math.min(hi,v)));
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+cY(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
     hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${cY(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${cY(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" points="${hs.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
     s+=histG(k,c,X,Y,T,ph,L);
     const m12=TH;
@@ -213,7 +211,6 @@
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const b=document.getElementById('pgrid');if(b&&(b.clientWidth||720)===lastW)return;draw()},150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;
   document.getElementById('leg').innerHTML=
-    `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="2.4"/>')}Sigma Dos (misma empresa, desde el 1-oct)</span>`+
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="1.4"/><rect x="13" y="1.5" width="7" height="7" transform="rotate(45 16.5 5)" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>')}CIS (barómetro de octubre)</span>`+
     `<span>${sw('<circle cx="17" cy="5" r="2.6" fill="currentColor" opacity=".5"/>')}Otras encuestas</span>`+
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7"/>')}Proyección de la media de las 14 encuestas (punto grande: hoy, ${fecha(PRED.generado)}; encuestas del ${RNG})</span>`+
