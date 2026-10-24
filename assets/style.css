@@ -785,3 +785,12 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .tvst{min-width:0;table-layout:auto}.tvst td,.tvst th{white-space:normal}.tvst tbody th{white-space:nowrap;font-size:13px}
 .tvbal{min-width:0}
 @media(max-width:640px){.tvst tbody th{font-size:12px;padding-inline:6px}.tvst td .nog{font-size:12px;line-height:1.3;display:block}}
+/* Noche electoral: hemiciclo vacío + tarjetas de todos los partidos */
+.nhm{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px;align-items:center;margin-top:8px}
+.nhemi .hemi{color:var(--fg)}.nhemi .hemi circle{transition:fill .8s ease}
+.ncards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ncards .hs{padding:8px 10px;border-radius:10px}.ncards .hs span{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);display:block}
+.ncards .hs b{display:block;font-family:var(--mono);font-size:26px;line-height:1.15;font-variant-numeric:tabular-nums}
+.ncards .hs small{display:block;font-size:11.5px;color:var(--muted)}
+.ncards .hs.emp{background:var(--panel)}.ncards .hs.emp b{color:var(--muted)}
+@media(max-width:760px){.nhm{grid-template-columns:1fr}.ncards{grid-template-columns:repeat(2,minmax(0,1fr))}}
