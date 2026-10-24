@@ -15,7 +15,21 @@ Se guardan aquí para no tener que volver a buscarlos cada vez que se rehaga o s
 - Las encuestas con solo proyección de escaños (sin porcentaje) y las internas de partidos se han dejado fuera.
 - Los porcentajes son sobre voto válido; los de Wikipedia pueden estar redondeados a un decimal.
 
+## Resultados por provincia (añadidos)
+
+| Archivo | Qué es |
+|---|---|
+| `provincias-2019-28A.csv` | % y escaños de PSOE, PP, Cs, UP, Vox en las 52 circunscripciones, abril 2019 |
+| `provincias-2019-10N.csv` | Ídem, noviembre 2019 |
+| `provincias-2023-23J.csv` | PP, PSOE, Vox, Sumar, 2023 (Vox en Santa Cruz de Tenerife = 7,56 %) |
+
+Fuente: Wikipedia, *Results breakdown of the … Spanish general election (Congress)*. Comprobación: los escaños suman exactamente los totales oficiales de cada partido, y Madrid y Albacete 2023 coinciden con `assets/home.js`. Navarra: PP y Cs van en coalición en 2019 y quedan en blanco.
+
+## Pruebas hechas con estos datos (24-oct-2026)
+
+- **Pesos por acierto de cada encuestadora** (`tools/backtest_empresas.py`): no mejora de forma consistente. Error medio 23-J con pesos de 10-N: 1,77 (1/MAE) frente a 1,80 de media simple; 10-N con pesos de 23-J: 1,25 frente a 1,19 (peor). Se descarta.
+- **Cambio distinto por provincia** (`tools/backtest_provincias.py`), con el cambio nacional real como entrada y la pendiente entrenada en la otra transición: no mejora. Error de voto por provincia 28A→10N: 1,67 pp frente a 1,12 del reparto uniforme; 10N→23J: 2,69 frente a 2,70. Diferencia de escaños: 38 frente a 32, y 51 frente a 49. Las pendientes cambian de signo entre transiciones (PSOE −0,69 y +0,14), señal de sobreajuste con solo dos casos. Se mantiene el reparto uniforme.
+
 ## Pendiente de conseguir
 
-- Resultados por provincia (52 circunscripciones) de abril de 2019, noviembre de 2019 y 2023 para PP, PSOE, Vox, Unidas Podemos/Sumar y Cs. De 2023 ya están en `assets/home.js` (`DATA[].p`). Hacen falta para probar un reparto con cambio distinto por provincia.
 - Encuestas de abril de 2019 y de 2016 si se quiere más base para la corrección histórica y para el acierto por empresa.
