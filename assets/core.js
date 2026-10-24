@@ -128,3 +128,21 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     nav.appendChild(b)};
   document.head.appendChild(s);
 })();
+
+/* Actualización automática: al volver a abrir la web (también desde el icono), si hay una versión nueva, se recarga sola */
+(function(){
+  var KEY='d29n_sig', last=0;
+  function sig(t){var h=0,i;for(i=0;i<t.length;i++){h=(h*31+t.charCodeAt(i))|0}return String(h)}
+  function check(){
+    var now=Date.now(); if(now-last<30000) return; last=now;
+    fetch(location.pathname+(location.search||''),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){
+      var s=sig(t),prev=null;
+      try{prev=sessionStorage.getItem(KEY+location.pathname)}catch(e){}
+      try{sessionStorage.setItem(KEY+location.pathname,s)}catch(e){}
+      if(prev&&prev!==s) location.reload();
+    }).catch(function(){});
+  }
+  check();
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')check()});
+  window.addEventListener('pageshow',function(e){if(e.persisted)check()});
+})();
