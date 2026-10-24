@@ -113,3 +113,17 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
   var hero=document.querySelector('.hero .hin'),mini=document.querySelector('header.mini');
   if(hero){a.classList.add('onhero');hero.appendChild(a)}else if(mini){mini.appendChild(a)}
 })();
+/* ===== Barra de situación en la base del menú (PP+Vox | PSOE y socios, punto en 176) ===== */
+(function(){
+  var nav=document.querySelector('nav.tabs');if(!nav)return;
+  var s=document.createElement('script');
+  s.src='assets/barra-data.js?h='+Math.floor(Date.now()/36e5);
+  s.onload=function(){var B=window.BARRA;if(!B)return;
+    var T=350,w=function(n){return (n/T*100).toFixed(2)+'%'};
+    var b=document.createElement('a');b.className='mbar';b.href='prediccion.html';
+    b.setAttribute('aria-label','Previsión de escaños: PP y Vox '+B.pv+', PSOE y socios '+B.iz+'. Mayoría absoluta: 176.');
+    b.title='Previsión: PP+Vox '+B.pv+' · PSOE y socios '+B.iz+' · mayoría 176';
+    b.innerHTML='<i style="width:'+w(B.pp)+';background:var(--pp)"></i><i style="width:'+w(B.vox)+';background:var(--vox)"></i><i style="width:'+w(350-B.pv-B.iz)+';background:var(--reg)"></i><i style="width:'+w(B.iz)+';background:var(--psoe)"></i><u style="left:'+w(176)+'"></u>';
+    nav.appendChild(b)};
+  document.head.appendChild(s);
+})();

@@ -122,6 +122,7 @@ const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv
 {const pc=x=>String(x).replace('.',','),rows=[['empresa','fecha','PP','PSOE','Vox','Sumar+Podemos','esc_PP','esc_PSOE','esc_Vox','esc_Sumar+Podemos','esc_PP+Vox','esc_bloque_investidura_2023'].join(';')];
   inp.privadas.forEach((p,i)=>{const e=escPriv[i];rows.push([p.e,p.f,pc(p.PP),pc(p.PSOE),pc(p.VOX),pc(p.SUMAR),e.esc.PP,e.esc.PSOE,e.esc.VOX,e.esc.SUMAR,e.PV,e.IZ].join(';'))});
   fs.writeFileSync(root+'datos/encuestas.csv','\ufeff'+rows.join('\n')+'\n')}
+{const e=out.escPrivadas;fs.writeFileSync(root+'assets/barra-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nwindow.BARRA='+JSON.stringify({pp:e.escanos.PP.c,vox:e.escanos.VOX.c,iz:out.escPrivadas.izq.c,pv:out.escPrivadas.ppVox.c,f:out.generado})+';\n')}
 fs.writeFileSync(root+'assets/prediccion-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nconst PRED='+JSON.stringify(out)+';\n');
 const show=e=>({esc:Object.fromEntries(K.map(k=>[k,`${e.escanos[k].c} (${e.escanos[k].p10}-${e.escanos[k].p90})`])),ppVox:e.ppVox});
 console.log(JSON.stringify({escBase,priv:show(out.escPrivadas),cis:show(out.escCIS),hist:escHist.map(h=>h.e+' '+h.f+' '+JSON.stringify(h.esc))},null,1));
