@@ -21,17 +21,25 @@
   {const el=$('pkey'),E=PRED.escPriv;if(el&&E&&E.length&&E[0].PV!=null){
     const n=E.length,si=E.filter(p=>p.PV>=MAJ).length,iz=E.filter(p=>p.IZ>=MAJ).length;
     const vs=E.map(p=>p.PV),lo=Math.min(160,Math.floor((Math.min(...vs)-6)/10)*10),hi=Math.max(220,Math.ceil((Math.max(...vs)+6)/10)*10);
-    const W=Math.max(300,Math.min(700,(el.clientWidth||innerWidth-60)-28)),H=92,L=14,R=14,X=v=>L+(v-lo)/(hi-lo)*(W-L-R),yb=52;
-    const cnt={};let svg=`<svg class="kstrip" viewBox="0 0 ${W} ${H}" role="img" aria-label="Escaños de PP + Vox en cada una de las ${n} encuestas: entre ${Math.min(...vs)} y ${Math.max(...vs)}; mayoría absoluta en 176">`;
+    const W=Math.max(300,Math.min(700,(el.clientWidth||innerWidth-60)-28)),H=100,L=14,R=14,X=v=>L+(v-lo)/(hi-lo)*(W-L-R),yb=60;
+    let svg=`<svg class="kstrip" viewBox="0 0 ${W} ${H}" role="img" aria-label="Escaños de PP + Vox en cada una de las ${n} encuestas: entre ${Math.min(...vs)} y ${Math.max(...vs)}; mayoría absoluta en 176">`;
     svg+=`<rect x="${X(lo)}" y="${yb-1}" width="${X(MAJ)-X(lo)}" height="2" fill="var(--line)"/><rect x="${X(MAJ)}" y="${yb-1}" width="${X(hi)-X(MAJ)}" height="2" fill="var(--vox)" opacity=".5"/>`;
     for(let v=lo;v<=hi;v+=10)svg+=`<text x="${X(v)}" y="${H-6}" text-anchor="middle">${v}</text>`;
     svg+=`<line x1="${X(MAJ)}" x2="${X(MAJ)}" y1="8" y2="${yb+12}" stroke="var(--fg)" stroke-dasharray="3 3"/><text x="${X(MAJ)+5}" y="16" style="font-weight:700;fill:var(--fg)">mayoría 176</text>`;
-    [...E].sort((a,b)=>a.PV-b.PV).forEach(p=>{const c=cnt[p.PV]=(cnt[p.PV]||0)+1,y=yb-8-(c-1)*11;
-      svg+=`<circle cx="${X(p.PV)}" cy="${y}" r="5" fill="${p.PV>=MAJ?'var(--pp)':'var(--psoe)'}" stroke="var(--panel)" stroke-width="1.5"><title>${p.e} (${fecha(p.f)}): PP + Vox ${p.PV}</title></circle>`});
+    const PAL=['#2f6fb5','#d9534f','#2e9e5b','#e08a1e','#8a5bc4','#17a2b8','#c2487f','#7a8b2c','#b5651d','#4a5fc1','#d4a017','#1f8a8a','#a04040','#6b7280'];
+    const order=[...E].map((p,i)=>i).sort((i,j)=>E[i].e.localeCompare(E[j].e,'es')),col={};order.forEach((i,k)=>col[i]=PAL[k%PAL.length]);
+    const R0=6,placed=[];
+    const items=E.map((p,i)=>({p,i})).sort((a,b)=>a.p.PV-b.p.PV||a.i-b.i);
+    items.forEach(it=>{const x=X(it.p.PV);let lvl=0;while(placed.some(q=>q.l===lvl&&Math.abs(q.x-x)<2*R0+1))lvl++;placed.push({x,l:lvl});it.x=x;it.y=yb-9-lvl*(2*R0+1)});
+    items.forEach(it=>{const{p,i}=it;svg+=`<circle class="kd" data-i="${i}" cx="${it.x}" cy="${it.y}" r="${R0}" fill="${col[i]}" stroke="var(--panel)" stroke-width="1.8"><title>${p.e} (${fecha(p.f)}): PP + Vox ${p.PV}</title></circle>`});
     svg+=`</svg>`;
+    const leg=items.map(({p,i})=>`<button type="button" class="kc" data-i="${i}"><i style="background:${col[i]}"></i>${p.e.split(' / ')[0]}<b>${p.PV}</b></button>`).join('');
     el.innerHTML=`<p class="kh"><b class="kn">${si} de ${n}</b> encuestas dan mayoría absoluta a PP + Vox</p>`+
       `<p class="note" style="margin:2px 0 6px">Cada punto es una encuesta (la última de cada empresa), con sus escaños calculados con nuestro D’Hondt provincial: PP + Vox entre <b>${Math.min(...vs)}</b> y <b>${Math.max(...vs)}</b>. El bloque PSOE + Sumar + Podemos + socios de 2023 llega a 176 en ${iz} de ${n}. Es un recuento de encuestas, no una probabilidad.</p>`+
-      `<div class="tw">${svg}</div>`;}}
+      `<div class="tw">${svg}</div><div class="kleg">${leg}</div>`;
+    const sel=i=>{el.querySelectorAll('.kd').forEach(d=>{d.style.opacity=i==null||d.dataset.i===i?1:.18;d.setAttribute('r',d.dataset.i===i?R0+2:R0)});el.querySelectorAll('.kc').forEach(c=>c.classList.toggle('on',i!=null&&c.dataset.i===i))};
+    let cur=null;el.querySelectorAll('.kc').forEach(c=>c.addEventListener('click',()=>{cur=cur===c.dataset.i?null:c.dataset.i;sel(cur)}));
+    el.querySelectorAll('.kd').forEach(d=>d.addEventListener('click',()=>{cur=cur===d.dataset.i?null:d.dataset.i;sel(cur)}));}}
 
   // 4. Qué ha cambiado esta semana
   {const el=$('psemana');if(el&&HD.length>1){
