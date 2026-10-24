@@ -112,38 +112,76 @@ function drawC(){
 }
 drawC();
 
-/* ---------- 5. Día de voto ---------- */
+/* ---------- 5. Día de voto (compacto) ---------- */
 const D=[
- ['Elige tu momento','Se vota el domingo 29 de noviembre de 9:00 a 20:00.'],
- ['Ve a tu colegio','Cada persona vota en el colegio de su sección, según su domicilio. Suele llegarte una tarjeta a casa con el dato, y se puede consultar en la sede electrónica del INE.'],
- ['Enseña tu documento','En la mesa te piden DNI, pasaporte o permiso de conducir (con foto). Lo comprueban y dicen tu nombre en voz alta.'],
- ['Elige papeleta y sobre','Hay un sobre para el Congreso y otro, de distinto color, para el Senado. Las papeletas están en el colegio y también puedes llevarlas de casa. Puedes usar la cabina, que es voluntaria.'],
- ['Deposita en la urna','Metes cada sobre en su urna. Mientras no lo hayas hecho, puedes cambiar de opinión. Después, no se puede.'],
- ['Y luego, el recuento','A las 20:00 se cierran las urnas y se cuenta en el mismo colegio. Esa noche sale el resultado: lo seguimos en la página de la noche electoral.']
+ ['Elige tu momento','El domingo 29 de noviembre, de 9:00 a 20:00.'],
+ ['Ve a tu colegio','Vota quien lo tiene asignado por su domicilio. Suele llegarte una tarjeta con el dato y se puede consultar en la sede electrónica del INE.'],
+ ['Enseña tu documento','DNI, pasaporte o permiso de conducir (con foto). En la mesa lo comprueban y dicen tu nombre en voz alta.'],
+ ['Elige papeleta y sobre','Un sobre para el Congreso y otro, de distinto color, para el Senado. Las papeletas están en el colegio o puedes llevarlas de casa. La cabina es voluntaria.'],
+ ['Deposita en la urna','Cada sobre en su urna. Hasta ese momento puedes cambiar de opinión.'],
+ ['Recuento','A las 20:00 se cierran las urnas y se cuenta en el mismo colegio. Esa noche sale el resultado: <a href="noche.html">noche electoral</a>.']
 ];
-let di=0;
-function drawD(){
-  const b=$('tvstep');
-  b.innerHTML=`<div class="tvbar"><i style="width:${(di+1)/D.length*100}%"></i></div><div class="tvbox big"><small>Paso ${di+1} de ${D.length}</small><h3>${D[di][0]}</h3><p>${D[di][1]}</p>${di===D.length-1?'<p><a href="noche.html">Ir a la noche electoral →</a></p>':''}</div>
-  <div class="tvnav"><button type="button" id="dp" ${di===0?'disabled':''}>← Anterior</button><button type="button" id="dn" ${di===D.length-1?'disabled':''}>Siguiente →</button></div>`;
-  $('dp').addEventListener('click',()=>{di--;drawD()});$('dn').addEventListener('click',()=>{di++;drawD()});
-}
-drawD();
-const CK=['Documento con foto (DNI, pasaporte o permiso de conducir)','Sé cuál es mi colegio','Sé a qué hora voy (de 9:00 a 20:00)','He decidido qué hago con mi voto (a una lista, en blanco… o no ir): es solo mío'];
+$('tvstep').innerHTML='<ol class="tvdia">'+D.map((d,i)=>`<li><span class="n">${i+1}</span><div><b>${d[0]}</b> <span>${d[1]}</span></div></li>`).join('')+'</ol>';
+const CK=['Documento con foto','Sé cuál es mi colegio','Sé a qué hora voy','Sé qué hago con mi voto (a una lista, en blanco… o no ir): es solo mío'];
 $('tvchk').innerHTML=CK.map((t,i)=>`<li><label><input type="checkbox" data-c="${i}"><span>${t}</span></label></li>`).join('')+'<li class="tvok" id="tvok" hidden>Listo. Con eso basta.</li>';
 $('tvchk').addEventListener('change',()=>{const n=document.querySelectorAll('#tvchk input:checked').length;$('tvok').hidden=n<CK.length});
 
-/* ---------- 6. Propuestas por tema ---------- */
-let tk=0;
+/* ---------- 6. Propuestas por tema + historial de promesas ---------- */
+/* Cada tema se cruza con las promesas ya documentadas en assets/promesas-data.js (misma base que la página Promesas).
+   Mismo formato y orden para todos los partidos; no hay puntuación ni ranking. */
+const MAP={
+ 0:['Decretos de vivienda','Ley de Vivienda y zonas tensionadas','Bajar los impuestos de la vivienda','183.000 viviendas públicas de alquiler asequible'],
+ 1:['No subir impuestos','Bajar los impuestos de la vivienda','Impuesto a la banca y mínimo del 15%'],
+ 2:['Pactos con Junts (ene. 2024)'],
+ 3:['Tarifas de la luz'],
+ 4:['Ley de gestión pública del SNS','Tiempos máximos de espera en sanidad'],
+ 5:['Pensiones como prioridad','Pensiones con el IPC'],
+ 6:['Reforma laboral','Derogar la reforma laboral del PP','Contratos laborales más simples','No abaratar el despido','3,5 millones de empleos en 2015','Reducción de jornada a 37,5 horas','Subir el salario mínimo','Registro horario digital obligatorio','Estatuto del Becario','Ingreso mínimo vital'],
+ 7:['Reforma educativa'],
+ 8:['Reformar la financiación autonómica','Cambiar el modelo de financiación autonómica','Pacto por la Austeridad con todas las Administraciones','Pactos con Junts (ene. 2024)'],
+ 9:['Amnistía','Indultos','Sacar a Franco del Valle de los Caídos','Derogar la ley mordaza','Nueva ley de secretos oficiales','Traer a Puigdemont ante la justicia','Ley de Transparencia'],
+ 10:[]
+};
+/* Promesas que pertenecen a la última legislatura (nov-2023 a oct-2026) */
+const UL=new Set(['Amnistía','Podemos e independentistas en el Gobierno','Decretos de vivienda','Ley de Vivienda y zonas tensionadas','Pensiones con el IPC','Derogar la ley mordaza','Aprobar los Presupuestos y no prorrogarlos','Nueva ley de secretos oficiales','Cambiar el modelo de financiación autonómica','Traer a Puigdemont ante la justicia','Elecciones generales en 2027','183.000 viviendas públicas de alquiler asequible','Tiempos máximos de espera en sanidad','Permisos de nacimiento de hasta 20 semanas','Pactos con Junts (ene. 2024)','Reducción de jornada a 37,5 horas','Ley de gestión pública del SNS','Subir el salario mínimo','Registro horario digital obligatorio','Estatuto del Becario']);
+const ULP=new Set(['Subir el salario mínimo']); // existe para Sumar (UL) y Podemos (anterior): se decide por partido
+const ICO={g:'✓',m:'◐',b:'✕'},SN={g:'Cumplida',m:'Parcial',b:'Incumplida o contraria'};
+const NOGOV=['VOX','ERC','JUNTS','PNV','BILDU'];
+let tk=0,tl='all';const ps=new Set();
+const isUL=x=>UL.has(x.t)&&!(x.k==='podemos');
+function hist(code,t){
+  const names=MAP[t]||[];
+  let arr=PROM.filter(x=>x.k===code.toLowerCase()&&names.includes(x.t));
+  return arr.map(x=>Object.assign({ul:isUL(x)},x)).sort((a,b)=>(b.ul-a.ul));
+}
+function cnt(a){return ['g','m','b'].map(s=>a.filter(x=>x.s===s).length)}
 function drawT(){
   chips($('tvt'),TOPICS.map((t,i)=>[i,t]),tk,k=>{tk=+k;drawT()});
-  $('tvp').innerHTML=PARTS.map(p=>{
+  chips($('tvl'),[['all','Todos los mandatos'],['ul','Solo la última legislatura (2023–2026)']],tl,k=>{tl=k;drawT()});
+  $('tvf').innerHTML='<b>Partido</b><button type="button" data-p="all" aria-pressed="'+(ps.size===0)+'">Todos</button>'+PARTS.map(p=>`<button type="button" data-p="${p[0]}" style="--c:${p[2]}" aria-pressed="${ps.has(p[0])}"><i></i>${p[1]}</button>`).join('');
+  $('tvf').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.p;if(k==='all')ps.clear();else ps.has(k)?ps.delete(k):ps.add(k);drawT()}));
+  const H=PARTS.filter(p=>!ps.size||ps.has(p[0])).map(p=>{let a=hist(p[0],tk);if(tl==='ul')a=a.filter(x=>x.ul);return [p,a]}),shown=H;
+  const none=!(MAP[tk]||[]).length;
+  const bar=a=>{const c=cnt(a);return `<div class="tvbal" role="img" aria-label="${c[0]} cumplidas, ${c[1]} parciales, ${c[2]} incumplidas">${['g','m','b'].map((k,i)=>c[i]?`<span class="${k}" style="flex:${c[i]}" title="${SN[k]}: ${c[i]}">${ICO[k]} ${c[i]}</span>`:'').join('')}</div>`};
+  $('tvsum').innerHTML=`<table class="tvst"><thead><tr><th>Partido</th><th>Prometió vs. hizo <span class="lg"><b class="g">✓</b> cumplida <b class="m">◐</b> parcial <b class="b">✕</b> incumplida</span></th></tr></thead><tbody>`+
+   H.map(([p,a])=>{const nog=NOGOV.includes(p[0]);return `<tr style="--c:${p[2]}"><th>${p[1]}</th><td>${nog?'<span class="nog">Sin Gobierno nacional: no hay promesas de gobierno que medir</span>':a.length?bar(a):'<span class="nog">Sin promesas documentadas en este tema</span>'}</td></tr>`}).join('')+'</tbody></table>'+
+   `<p class="sources" style="margin:6px 0 0">${none?'Para este tema no hay promesas documentadas en la base de Promesas. ':''}Un partido que no ha gobernado no puede cumplir ni incumplir: «sin datos» no es lo mismo que «cumple más». Las barras cuentan promesas documentadas, no su importancia, y las muestras son distintas; ver <a href="promesas.html">Promesas</a>.</p>`;
+  $('tvp').innerHTML=shown.map(([p,a],ix)=>{
     const x=PROP[p[0]][tk];
-    if(!x)return `<div class="tvpt" style="--c:${p[2]}"><div class="tvpn"><i></i><b>${p[1]}</b><span class="na">Sin posición concreta en las fuentes consultadas.</span></div></div>`;
-    const m=x.t.slice(40).search(/[.;] /);let first=m>=0&&m+41<=170?x.t.slice(0,m+41):x.t;
-    first=first.replace(/[;:,]\s*$/,'…');
-    if(first.length>170){first=first.slice(0,170);first=first.slice(0,first.lastIndexOf(' '))+'…'}
-    return `<details class="tvpt" style="--c:${p[2]}"><summary class="tvpn"><i></i><b>${p[1]}</b><span>${esc(first)}</span></summary><div class="tvpb">${esc(x.t)}<div class="o">Origen: ${esc(x.o)}</div><div class="ms">Fuentes: ${x.f.map(k=>A(S[k][0],S[k][1])).join('')}</div></div></details>`;
+    let top;
+    if(!x)top=`<div class="tvpn"><i></i><b>${p[1]}</b><span class="na">Sin posición concreta en las fuentes consultadas.</span></div>`;
+    else{
+      const m=x.t.slice(40).search(/[.;] /);let first=m>=0&&m+41<=170?x.t.slice(0,m+41):x.t;
+      first=first.replace(/[;:,]\s*$/,'…');
+      if(first.length>170){first=first.slice(0,170);first=first.slice(0,first.lastIndexOf(' '))+'…'}
+      top=`<details class="tvdet"><summary class="tvpn"><b>${p[1]}</b><span>${esc(first)}</span></summary><div class="tvpb">${esc(x.t)}<div class="o">Origen: ${esc(x.o)}</div><div class="ms">Fuentes: ${x.f.map(k=>A(S[k][0],S[k][1])).join('')}</div></div></details>`;
+    }
+    let hh='';
+    if(a.length){
+      const c=cnt(a);
+      hh=`<details class="tvhist"${ps.size===1?' open':''}><summary>Lo que prometió y lo que hizo <em>✓ ${c[0]} · ◐ ${c[1]} · ✕ ${c[2]}</em></summary><ul>${a.map(y=>`<li class="${y.s}"><span class="st" title="${SN[y.s]}">${ICO[y.s]}</span><div><b>${esc(y.t)}</b>${y.ul?' <span class="ul">Última legislatura</span>':''}<div class="pp">Prometió: ${esc(y.p)}</div><div class="hh">Hizo: ${esc(y.h)}</div><div class="ms">Fuentes: ${y.f.map(f=>A(f[0],f[1])).join('')}</div></div></li>`).join('')}</ul></details>`;
+    }
+    return `<div class="tvpt cardin" style="--c:${p[2]};animation-delay:${ix*0.04}s">${top}${hh}</div>`;
   }).join('');
 }
 drawT();
