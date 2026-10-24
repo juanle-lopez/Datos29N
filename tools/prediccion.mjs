@@ -54,7 +54,7 @@ const eFt=(e,d)=>inp.errorGradual?e*Math.pow(d/T,PG/2):(d===T?e:0);
 function escenario(clave,trend,N=4000){
   const trd=inp.usarTendencia?trend.tr:Object.fromEntries(K.map(k=>[k,0]));   // sin tendencia: la previsión central es la media de hoy
   const ruta={},fin={},sdFin={};[...K,'PV','IZ'].forEach(k=>{ruta[k]=[]});
-  const provSims=[];
+  const provSims=[];const simsOut=[];
   const ds=[];for(let d=0;d<=T;d+=(d+2>T?T-d||1:2))ds.push(d);
   const sdAt=(k,d,final)=>Math.sqrt(s0[clave][k]**2+volDay*d+(final?inp.sdError**2:0));
   ds.forEach((d,i)=>{
@@ -62,16 +62,18 @@ function escenario(clave,trend,N=4000){
     K.forEach(k=>{c[k]=base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d);sdv[k]=sdAt(k,d,fin_)});
     const n=fin_?N:1500, dr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
     const vc=volDay*d+(inp.errorGradual?inp.sdError**2*Math.pow(d/T,PG):(fin_?inp.sdError**2:0)),sl={};[...K,'O'].forEach(k=>sl[k]=sdl(clave,k,c,vc));
-    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const sv=simulate(DATA,v),t=sv.tot;K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t));if(fin_&&clave==='priv')provSims.push(sv.prov)}
+    for(let j=0;j<n;j++){let v;if(inp.errorLogit){const e={};[...K,'O'].forEach(k=>e[k]=sl[k]*gauss());if(fin_&&inp.sdBloque){const b=inp.sdBloque/(100*REF)*gauss();e.PP+=b;e.VOX+=b;e.PSOE-=b;e.SUMAR-=b}v=compon(c,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,c[k]+sdv[k]*gauss()))}const sv=simulate(DATA,v),t=sv.tot;if(fin_&&clave==='priv'&&j<300)simsOut.push([t.PP,t.PSOE,t.VOX,t.SUMAR]);K.forEach(k=>dr[k].push(t[k]));dr.PV.push(t.PP+t.VOX);dr.IZ.push(IZ(t));if(fin_&&clave==='priv')provSims.push(sv.prov)}
     const cs=simulate(DATA,c).tot;
     K.forEach(k=>ruta[k].push({d:iso(D0+d),esc:cs[k],lo:pct(dr[k],.1),hi:pct(dr[k],.9),lo95:pct(dr[k],.025),hi95:pct(dr[k],.975),lo50:pct(dr[k],.25),hi50:pct(dr[k],.75),pv:fin_?{c:cs.PP+cs.VOX,p10:pct(dr.PV,.1),p50:pct(dr.PV,.5),p90:pct(dr.PV,.9)}:undefined}));
     [['PV',cs.PP+cs.VOX],['IZ',IZ(cs)]].forEach(([b,cv])=>ruta[b].push({d:iso(D0+d),esc:cv,lo:pct(dr[b],.1),hi:pct(dr[b],.9),lo95:pct(dr[b],.025),hi95:pct(dr[b],.975),lo50:pct(dr[b],.25),hi50:pct(dr[b],.75)}));
     if(fin_){K.forEach(k=>{fin[k]=c[k];sdFin[k]=sdv[k]});ruta._fin={c,dr,cs}}
   });
   const f=ruta._fin;delete ruta._fin;
-  const out={ruta,escanos:{}};
+  const out={ruta,escanos:{}};if(clave==='priv')out.sims=simsOut;
   // Provincias en disputa: en cuántas de las simulaciones finales el reparto de una provincia cambia respecto al central, y entre qué partidos
-  if(clave==='priv'){const cen=simulate(DATA,f.c).prov,PS=['PP','PSOE','VOX','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'];
+  if(clave==='priv'){const cen=simulate(DATA,f.c).prov;
+    out.demo=['Madrid','Sevilla','Valencia','Valladolid','Albacete','Soria'].map(nm=>{const cp=cen.find(x=>x.n===nm),dd=DATA.find(x=>x.n===nm);return {n:nm,s:cp.s,sh:Object.fromEntries(Object.entries(cp.sh).filter(([k])=>k!=='FA').map(([k,v])=>[k,round(k==='SUMAR'?v-(cp.sh.POD||0):v,3)])),seats:Object.fromEntries(Object.entries(cp.seats).filter(([k,v])=>k!=='FA'&&v)),v23:Object.fromEntries(['PP','PSOE','VOX','SUMAR'].map(k=>[k,dd.p[k]]))}});
+    const PS=['PP','PSOE','VOX','SUMAR','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'];
     out.disputa=cen.map((cp,i)=>{let n=0;const gana={},pierde={};provSims.forEach(ps=>{const q=ps[i].seats;let ch=false;PS.forEach(k=>{const dlt=(q[k]||0)-(cp.seats[k]||0);if(dlt>0){gana[k]=(gana[k]||0)+1;ch=true}else if(dlt<0){pierde[k]=(pierde[k]||0)+1;ch=true}});if(ch)n++});
       const top=o=>Object.entries(o).sort((a,b)=>b[1]-a[1])[0];const g=top(gana),l=top(pierde);
       return {n:cp.n,s:cp.s,p:round(100*n/provSims.length,0),gana:g?g[0]:null,pierde:l?l[0]:null,esc:Object.fromEntries(PS.filter(k=>cp.seats[k]).map(k=>[k,cp.seats[k]]))}})
