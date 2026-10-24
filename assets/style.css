@@ -820,3 +820,8 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .addhome span{flex:1;min-width:0}
 .addhome i{flex:none;font-style:normal;font-weight:700;font-size:12.5px;padding:5px 11px;border-radius:99px;background:var(--fg);color:var(--bg)}
 .addhome:hover{border-color:var(--fg)}
+
+.rfbtn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;margin:-4px 8px -4px 0;padding:0;vertical-align:middle;border:1px solid var(--line);border-radius:50%;background:var(--panel);color:var(--fg);cursor:pointer}
+.rfbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rfbtn.spin svg{animation:rfspin .8s linear infinite}
+@keyframes rfspin{to{transform:rotate(360deg)}}

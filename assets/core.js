@@ -146,3 +146,5 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')check()});
   window.addEventListener('pageshow',function(e){if(e.persisted)check()});
 })();
+
+(function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
