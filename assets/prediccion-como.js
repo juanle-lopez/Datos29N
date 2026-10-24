@@ -54,7 +54,7 @@
     dur:null,go(){return `<div class="cmdh"><div class="cmsel" role="group" aria-label="Provincia">${E.demo.map((d,i)=>`<button type="button" data-d="${i}" aria-pressed="${i===dem}">${d.n}</button>`).join('')}</div><div id="cmdh"></div></div>`},
     after(){runDh()}});
   // 5. Simulaciones
-  S.push({t:'Repetimos 4.000 elecciones posibles',p:`Sorteamos <b>4.000 resultados</b> dentro de esas campanas y repartimos los 350 escaños de cada uno. Cada bola es una simulación y cae sobre los escaños que suman <b>PP + Vox</b> en ella; su color depende de lo que saca el PSOE. Se agrupan, pero se abren.`,
+  S.push({t:'Hacemos 4.000 simulaciones de elecciones',p:`Sorteamos <b>4.000 resultados</b> dentro de esas campanas y repartimos los 350 escaños de cada uno. Cada bola es una simulación y cae sobre los escaños que suman <b>PP + Vox</b> en ella; su color depende de lo que saca el PSOE. Se agrupan, pero se abren.`,
     dur:11000,go(){return `<canvas id="cmcv" class="cmcv" role="img" aria-label="Animación de 4.000 simulaciones de escaños de PP más Vox"></canvas>`},
     after(){runSims()}});
   // 6. Resultado
