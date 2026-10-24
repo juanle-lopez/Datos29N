@@ -21,7 +21,7 @@
   {const el=$('pkey'),E=PRED.escPriv;if(el&&E&&E.length&&E[0].PV!=null){
     const n=E.length,si=E.filter(p=>p.PV>=MAJ).length,iz=E.filter(p=>p.IZ>=MAJ).length;
     const all=[...E.map(p=>p.PV),...E.map(p=>p.IZ)],lo=Math.max(0,Math.min(100,Math.floor((Math.min(...all)-6)/10)*10)),hi=Math.max(220,Math.ceil((Math.max(...all)+6)/10)*10);
-    const W=Math.max(300,Math.min(700,(el.clientWidth||innerWidth-60)-28)),H=124,Lm=14,Rm=14,X=v=>Lm+(v-lo)/(hi-lo)*(W-Lm-Rm),yb=84;
+    const W=Math.max(300,Math.min(700,(el.clientWidth||innerWidth-60)-28)),H=142,Lm=14,Rm=14,X=v=>Lm+(v-lo)/(hi-lo)*(W-Lm-Rm),yb=102;
     const PAL=['#2f6fb5','#d9534f','#2e9e5b','#e08a1e','#8a5bc4','#17a2b8','#c2487f','#7a8b2c','#b5651d','#4a5fc1','#d4a017','#1f8a8a','#a04040','#6b7280'];
     const order=[...E].map((p,i)=>i).sort((i,j)=>E[i].e.localeCompare(E[j].e,'es')),col={};order.forEach((i,k)=>col[i]=PAL[k%PAL.length]);
     const R0=6;
@@ -35,13 +35,13 @@
       items.forEach(it=>{const x=X(it.p[key]);let lvl=0;while(placed.some(q=>q.l===lvl&&Math.abs(q.x-x)<2*R0+1))lvl++;placed.push({x,l:lvl});it.x=x;it.y=yb-9-lvl*(2*R0+1)});
       items.forEach(it=>{const{p,i}=it;svg+=`<circle class="kd" data-i="${i}" cx="${it.x}" cy="${it.y}" r="${R0}" fill="${col[i]}" stroke="var(--panel)" stroke-width="1.8"><title>${p.e} (${fecha(p.f)}): ${nm} ${p[key]}</title></circle>`});
       return svg+`</svg>`};
-    const NA='PP + Vox',NB='PSOE + Sumar + Podemos + ERC, Junts, EH Bildu, PNV, BNG y CC';
+    const NA='PP + Vox',NB='PSOE + Sumar + Podemos + ERC, Junts, EH Bildu, PNV, BNG y CC',NBs='PSOE + Sumar + Podemos y socios de 2023';
     const leg=[...E.keys()].sort((i,j)=>E[i].e.localeCompare(E[j].e,'es')).map(i=>`<button type="button" class="kc" data-i="${i}"><i style="background:${col[i]}"></i>${E[i].e.split(' / ')[0]}<b>${E[i].PV} · ${E[i].IZ}</b></button>`).join('');
-    el.innerHTML=`<p class="kh"><b>Mayoría absoluta (176) por coalición posible</b>, encuesta a encuesta</p>`+
-      `<p class="note" style="margin:2px 0 6px">Cada punto es una encuesta (la última de cada empresa), con sus escaños calculados con nuestro D’Hondt provincial. Se muestran las dos coaliciones posibles con las mismas reglas: <b>${si} de ${n}</b> encuestas dan 176 o más a ${NA}; <b>${iz} de ${n}</b> a PSOE + Sumar + Podemos + socios de 2023. Es un recuento de encuestas, no una probabilidad.</p>`+
-      `<p class="note" style="margin:8px 0 0"><b>Coalición de derecha (${NA})</b>: entre <b>${Math.min(...E.map(p=>p.PV))}</b> y <b>${Math.max(...E.map(p=>p.PV))}</b> escaños.</p><div class="tw">${strip('PV',NA)}</div>`+
-      `<p class="note" style="margin:8px 0 0"><b>Coalición de izquierda y socios (${NB})</b>: entre <b>${Math.min(...E.map(p=>p.IZ))}</b> y <b>${Math.max(...E.map(p=>p.IZ))}</b> escaños.</p><div class="tw">${strip('IZ',NB)}</div>`+
-      `<p class="note" style="margin:8px 0 2px">Cada botón muestra los escaños de la coalición de derecha · la de izquierda y socios en esa encuesta.</p><div class="kleg">${leg}</div>`;
+    el.innerHTML=`<p class="kh"><b>¿Qué sumas llegan a 176 escaños?</b> Encuesta a encuesta</p>`+
+      `<p class="note" style="margin:2px 0 6px">Cada punto es una encuesta (la última de cada empresa), con sus escaños calculados con nuestro D’Hondt provincial. Se muestran dos sumas de partidos con las mismas reglas y sin presuponer pactos: <b>${si} de ${n}</b> encuestas dan 176 o más a ${NA}; <b>${iz} de ${n}</b> a ${NBs}. Es un recuento de encuestas, no una probabilidad.</p>`+
+      `<p class="note" style="margin:8px 0 0"><b>Suma de ${NA}</b>: entre <b>${Math.min(...E.map(p=>p.PV))}</b> y <b>${Math.max(...E.map(p=>p.PV))}</b> escaños.</p><div class="tw">${strip('PV',NA)}</div>`+
+      `<p class="note" style="margin:8px 0 0"><b>Suma de ${NBs}</b> <span style="font-weight:400">(${NB.replace('PSOE + Sumar + Podemos + ','')})</span>: entre <b>${Math.min(...E.map(p=>p.IZ))}</b> y <b>${Math.max(...E.map(p=>p.IZ))}</b> escaños.</p><div class="tw">${strip('IZ',NB)}</div>`+
+      `<p class="note" style="margin:8px 0 2px">Cada botón muestra los escaños de la primera suma · la segunda en esa encuesta.</p><div class="kleg">${leg}</div>`;
     const sel=i=>{el.querySelectorAll('.kd').forEach(d=>{d.style.opacity=i==null||d.dataset.i===i?1:.18;d.setAttribute('r',d.dataset.i===i?R0+2:R0)});el.querySelectorAll('.kc').forEach(c=>c.classList.toggle('on',i!=null&&c.dataset.i===i))};
     // Los puntos se mecen muy suavemente, cada uno a su ritmo
     el.querySelectorAll('.kd').forEach((d,k)=>{const r=(k*7919%97)/97,q=(k*104729%89)/89;d.style.setProperty('--fx',(1.2+r*1.6).toFixed(2)+'px');d.style.setProperty('--fy',(1.2+q*1.6).toFixed(2)+'px');d.style.animationDuration=(5+r*4).toFixed(2)+'s';d.style.animationDelay=(-q*8).toFixed(2)+'s'});
