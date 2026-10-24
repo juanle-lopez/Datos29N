@@ -117,7 +117,7 @@ const NAMES={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar',ERC:'ERC',JUNTS:'Junts'
 const COL={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)'};
 const REG='var(--reg)';
 const REGB={ERC:1.89,JUNTS:1.60,BILDU:1.36,PNV:1.12,BNG:0.62,CCa:0.47,UPN:0.21};
-const PRESETS={'2023':{PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31,...REGB},poll:{PP:32.4,PSOE:26.4,VOX:18.7,SUMAR:9.1,...REGB}};
+const PRESETS={'2023':{PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31,...REGB},poll:{PP:32.29,PSOE:26.47,VOX:18.81,SUMAR:9.18,...REGB}};
 const MAIN=['PP','PSOE','VOX','SUMAR'];
 const REGL=['ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'],REGMAX={ERC:20,JUNTS:15,BILDU:12,PNV:10,BNG:4,CCa:4,UPN:2};
 const ALLC=MAIN.concat(REGL);

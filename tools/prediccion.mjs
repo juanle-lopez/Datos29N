@@ -103,6 +103,13 @@ const escBase={priv:Object.fromEntries(K.map(k=>[k,seatsOf(base.priv)[k]])),cis:
 const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv.length,privadas:priv,historial:inp.historial,cis:inp.cis,
   base,sesgo:{delta:Object.fromEntries(K.map(k=>[k,round(delta[k],2)])),err:inp.sesgo?inp.sesgo.err:null,elecciones:inp.sesgo?inp.sesgo.elecciones:null},tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
   escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq};
+// Sincroniza la portada con la media de las encuestas (antes estaba a mano y se desfasaba): valor del simulador y texto de método.
+{const hp=root+'assets/home.js',hh=fs.readFileSync(hp,'utf8'),v=k=>base.priv[k].toFixed(2),
+  h2=hh.replace(/poll:\{PP:[\d.]+,PSOE:[\d.]+,VOX:[\d.]+,SUMAR:[\d.]+,/,`poll:{PP:${v('PP')},PSOE:${v('PSOE')},VOX:${v('VOX')},SUMAR:${v('SUMAR')},`);
+  if(h2!==hh)fs.writeFileSync(hp,h2);
+  const ip=root+'index.html',ih=fs.readFileSync(ip,'utf8'),c=k=>base.priv[k].toFixed(1).replace('.',','),
+    i2=ih.replace(/PP [\d,]+ · PSOE [\d,]+ · Vox [\d,]+ · Sumar y Podemos agrupados \([\d,]+\)/,`PP ${c('PP')} · PSOE ${c('PSOE')} · Vox ${c('VOX')} · Sumar y Podemos agrupados (${c('SUMAR')})`);
+  if(i2!==ih)fs.writeFileSync(ip,i2)}
 fs.writeFileSync(root+'assets/prediccion-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nconst PRED='+JSON.stringify(out)+';\n');
 const show=e=>({esc:Object.fromEntries(K.map(k=>[k,`${e.escanos[k].c} (${e.escanos[k].p10}-${e.escanos[k].p90})`])),ppVox:e.ppVox});
 console.log(JSON.stringify({escBase,priv:show(out.escPrivadas),cis:show(out.escCIS),hist:escHist.map(h=>h.e+' '+h.f+' '+JSON.stringify(h.esc))},null,1));
