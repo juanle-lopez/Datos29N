@@ -829,3 +829,24 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .kstrip .kd{transition:opacity .2s;animation:ksway 6s ease-in-out infinite}
 @keyframes ksway{0%,100%{transform:translate(0,0)}25%{transform:translate(var(--fx,2px),calc(var(--fy,2px)*-1))}50%{transform:translate(calc(var(--fx,2px)*.4),var(--fy,2px))}75%{transform:translate(calc(var(--fx,2px)*-1),calc(var(--fy,2px)*-.3))}}
 @media (prefers-reduced-motion:reduce){.kstrip .kd{animation:none}}
+
+/* Entrevistas y debates */
+.wild{margin:0;padding:16px;border-radius:14px;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--fg)}
+.wild .wh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.wbadge{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:99px;background:var(--fg);color:var(--bg)}
+.wcd{font:600 13px var(--mono);color:var(--muted)}
+.wild h3{margin:8px 0 8px;font-size:20px;line-height:1.25}
+.wfmt{margin:0 0 4px;padding-left:18px;line-height:1.5}.wfmt li{margin:3px 0}
+.wcards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.ecard{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.ecard h4{margin:0;font-size:15px;line-height:1.25}.ecard .ep{margin:2px 0 8px;font:12px var(--mono);color:var(--muted)}
+.ecard dl{margin:0;display:grid;gap:6px}.ecard dt{font:11px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.ecard dd{margin:0;font-size:13.5px;line-height:1.35}
+@media(max-width:900px){.wcards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.wcards{grid-template-columns:1fr}.ecard dl{grid-template-columns:110px 1fr;gap:4px 10px}.ecard dt{align-self:center}}
+.etent td{vertical-align:top;font-size:13.5px;line-height:1.4}.etent td:last-child a{display:block}
+
+.elist{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.erow{display:grid;grid-template-columns:86px 1fr;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.erow .ef{font:600 13px var(--mono);padding-top:2px}.erow b{font-size:15px;line-height:1.3}
+.erow dl{margin:6px 0 0;display:grid;grid-template-columns:64px 1fr;gap:4px 10px}.erow dt{font:11px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);padding-top:2px}.erow dd{margin:0;font-size:13.5px;line-height:1.4}
+@media(max-width:520px){.erow{grid-template-columns:1fr;gap:4px}}
