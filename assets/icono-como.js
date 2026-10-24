@@ -4,7 +4,7 @@
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $=id=>document.getElementById(id);
   const ua=navigator.userAgent||'';
-  let os=/Android/i.test(ua)?'and':'ios',step=0,tm=[],auto=false,seen=false;
+  let os=/Android/i.test(ua)?'and':(/iPhone|iPad|iPod/i.test(ua)&&!/CriOS|FxiOS|EdgiOS/i.test(ua)&&/Safari/i.test(ua))?'ios':'ioc',step=0,tm=[],auto=false,seen=false;
   const clear=()=>{tm.forEach(t=>clearTimeout(t));tm=[]};
   const later=(f,ms)=>{const t=setTimeout(f,ms);tm.push(t);return t};
   const W=420,H=300,A='var(--mid)';
@@ -30,6 +30,16 @@
    {t:'Toca «Añadir» y listo',p:`Arriba a la derecha toca <b>«Añadir»</b>. En tu pantalla aparecerá el icono <b>Datos 29N</b>: ya puedes abrirla como una app, de un toque.`,
     go(){return svg(defs+phone(`<rect x="141" y="14" width="138" height="272" rx="19" fill="var(--bg)"/>`)+`<g class="fout" style="animation-delay:3.4s"><rect x="147" y="36" width="126" height="170" rx="12" fill="var(--panel)" stroke="var(--line)"/>${tx(155,54,'Cancelar',{a:'start',z:7.5,s:'fill:var(--muted)'})}${tx(265,54,'Añadir',{a:'end',z:8.5,s:'font-weight:800;fill:var(--fg)'})}<rect x="226" y="42" width="44" height="17" rx="8" fill="${A}" opacity=".25"/>${dlgIcon(193,76)}<rect x="157" y="124" width="106" height="20" rx="6" fill="var(--bg)" stroke="var(--line)"/>${tx(165,137,'Datos 29N',{a:'start',z:8})}${tx(210,170,'Se creará un icono en tu pantalla',{z:6.2})}${tap(248,51,1)}</g>`+home(3.9,true),'Se toca Añadir y aparece el icono en la pantalla de inicio')}}
   ];
+  // iPhone con Chrome: Compartir está dentro de la barra de direcciones
+  const cbar=()=>`<line x1="141" x2="279" y1="46" y2="46" stroke="var(--line)"/>${tx(150,35,'←',{z:11})}<rect x="160" y="22" width="100" height="18" rx="9" fill="var(--line)"/>${tx(200,34,'juanle-lopez.github.io',{z:6.2})}<g><rect x="244" y="27" width="8" height="7" rx="1.5" fill="none" stroke="var(--fg)" stroke-width="1.1"/><path d="M248 29V23M245.6 25.4L248 23l2.4 2.4" fill="none" stroke="var(--fg)" stroke-width="1.1"/></g>${tx(269,35,'···',{z:9})}`;
+  const cbot=()=>`<line x1="141" x2="279" y1="256" y2="256" stroke="var(--line)"/>${tx(172,272,'Pregunta',{z:6})}${tx(210,272,'＋ Pestaña',{z:6})}${tx(250,272,'Pestañas',{z:6})}`;
+  const IOC=[
+   {t:'Abre la web en Chrome',p:`Abre <b>Chrome</b> (el círculo de colores) y entra en <b>juanle-lopez.github.io/Datos29N</b>. Si ya estás aquí leyendo esto, ya has hecho el primer paso.`,
+    go(){return svg(defs+phone(cbar()+page().replace(/y="80"/,'y="84"')+cbot())+tx(60,130,'Chrome',{z:14,c:'cml fade',s:'fill:var(--fg);animation-delay:.4s'}),'iPhone con la web abierta en Chrome')}},
+   {t:'Toca el botón Compartir',p:`Está <b>arriba, dentro de la barra de direcciones, a la derecha</b>: un cuadradito con una flecha hacia arriba. Tócalo una vez.`,
+    go(){return svg(defs+phone(cbar()+page().replace(/y="80"/,'y="84"')+cbot())+tap(248,30,.6)+call(100,34,'Compartir','end',132,31,.3).replace('M132 31L104 31','M132 31L106 31'),'Se toca el botón Compartir de la barra de Chrome')}},
+   IOS[2],IOS[3]
+  ];
   const AND=[
    {t:'Abre la web en Chrome',p:`En Android, <b>usa Chrome</b> (el círculo rojo, amarillo, verde y azul). Entra en <b>juanle-lopez.github.io/Datos29N</b>. Si ya estás aquí, ya has hecho el primer paso.`,
     go(){return svg(defs+phone(`<rect x="147" y="22" width="106" height="18" rx="9" fill="var(--line)"/>${tx(200,34,'juanle-lopez.github.io',{z:6.6})}<g fill="var(--fg)"><circle cx="265" cy="26" r="1.8"/><circle cx="265" cy="31" r="1.8"/><circle cx="265" cy="36" r="1.8"/></g>${page()}`)+tx(60,130,'Chrome',{z:14,c:'cml fade',s:'fill:var(--fg);animation-delay:.4s'}),'Móvil Android con la web abierta en Chrome')}},
@@ -40,11 +50,11 @@
    {t:'Toca «Añadir» y listo',p:`Aparece una ventana con el nombre <b>Datos 29N</b>. Toca <b>«Añadir»</b> y, si te lo pide otra vez, vuelve a tocar «Añadir». El icono quedará en tu pantalla, listo para abrir de un toque.`,
     go(){return svg(defs+phone(`<rect x="141" y="14" width="138" height="272" rx="19" fill="var(--bg)"/>`)+`<g class="fout" style="animation-delay:3.4s"><rect x="141" y="14" width="138" height="272" rx="19" fill="#000" opacity=".3"/><rect x="151" y="96" width="118" height="104" rx="14" fill="var(--panel)" stroke="var(--line)"/>${tx(160,114,'Añadir a pantalla de inicio',{a:'start',z:7,s:'font-weight:800;fill:var(--fg)'})}${dlgIcon(160,122)}<rect x="200" y="130" width="62" height="18" rx="5" fill="var(--bg)" stroke="var(--line)"/>${tx(205,142,'Datos 29N',{a:'start',z:7.5})}${tx(206,185,'Cancelar',{a:'end',z:7.5,s:'fill:var(--muted)'})}<rect x="212" y="173" width="48" height="18" rx="9" fill="${A}" opacity=".3"/>${tx(236,185,'Añadir',{z:8,s:'font-weight:800;fill:var(--fg)'})}${tap(236,182,1)}</g>`+home(3.9,false),'Se toca Añadir y aparece el icono en la pantalla de inicio')}}
   ];
-  const S=()=>os==='ios'?IOS:AND;
+  const S=()=>os==='ioc'?IOC:os==='ios'?IOS:AND;
   const labels=['Abrir','Menú','Opción','Añadir'];
   el.classList.add('cm4');
   el.innerHTML=`<div class="cmh1"><h3 class="kh">Ponla en la pantalla de tu móvil</h3><span class="cmsub">Como una app, sin instalar nada · 4 pasos</span></div>
-    <div class="cmsel" role="group" aria-label="Tu móvil" style="margin:10px 0 0"><button type="button" data-os="ios" aria-pressed="${os==='ios'}">iPhone</button><button type="button" data-os="and" aria-pressed="${os==='and'}">Android</button></div>
+    <div class="cmsel" role="group" aria-label="Tu móvil" style="margin:10px 0 0"><button type="button" data-os="ioc" aria-pressed="${os==='ioc'}">iPhone · Chrome</button><button type="button" data-os="ios" aria-pressed="${os==='ios'}">iPhone · Safari</button><button type="button" data-os="and" aria-pressed="${os==='and'}">Android · Chrome</button></div>
     <div class="cmnav" role="tablist" aria-label="Pasos">${labels.map((l,i)=>`<button type="button" role="tab" data-s="${i}"><b>${i+1}</b><span>${l}</span></button>`).join('')}</div>
     <div class="cmprog" aria-hidden="true"><i id="icprog"></i></div>
     <div class="cmstage" id="icstage"></div>
