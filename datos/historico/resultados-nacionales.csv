@@ -1,0 +1,3 @@
+eleccion,fecha,PP,PSOE,VOX,UP_SUMAR,Cs,nota
+23-J 2023,2023-07-23,33.06,31.70,12.39,12.31,,Sumar (con Podemos fuera en algunas listas). Fuente: Wikipedia (tabla de encuestas) y datos ya usados en el simulador (BASE de assets/home.js).
+10-N 2019,2019-11-10,20.82,28.00,15.09,12.84,6.79,Vox 15.09: de la tabla nacional de orain.eus (escaños 52, 3.640.063 votos). La fila de resultado de Wikipedia daba 12.9 para Vox en las encuestas; no coincide y NO se usa como resultado.
