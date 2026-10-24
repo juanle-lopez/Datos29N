@@ -54,14 +54,11 @@
       s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">8 de cada 10</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">19 de cada 20</text>`}
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
-    // histórico: CIS (rombos), Sigma Dos (línea gruesa), otras encuestas (puntos) y escenario CIS
-    // El escenario CIS no marca la escala: si se sale, se dibuja pegado al borde con su valor y una flecha
+    // histórico: CIS (rombos), Sigma Dos (línea gruesa) y otras encuestas (puntos). Un valor fuera de escala se dibuja pegado al borde
     const cY=v=>Y(Math.max(lo,Math.min(hi,v)));
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+cY(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
-    s+=`<polyline fill="none" stroke="${c}" stroke-width="1.6" stroke-dasharray="9 5" opacity=".9" points="${X(dd(lc.f))},${cY(lc.esc[k])} ${rC.map(r=>X(dd(r.d))+','+cY(r.esc)).join(' ')}"/>`;
     hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${cY(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${cY(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
-    {const ve=rC[rC.length-1].esc;if(ve<lo||ve>hi)s+=`<text x="${X(D1)-4}" y="${ve<lo?Y(lo)-5:Y(hi)+12}" text-anchor="end" style="fill:${c};font-size:10.5px;font-weight:600">CIS: ${ve} ${ve<lo?'↓':'↑'}</text>`}
     s+=`<polyline fill="none" stroke="${c}" stroke-width="2.4" points="${hs.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ')}"/>`;
     dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
     s+=histG(k,c,X,Y,T,ph,L);
@@ -81,10 +78,11 @@
   function histG(k,c,X,Y,T,ph,L){
     if(!HD.length)return '';
     const pts=HD.map(h=>X(dd(h.f))+','+Y(h.esc[k])).join(' ');
-    let g=`<g class="hist"><polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" stroke-linejoin="round" points="${pts}"/>`;
+    let lastX=-99,lastBelow=false;let g=`<g class="hist"><polyline fill="none" stroke="${c}" stroke-width="1.2" opacity=".55" stroke-linejoin="round" points="${pts}"/>`;
     HD.forEach(h=>{const x=X(dd(h.f)),y=Y(h.esc[k]),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0;
       g+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[k])}" y2="${Y(h.lo[k])}" stroke="${c}" stroke-width="2" opacity=".32" stroke-linecap="round"/>`;
       g+=ch?`<circle cx="${x}" cy="${y}" r="${RC+3.5}" fill="${c}" opacity=".2"/><circle cx="${x}" cy="${y}" r="${RC}" fill="${c}" stroke="var(--bg)" stroke-width="2"/>`:`<circle cx="${x}" cy="${y}" r="${RD}" fill="${c}" opacity=".9"/>`;
+      if(ch&&Math.abs(x-X(TH))>26){const below=(Math.abs(x-lastX)<30&&!lastBelow)||y-RC-9<T+8;g+=`<text x="${x}" y="${below?y+RC+15:y-RC-6}" text-anchor="middle" class="dl" style="fill:${c}">${h.esc[k]}</text>`;lastX=x;lastBelow=below}
       });
     {const lc=HD.slice(1).filter(h=>h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[k]!==0).pop();
       if(lc&&!REDUCE)g+=`<circle class="hint" cx="${X(dd(lc.f))}" cy="${Y(lc.esc[k])}" r="${RC}" fill="none" stroke="${c}" stroke-width="1.8"><animate attributeName="r" values="${RC};${RC+13};${RC+13}" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;0" keyTimes="0;.6;1" dur="3s" repeatCount="indefinite"/></circle>`}
@@ -137,10 +135,8 @@
       s+=`<polygon points="${poly('lo95','hi95')}" fill="var(--fg)" opacity=".10"/><polygon points="${poly('lo','hi')}" fill="var(--fg)" opacity=".14"/><polygon points="${poly('lo50','hi50')}" fill="var(--fg)" opacity=".18"/>`;
       s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="2" points="${x0},${Y(bl[tk])} ${r.map(q=>xs_(dd(q.d))+','+Y(q.esc)).join(' ')}"/>`;
       const q=r[r.length-1];s+=`<text x="${xe-6}" y="${tk==='PV'?Math.max(T+10,Y(q.hi)-4):Y(q.lo)+13}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">8 de cada 10 simulaciones</text></g>`;
-      // línea de la mayoría y escenario CIS
+      // línea de la mayoría
       s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;${halo}">176</text>`;
-      const rC=PRED.escCIS.ruta[tk],cy=v=>Y(Math.max(lo,Math.min(hi,v)));
-      s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="1.5" stroke-dasharray="2 4" opacity=".8" points="${x0},${cy(PRED.escBaseBloq.cis[tk])} ${rC.map(z=>xs_(dd(z.d))+','+cy(z.esc)).join(' ')}"/><text x="${xe-6}" y="${cy(rC[rC.length-1].esc)-4}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">solo CIS: ${rC[rC.length-1].esc}</text>`;
       if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/>${ch?`<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${RC+3.5}" fill="var(--fg)" opacity=".18"/>`:''}<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?RC:RD}" fill="var(--fg)" stroke="var(--bg)" stroke-width="${ch?2:0}"/>`});
       // etiquetas por partido al final (separadas para que no se pisen)
       let acc=0;const lb=pr.map(([k,n,pc_])=>{const v=pval(proj[proj.length-1].o,k),y=Y((Math.max(acc,lo)+acc+v)/2);acc+=v;return{n,v,c:pc_,y}});
@@ -221,7 +217,6 @@
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="1.4"/><rect x="13" y="1.5" width="7" height="7" transform="rotate(45 16.5 5)" fill="var(--bg)" stroke="currentColor" stroke-width="1.5"/>')}CIS (barómetro de octubre)</span>`+
     `<span>${sw('<circle cx="17" cy="5" r="2.6" fill="currentColor" opacity=".5"/>')}Otras encuestas</span>`+
     `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="0.1 7"/>')}Proyección de la media de las 14 encuestas (punto grande: hoy, ${fecha(PRED.generado)}; encuestas del ${RNG})</span>`+
-    `<span>${sw('<line x1="0" x2="34" y1="5" y2="5" stroke="currentColor" stroke-width="1.6" stroke-dasharray="9 5"/>')}Escenario solo CIS</span>`+
     (HD.length?`<span>${sw('<line x1="17" x2="17" y1="0" y2="10" stroke="currentColor" stroke-width="2" opacity=".32"/><circle cx="17" cy="5" r="3.2" fill="var(--bg)" stroke="currentColor" stroke-width="1.6"/>')}Historial diario de la media (con su margen del 80 %): toca esa zona para ver qué cambió cada día</span>`:'')+
     `<span>${sw('<rect x="0" y="0" width="34" height="3" fill="currentColor" opacity=".12"/><rect x="0" y="3.5" width="34" height="3" fill="currentColor" opacity=".25"/><rect x="0" y="7" width="34" height="3" fill="currentColor" opacity=".12"/>')}Tubo: 50 %, 80 % y 95 % de las simulaciones</span>`+
     `<span>${sw('<path d="M0 8 L10 2 L22 6 L34 1" fill="none" stroke="currentColor" stroke-width=".9" opacity=".5"/>')}24 trayectorias simuladas (suavizadas)</span>`+
