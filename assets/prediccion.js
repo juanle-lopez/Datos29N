@@ -206,7 +206,8 @@
   }
   {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
     if(ps)ps.innerHTML=`<b>29-N, según la media de las encuestas</b> (valor central y rango del 80 %):<br>`+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span>`).join(' · ')+
-      `<span class="maj">PP + Vox: <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span> · mayoría absoluta: 176</span>`;
+      `<span class="maj">PP + Vox: <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span> · mayoría absoluta: 176</span>`+
+      (PRED.base&&PRED.base.priv?`<span class="maj">Voto medio hoy (media de las ${PRED.privadas.length} encuestas): `+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${PRED.base.priv[k].toFixed(1).replace('.',',')} %</b>`).join(' · ')+`</span>`:'');
     const bt=document.getElementById('psimple');if(bt)bt.addEventListener('click',()=>{const on=bt.getAttribute('aria-pressed')!=='true';bt.setAttribute('aria-pressed',String(on));document.getElementById('pgrid').classList.toggle('simple',on)})}
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const b=document.getElementById('pgrid');if(b&&(b.clientWidth||720)===lastW)return;draw()},150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;

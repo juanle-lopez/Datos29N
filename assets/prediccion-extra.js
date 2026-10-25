@@ -14,7 +14,7 @@
 
   // Portada: escaños hoy y proyectados al 29-N
   {const el=$('phoy');if(el){const E=PRED.escPrivadas,B=PRED.escBase.priv,pv=E.ppVox;
-    el.innerHTML=P.map(([k,nm,c])=>`<div class="hoyc" style="--c:${c}"><div class="hn">${nm}</div><div class="hv"><b>${B[k]}</b><span>→ ${E.escanos[k].c}</span></div><small>hoy → 29‑N (${E.escanos[k].p10}–${E.escanos[k].p90})</small></div>`).join('')+
+    el.innerHTML=P.map(([k,nm,c])=>`<div class="hoyc" style="--c:${c}"><div class="hn">${nm}</div><div class="hv"><b>${B[k]}</b><span>→ ${E.escanos[k].c}</span></div><small>hoy → 29‑N (${E.escanos[k].p10}–${E.escanos[k].p90})</small><small>Voto medio: <b>${PRED.base.priv[k].toFixed(1).replace('.',',')} %</b></small></div>`).join('')+
       `<div class="hoym">PP + Vox: <b>${PRED.escBaseBloq.priv.PV}</b> hoy → <b>${pv.c}</b> el 29‑N (${pv.p10}–${pv.p90}) · mayoría absoluta: <b>176</b></div>`;}}
 
   // 1. Encuestas una a una: cuántas dan mayoría a PP + Vox (escaños con nuestro D'Hondt) y franja de puntos
