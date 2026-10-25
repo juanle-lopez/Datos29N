@@ -106,7 +106,7 @@
   const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
   const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?140:156,sub=22+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?140:156,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
     const hi=240,lo=0,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
     const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
     // series de partes: historial (HD) y proyección (ruta)
@@ -115,24 +115,23 @@
     s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido; altura = escaños</text>`;
     const halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round';
     BL.forEach(([tk,nm,c],bi)=>{
-      const hy=34+bi*sub+(bi?0:8),T=hy+22,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
+      const hy=34+bi*sub+(bi?0:8),T=hy+30,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
       s+=`<text x="0" y="${hy+8}" style="fill:${c};font-size:${mob?10.5:11.5}px;font-weight:700">${mob&&tk==='IZ'?'PSOE + Sumar + Podemos + socios':nm}: ${e.c} (${e.p10}–${e.p90})</text>`;
       for(let v=lo;v<=hi;v+=40)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
       if(bi)MES.forEach(([d,l])=>{s+=`<text x="${xs_(dd(d))}" y="${T+ph+16}">${l}</text>`});
       s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><line x1="${xe}" x2="${xe}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/>`;
-      if(!bi){s+=`<text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text><text x="${xe}" y="${T-5}" text-anchor="middle">29-N</text>`;
-        if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:var(--muted);font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:var(--muted);font-size:10.5px">toca aquí →</text>`}
+      if(!bi){s+=`<text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text><text x="${xe}" y="${T-5}" text-anchor="middle">29-N</text>`}
       // pila: de abajo arriba, cada parte entre su acumulado anterior y el suyo
       const stack=(ser,op)=>{let o='';pr.forEach(([k,n,pc_],i)=>{const up=ser.map(q=>xs_(q.t)+','+Y(pr.slice(0,i+1).reduce((a,[kk])=>a+pval(q.o,kk),0))),dn=[...ser].reverse().map(q=>xs_(q.t)+','+Y(pr.slice(0,i).reduce((a,[kk])=>a+pval(q.o,kk),0)));o+=`<polygon points="${up.join(' ')} ${dn.join(' ')}" fill="${pc_}" opacity="${op}"/>`});return o};
       s+=`<clipPath id="pc-${bi}"><rect x="${L}" y="${T}" width="${pw+2}" height="${ph}"/></clipPath>`;
       if(hist.length)s+=`<g clip-path="url(#pc-${bi})">${stack(hist,.9)}</g>`;
-      {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${x0-9}" y="${Math.max(T+12,Y(tv)-8)}" text-anchor="end" style="fill:${c};font-size:14px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">hoy ${tv}</text>`}
+      {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${x0-9}" y="${Y(tv)+24}" text-anchor="end" style="fill:${c};font-size:13px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">hoy ${tv}</text>`}
       const base={t:TH,o:{PP:today('PP'),VOX:today('VOX'),PSOE:today('PSOE'),SUMAR:today('SUMAR'),IZ:bl.IZ}};
       s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.62)}</g>`;
       const poly=(a,b2)=>r.map(q=>xs_(dd(q.d))+','+Y(q[b2])).join(' ')+' '+[...r].reverse().map(q=>xs_(dd(q.d))+','+Y(q[a])).join(' ');
       s+=`<polygon points="${poly('lo95','hi95')}" fill="var(--fg)" opacity=".10"/><polygon points="${poly('lo','hi')}" fill="var(--fg)" opacity=".14"/><polygon points="${poly('lo50','hi50')}" fill="var(--fg)" opacity=".18"/>`;
       s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="2" points="${x0},${Y(bl[tk])} ${r.map(q=>xs_(dd(q.d))+','+Y(q.esc)).join(' ')}"/>`;
-      const q=r[r.length-1];s+=`<text x="${xe-6}" y="${tk==='PV'?Math.max(T+10,Y(q.hi)-4):Y(q.lo)+13}" text-anchor="end" style="fill:var(--fg);font-size:10px;${halo}">8 de cada 10 simulaciones</text></g>`;
+      s+=`</g>`;
       // línea de la mayoría
       s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;${halo}">176</text>`;
       if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/>${ch?`<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${RC+3.5}" fill="var(--fg)" opacity=".18"/>`:''}<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?RC:RD}" fill="var(--fg)" stroke="var(--bg)" stroke-width="${ch?2:0}"/>`});
@@ -205,9 +204,10 @@
     Object.entries(OPEN).forEach(([k,f])=>{const sv=box.querySelector('svg.pg[data-k="'+k+'"]');if(sv)abrir(sv.closest('.pcell'),k,f,true)});
   }
   {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
-    if(ps)ps.innerHTML=`<b>29-N, según la media de las encuestas</b> (valor central y rango del 80 %):<br>`+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span>`).join(' · ')+
-      `<span class="maj">PP + Vox: <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span> · mayoría absoluta: 176</span>`+
-      (PRED.base&&PRED.base.priv?`<span class="maj">Voto medio hoy (media de las ${PRED.privadas.length} encuestas): `+K.map(([k,n,c])=>`<span style="color:${c};font-weight:700">${n}</span> <b class="n">${PRED.base.priv[k].toFixed(1).replace('.',',')} %</b>`).join(' · ')+`</span>`:'');
+    if(ps){const f1=x=>x.toFixed(1).replace('.',','),bp=PRED.base&&PRED.base.priv;
+      ps.innerHTML=`<div class="ph">29-N según la media de las ${PRED.privadas.length} encuestas</div><div class="pst"><div class="psr hd"><span>Partido</span><span>Escaños <i>(80 %)</i></span><span>Voto medio</span></div>`+
+      K.map(([k,n,c])=>`<div class="psr"><span style="color:${c};font-weight:700">${n}</span><span><b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span></span><span>${bp?`<b class="n">${f1(bp[k])} %</b>`:''}</span></div>`).join('')+
+      `</div><div class="pm"><span>PP + Vox <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span></span><span class="r">Mayoría absoluta: 176 escaños</span></div>`}
     const bt=document.getElementById('psimple');if(bt)bt.addEventListener('click',()=>{const on=bt.getAttribute('aria-pressed')!=='true';bt.setAttribute('aria-pressed',String(on));document.getElementById('pgrid').classList.toggle('simple',on)})}
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const b=document.getElementById('pgrid');if(b&&(b.clientWidth||720)===lastW)return;draw()},150)});
   const sw=st=>`<svg viewBox="0 0 34 10" aria-hidden="true">${st}</svg>`;
