@@ -41,7 +41,7 @@
       s+=`<text x="${W}" y="14" text-anchor="end" class="cmbig fade" style="animation-delay:1.5s">media</text>`;return svg(s,'Los puntos se juntan en la media y esta se corrige con el error histórico')},
     tick(){}});
   // 3. Margen de error
-  S.push({t:'Medimos cuánto nos podemos equivocar',p:`Las encuestas fallan, y casi siempre todas a la vez. Por eso no damos una cifra sola: dibujamos una <b>campana</b> con lo más probable en el centro y una <b>franja del 80 %</b> alrededor. Recoge el error típico de 2019 y 2023 (±${nf(PRED.sdError)} puntos) y que la opinión puede moverse hasta el 29-N.`,
+  S.push({t:'Medimos cuánto nos podemos equivocar',p:`Las encuestas fallan, y casi siempre todas a la vez. Por eso no damos una cifra sola: dibujamos una <b>campana</b> con lo más probable en el centro y una <b>franja del 80 %</b> alrededor. Recoge el error típico de 2019 y 2023 (±${nf(PRED.sdError)} puntos) que las encuestas suelen fallar a la vez en el mismo sentido (error común de bloque) y que la opinión puede moverse hasta el 29-N.`,
     dur:6500,go(){let s=axis();const sd=K.map(([k])=>sdv(k)),mn=Math.min(...sd),hh=i=>46*mn/sd[i];
       K.forEach(([k,,c],i)=>{const m=fin[k],sg_=sd[i],h=hh(i),pts=[];for(let v=Math.max(0,m-3.6*sg_);v<=m+3.6*sg_;v+=sg_/6){pts.push([v,Math.exp(-0.5*((v-m)/sg_)**2)*h])}
         const lo=m-1.2816*sg_,hi=m+1.2816*sg_,inb=pts.filter(p=>p[0]>=lo&&p[0]<=hi);
