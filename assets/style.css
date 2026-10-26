@@ -882,3 +882,6 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 .cdif{font-size:13.5px;line-height:1.45;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.cdif b{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:6px}
 .csrc{background:none;border:0;color:var(--muted);font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;padding:2px 2px 10px}
 @media (max-width:640px){.cl{grid-template-columns:1fr;gap:1px}}
+.cs{border-left:3px solid var(--c);padding-left:8px;display:grid;gap:4px}.cs>small{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}.cs .cl{border:0;padding:0;grid-template-columns:70px 1fr}
+.cd>div{font-size:13.5px}.cd>div>b{display:block}
+#cpick .pre button{font-size:12.5px}
