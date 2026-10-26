@@ -894,3 +894,5 @@ details.tvpt>summary::after{content:"Ver completo ▾";grid-column:1/-1;font-siz
 
 .crb .pv{flex:none}.gh span{overflow:hidden;font-size:9.5px}
 @media (max-width:640px){.crb[style*="27px"] .pv{width:26px;height:26px;font-size:12px}}
+#cpick .rowf.pre{flex-wrap:wrap;overflow:visible;white-space:normal;gap:8px}#cpick .rowf.pre>b{flex:0 0 100%}#cpick .rowf.pre button{text-align:left;white-space:normal;line-height:1.3}
+#cpick .rowf.pre button{flex:0 1 auto;max-width:100%;min-width:0;overflow-wrap:anywhere}
