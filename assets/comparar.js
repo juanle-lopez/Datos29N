@@ -7,7 +7,7 @@ const SYM={y:'✓',n:'✕',p:'◐',q:'–'};
 const NAME={y:'propone',n:'se opone o propone lo contrario',p:'matizado o con divergencias dentro de la coalición',q:'sin posición concreta en las fuentes'};
 const SHORT=k=>cpOf(k).n.replace(' / Frente Amplio','').replace('EH Bildu','Bildu');
 const PRE=[['PP + Vox',['PP','VOX']],['PSOE + Sumar + Podemos',['PSOE','SUMAR','PODEMOS']],['PSOE + Sumar + Podemos + ERC, Junts, Bildu y PNV (socios de 2023)',['PSOE','SUMAR','PODEMOS','ERC','JUNTS','BILDU','PNV']]];
-let selA=['PP','VOX'],selB=['PSOE','SUMAR','PODEMOS',],open_=null;
+let selA=['PP','VOX'],selB=['PSOE','SUMAR','PODEMOS'],open_=null;
 (function(){const h=(location.hash||'').replace('#','').split('-');if(h.length===2){const a=h[0].split('.'),b=h[1].split('.');
   if([...a,...b].every(k=>IDX[k]!=null)&&!a.some(k=>b.includes(k))&&a.length&&b.length){selA=a;selB=b}}})();
 const same=(a,b)=>a.length===b.length&&a.every(k=>b.includes(k));
@@ -24,20 +24,22 @@ const head=t=>{const x=String(t).split(/;| \(/)[0].trim();return x.length>110?x.
 function srcTxt(k,t){const x=PROP[k][t];
   if(!x)return '<span class="na">Sin posición concreta en las fuentes consultadas.</span>';
   return `<div class="o">Origen: ${esc(x.o)}</div><div class="ms">Fuentes: ${x.f.map(f=>A(S[f][0],S[f][1])).join('')}</div>`}
+const modeOf=sel=>PRE.findIndex(p=>same(p[1],sel));   // atajo activo: -1 si es una selección propia
+let custom={A:false,B:false};
 function pickers(){
-  const row=(id,lab,sel,other)=>`<div class="rowf" id="${id}"><b>${lab}</b>`+CP.map(p=>`<button type="button" data-${id}="${p.k}" aria-pressed="${sel.includes(p.k)}" ${other.includes(p.k)?'disabled':''} style="--c:${p.c}">${esc(SHORT(p.k))}</button>`).join('')+'</div>';
-  document.getElementById('cpick').innerHTML=row('pa','Coalición A',selA,selB)+row('pb','Coalición B',selB,selA)+
-    `<div class="rowf pre"><b>Atajos</b>${PRE.map((p,i)=>`<button type="button" data-pre="${i}">${esc(p[0])}</button>`).join('')}</div>`;
+  const mk=(id,lab,sel,other,side)=>{const m=custom[side]?-1:modeOf(sel),lock=m>=0;
+    return `<div class="cside"><div class="rowf pre" id="${id}p"><b>${lab}</b>`+
+      PRE.map((p,i)=>`<button type="button" data-${id}p="${i}" aria-pressed="${m===i}" ${p[1].some(k=>other.includes(k))?'disabled':''}>${esc(p[0])}</button>`).join('')+
+      `<button type="button" data-${id}p="-1" aria-pressed="${m<0}">Personalizada</button></div>`+
+      `<div class="rowf" id="${id}">`+CP.map(p=>`<button type="button" data-${id}="${p.k}" aria-pressed="${sel.includes(p.k)}" ${other.includes(p.k)||lock?'disabled':''} style="--c:${p.c}">${esc(SHORT(p.k))}</button>`).join('')+'</div>'+
+      (lock?'<p class="clock">Coalición fija. Para cambiarla, elige «Personalizada».</p>':'')+'</div>'};
+  document.getElementById('cpick').innerHTML=mk('pa','Coalición A',selA,selB,'A')+mk('pb','Coalición B',selB,selA,'B');
   const tog=(sel,k)=>sel.includes(k)?(sel.length>1?sel.filter(x=>x!==k):sel):[...sel,k];
   document.querySelectorAll('[data-pa]').forEach(b=>b.addEventListener('click',()=>{selA=tog(selA,b.dataset.pa);open_=null;draw()}));
   document.querySelectorAll('[data-pb]').forEach(b=>b.addEventListener('click',()=>{selB=tog(selB,b.dataset.pb);open_=null;draw()}));
-  document.querySelectorAll('[data-pre]').forEach(b=>b.addEventListener('click',()=>{const s=PRE[+b.dataset.pre][1];
-    if(selA.some(k=>s.includes(k))&&!same(selA,s)){} ;
-    const other=selA.slice();
-    // el atajo se coloca en la coalición que no contiene a sus partidos
-    if(s.some(k=>selB.includes(k))&&!s.some(k=>selA.includes(k))){selA=s;selB=selB.filter(k=>!s.includes(k));if(!selB.length)selB=CP.map(p=>p.k).filter(k=>!s.includes(k)).slice(0,1)}
-    else{selB=s;selA=other.filter(k=>!s.includes(k));if(!selA.length)selA=CP.map(p=>p.k).filter(k=>!s.includes(k)).slice(0,1)}
-    open_=null;draw()}));
+  [['A','pap'],['B','pbp']].forEach(([side,id])=>document.querySelectorAll('[data-'+id+']').forEach(b=>b.addEventListener('click',()=>{
+    const i=+b.dataset[id];if(i<0){custom[side]=true}else{custom[side]=false;if(side==='A')selA=PRE[i][1].slice();else selB=PRE[i][1].slice()}
+    open_=null;draw()})));
 }
 function draw(){
   try{history.replaceState(null,'','#'+selA.join('.')+'-'+selB.join('.'))}catch(e){}
