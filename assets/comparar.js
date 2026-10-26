@@ -34,7 +34,7 @@ function group(vals){          // vals: [[clave, y|n|p|q]]
 function pickers(){
   document.getElementById('cpick').innerHTML=
    `<div class="rowf pre"><b>Coalición</b>`+COAL.map((c,i)=>`<button type="button" data-co="${i}" aria-pressed="${ci===i}">${esc(c[0])}</button>`).join('')+`</div>`+
-   `<p class="clock">Se comparan entre sí los partidos de la coalición elegida.</p>`;
+   `<p class="clock">Elige la coalición: se compara qué proponen sus integrantes.</p>`;
   document.querySelectorAll('[data-co]').forEach(b=>b.addEventListener('click',()=>{ci=+b.dataset.co;open_=null;draw()}));
 }
 function draw(){
@@ -49,7 +49,7 @@ function draw(){
    `<div class="cbh"><span>${esc(nm)}</span></div>`+
    `<div class="cb" role="img" aria-label="${seg.map(s=>s[1]+': '+s[2]).join('; ')}">`+seg.filter(s=>s[2]).map(s=>`<span style="flex:${s[2]};background:${s[3]}"><b>${s[2]}</b></span>`).join('')+'</div>'+
    `<div class="cleg">`+seg.map(s=>`<span><i style="background:${s[3]}"></i>${esc(s[1])} <b>${s[2]}</b></span>`).join('')+'</div>'+
-   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de estos partidos; en ${sin} no hay dato. «Coinciden» significa misma postura; en las que lo indican, las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
+   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de los integrantes de la coalición; en ${sin} no hay dato. «Coinciden» significa misma postura; en las que lo indican, las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
   const groups=[['co','Coinciden','var(--good)'],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
   const pair=same(SEL,['PP','VOX']);
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
