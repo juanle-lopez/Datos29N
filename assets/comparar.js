@@ -11,7 +11,8 @@ const SHORT=k=>cpOf(k).n.replace(' / Frente Amplio','').replace('EH Bildu','Bild
    Para añadir o cambiar una coalición, edita esta lista. */
 const COAL=[
  ['PP + Vox',['PP','VOX'],[1,2,4,6,7,10,11,16,23,26,27]],
- ['PSOE + Sumar + Podemos',['PSOE','SUMAR','PODEMOS'],[0,3,5,6,12,15,17,21,28,29]]
+ ['PSOE + Sumar + Podemos',['PSOE','SUMAR','PODEMOS'],[0,3,5,6,12,15,17,21,28,29]],
+ ['PSOE + Sumar + Podemos + socios de 2023 (ERC, Junts, Bildu, PNV)',['PSOE','SUMAR','PODEMOS','ERC','JUNTS','BILDU','PNV'],[3,6,8,12,14,17,23,24,28,29],'Los socios de la investidura de 2023 incluían también BNG y CCa, que no están en las fuentes de Propuestas y no se comparan.']
 ];
 let ci=0,open_=null;
 (function(){const h=(location.hash||'').replace('#','');const i=COAL.findIndex(c=>c[1].join('.')===h);if(i>=0)ci=i})();
@@ -34,12 +35,12 @@ function group(vals){          // vals: [[clave, y|n|p|q]]
 function pickers(){
   document.getElementById('cpick').innerHTML=
    `<div class="rowf pre"><b>Coalición</b>`+COAL.map((c,i)=>`<button type="button" data-co="${i}" aria-pressed="${ci===i}">${esc(c[0])}</button>`).join('')+`</div>`+
-   `<p class="clock">Elige la coalición: se compara qué proponen sus integrantes.</p>`;
+   `<p class="clock">Elige la coalición: se compara qué proponen sus integrantes.${COAL[ci][3]?' '+esc(COAL[ci][3]):''}</p>`;
   document.querySelectorAll('[data-co]').forEach(b=>b.addEventListener('click',()=>{ci=+b.dataset.co;open_=null;draw()}));
 }
 function draw(){
   const sel_=sel();try{history.replaceState(null,'','#'+sel_.join('.'))}catch(e){}
-  pickers();const SEL=sel_,DIF=COAL[ci][2];
+  pickers();const SEL=sel_,DIF=COAL[ci][2],GRID=SEL.length>4?`grid-template-columns:1fr repeat(${SEL.length},27px);gap:4px`:`grid-template-columns:1fr repeat(${SEL.length},34px)`;
   const G={co:[],co2:[],op:[],part:[],S:[]};let sin=0;
   CMP.forEach((m,i)=>{let g=group(SEL.map(k=>[k,m.v[IDX[k]]]));if(g)G[g].push(i);else sin++});
   const tot=CMP.length-sin,nm=label(SEL);
@@ -53,11 +54,11 @@ function draw(){
   const groups=[['co','Coinciden','var(--good)'],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
   const pair=same(SEL,['PP','VOX']);
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
-    `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
+    `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="${GRID}"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
     G[g].map(i=>{const m=CMP[i],on=open_===i,v=k=>m.v[IDX[k]];
       const con=SEL.filter(k=>CMPD[i][k]),sinp=SEL.filter(k=>!CMPD[i][k]);
       const nt=pair&&CMPN[i]&&CMPD[i].PP&&CMPD[i].VOX?`<div class="cdif"><b>Diferencias</b> ${esc(CMPN[i])}</div>`:'';
-      return `<div class="cr${on?' on':''}"><button type="button" class="crb" data-i="${i}" aria-expanded="${on}" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span class="cm"><small>${esc(TP[m.t])}</small>${esc(m.m)}${g==='co'&&DIF.includes(i)?'<em class="cdf">cifras o alcance distintos</em>':''}</span>${SEL.map(k=>`<span class="pv ${v(k)}" title="${esc(cpOf(k).n)}: ${NAME[v(k)]}">${SYM[v(k)]}</span>`).join('')}</button>`+
+      return `<div class="cr${on?' on':''}"><button type="button" class="crb" data-i="${i}" aria-expanded="${on}" style="${GRID}"><span class="cm"><small>${esc(TP[m.t])}</small>${esc(m.m)}${g==='co'&&DIF.includes(i)?'<em class="cdf">cifras o alcance distintos</em>':''}</span>${SEL.map(k=>`<span class="pv ${v(k)}" title="${esc(cpOf(k).n)}: ${NAME[v(k)]}">${SYM[v(k)]}</span>`).join('')}</button>`+
        `<div class="cdt">${con.map(k=>`<div class="cl" style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b><span>${esc(head(CMPD[i][k]))}</span></div>`).join('')}${sinp.length?`<div class="cl none"><b></b><span>Sin posición concreta: ${esc(label(sinp))}</span></div>`:''}${nt}</div>`+
        `<button type="button" class="csrc" data-i="${i}">${on?'Ocultar':'Ver'} detalle y fuentes</button>`+
        (on?`<div class="cd">${con.map(k=>`<div style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b>${esc(CMPD[i][k])}${srcTxt(k,m.t,i)}</div>`).join('')}</div>`:'')+'</div>'}).join('')+'</section>').join('');
