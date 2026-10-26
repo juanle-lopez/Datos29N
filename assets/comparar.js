@@ -41,23 +41,23 @@ function draw(){
   const sel_=sel();try{history.replaceState(null,'','#'+sel_.join('.'))}catch(e){}
   pickers();const SEL=sel_,DIF=COAL[ci][2];
   const G={co:[],co2:[],op:[],part:[],S:[]};let sin=0;
-  CMP.forEach((m,i)=>{let g=group(SEL.map(k=>[k,m.v[IDX[k]]]));if(g==='co'&&DIF.includes(i))g='co2';if(g)G[g].push(i);else sin++});
+  CMP.forEach((m,i)=>{let g=group(SEL.map(k=>[k,m.v[IDX[k]]]));if(g)G[g].push(i);else sin++});
   const tot=CMP.length-sin,nm=label(SEL);
   const GL='color-mix(in srgb,var(--good) 55%,var(--bg))';
-  const seg=[['co','Misma postura y mismo alcance',G.co.length,'var(--good)'],['co2','Misma postura, distinto alcance o cifras',G.co2.length,GL],['part','Postura matizada',G.part.length,'var(--mid)'],['op','Se oponen',G.op.length,'var(--bad)'],['S','Solo uno tiene posición',G.S.length,'var(--reg)']];
+  const seg=[['co','Coinciden',G.co.length,'var(--good)'],['part','Postura matizada',G.part.length,'var(--mid)'],['op','Se oponen',G.op.length,'var(--bad)'],['S','Solo uno tiene posición',G.S.length,'var(--reg)']];
   document.getElementById('cbar').innerHTML=
    `<div class="cbh"><span>${esc(nm)}</span></div>`+
    `<div class="cb" role="img" aria-label="${seg.map(s=>s[1]+': '+s[2]).join('; ')}">`+seg.filter(s=>s[2]).map(s=>`<span style="flex:${s[2]};background:${s[3]}"><b>${s[2]}</b></span>`).join('')+'</div>'+
    `<div class="cleg">`+seg.map(s=>`<span><i style="background:${s[3]}"></i>${esc(s[1])} <b>${s[2]}</b></span>`).join('')+'</div>'+
-   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de estos partidos; en ${sin} no hay dato. Los dos tonos de verde son coincidencia de postura: el claro avisa de que las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
-  const groups=[['co','Misma postura y mismo alcance','var(--good)'],['co2','Misma postura, distinto alcance o cifras',GL],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
+   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de estos partidos; en ${sin} no hay dato. «Coinciden» significa misma postura; en las que lo indican, las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
+  const groups=[['co','Coinciden','var(--good)'],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
   const pair=same(SEL,['PP','VOX']);
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
     `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
     G[g].map(i=>{const m=CMP[i],on=open_===i,v=k=>m.v[IDX[k]];
       const con=SEL.filter(k=>CMPD[i][k]),sinp=SEL.filter(k=>!CMPD[i][k]);
       const nt=pair&&CMPN[i]&&CMPD[i].PP&&CMPD[i].VOX?`<div class="cdif"><b>Diferencias</b> ${esc(CMPN[i])}</div>`:'';
-      return `<div class="cr${on?' on':''}"><button type="button" class="crb" data-i="${i}" aria-expanded="${on}" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span class="cm"><small>${esc(TP[m.t])}</small>${esc(m.m)}</span>${SEL.map(k=>`<span class="pv ${v(k)}" title="${esc(cpOf(k).n)}: ${NAME[v(k)]}">${SYM[v(k)]}</span>`).join('')}</button>`+
+      return `<div class="cr${on?' on':''}"><button type="button" class="crb" data-i="${i}" aria-expanded="${on}" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span class="cm"><small>${esc(TP[m.t])}</small>${esc(m.m)}${g==='co'&&DIF.includes(i)?'<em class="cdf">cifras o alcance distintos</em>':''}</span>${SEL.map(k=>`<span class="pv ${v(k)}" title="${esc(cpOf(k).n)}: ${NAME[v(k)]}">${SYM[v(k)]}</span>`).join('')}</button>`+
        `<div class="cdt">${con.map(k=>`<div class="cl" style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b><span>${esc(head(CMPD[i][k]))}</span></div>`).join('')}${sinp.length?`<div class="cl none"><b></b><span>Sin posición concreta: ${esc(label(sinp))}</span></div>`:''}${nt}</div>`+
        `<button type="button" class="csrc" data-i="${i}">${on?'Ocultar':'Ver'} detalle y fuentes</button>`+
        (on?`<div class="cd">${con.map(k=>`<div style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b>${esc(CMPD[i][k])}${srcTxt(k,m.t,i)}</div>`).join('')}</div>`:'')+'</div>'}).join('')+'</section>').join('');
