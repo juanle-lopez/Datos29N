@@ -90,3 +90,7 @@ Si encuentras un error o un dato sin fuente, abre una *issue* con el enlace al d
 ## Autoría
 
 Por **JuanLe**. Proyecto independiente y sin publicidad.
+
+## Licencia
+
+© 2026 JuanLe. Todos los derechos reservados: no se puede copiar ni reutilizar el código, el diseño ni los textos sin permiso por escrito. Ver [LICENSE](LICENSE). Los datos de terceros pertenecen a sus fuentes.
