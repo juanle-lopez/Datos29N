@@ -40,16 +40,17 @@ function pickers(){
 function draw(){
   const sel_=sel();try{history.replaceState(null,'','#'+sel_.join('.'))}catch(e){}
   pickers();const SEL=sel_,DIF=COAL[ci][2];
-  const G={co:[],op:[],part:[],S:[]};let sin=0;
-  CMP.forEach((m,i)=>{let g=group(SEL.map(k=>[k,m.v[IDX[k]]]));if(g==='co'&&DIF.includes(i))g='part';if(g)G[g].push(i);else sin++});
+  const G={co:[],co2:[],op:[],part:[],S:[]};let sin=0;
+  CMP.forEach((m,i)=>{let g=group(SEL.map(k=>[k,m.v[IDX[k]]]));if(g==='co'&&DIF.includes(i))g='co2';if(g)G[g].push(i);else sin++});
   const tot=CMP.length-sin,nm=label(SEL);
-  const seg=[['co','Coinciden del todo',G.co.length,'var(--good)'],['part','Coinciden en parte',G.part.length,'var(--mid)'],['op','Se oponen',G.op.length,'var(--bad)'],['S','Solo uno tiene posición',G.S.length,'var(--reg)']];
+  const GL='color-mix(in srgb,var(--good) 55%,var(--bg))';
+  const seg=[['co','Misma postura y mismo alcance',G.co.length,'var(--good)'],['co2','Misma postura, distinto alcance o cifras',G.co2.length,GL],['part','Postura matizada',G.part.length,'var(--mid)'],['op','Se oponen',G.op.length,'var(--bad)'],['S','Solo uno tiene posición',G.S.length,'var(--reg)']];
   document.getElementById('cbar').innerHTML=
    `<div class="cbh"><span>${esc(nm)}</span></div>`+
    `<div class="cb" role="img" aria-label="${seg.map(s=>s[1]+': '+s[2]).join('; ')}">`+seg.filter(s=>s[2]).map(s=>`<span style="flex:${s[2]};background:${s[3]}"><b>${s[2]}</b></span>`).join('')+'</div>'+
    `<div class="cleg">`+seg.map(s=>`<span><i style="background:${s[3]}"></i>${esc(s[1])} <b>${s[2]}</b></span>`).join('')+'</div>'+
-   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de estos partidos; en ${sin} no hay dato. «En parte»: van en la misma dirección pero difieren en alcance o cifras, o tienen una postura matizada. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
-  const groups=[['co','Coinciden del todo','var(--good)'],['op','Se oponen','var(--bad)'],['part','Coinciden en parte','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
+   `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de estos partidos; en ${sin} no hay dato. Los dos tonos de verde son coincidencia de postura: el claro avisa de que las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
+  const groups=[['co','Misma postura y mismo alcance','var(--good)'],['co2','Misma postura, distinto alcance o cifras',GL],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
   const pair=same(SEL,['PP','VOX']);
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
     `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="grid-template-columns:1fr repeat(${SEL.length},34px)"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
