@@ -16,7 +16,7 @@ function rel(a,b){
 }
 function cellTxt(k,t){const x=PROP[k][t];
   if(!x)return '<span class="na">Sin posición concreta en las fuentes consultadas.</span>';
-  return esc(x.t)+`<div class="o">Origen: ${esc(x.o)}</div><div class="ms">Fuentes: ${x.f.map(f=>A(S[f][0],S[f][1])).join('')}</div>`}
+  return `<div class="o">Origen: ${esc(x.o)}</div><div class="ms">Fuentes: ${x.f.map(f=>A(S[f][0],S[f][1])).join('')}</div>`}
 function pickers(){
   const row=(id,lab,sel,other)=>`<div class="rowf" id="${id}"><b>${lab}</b>`+CP.map(p=>`<button type="button" data-${id}="${p.k}" aria-pressed="${p.k===sel}" ${p.k===other?'disabled':''} style="--c:${p.c}">${esc(p.n)}</button>`).join('')+'</div>';
   document.getElementById('cpick').innerHTML=row('pa','Partido A',selA,selB)+row('pb','Partido B',selB,selA);
@@ -41,9 +41,13 @@ function draw(){
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
     `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3>`+
     G[g].map(i=>{const m=CMP[i],va=val(m,selA),vb=val(m,selB),on=open_===i;
+      const dl=(p,k,v)=>CMPD[i][k]?`<div class="cl" style="--c:${p.c}"><b>${esc(p.n)}</b><span>${esc(CMPD[i][k])}</span></div>`:`<div class="cl none" style="--c:${p.c}"><b>${esc(p.n)}</b><span>Sin posición concreta en las fuentes.</span></div>`;
+      const nt=(selA==='PP'&&selB==='VOX'||selA==='VOX'&&selB==='PP')&&CMPN[i]?`<div class="cdif"><b>Diferencias</b> ${esc(CMPN[i])}</div>`:'';
       return `<div class="cr${on?' on':''}"><button type="button" class="crb" data-i="${i}" aria-expanded="${on}"><span class="cm"><small>${esc(TOPICS[m.t])}</small>${esc(m.m)}</span><span class="pv ${va}" title="${esc(a.n)}: ${NAME[va]}">${SYM[va]}</span><span class="pv ${vb}" title="${esc(b.n)}: ${NAME[vb]}">${SYM[vb]}</span></button>`+
+       `<div class="cdt">${dl(a,selA)}${dl(b,selB)}${nt}</div>`+
+       `<button type="button" class="csrc" data-i="${i}">${on?'Ocultar':'Ver'} origen y fuentes</button>`+
        (on?`<div class="cd"><div style="--c:${a.c}"><b>${esc(a.n)}</b>${cellTxt(selA,m.t)}</div><div style="--c:${b.c}"><b>${esc(b.n)}</b>${cellTxt(selB,m.t)}</div></div>`:'')+'</div>'}).join('')+'</section>').join('');
-  document.querySelectorAll('.crb').forEach(btn=>btn.addEventListener('click',()=>{const i=+btn.dataset.i;open_=open_===i?null:i;draw()}));
+  document.querySelectorAll('.crb,.csrc').forEach(btn=>btn.addEventListener('click',()=>{const i=+btn.dataset.i;open_=open_===i?null:i;draw()}));
   // 3. Mapa completo
   document.getElementById('cmap').innerHTML='<thead><tr><th></th>'+CP.map(p=>`<th class="${p.k===selA||p.k===selB?'hl':''}" style="--c:${p.c}">${esc(p.n.replace(' / Frente Amplio','').replace('EH Bildu','Bildu'))}</th>`).join('')+'</tr></thead><tbody>'+
    TOPICS.map((tp,t)=>{const ms=CMP.filter(m=>m.t===t);if(!ms.length)return '';
