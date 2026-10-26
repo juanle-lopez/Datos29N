@@ -48,13 +48,13 @@ function draw(){
   const seg=[['co','Coinciden',G.co.length,'var(--good)'],['part','Postura matizada',G.part.length,'var(--mid)'],['op','Se oponen',G.op.length,'var(--bad)'],['S','Solo uno tiene posición',G.S.length,'var(--reg)']];
   document.getElementById('cbar').innerHTML=
    `<div class="cbh"><span>${esc(nm)}</span></div>`+
-   `<div class="cb" role="img" aria-label="${seg.map(s=>s[1]+': '+s[2]).join('; ')}">`+seg.filter(s=>s[2]).map(s=>`<span style="flex:${s[2]};background:${s[3]}"><b>${s[2]}</b></span>`).join('')+'</div>'+
-   `<div class="cleg">`+seg.map(s=>`<span><i style="background:${s[3]}"></i>${esc(s[1])} <b>${s[2]}</b></span>`).join('')+'</div>'+
+   `<div class="cb" role="img" aria-label="${seg.map(s=>s[1]+': '+s[2]).join('; ')}">`+seg.filter(s=>s[2]).map(s=>`<button type="button" class="cgo" data-g="${s[0]}" style="flex:${s[2]};background:${s[3]}" aria-label="Ir a: ${esc(s[1])} (${s[2]})"><b>${s[2]}</b></button>`).join('')+'</div>'+
+   `<div class="cleg">`+seg.map(s=>s[2]?`<button type="button" class="cgo cl2" data-g="${s[0]}"><i style="background:${s[3]}"></i>${esc(s[1])} <b>${s[2]}</b></button>`:`<span><i style="background:${s[3]}"></i>${esc(s[1])} <b>0</b></span>`).join('')+'</div>'+
    `<p class="cnote">${tot} de las ${CMP.length} medidas tienen posición concreta de alguno de los integrantes de la coalición; en ${sin} no hay dato. «Coinciden» significa misma postura; en las que lo indican, las cifras o el alcance difieren. <b>Cuenta medidas, no peso político</b>: no mide cercanía ideológica.</p>`;
   const groups=[['co','Coinciden','var(--good)'],['op','Se oponen','var(--bad)'],['part','Postura matizada','var(--mid)'],['S','Solo uno tiene posición','var(--reg)']];
   const pair=same(SEL,['PP','VOX']);
   document.getElementById('crows').innerHTML=groups.filter(g=>G[g[0]].length).map(([g,t,c])=>
-    `<section class="cg"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="${GRID}"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
+    `<section class="cg" id="cg-${g}"><h3><i style="background:${c}"></i>${esc(t)} <span>${G[g].length}</span></h3><div class="gh" style="${GRID}"><span></span>${SEL.map(k=>`<span style="color:${cpOf(k).c}">${esc(SHORT(k).replace('Podemos','Pod.'))}</span>`).join('')}</div>`+
     G[g].map(i=>{const m=CMP[i],on=open_===i,v=k=>m.v[IDX[k]];
       const con=SEL.filter(k=>CMPD[i][k]),sinp=SEL.filter(k=>!CMPD[i][k]);
       const nt=pair&&CMPN[i]&&CMPD[i].PP&&CMPD[i].VOX?`<div class="cdif"><b>Diferencias</b> ${esc(CMPN[i])}</div>`:'';
@@ -62,6 +62,8 @@ function draw(){
        `<div class="cdt">${con.map(k=>`<div class="cl" style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b><span>${esc(head(CMPD[i][k]))}</span></div>`).join('')}${sinp.length?`<div class="cl none"><b></b><span>Sin posición concreta: ${esc(label(sinp))}</span></div>`:''}${nt}</div>`+
        `<button type="button" class="csrc" data-i="${i}">${on?'Ocultar':'Ver'} detalle y fuentes</button>`+
        (on?`<div class="cd">${con.map(k=>`<div style="--c:${cpOf(k).c}"><b>${esc(SHORT(k))}</b>${esc(CMPD[i][k])}${srcTxt(k,m.t,i)}</div>`).join('')}</div>`:'')+'</div>'}).join('')+'</section>').join('');
+  document.querySelectorAll('.cgo').forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById('cg-'+b.dataset.g);if(!t)return;
+    const rm=window.matchMedia('(prefers-reduced-motion:reduce)').matches;t.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'});t.classList.remove('flash');void t.offsetWidth;t.classList.add('flash')}));
   document.querySelectorAll('.crb,.csrc').forEach(btn=>btn.addEventListener('click',()=>{const i=+btn.dataset.i;open_=open_===i?null:i;draw()}));
   document.getElementById('cmap').innerHTML='<thead><tr><th></th>'+CP.map(p=>`<th class="${SEL.includes(p.k)?'hl':''}" style="--c:${p.c}">${esc(SHORT(p.k))}</th>`).join('')+'</tr></thead><tbody>'+
    TP.map((tp,t)=>{const ms=CMP.filter(m=>m.t===t);if(!ms.length)return '';
