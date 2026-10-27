@@ -1,10 +1,20 @@
-📊 *Datos 29N · 27 oct*
-Escaños con la media de las encuestas de hoy:
-• PP: *133*
-• PSOE: *108*
-• Vox: *66*
-• Sumar + Podemos: *10*
+🗳️ *DATOS 29N · 27 oct*
+_Escaños según la media de las encuestas de hoy_
 
-PP + Vox: *199* hoy → *194* el 29-N (179–211). PSOE + Sumar + Podemos + socios de 2023: *150*. La mayoría absoluta está en 176.
+🔵 PP  ▸  *133*
+🔴 PSOE  ▸  *108*
+🟢 Vox  ▸  *66*
+🟣 Sumar + Podemos  ▸  *10*
 
-Modelo experimental, no es una previsión oficial. Detalle y fuentes: https://datos29n.juanle.net/prediccion.html
+⚖️ *Mayoría absoluta: 176*
+PP + Vox  *199*
+████████░░░░░░
+PSOE + Sumar + Podemos + socios  *150*
+██████░░░░░░░░
+
+🔭 Proyección al 29-N: PP + Vox *194* (179–211)
+
+📈 Detalle día a día y fuentes:
+https://datos29n.juanle.net/prediccion.html
+
+⚠️ _Modelo experimental, no es una previsión oficial._

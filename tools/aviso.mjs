@@ -8,21 +8,32 @@ const h=JSON.parse(fs.readFileSync(path.join(root,'datos/historial',dia+'.json')
 const c=h.cambio||{};
 const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const [y,m,d]=dia.split('-').map(Number);const fecha=d+' '+MES[m-1];
-const sg=n=>n>0?` (+${n})`:n<0?` (−${n*-1})`:'';
-const NOM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos'};
-const lin=['PP','PSOE','VOX','SUMAR'].map(k=>`• ${NOM[k]}: *${h.esc[k]}*${sg((c.dEsc||{})[k]||0)}`).join('\n');
+const fl=n=>n>0?` 🔺+${n}`:n<0?` 🔻−${n*-1}`:'';
+const NOM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos'},DOT={PP:'🔵',PSOE:'🔴',VOX:'🟢',SUMAR:'🟣'};
+const lin=['PP','PSOE','VOX','SUMAR'].map(k=>`${DOT[k]} ${NOM[k]}  ▸  *${h.esc[k]}*${fl((c.dEsc||{})[k]||0)}`).join('\n');
+const bar=n=>'█'.repeat(Math.round(n/25))+'░'.repeat(14-Math.round(n/25));
 const pv=h.proy.ppVox;
 const nuevas=(c.entran||[]).map(e=>typeof e==='string'?e:(e.e||'')).filter(Boolean);
 const msg=[
- `📊 *Datos 29N · ${fecha}*`,
- `Escaños con la media de las encuestas de hoy:`,
+ `🗳️ *DATOS 29N · ${fecha}*`,
+ `_Escaños según la media de las encuestas de hoy_`,
+ ``,
  lin,
  ``,
- `PP + Vox: *${h.esc.PV}* hoy → *${pv.c}* el 29-N (${pv.p10}–${pv.p90}). PSOE + Sumar + Podemos + socios de 2023: *${h.esc.IZ}*. La mayoría absoluta está en 176.`,
- nuevas.length?`\n🆕 Nueva${nuevas.length>1?'s':''} encuesta${nuevas.length>1?'s':''}: ${nuevas.join('; ')}.`:'',
+ `⚖️ *Mayoría absoluta: 176*`,
+ `PP + Vox  *${h.esc.PV}*${fl(c.dEsc?c.dEsc.PV||0:0)}`,
+ bar(h.esc.PV),
+ `PSOE + Sumar + Podemos + socios  *${h.esc.IZ}*${fl(c.dEsc?c.dEsc.IZ||0:0)}`,
+ bar(h.esc.IZ),
  ``,
- `Modelo experimental, no es una previsión oficial. Detalle y fuentes: https://datos29n.juanle.net/prediccion.html`
-].filter(l=>l!==undefined).join('\n').replace(/\n{3,}/g,'\n\n');
+ `🔭 Proyección al 29-N: PP + Vox *${pv.c}* (${pv.p10}–${pv.p90})`,
+ nuevas.length?`\n🆕 Nueva${nuevas.length>1?'s':''} encuesta${nuevas.length>1?'s':''}: ${nuevas.join('; ')}`:'',
+ ``,
+ `📈 Detalle día a día y fuentes:`,
+ `https://datos29n.juanle.net/prediccion.html`,
+ ``,
+ `⚠️ _Modelo experimental, no es una previsión oficial._`
+].join('\n').replace(/\n{3,}/g,'\n\n');
 const hubo=!!c.huboCambio;
 const cab=hubo?`PUBLICAR: hay cambios respecto al día anterior.`:`OPCIONAL: sin cambios respecto al día anterior; mejor no publicar hoy.`;
 fs.mkdirSync(path.join(root,'datos/avisos'),{recursive:true});
