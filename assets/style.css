@@ -990,3 +990,9 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
 .wacta .go{color:#1a8f48;font-weight:700}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .wacta .go{color:#4cd38a}}
 :root[data-theme="dark"] .wacta .go{color:#4cd38a}
+.hchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.hchips .newdom{margin:0}
+.wapill{display:inline-flex;align-items:center;gap:6px;padding:3px 11px 3px 9px;border:1px solid #1fa855;border-radius:99px;font-size:11.5px;font-weight:500;line-height:1.3;color:var(--muted);background:var(--panel);text-decoration:none}
+.wapill b{font-weight:700;color:var(--fg)}
+.wapill svg{width:14px;height:14px;fill:none;stroke:#1fa855;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wapill:hover{background:#e7f7ee}
