@@ -94,3 +94,7 @@ Por **JuanLe**. Proyecto independiente y sin publicidad.
 ## Licencia
 
 © 2026 JuanLe. Todos los derechos reservados: no se puede copiar ni reutilizar el código, el diseño ni los textos sin permiso por escrito. Ver [LICENSE](LICENSE). Los datos de terceros pertenecen a sus fuentes.
+
+## Actualización diaria (completa)
+
+`sh tools/actualizar.sh` regenera la previsión, completa el historial diario hasta hoy, actualiza versiones de los datos y la fecha, y falla si algo no está al día. Después: commit y push.
