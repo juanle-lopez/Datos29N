@@ -941,3 +941,15 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
   nav.tabs a:not(.mbar) svg,nav.tabs .more svg{stroke-width:2.5;filter:drop-shadow(0 0 .6px var(--panel)) drop-shadow(0 0 3px color-mix(in srgb,var(--panel) 85%,transparent))}
 }
 @media(max-width:640px){nav.tabs a[aria-current="page"] svg{filter:none}}
+/* Dock: transparencia sin color-mix (iOS antiguos lo ignoraban y dejaban el fondo sólido) */
+:root{--dock:rgba(255,255,255,.55)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--dock:rgba(23,28,35,.55)}}
+:root[data-theme="dark"]{--dock:rgba(23,28,35,.55)}
+@media(max-width:640px){nav.tabs{background:var(--dock);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+  nav.tabs a:not(.mbar) svg,nav.tabs .more svg{filter:drop-shadow(0 0 .6px var(--panel)) drop-shadow(0 0 3px var(--dock))}nav.tabs a[aria-current="page"] svg{filter:none}}
+/* Dock: más cristal */
+:root{--dock:rgba(255,255,255,.3)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--dock:rgba(23,28,35,.3)}}
+:root[data-theme="dark"]{--dock:rgba(23,28,35,.3)}
+@media(max-width:640px){nav.tabs{-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);border-color:color-mix(in srgb,var(--fg) 14%,transparent);border-color:rgba(128,136,150,.35)}
+  nav.tabs a:not(.mbar) svg,nav.tabs .more svg{stroke-width:2.6;filter:drop-shadow(0 0 1px var(--panel)) drop-shadow(0 0 4px var(--panel))}nav.tabs a[aria-current="page"] svg{filter:none}}
