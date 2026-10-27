@@ -965,8 +965,8 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
   nav.tabs a:not(.mbar) svg,nav.tabs .more svg{width:22px;height:22px}
 }
 /* aviso de nueva dirección */
-.newdom{display:inline-flex;align-items:center;gap:7px;margin:10px 0 0;padding:4px 11px;border:1px solid var(--line);border-radius:99px;font-size:12px;color:var(--muted);background:var(--panel)}
-.newdom b{color:var(--fg);font-weight:700}
-.newdom i{width:7px;height:7px;border-radius:50%;background:#e08a00;animation:ndp 1.2s ease-in-out infinite}
-@keyframes ndp{0%,100%{opacity:1}50%{opacity:.15}}
-@media(prefers-reduced-motion:reduce){.newdom i{animation:none}}
+.newdom{display:flex;margin-top:-6px!important;align-items:center;justify-content:center;gap:9px;margin:8px 0 0;padding:9px 14px;border:1.5px solid #e08a00;border-radius:99px;font-size:12px;font-weight:600;color:#3a2600;background:#ffe3a3;animation:ndg 1.4s ease-in-out infinite}
+.newdom b{font-weight:800}
+.newdom i{flex:none;width:9px;height:9px;border-radius:50%;background:#d97200}
+@keyframes ndg{0%,100%{box-shadow:0 0 0 0 rgba(224,138,0,.65);background:#ffe3a3}50%{box-shadow:0 0 0 7px rgba(224,138,0,0);background:#ffc860}}
+@media(prefers-reduced-motion:reduce){.newdom{animation:none}}
