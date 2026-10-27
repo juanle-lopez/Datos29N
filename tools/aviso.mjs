@@ -10,10 +10,15 @@ const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','di
 const [y,m,d]=dia.split('-').map(Number);const fecha=d+' '+MES[m-1];
 const fl=n=>n>0?` 🔺+${n}`:n<0?` 🔻−${n*-1}`:'';
 const NOM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos'},DOT={PP:'🔵',PSOE:'🔴',VOX:'🟢',SUMAR:'🟣'};
-const lin=['PP','PSOE','VOX','SUMAR'].map(k=>`${DOT[k]} ${NOM[k]}  ▸  *${h.esc[k]}*${fl((c.dEsc||{})[k]||0)}`).join('\n');
+const lin=['PP','PSOE','VOX','SUMAR'].map(k=>`${DOT[k]} ${NOM[k]}  ▸  *${h.esc[k]}* escaños${fl((c.dEsc||{})[k]||0)}  · rango ${h.lo[k]}–${h.hi[k]} · ${h.voto[k].toFixed(1).replace('.',',')} %`).join('\n');
 const bar=n=>'█'.repeat(Math.round(n/25))+'░'.repeat(14-Math.round(n/25));
 const pv=h.proy.ppVox;
 const nuevas=(c.entran||[]).map(e=>typeof e==='string'?e:(e.e||'')).filter(Boolean);
+const NO=JSON.parse(fs.readFileSync(path.join(root,'assets/noticias.json'),'utf8'));const items=Array.isArray(NO)?NO:NO.items;
+const hoyS=d+' '+MES[m-1],ayerD=new Date(Date.UTC(y,m-1,d-1)),ayerS=ayerD.getUTCDate()+' '+MES[ayerD.getUTCMonth()];
+let nots=items.filter(x=>x.fecha===hoyS);if(nots.length<2)nots=items.filter(x=>x.fecha===hoyS||x.fecha===ayerS);nots=nots.slice(0,3);
+const tit=t=>t.length>110?t.slice(0,107).replace(/\s+\S*$/,'')+'…':t;
+const nb=nots.length?['📰 *Últimas noticias*',...nots.map(x=>`▫️ ${tit(x.titular)} (${x.medio})\n👉 https://datos29n.juanle.net/noticias.html`),'']:[];
 const msg=[
  `🗳️ *DATOS 29N · ${fecha}*`,
  `_Escaños según la media de las encuestas de hoy_`,
@@ -29,10 +34,9 @@ const msg=[
  `🔭 Proyección al 29-N: PP + Vox *${pv.c}* (${pv.p10}–${pv.p90})`,
  nuevas.length?`\n🆕 Nueva${nuevas.length>1?'s':''} encuesta${nuevas.length>1?'s':''}: ${nuevas.join('; ')}`:'',
  ``,
+ ...nb,
  `📈 Detalle día a día y fuentes:`,
- `https://datos29n.juanle.net/prediccion.html`,
- ``,
- `⚠️ _Modelo experimental, no es una previsión oficial._`
+ `https://datos29n.juanle.net/prediccion.html`
 ].join('\n').replace(/\n{3,}/g,'\n\n');
 const hubo=!!c.huboCambio;
 const cab=hubo?`PUBLICAR: hay cambios respecto al día anterior.`:`OPCIONAL: sin cambios respecto al día anterior; mejor no publicar hoy.`;
