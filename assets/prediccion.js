@@ -62,7 +62,7 @@
     // marcador del valor central del 29-N y rango del 80 %
     s+=`<line x1="${xe-3}" x2="${xe+DW+3}" y1="${Y(ev.c)}" y2="${Y(ev.c)}" stroke="${c}" stroke-width="2.2"/><text class="lab" x="${xe+DW+6}" y="${Y(ev.c)+4}" style="fill:${c};font-size:14px;font-weight:800">${ev.c}</text>`;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T}" y2="${T+ph}" stroke="${c}" stroke-width="1"/><circle class="ttc" r="4.5" fill="var(--bg)" stroke="${c}" stroke-width="2"/><rect class="ttb" rx="5" height="34" fill="var(--panel)" stroke="${c}" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T}" width="${X(D1)-x0}" height="${ph}" fill="transparent"/>`;
-    return `<svg class="pg" data-k="${k}" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${name}: ${ev.c} escaños proyectados el 29-N, rango del 80 % de ${ev.p10} a ${ev.p90}, y del 95 % de ${rP[rP.length-1].lo95} a ${rP[rP.length-1].hi95}"><title>${name}</title>${s}</svg>`;
+    return `<svg class="pg" data-k="${k}" data-x0="${x0}" data-pw="${pw}" data-plots="${T},${ph}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${name}: ${ev.c} escaños proyectados el 29-N, rango del 80 % de ${ev.p10} a ${ev.p90}, y del 95 % de ${rP[rP.length-1].lo95} a ${rP[rP.length-1].hi95}"><title>${name}</title>${s}</svg>`;
   }
 
   // Historial diario: un punto por día (con su margen del 80 %) que se queda donde estaba; los días con cambio se pueden pulsar.
@@ -88,7 +88,9 @@
     const i=HD.findIndex(h=>h.f===f),h=HD[i],a=HD[i-1];if(!h||!a)return '';
     const ch=h.cambio,dE=ch.dEsc[k],ents=ch.entran.map(e=>`<li><b>${e.e}</b> (${fecha(e.f)}): ${name} ${pc(e.voto[k])}${e.antes?`; su encuesta anterior (${fecha(e.antes.f)}) daba ${pc(e.antes.voto[k])}`:'; primera encuesta de esa empresa en la media'}.</li>`).join(''),
       sal=(ch.salen||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)}, ${name} ${pc(e.voto[k])}) sale de la media por tener más de 30 días.</li>`).join('');
-    return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>${name} · ${fecha(f)}</b>: ${a.esc[k]} → ${h.esc[k]} escaños${dE?` (${nf(dE,0)})`:' (sin cambio)'}</p>`+
+    const nE=ch.entran.map(e=>e.e.split(' /')[0]),nS=(ch.salen||[]).map(e=>e.e.split(' /')[0]),pa=[];if(nE.length)pa.push('entra la encuesta de '+nE.join(' y '));if(nS.length)pa.push('sale la de '+nS.join(' y ')+' (más de 30 días)');
+    const why=pa.length?pa.join(' y ').replace(/^./,x=>x.toUpperCase())+'.':'Ese día no entró ni salió ninguna encuesta, así que la media no se movió.';
+    return `<button type="button" class="hx" aria-label="Volver">×</button><div class="hh"><span class="hd">${fecha(f).replace(/ de /,' ')}</span><span class="hv">${name} <b>${h.esc[k]}</b> escaños <em>${dE?nf(dE,0):'sin cambio'}</em></span></div><p class="hq">${why}</p><details class="hm"><summary>Ver el detalle</summary>`+
       `<p>Media de voto: ${pc(a.voto[k])} → ${pc(h.voto[k])} (${nf(ch.dVoto[k],2)} puntos). Margen del 80 % ese día: ${h.lo[k]}–${h.hi[k]} escaños, con ${h.n} encuestas.</p>`+
       (!ents&&!sal?`<p>Ese día no entró ni salió ninguna encuesta, así que la media no se movió.</p>`:'')+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+
       (()=>{const all=(h.ctx||[]).filter(x=>!x.p||x.p===k||x.p==='general'),li=x=>`<li>${x.p==='general'?'<i>General</i> · ':''}${x.tipo?x.tipo.charAt(0).toUpperCase()+x.tipo.slice(1)+': ':''}${x.t}${x.hecho&&x.hecho!==f?` (${fecha(x.hecho)})`:''}${x.u?` <a href="${x.u}" rel="noopener">${x.medio||'fuente'}</a>`:''}${x.pos?`<br><span style="color:var(--muted)">Posible relación (hipótesis, no demostrada): ${x.pos}</span>`:''}</li>`,
@@ -112,8 +114,9 @@
     let s=`<defs>${animate?`<linearGradient id="lg-may" x1="0" x2="1" y1="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><mask id="cp-may" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${H}"><rect x="${x0-3-80}" y="0" width="0" height="${H}" fill="#fff">${WA('width',`0;${W-x0+3+80};${W-x0+3+80}`)}</rect><rect x="${x0-3-80}" y="0" width="80" height="${H}" fill="url(#lg-may)">${WA('x',`${x0-3-80};${W};${W}`)}</rect></mask>`:`<clipPath id="cp-may"><rect x="${x0-3}" y="0" width="${W}" height="${H}"/></clipPath>`}</defs>`;
     s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido; altura = escaños</text>`;
     const halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round';
+    const PL=[];
     BL.forEach(([tk,nm,c],bi)=>{
-      const hy=34+bi*sub+(bi?0:8),T=hy+46,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
+      const hy=34+bi*sub+(bi?0:8),T=hy+46,Y=v=>Yf(T,v);PL.push(T+','+ph);const e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
       {const tv0=tk==='PV'?today('PP')+today('VOX'):bl.IZ;
       s+=`<text x="0" y="${hy+8}" class="lab" style="fill:${c};font-size:${mob?12.5:14}px">${mob&&tk==='IZ'?'PSOE + Sumar + Podemos + socios':nm}</text><text x="0" y="${hy+26}" style="fill:${c};font-size:11.5px;font-weight:600"><tspan style="font-size:14px;font-weight:800">Hoy ${tv0}</tspan>  →  29-N: ${e.c} escaños (${e.p10}–${e.p90})</text>`}
       for(let v=lo;v<=hi;v+=40)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
@@ -147,12 +150,15 @@
     const T1=34+8+46,TB=34+sub+46+ph;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T1}" y2="${TB}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T1}" width="${xe-x0}" height="${TB-T1}" fill="transparent"/>`;
     if(HD.length)s+=`<rect class="hzone" data-k="MAY" x="${L-4}" y="0" width="${x0+5-L+4}" height="${TB}" fill="transparent" style="cursor:pointer"/>`;
-    return `<svg class="pg" data-k="MAY" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mayoría absoluta el 29-N: PP más Vox ${E.ppVox.c} escaños (${E.ppVox.p10} a ${E.ppVox.p90}); PSOE, Sumar, Podemos y socios de 2023 ${E.izq.c} (${E.izq.p10} a ${E.izq.p90}); la mayoría absoluta es 176"><title>Mayoría absoluta</title>${s}</svg>`;
+    return `<svg class="pg" data-k="MAY" data-x0="${x0}" data-pw="${pw}" data-plots="${PL.join(';')}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mayoría absoluta el 29-N: PP más Vox ${E.ppVox.c} escaños (${E.ppVox.p10} a ${E.ppVox.p90}); PSOE, Sumar, Podemos y socios de 2023 ${E.izq.c} (${E.izq.p10} a ${E.izq.p90}); la mayoría absoluta es 176"><title>Mayoría absoluta</title>${s}</svg>`+`</details>`;
   }
   function hdetailM(f){
     const i=HD.findIndex(h=>h.f===f),h=HD[i],a=HD[i-1];if(!h||!a)return '';const ch=h.cambio,dv=BL.map(([k,n,c])=>`<li style="color:${c}"><b>${n}</b>: ${a.esc[k]} → ${h.esc[k]} escaños${h.cambio.dEsc&&h.cambio.dEsc[k]?` (${nf(h.cambio.dEsc[k],0)})`:' (sin cambio)'} · margen del 80 %: ${h.lo[k]}–${h.hi[k]}</li>`).join('');
     const ents=(ch.entran||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)})</li>`).join(''),sal=(ch.salen||[]).map(e=>`<li><b>${e.e}</b> (${fecha(e.f)}) sale por tener más de 30 días</li>`).join('');
-    return `<button type="button" class="hx" aria-label="Cerrar">×</button><p class="ht"><b>Mayoría · ${fecha(f)}</b> (176 = mayoría absoluta)</p><ul style="list-style:none;padding-left:0">${dv}</ul>`+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+(!ents&&!sal?`<p>Ese día no entró ni salió ninguna encuesta.</p>`:'')+`<p class="hn">Los detalles por partido y el contexto de cada día están en los gráficos de arriba. Con ${h.n} encuestas en la media.</p>`;
+    const nE=(ch.entran||[]).map(e=>e.e.split(' /')[0]),nS=(ch.salen||[]).map(e=>e.e.split(' /')[0]),pa=[];if(nE.length)pa.push('entra la encuesta de '+nE.join(' y '));if(nS.length)pa.push('sale la de '+nS.join(' y ')+' (más de 30 días)');
+    const why=pa.length?pa.join(' y ').replace(/^./,x=>x.toUpperCase())+'.':'Ese día no entró ni salió ninguna encuesta, así que la media no se movió.';
+    const bl=BL.map(([k,n,c])=>`<li style="color:${c}"><b>${n.replace(' + Podemos + socios 2023',' + Podemos + socios')}</b>: <b>${h.esc[k]}</b> escaños <em>${h.cambio.dEsc&&h.cambio.dEsc[k]?nf(h.cambio.dEsc[k],0):'sin cambio'}</em></li>`).join('');
+    return `<button type="button" class="hx" aria-label="Volver">×</button><div class="hh"><span class="hd">${fecha(f).replace(/ de /,' ')}</span><span class="hv">176 = mayoría absoluta</span></div><ul class="hbl">${bl}</ul><p class="hq">${why}</p><details class="hm"><summary>Ver el detalle</summary><ul style="list-style:none;padding-left:0">${dv}</ul>`+(ents?`<p style="margin-bottom:2px">Entra:</p><ul>${ents}</ul>`:'')+(sal?`<p style="margin-bottom:2px">Sale:</p><ul>${sal}</ul>`:'')+`<p class="hn">Con ${h.n} encuestas en la media.</p></details>`;
   }
   function wireMay(svg){
     const E=PRED.escPrivadas,r0=E.ruta.PV,hit=svg.querySelector('.hit'),g=svg.querySelector('.tt:has(.ttl)'),l=g.querySelector('.ttl'),bx=g.querySelector('.ttb'),t1=g.querySelector('.tt1'),t2=g.querySelector('.tt2'),t3=g.querySelector('.tt3'),x0=+svg.dataset.x0,pw=+svg.dataset.pw;
@@ -186,23 +192,25 @@
     });
   }
   let drawn=false,lastW=0;const OPEN={};
+  const PH='<p class="hph">Desliza la barra de arriba: verás qué cambió cada día y por qué.</p>';
   function draw(){
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
     const an=!REDUCE&&!Object.keys(OPEN).length;drawn=true;lastW=w;
-    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('')+`<div class="pcell pmay">${panelMay(W,an)}<div class="hdet" hidden></div></div>`;
+    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet">${PH}</div></div>`).join('')+`<div class="pcell pmay">${panelMay(W,an)}<div class="hdet">${PH}</div></div>`;
     wire(box,W);wireMay(box.querySelector('svg[data-k=MAY]'));
     box.querySelectorAll('.hzone').forEach(z=>z.ownerSVGElement.appendChild(z));
     const dias=HD.slice(1).map(h=>h.f),cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
     const marca=(cell,k,f)=>{const svg=cell.querySelector('svg.pg');if(!svg)return;svg.querySelectorAll('.sel').forEach(n=>n.remove());if(!f)return;
       const vb=svg.viewBox.baseVal,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=dd(f),px=t>=TH?x0+(t-TH)/(D1-TH)*pw*(1-FH):x0-(TH-t)*pw*FH/(TH-D0);
       const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','sel');g.setAttribute('pointer-events','none');
-      g.innerHTML=`<line x1="${px}" x2="${px}" y1="0" y2="${vb.height}" stroke="var(--fg)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".6"/><rect x="${px-22}" y="0" width="44" height="14" rx="7" fill="var(--fg)"/><text x="${px}" y="10.5" text-anchor="middle" style="fill:var(--bg);font-size:9.5px;font-weight:700">${fecha(f).replace(/ de .*/,'')}</text>`;
+      const pl=(svg.dataset.plots||('0,'+vb.height)).split(';').map(q=>q.split(',').map(Number)),pxp=Math.max(54,Math.min(px,vb.width-120)),lab=fecha(f).replace(/ de .*/,'');
+      g.innerHTML=pl.map(([T,ph])=>`<line x1="${px}" x2="${px}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="3 3" opacity=".7"/><rect x="${pxp-24}" y="${T+ph-19}" width="48" height="16" rx="8" fill="var(--fg)"/><text x="${pxp}" y="${T+ph-7.5}" text-anchor="middle" style="fill:var(--bg);font-size:10.5px;font-weight:700">${lab}</text>`).join('');
       svg.insertBefore(g,svg.querySelector('.hzone'))};
     const abrir=(cell,k,f,restore)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
       box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;OPEN[k]=f;marca(cell,k,f);{const sl=cell.querySelector('.hsl input');if(sl)sl.value=Math.round((dd(f)-D0)/864e5)}
       if(!restore){const r=d.getBoundingClientRect();if(r.bottom>innerHeight-70||r.top<0)d.scrollIntoView({block:'nearest',behavior:REDUCE?'auto':'smooth'})}
-      d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true;delete OPEN[k];marca(cell,k,null)});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
+      d.querySelector('.hx').addEventListener('click',()=>{d.innerHTML=PH;delete OPEN[k];marca(cell,k,null);const sl=cell.querySelector('.hsl input');if(sl)sl.value=sl.max});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
     box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
     {const nD=Math.round((dd(dias[dias.length-1])-D0)/864e5),fr=nD/Math.max(1,Math.round((TH-D0)/864e5));
