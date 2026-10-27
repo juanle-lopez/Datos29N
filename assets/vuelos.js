@@ -13,7 +13,7 @@ function agg(){
 let PM='';
 function chips(){
   const ys=[2021,2022,2023,2024,2025,2026];
-  const PL=[['all','Todos los años'],...ys.map(y=>[String(y),y===2026?'2026 (hasta 23-oct)':String(y)]),['q1','Último día'],['q7','Últimos 7 días'],['q30','Últimos 30 días'],['c','Elegir fechas…']];
+  const PL=[['all','Todos los años'],...ys.map(y=>[String(y),y===2026?'2026 (hasta 26-oct)':String(y)]),['q1','Último día'],['q7','Últimos 7 días'],['q30','Últimos 30 días'],['c','Elegir fechas…']];
   const cur=PM||String(fy);
   document.getElementById('vy').innerHTML='<b>Periodo</b><select id="vper" class="vsel" aria-label="Periodo">'+PL.map(([v,l])=>'<option value="'+v+'"'+(cur===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';
   const UL={all:'Todos',Gobierno:'Gobierno',"Casa Real":'Casa Real',Militar:'Ejército (militar)',Mantenimiento:'Mantenimiento','Sin registrar':'Sin registrar'};
@@ -189,14 +189,14 @@ function ritmo(){
   document.getElementById('vyt').innerHTML='<thead><tr><th>Año</th><th>Vuelos</th><th>Por día</th><th>Horas por vuelo</th><th>Coste estimado</th><th>€ por hora</th><th>CO₂ est. (t)</th><th>% en A310/A330</th></tr></thead><tbody>'+
    R.map(r=>`<tr><td>${r.y}${r.y===2026?'*':''}</td><td class="m"><span style="display:inline-block;height:8px;border-radius:4px;background:var(--hot);width:${(r.n/mxN*70).toFixed(0)}px;margin-right:6px;vertical-align:middle"></span>${fmt(r.n)}</td><td class="m">${fmt(r.dia,1)}</td><td class="m">${fmt(r.hv,1)}</td><td class="m">${fmt(r.c/1e6,1)} M€</td><td class="m">${fmt(r.ch)}</td><td class="m">${fmt(r.co/1000,1)} mil</td><td class="m">${fmt(r.big,0)} %</td></tr>`).join('')+'</tbody>';
   const p=R.reduce((a,r)=>r.n>a.n?r:a,R[0]),l=R.filter(r=>r.y<2026).slice(-1)[0];
-  document.getElementById('vyn').innerHTML=`<b>Cómo leerlo.</b> El año con más vuelos del filtro actual es ${p.y} (${fmt(p.n)}). 2026* llega solo hasta el 23-oct, por eso las ratios por día son comparables y los totales no. «€ por hora» y «CO₂» son estimaciones de falcondespega.es, no cifras oficiales. Con el filtro «Fechas» de arriba puedes ver un día concreto o cualquier tramo de días.`;
+  document.getElementById('vyn').innerHTML=`<b>Cómo leerlo.</b> El año con más vuelos del filtro actual es ${p.y} (${fmt(p.n)}). 2026* llega solo hasta el 26-oct, por eso las ratios por día son comparables y los totales no. «€ por hora» y «CO₂» son estimaciones de falcondespega.es, no cifras oficiales. Con el filtro «Fechas» de arriba puedes ver un día concreto o cualquier tramo de días.`;
 }
 
 /* ===== Filtro por fechas (un día o varios) ===== */
 const E0=Date.UTC(2021,2,1),DAY=864e5,MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
 const iso=d=>new Date(E0+d*DAY).toISOString().slice(0,10),off=s=>Math.round((Date.parse(s+'T00:00:00Z')-E0)/DAY);
 const largo=s=>{const [y,m,d]=s.split('-');return (+d)+' de '+MESES[+m-1]+' de '+y};
-function loadDias(){return DIAS?Promise.resolve(DIAS):fetch('assets/vuelos-dias.json?v=59').then(r=>r.json()).then(j=>(DIAS=j))}
+function loadDias(){return DIAS?Promise.resolve(DIAS):fetch('assets/vuelos-dias.json?v=64').then(r=>r.json()).then(j=>(DIAS=j))}
 function applyRange(a,b){
   return loadDias().then(J=>{
     if(!BASE)BASE={tot:D.tot,vis:D.vis,ac:D.ac};
@@ -233,7 +233,7 @@ let playT=null;
 function stopPlay(){if(playT){clearInterval(playT);playT=null}const b=document.getElementById('vplay');if(b){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}}
 function startPlay(){
   const ys=[2021,2022,2023,2024,2025,2026],b=document.getElementById('vplay');let i=0;b.textContent='❚❚ Parar';b.setAttribute('aria-pressed','true');
-  const step=()=>{if(RK)clearRange(true);fy=ys[i];render();document.getElementById('vplst').textContent='Año '+fy+(fy===2026?' (hasta 23-oct)':'');i++;if(i>=ys.length){clearInterval(playT);playT=null;setTimeout(()=>{if(!playT){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}},2200)}};
+  const step=()=>{if(RK)clearRange(true);fy=ys[i];render();document.getElementById('vplst').textContent='Año '+fy+(fy===2026?' (hasta 26-oct)':'');i++;if(i>=ys.length){clearInterval(playT);playT=null;setTimeout(()=>{if(!playT){b.textContent='▶ Ver año a año';b.setAttribute('aria-pressed','false')}},2200)}};
   step();playT=setInterval(step,2400);
 }
 function countUp(el,to,dec){const REDUCE=matchMedia('(prefers-reduced-motion:reduce)').matches;if(REDUCE){el.textContent=fmt(to,dec);return}const t0=performance.now(),dur=1600;(function s(now){const k=Math.min(1,(now-t0)/dur),e=1-Math.pow(1-k,3);el.textContent=fmt(to*e,dec);if(k<1)requestAnimationFrame(s)})(t0)}
@@ -280,6 +280,6 @@ function juego(){
 function render(){chips();rangeUI();kpis();ritmo();const {W,S}=agg();worldMap(W);window.globoSet&&globoSet(W,HCACHE['w2|'+fy+'|'+fu+'|'+RK]);worldTip(W);spainMap(S);spainTip(S);tops(W,S);bars()}
 document.addEventListener('click',e=>{const zb=e.target.closest&&e.target.closest('[data-wz]');if(zb){wz=zb.dataset.wz;selW=null;window._vc=0;const {W}=agg();worldMap(W);return}
   if(e.target.id==='vplay'){playT?stopPlay():startPlay()}else if(playT&&e.target.closest&&e.target.closest('#vy,#vu')){stopPlay()}},true);
-Promise.all([fetch('assets/vuelos-data.json?v=58').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;window.initGlobo&&initGlobo({G,D,mkSC,LAND});render();hero();waffle();juego();
- document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.687 tramos del 1-mar-2021 al 23-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
+Promise.all([fetch('assets/vuelos-data.json?v=64').then(r=>r.json()),fetch('assets/vuelos-geo.json?v=16').then(r=>r.json())]).then(([d,g])=>{D=d;G=g;window.initGlobo&&initGlobo({G,D,mkSC,LAND});render();hero();waffle();juego();
+ document.getElementById('vsrc').innerHTML='<b>Fuentes.</b> Registro de vuelos exportado de <a href="https://falcondespega.es" target="_blank" rel="noopener">falcondespega.es</a> (7.697 tramos del 1-mar-2021 al 26-oct-2026; método de coste y emisiones en su web). Contornos de países: <a href="https://github.com/johan/world.geo.json" target="_blank" rel="noopener">world.geo.json</a> (Natural Earth, dominio público). Contornos de provincias: CartoDB / <a href="https://github.com/codeforgermany/click_that_hood" target="_blank" rel="noopener">click_that_hood</a>. Contexto del cálculo: <a href="https://theobjective.com/espana/politica/2023-05-02/falcon-sanchez-3130-vuelos-55500-toneladas-co2-retiro-donana/" target="_blank" rel="noopener">The Objective (may-2023)</a>.';
 }).catch(()=>{document.getElementById('vk').innerHTML='<p class="na">No se han podido cargar los datos.</p>'});

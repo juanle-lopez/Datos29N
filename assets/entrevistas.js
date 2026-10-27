@@ -14,5 +14,5 @@
   $('wotras').textContent=W.otras;
   $('wsrc').innerHTML='Fuentes: '+src(W.fuentes)+'.';
   $('ecal').innerHTML=ENT.cal.map(r=>`<li class="erow"><span class="ef">${esc(r.f)}</span><div><b>${esc(r.t)}</b><dl><dt>Quién</dt><dd>${esc(r.q)}</dd><dt>Dónde</dt><dd>${esc(r.c)}</dd><dt>Estado</dt><dd>${esc(r.e)}</dd><dt>Fuente</dt><dd>${src(r.s)}</dd></dl></div></li>`).join('');
-  const u=$('eupd');if(u){const [y,m,d]=ENT.actualizado.split('-').map(Number);u.textContent='Actualizado el '+d+'/'+m+'/'+y}
+  
 })();
