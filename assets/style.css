@@ -901,3 +901,17 @@ button.cgo{border:0;font:inherit;cursor:pointer;color:#fff;padding:0}button.cgo:
 button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:center;gap:0;padding:2px 0;font-size:13px;text-decoration:underline;text-underline-offset:3px}button.cl2:hover{filter:none;color:var(--fg)}
 .cg{scroll-margin-top:70px}.cg.flash h3{animation:cgflash 1.2s ease}@keyframes cgflash{0%,60%{background:var(--midbg)}100%{background:transparent}}
 @media (prefers-reduced-motion:reduce){.cg.flash h3{animation:none}}
+
+/* Portada: Hoy en diez segundos */
+.hoyh{margin:16px 0 4px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);text-align:left}
+.hoyh .hk{margin:0 0 6px;font:700 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.hoyh .ht{margin:0 0 12px;font-size:17px;line-height:1.4;font-weight:500}.hoyh .ht b{font-weight:800}
+.hoyh .hrs{position:relative;display:grid;gap:10px;margin:0 0 12px}
+.hoyh .hr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.hoyh .hn{grid-column:1/3;font-size:13px;font-weight:700;color:var(--muted)}
+.hoyh .hb{position:relative;height:16px;border-radius:8px;background:var(--line);overflow:hidden}.hoyh .hb i{position:absolute;left:0;top:0;bottom:0;border-radius:8px;opacity:.9}
+.hoyh .hb u{position:absolute;top:-2px;bottom:-2px;width:0;border-left:2px dashed var(--fg)}
+.hoyh .hv{font:800 22px/1 var(--mono);font-variant-numeric:tabular-nums;min-width:2.4em;text-align:right}
+.hoyh .hax{position:relative;height:16px;margin:-4px 14px 0 0}.hoyh .hax span{position:absolute;top:0;transform:translateX(-50%);font:700 11px/1 var(--mono);color:var(--muted);white-space:nowrap}
+.hoyh .hc,.hoyh .hnw{margin:0 0 8px;font-size:14px;line-height:1.4}.hoyh .hnw{color:var(--muted)}
+.hoyh .hl{font-size:14px;font-weight:700}
