@@ -95,7 +95,7 @@
     g.fillStyle=bg;g.fillRect(0,0,Wd,Ht);
     if(title){g.fillStyle=fg;g.font='700 17px "Public Sans",system-ui,sans-serif';g.fillText(title,pad,28)}
     g.drawImage(img,pad,top,vb.width,vb.height);URL.revokeObjectURL(url);
-    g.fillStyle=mu;g.font='11px "IBM Plex Mono",ui-monospace,monospace';g.fillText('Datos 29N · juanle-lopez.github.io/Datos29N',pad,Ht-12);if(title){g.textAlign='right';g.fillText(fecha(PRED.generado)+' 2026',Wd-pad,28);g.textAlign='left'}
+    g.fillStyle=mu;g.font='11px "IBM Plex Mono",ui-monospace,monospace';g.fillText('Datos 29N · datos29n.juanle.net',pad,Ht-12);if(title){g.textAlign='right';g.fillText(fecha(PRED.generado)+' 2026',Wd-pad,28);g.textAlign='left'}
     return await new Promise(r=>cv.toBlob(r,'image/png'));
   }
   async function share(svg,title,name){

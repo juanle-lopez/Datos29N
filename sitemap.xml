@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://juanle-lopez.github.io/Datos29N/</loc><changefreq>daily</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/prediccion.html</loc><changefreq>daily</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/propuestas.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/promesas.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/casos.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/gastos.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/vuelos.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/tu-voto.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/mesas.html</loc><changefreq>weekly</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/noticias.html</loc><changefreq>daily</changefreq></url>
-  <url><loc>https://juanle-lopez.github.io/Datos29N/guia.html</loc><changefreq>daily</changefreq></url>
-<url><loc>https://juanle-lopez.github.io/Datos29N/metodo.html</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://juanle-lopez.github.io/Datos29N/entrevistas.html</loc></url>
-  <url><loc>https://juanle-lopez.github.io/Datos29N/comparar.html</loc></url>
-  <url><loc>https://juanle-lopez.github.io/Datos29N/noche.html</loc></url>
+<url><loc>https://datos29n.juanle.net/</loc><changefreq>daily</changefreq></url>
+<url><loc>https://datos29n.juanle.net/prediccion.html</loc><changefreq>daily</changefreq></url>
+<url><loc>https://datos29n.juanle.net/propuestas.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/promesas.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/casos.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/gastos.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/vuelos.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/tu-voto.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/mesas.html</loc><changefreq>weekly</changefreq></url>
+<url><loc>https://datos29n.juanle.net/noticias.html</loc><changefreq>daily</changefreq></url>
+  <url><loc>https://datos29n.juanle.net/guia.html</loc><changefreq>daily</changefreq></url>
+<url><loc>https://datos29n.juanle.net/metodo.html</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://datos29n.juanle.net/entrevistas.html</loc></url>
+  <url><loc>https://datos29n.juanle.net/comparar.html</loc></url>
+  <url><loc>https://datos29n.juanle.net/noche.html</loc></url>
 </urlset>

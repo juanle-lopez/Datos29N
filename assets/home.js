@@ -24,7 +24,7 @@ function simulate(data,nat,opt){
   if(q){tot.FA=tot.SUMAR;tot.SUMAR=tot.FA+tot.POD}
   return {tot,prov};
 }
-const SITE_URL='https://juanle-lopez.github.io/Datos29N/';
+const SITE_URL='https://datos29n.juanle.net/';
 let mapSel=null,lastProv=null,mapMode='win',mapBuilt=false;
 const MODES=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['air','Escaño en el aire']];
 const tileWinner=c=>{let b=null,bs=-1,bsh=-1;for(const p of PARTIES){const k=c.seats[p];if(k>bs||(k===bs&&c.sh[p]>bsh)){b=p;bs=k;bsh=c.sh[p]}}return b};

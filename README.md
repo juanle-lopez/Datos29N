@@ -2,7 +2,7 @@
 
 Web informativa, independiente y sin publicidad sobre las elecciones generales del **29 de noviembre de 2026** en España. Reúne datos con su fuente enlazada y dice también lo que no se sabe.
 
-**Web:** https://juanle-lopez.github.io/Datos29N/
+**Web:** https://datos29n.juanle.net/
 
 Esta web no recomienda voto y no está vinculada a ningún partido.
 
@@ -81,7 +81,7 @@ sh tools/sellar-fecha.sh
 
 ## Fuentes principales
 
-Resultados de 2023 (tablas por circunscripción), encuestas recopiladas en elecciones29noviembre.com, barómetro del CIS, Eurostat (gasto público por tipo y función, IPCA y PIB) y las fuentes enlazadas en cada apartado. La lista completa está en la página [Método](https://juanle-lopez.github.io/Datos29N/metodo.html).
+Resultados de 2023 (tablas por circunscripción), encuestas recopiladas en elecciones29noviembre.com, barómetro del CIS, Eurostat (gasto público por tipo y función, IPCA y PIB) y las fuentes enlazadas en cada apartado. La lista completa está en la página [Método](https://datos29n.juanle.net/metodo.html).
 
 ## Contribuir
 
