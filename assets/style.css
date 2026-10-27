@@ -935,3 +935,9 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
   nav.tabs .more[data-on]{color:var(--muted);background:none}
   nav.tabs a.mbar{left:18px;right:18px;top:5px}
 }
+@media(max-width:640px){
+  nav.tabs{background:color-mix(in srgb,var(--panel) 68%,transparent);-webkit-backdrop-filter:blur(22px) saturate(1.5);backdrop-filter:blur(22px) saturate(1.5)}
+  nav.tabs a:not(.mbar):not([aria-current="page"]),nav.tabs .more{color:var(--fg)}
+  nav.tabs a:not(.mbar) svg,nav.tabs .more svg{stroke-width:2.5;filter:drop-shadow(0 0 .6px var(--panel)) drop-shadow(0 0 3px color-mix(in srgb,var(--panel) 85%,transparent))}
+}
+@media(max-width:640px){nav.tabs a[aria-current="page"] svg{filter:none}}
