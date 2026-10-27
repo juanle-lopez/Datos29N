@@ -964,3 +964,9 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
   nav.tabs a[href="index.html"][aria-current="page"]{padding:0 12px}
   nav.tabs a:not(.mbar) svg,nav.tabs .more svg{width:22px;height:22px}
 }
+/* aviso de nueva dirección */
+.newdom{display:inline-flex;align-items:center;gap:7px;margin:10px 0 0;padding:4px 11px;border:1px solid var(--line);border-radius:99px;font-size:12px;color:var(--muted);background:var(--panel)}
+.newdom b{color:var(--fg);font-weight:700}
+.newdom i{width:7px;height:7px;border-radius:50%;background:#e08a00;animation:ndp 1.2s ease-in-out infinite}
+@keyframes ndp{0%,100%{opacity:1}50%{opacity:.15}}
+@media(prefers-reduced-motion:reduce){.newdom i{animation:none}}
