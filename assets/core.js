@@ -16,7 +16,7 @@ function rvScan(){
     if(el.dataset.rv)return;el.dataset.rv='1';
     if(!rvIO||el.offsetHeight>innerHeight*2){el.classList.add('in');return}
     const sib=[...el.parentNode.children].filter(x=>x.matches&&x.matches(RV_SEL));
-    el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*70+'ms');
+    el.style.setProperty('--d',Math.min(sib.indexOf(el),6)*110+'ms');
     el.classList.add('rv');rvIO.observe(el);
   });
 }
@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 11:59 (GMT+1)';
+const ACT='27 de octubre de 2026 · 12:01 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||document.querySelector('.act'))return;
