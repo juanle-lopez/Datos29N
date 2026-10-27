@@ -109,9 +109,10 @@ const escHist=inp.historial.filter(completo).map(h=>({e:h.e,tipo:h.tipo,f:h.f,ap
 const escPriv=inp.privadas.map(p=>{const t=seatsOf(p);return {e:p.e,f:p.f,esc:Object.fromEntries(K.map(k=>[k,t[k]])),PV:t.PP+t.VOX,IZ:IZ(t)}});
 const escBaseBloq={priv:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.priv)),cis:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.cis))};
 const escBase={priv:Object.fromEntries(K.map(k=>[k,seatsOf(base.priv)[k]])),cis:Object.fromEntries(K.map(k=>[k,seatsOf(base.cis)[k]]))};
+const errSc=(inp.sesgo&&inp.sesgo.elecciones||[]).map((el,i)=>{const v={},er={};K.forEach(k=>{const e=inp.sesgo.err[k];er[k]=e&&e[i]!==undefined?e[i]:null;v[k]=base.priv[k]+(er[k]||0)});const t=seatsOf(v);return {e:el.replace(/ \(.*\)/,''),err:er,esc:Object.fromEntries(K.map(k=>[k,t[k]])),PV:t.PP+t.VOX,IZ:IZ(t)}});
 const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv.length,privadas:priv,historial:inp.historial,cis:inp.cis,
   base,sesgo:{delta:Object.fromEntries(K.map(k=>[k,round(delta[k],2)])),err:inp.sesgo?inp.sesgo.err:null,elecciones:inp.sesgo?inp.sesgo.elecciones:null},tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
-  escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq};
+  escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq,errSc};
 // Sincroniza la portada con la media de las encuestas (antes estaba a mano y se desfasaba): valor del simulador y texto de método.
 {const hp=root+'assets/home.js',hh=fs.readFileSync(hp,'utf8'),v=k=>base.priv[k].toFixed(2),
   h2=hh.replace(/poll:\{PP:[\d.]+,PSOE:[\d.]+,VOX:[\d.]+,SUMAR:[\d.]+,/,`poll:{PP:${v('PP')},PSOE:${v('PSOE')},VOX:${v('VOX')},SUMAR:${v('SUMAR')},`);

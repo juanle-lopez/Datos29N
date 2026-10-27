@@ -113,3 +113,15 @@
   }
   const g=$('pgrid');if(g){addBtns();new MutationObserver(addBtns).observe(g,{childList:true})}
 })();
+
+/* Si las encuestas fallan: la media de hoy con el error de 28-A 2019, 10-N 2019 y 23-J 2023 (calculado en tools/prediccion.mjs) */
+(function(){
+  const box=document.getElementById('perr');if(!box||typeof PRED==='undefined'||!PRED.errSc)return;
+  const nm={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Pod.'},f1=x=>(x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(1).replace('.',',');
+  const hoy={e:'Media de hoy',esc:PRED.escBase.priv,PV:PRED.escBaseBloq.priv.PV,IZ:PRED.escBaseBloq.priv.IZ};
+  const col={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)'};
+  box.className='perr';
+  box.innerHTML=[hoy,...PRED.errSc].map(r=>`<div class="pe${r.e==='Media de hoy'?' hoy':''}"><p class="pet">${r.e==='Media de hoy'?'Media de hoy':'Con el error de '+r.e}</p><div class="pseats">${['PP','PSOE','VOX','SUMAR'].map(k=>`<span class="pchip"><i style="background:${col[k]}"></i>${nm[k]}<b>${r.esc[k]}</b></span>`).join('')}</div><p class="pes"><span>PP + Vox <b>${r.PV}</b></span><span>PSOE + Sumar + Pod. + socios <b>${r.IZ}</b></span></p></div>`).join('');
+  const n=document.getElementById('perrn');
+  if(n)n.innerHTML='Mayoría absoluta: 176. Errores aplicados (puntos de voto): '+PRED.errSc.map(r=>`<b>${r.e}</b>: `+['PP','PSOE','VOX','SUMAR'].filter(k=>r.err[k]!==null).map(k=>nm[k]+' '+f1(r.err[k])).join(', ')).join(' · ')+'. Sumar + Podemos solo tiene el error de 2023, porque antes iban por separado.';
+})();
