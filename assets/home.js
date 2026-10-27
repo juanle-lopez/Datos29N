@@ -117,7 +117,7 @@ const NAMES={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar',ERC:'ERC',JUNTS:'Junts'
 const COL={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)'};
 const REG='var(--reg)';
 const REGB={ERC:1.89,JUNTS:1.60,BILDU:1.36,PNV:1.12,BNG:0.62,CCa:0.47,UPN:0.21};
-const PRESETS={'2023':{PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31,...REGB},poll:{PP:32.29,PSOE:26.47,VOX:18.81,SUMAR:9.18,...REGB}};
+const PRESETS={'2023':{PP:33.06,PSOE:31.70,VOX:12.39,SUMAR:12.31,...REGB},poll:{PP:32.22,PSOE:26.53,VOX:18.84,SUMAR:9.25,...REGB}};
 const MAIN=['PP','PSOE','VOX','SUMAR'];
 const REGL=['ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'],REGMAX={ERC:20,JUNTS:15,BILDU:12,PNV:10,BNG:4,CCa:4,UPN:2};
 const ALLC=MAIN.concat(REGL);
@@ -195,7 +195,7 @@ render();
   const P=['PP','PSOE','VOX','SUMAR'];
   hs.innerHTML=P.map(p=>`<div class="hs" style="--c:${COL[p]}"><span class="hn">${NAMES[p]}</span><b id="hn_${p}">${old[p]}</b><small id="hd_${p}">23-J</small></div>`).join('');
   renderHemi('hemi1',old);
-  const L1='Resultado del 23-J de 2023',L2='Escenario con la media de 14 sondeos (publicados del 24-sep al 23-oct) sobre las provincias de 2023. No es una previsión.';
+  const L1='Resultado del 23-J de 2023',L2='Escenario con la media de 14 sondeos (publicados del 24-sep al 26-oct) sobre las provincias de 2023. No es una previsión.';
   lab.textContent=L1;
   const start=()=>box.classList.add('on');
   if(REDUCE){start();renderHemi('hemi1',poll);lab.textContent=L2;P.forEach(p=>{document.getElementById('hn_'+p).textContent=poll[p];const d=poll[p]-old[p];document.getElementById('hd_'+p).textContent=(d>0?'+':'')+d+' vs 2023'});return}

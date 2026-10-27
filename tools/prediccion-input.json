@@ -56,13 +56,13 @@
   },
   {
    "e": "Sigma Dos / El Mundo",
-   "f": "2026-10-19",
-   "PP": 31.5,
-   "PSOE": 25.3,
-   "VOX": 19.5,
-   "SUMAR": 10.0,
-   "nota": "Publicada 19-oct; campo 1–14 oct, 3.007 entrevistas. Frente Amplio 7,2 + Podemos 2,8 (sin Compromís-FV, 0,9). Fuente de las cifras: web de la empresa; reproducción en Libertad Digital.",
-   "fuente": "https://www.sigmados.com/noticia?id=EIJOKGN2GFZmhHt"
+   "f": "2026-10-26",
+   "PP": 30.6,
+   "PSOE": 26.1,
+   "VOX": 19.9,
+   "SUMAR": 11.0,
+   "nota": "Publicada 25-26 oct; campo 8–22 oct, 3.122 entrevistas, margen ±2,1. Sigma Dos publica PP 128, PSOE 107, Vox 68 y Frente Amplio + Compromís-FV + Podemos 16 escaños con el 11 % del voto. Los escaños del modelo se recalculan aquí con el mismo método para todas las encuestas.",
+   "fuente": "https://www.que.es/2026/10/26/elecciones-generales-29n-encuestas/"
   },
   {
    "e": "SocioMétrica / EL ESPAÑOL",
@@ -299,6 +299,17 @@
    "SUMAR": 9.9,
    "fuente": "https://elecciones29noviembre.com/encuestas/",
    "nota": "Oleada anterior de IMOP (9-oct)."
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-19",
+   "PP": 31.5,
+   "PSOE": 25.3,
+   "VOX": 19.5,
+   "SUMAR": 10.0,
+   "nota": "Publicada 19-oct; campo 1–14 oct, 3.007 entrevistas. Frente Amplio 7,2 + Podemos 2,8 (sin Compromís-FV, 0,9). Fuente de las cifras: web de la empresa; reproducción en Libertad Digital.",
+   "fuente": "https://www.sigmados.com/noticia?id=EIJOKGN2GFZmhHt",
+   "tipo": "privada"
   }
  ],
  "sesgo": {
