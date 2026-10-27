@@ -9,14 +9,14 @@
 <meta property="og:description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://datos29n.juanle.net/prediccion.html">
-<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10271840">
+<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272059">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Datos 29N">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Predicción de escaños 29-N 2026 y mayoría absoluta · Datos 29N">
-<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10271840">
+<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272059">
 <link rel="canonical" href="https://datos29n.juanle.net/prediccion.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -132,21 +132,21 @@
         </ol>
       </details>
       <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
-      <details class="pdet"><summary>Los cinco pasos</summary>
+      <details class="pdet"><summary>Los siete pasos y los cambios de método</summary>
         <ol class="steps">
-          <li><b>Datos.</b><span>Las <span class="npol">13</span> encuestas privadas más recientes (<span id="rng2">24-sep a 26-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
+          <li><b>Datos.</b><span>Las <span class="npol">13</span> encuestas privadas más recientes (<span id="rng2">5-oct a 26-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las <span class="npol">13</span> privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Corrección histórica (20-oct).</b><span>Las medias de encuestas de la última semana se equivocaron en 2019 (abril y noviembre) y 2023 casi siempre en la misma dirección para PSOE y Vox. El centro del 29-N se corrige con la media de esos errores, reducida según lo mucho que varían entre elecciones, y entra poco a poco: hoy es la media de las encuestas. Hoy: PSOE +1,0, PP −0,6, Vox −0,6 puntos; Sumar + Podemos no se corrige (solo hay una elección con dato). Es una apuesta apoyada en tres elecciones.</span></li>
           <li><b>Sin tendencia.</b><span>Esa corrección aparte, la previsión central no prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
           <li><b>Error.</b><span>Crece poco a poco con los días: la deriva de la opinión y el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media al llegar al 29-N) se reparten a lo largo del tiempo, así que el tubo se abre de forma gradual y no da un salto el último día. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones del resultado del 29-N con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
-          <li><b>Cuántas simulaciones.</b><span>Son 4.000 solo para el 29-N: de ellas salen el valor central, el rango del 80 % de las tablas y la animación del paso 5. Las líneas día a día de los gráficos usan 1.500 simulaciones por cada fecha, y las líneas finas (30 por partido, 24 en los gráficos de mayoría) son simulaciones completas elegidas de un total de 40, dibujadas solo como ejemplo de cómo se abre el abanico; las cifras salen de las 4.000 simulaciones, no de esas líneas.</span></li>
+          <li><b>Cuántas simulaciones.</b><span>Son 4.000 solo para el 29-N: de ellas salen el valor central, el rango del 80 % de las tablas y la animación del paso 6. Las líneas día a día de los gráficos usan 1.500 simulaciones por cada fecha, y las líneas finas (30 por partido, 24 en los gráficos de mayoría) son simulaciones completas elegidas de un total de 40, dibujadas solo como ejemplo de cómo se abre el abanico; las cifras salen de las 4.000 simulaciones, no de esas líneas.</span></li>
           <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, se añade la corrección histórica, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
           <li><b>Cambio de método (27-oct).</b><span>El error de las encuestas y el del bloque (PP + Vox frente a PSOE + Sumar + Podemos + socios) se reparten de forma gradual entre hoy y el 29-N, en vez de aplicarse de golpe el último día. Los rangos finales no cambian; solo la forma en que se abre el tubo. Se añade además la trayectoria de cada bloque para el gráfico de mayoría.</span></li>
         </ol>
       </details>
       <details class="pdet"><summary>La fórmula, paso a paso</summary>
-        <p>Es el cálculo completo, sin atajos. Cada línea corresponde a uno de los cinco pasos.</p>
+        <p>Es el cálculo completo, sin atajos. Cada línea corresponde a uno de los siete pasos.</p>
         <p><b>1. Voto en cada provincia.</b> Para PP, PSOE, Vox y Sumar + Podemos (k), en cada provincia (p):</p>
         <div class="frm">voto'(p,k) = voto2023(p,k) × V(k) / V2023(k)</div>
         <p>V(k) es el porcentaje nacional de la proyección y V2023(k) el de 2023. Los demás partidos mantienen su voto de 2023. Podemos se separa de Sumar con el 35 % de su voto (salvo en Canarias y la C. Valenciana, donde van juntos; en Cataluña ese voto pasa a ERC). Después se reescala para que cada provincia sume 100.</p>
@@ -194,7 +194,7 @@
   <a class="nextp" href="index.html"><small>Inicio</small><b>Lo que dicen las encuestas hoy</b></a>
   <footer class="credit"><b>Datos 29N</b> es un proyecto independiente de elaboración propia, creado por <b>JuanLe</b>: el modelo, el análisis y el diseño son originales y no reproducen ninguna otra web. Se basa en datos abiertos obtenidos de fuentes públicas, enlazadas en cada apartado (ver Método). Sin publicidad ni vínculo con partidos o medios. © 2026 JuanLe. Todos los derechos reservados. Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. <a href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener">Canal de WhatsApp</a>.</footer>
 </div>
-<script src="assets/core.js?v=10271939"></script>
+<script src="assets/core.js?v=10272159"></script>
 <script src="assets/prediccion-data.js?v=20261027a"></script>
 <script src="assets/historial-data.js?v=20261027"></script>
 <script src="assets/prediccion.js?v=69"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
