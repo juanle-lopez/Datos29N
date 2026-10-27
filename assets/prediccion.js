@@ -104,7 +104,7 @@
   const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
   const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?200:210,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const mob=W<420,L=30,R=mob?86:96,pw=W-L-R,ph=mob?200:210,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
     const hi=240,lo=0,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
     const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
     // series de partes: historial (HD) y proyección (ruta)
@@ -141,7 +141,7 @@
       // etiquetas por partido al final (separadas para que no se pisen)
       let acc=0;const lb=pr.map(([k,n,pc_])=>{const v=pval(proj[proj.length-1].o,k),y=Y((Math.max(acc,lo)+acc+v)/2);acc+=v;return{n,v,c:pc_,y}});
       for(let i=1;i<lb.length;i++)if(lb[i].y>lb[i-1].y-12)lb[i].y=lb[i-1].y-12;
-      lb.forEach(l=>{s+=`<text class="lab" x="${xe+8}" y="${l.y+4}" style="fill:${l.c==='var(--muted)'?'var(--fg)':l.c};font-size:${mob?10.5:11.5}px">${l.n} ${l.v}</text>`});
+      lb.forEach(l=>{s+=`<text class="lab" x="${xe+8}" y="${l.y+4}" style="fill:${l.c==='var(--muted)'?'var(--fg)':l.c};font-size:${mob?9.5:11.5}px">${l.n} ${l.v}</text>`});
     });
     const T1=34+8+22,TB=34+sub+22+ph;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T1}" y2="${TB}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T1}" width="${xe-x0}" height="${TB-T1}" fill="transparent"/>`;
@@ -189,7 +189,7 @@
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
     const an=!REDUCE&&!Object.keys(OPEN).length;drawn=true;lastW=w;
-    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('')+`<div class="pcell pmay" style="grid-column:1/-1">${panelMay(Math.min(W*(cols),w),an)}<div class="hdet" hidden></div></div>`;
+    box.innerHTML=K.map(([k,n,c])=>`<div class="pcell">${panel(k,n,c,W,an)}<div class="hdet" hidden></div></div>`).join('')+`<div class="pcell pmay">${panelMay(W,an)}<div class="hdet" hidden></div></div>`;
     wire(box,W);wireMay(box.querySelector('svg[data-k=MAY]'));
     box.querySelectorAll('.hzone').forEach(z=>z.ownerSVGElement.appendChild(z));
     const dias=HD.slice(1).map(h=>h.f),cambios=HD.filter(h=>h.cambio&&h.cambio.huboCambio&&!h.cambio.inicio).map(h=>h.f);
