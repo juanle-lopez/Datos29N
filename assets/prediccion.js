@@ -55,7 +55,7 @@
     s+=`<polyline fill="none" stroke="${c}" stroke-width="1.4" opacity=".75" points="${hc.map(h=>X(dd(h.f))+','+cY(h.esc[k])).join(' ')}"/>`;
     const lc=hc[hc.length-1];
     hc.forEach(h=>{s+=`<rect x="${X(dd(h.f))-3.5}" y="${cY(h.esc[k])-3.5}" width="7" height="7" transform="rotate(45 ${X(dd(h.f))} ${cY(h.esc[k])})" fill="var(--bg)" stroke="${c}" stroke-width="1.5"/>`});
-    dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"/>`});
+    dots.forEach(p=>{s+=`<circle cx="${X(dd(p.f))}" cy="${Y(p.esc[k])}" r="2.4" fill="${c}" opacity=".45"><title>${p.e||'Encuesta'} · ${fecha(p.f)}: ${p.esc[k]} escaños</title></circle>`});
     s+=histG(k,c,X,Y,T,ph,L);
     const m12=TH;
     s+=`<circle cx="${X(m12)}" cy="${Y(base)}" r="6.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${X(m12)}" y="${Y(base)-12}" text-anchor="middle" style="fill:${c};font-size:14px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">${base}</text>`;
