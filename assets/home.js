@@ -208,3 +208,22 @@ render();
       if(k<1)requestAnimationFrame(step);else P.forEach(p=>{const d=poll[p]-old[p];document.getElementById('hd_'+p).textContent=(d>0?'+':'')+d+' vs 2023'})})(t0);
   },2200);
 })();
+
+/* Tu provincia: código postal → escaños con la media de encuestas (mismo simulador que el resto de la portada) */
+(function(){
+  const cp=document.getElementById('tpcp'),sel=document.getElementById('tpsel'),res=document.getElementById('tpres');if(!cp||!sel||!res)return;
+  const CP={'01':'Araba/Álava','02':'Albacete','03':'Alicante','04':'Almería','05':'Ávila','06':'Badajoz','07':'Illes Balears','08':'Barcelona','09':'Burgos','10':'Cáceres','11':'Cádiz','12':'Castellón','13':'Ciudad Real','14':'Córdoba','15':'A Coruña','16':'Cuenca','17':'Girona','18':'Granada','19':'Guadalajara','20':'Gipuzkoa','21':'Huelva','22':'Huesca','23':'Jaén','24':'León','25':'Lleida','26':'La Rioja','27':'Lugo','28':'Madrid','29':'Málaga','30':'Murcia','31':'Navarra','32':'Ourense','33':'Asturias','34':'Palencia','35':'Las Palmas','36':'Pontevedra','37':'Salamanca','38':'Santa Cruz de Tenerife','39':'Cantabria','40':'Segovia','41':'Sevilla','42':'Soria','43':'Tarragona','44':'Teruel','45':'Toledo','46':'Valencia','47':'Valladolid','48':'Bizkaia','49':'Zamora','50':'Zaragoza','51':'Ceuta','52':'Melilla'};
+  const now=simulate(DATA,PRESETS.poll,{podemos:PODQ}).prov,old=simulate(DATA,PRESETS['2023']).prov,by=(a,n)=>a.find(c=>c.n===n);
+  sel.innerHTML='<option value="">Elige provincia</option>'+DATA.map(c=>c.n).slice().sort((a,b)=>a.localeCompare(b,'es')).map(n=>`<option>${n}</option>`).join('');
+  const nm=p=>p==='SUMAR'?'Sumar + Podemos':NAMES[p];
+  function show(n){
+    const c=by(now,n),o=by(old,n);if(!c){res.innerHTML='';return}
+    const P=PARTIES.filter(p=>c.seats[p]>0).sort((x,y)=>c.seats[y]-c.seats[x]||c.sh[y]-c.sh[x]);
+    const chip=p=>{const d=c.seats[p]-o.seats[p];return `<span class="pchip"><i style="background:${COL[p]||REG}"></i>${nm(p)}<b>${c.seats[p]}</b>${d?`<small class="${d>0?'up':'dn'}">${d>0?'+':'−'}${Math.abs(d)}</small>`:''}</span>`};
+    const m=c.marg,close=m&&m.ratio>=.9&&m.win&&m.lose?`<p class="note" style="margin:8px 0 0">El último escaño se decide por poco entre <b>${nm(m.win)}</b> y <b>${nm(m.lose)}</b>.</p>`:'';
+    res.innerHTML=`<p class="tph"><b>${n}</b> · ${c.s} ${c.s===1?'escaño':'escaños'}</p><div class="pseats">${P.map(chip).join('')}</div><p class="note" style="margin:8px 0 0">Los números pequeños son el cambio respecto al 23-J. Con la media de las encuestas aplicada a tu provincia; no es una previsión local.${close?'':''}</p>${close}`;
+  }
+  cp.addEventListener('input',()=>{const v=cp.value.replace(/\D/g,'').slice(0,5);cp.value=v;if(v.length<2){res.innerHTML='';sel.value='';return}
+    if(v.length===5||v.length>=2){const n=CP[v.slice(0,2)];if(n){sel.value=n;show(n)}else if(v.length===5){res.innerHTML='<p class="note">No reconozco ese código postal.</p>'}}});
+  sel.addEventListener('change',()=>{cp.value='';show(sel.value)});
+})();
