@@ -19,9 +19,19 @@ const hoyS=d+' '+MES[m-1],ayerD=new Date(Date.UTC(y,m-1,d-1)),ayerS=ayerD.getUTC
 let nots=items.filter(x=>x.fecha===hoyS);if(nots.length<2)nots=items.filter(x=>x.fecha===hoyS||x.fecha===ayerS);nots=nots.slice(0,3);
 const tit=t=>t.length>110?t.slice(0,107).replace(/\s+\S*$/,'')+'…':t;
 const nb=nots.length?['📰 *Últimas noticias*',...nots.map(x=>`▫️ ${tit(x.titular)} (${x.medio})\n👉 https://datos29n.juanle.net/noticias.html`),'']:[];
+const dE=c.dEsc||{};
+const movs=['PP','PSOE','VOX','SUMAR'].filter(k=>dE[k]).map(k=>`${NOM[k]} ${dE[k]>0?'+':'−'}${Math.abs(dE[k])}`);
+const resumen=['📌 *LO NUEVO DE HOY*',
+ hubo0()?`• Escaños: ${movs.join(', ')}. PP + Vox ${h.esc.PV}, bloque contrario ${h.esc.IZ}.`:`• Previsión estable: PP + Vox ${h.esc.PV} escaños y PSOE + Sumar + Podemos + socios ${h.esc.IZ} (mayoría: 176).`,
+ nuevas.length?`• 🆕 ${nuevas.length} encuesta${nuevas.length>1?'s':''} nueva${nuevas.length>1?'s':''}: ${nuevas.join('; ')}.`:`• Sin encuestas nuevas en la media.`,
+ nots.length?`• 📰 Noticias del ${hoyS}: ${nots.length} destacada${nots.length>1?"s":""}, más abajo.`:`• Sin noticias nuevas destacadas.`,
+ ``];
+function hubo0(){return !!c.huboCambio&&movs.length>0}
 const msg=[
  `🗳️ *DATOS 29N · ${fecha}*`,
- `_Escaños según la media de las encuestas de hoy_`,
+ ``,
+ ...resumen,
+ `📊 *Los datos* _(escaños según la media de las encuestas de hoy)_`,
  ``,
  lin,
  ``,
