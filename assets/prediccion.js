@@ -104,7 +104,7 @@
   const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
   const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const mob=W<420,L=30,R=mob?86:96,pw=W-L-R,ph=mob?200:210,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const mob=W<420,L=30,R=mob?86:96,pw=W-L-R,ph=mob?200:210,sub=44+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
     const hi=240,lo=0,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
     const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
     // series de partes: historial (HD) y proyección (ruta)
@@ -113,8 +113,9 @@
     s+=`<text x="0" y="14" class="lab" style="font-size:14px;fill:var(--fg)">¿Mayoría absoluta el 29-N?</text><text x="0" y="28" style="font-size:10.5px">Un color por partido; altura = escaños</text>`;
     const halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round';
     BL.forEach(([tk,nm,c],bi)=>{
-      const hy=34+bi*sub+(bi?0:8),T=hy+30,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
-      s+=`<text x="0" y="${hy+8}" style="fill:${c};font-size:${mob?10.5:11.5}px;font-weight:700">${mob&&tk==='IZ'?'PSOE + Sumar + Podemos + socios':nm}: ${e.c} (${e.p10}–${e.p90})</text>`;
+      const hy=34+bi*sub+(bi?0:8),T=hy+46,Y=v=>Yf(T,v),e=tk==='PV'?E.ppVox:E.izq,pr=PARTS[tk],r=E.ruta[tk];
+      {const tv0=tk==='PV'?today('PP')+today('VOX'):bl.IZ;
+      s+=`<text x="0" y="${hy+8}" class="lab" style="fill:${c};font-size:${mob?12.5:14}px">${mob&&tk==='IZ'?'PSOE + Sumar + Podemos + socios':nm}</text><text x="0" y="${hy+26}" style="fill:${c};font-size:11.5px;font-weight:600"><tspan style="font-size:14px;font-weight:800">Hoy ${tv0}</tspan>  →  29-N: ${e.c} escaños (${e.p10}–${e.p90})</text>`}
       for(let v=lo;v<=hi;v+=40)s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-5}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
       if(bi)MES.forEach(([d,l])=>{s+=`<text x="${xs_(dd(d))}" y="${T+ph+16}">${l}</text>`});
       s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><line x1="${xe}" x2="${xe}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/>`;
@@ -123,7 +124,7 @@
       const stack=(ser,op)=>{let o='';pr.forEach(([k,n,pc_],i)=>{const up=ser.map(q=>xs_(q.t)+','+Y(pr.slice(0,i+1).reduce((a,[kk])=>a+pval(q.o,kk),0))),dn=[...ser].reverse().map(q=>xs_(q.t)+','+Y(pr.slice(0,i).reduce((a,[kk])=>a+pval(q.o,kk),0)));o+=`<polygon points="${up.join(' ')} ${dn.join(' ')}" fill="${pc_}" opacity="${op}"/>`});return o};
       s+=`<clipPath id="pc-${bi}"><rect x="${L}" y="${T}" width="${pw+2}" height="${ph}"/></clipPath>`;
       if(hist.length)s+=`<g clip-path="url(#pc-${bi})">${stack(hist,.9)}</g>`;
-      {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${x0-9}" y="${tv>176?Y(tv)-13:Y(tv)+24}" text-anchor="end" style="fill:${c};font-size:13px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">hoy ${tv}</text>`}
+      {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/>`}
       const base={t:TH,o:{PP:today('PP'),VOX:today('VOX'),PSOE:today('PSOE'),SUMAR:today('SUMAR'),IZ:bl.IZ}};
       s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.78)}</g>`;
       const poly=(a,b2)=>r.map(q=>xs_(dd(q.d))+','+Y(q[b2])).join(' ')+' '+[...r].reverse().map(q=>xs_(dd(q.d))+','+Y(q[a])).join(' ');
@@ -136,14 +137,14 @@
           if(animate&&ti<10)s+=`<polyline fill="none" stroke="${cb[ti%2]}" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" opacity=".9" stroke-dasharray="0.01 77.99" points="${P(a)}">${mv}<animate attributeName="stroke-dashoffset" from="0" to="-78" dur="${(4.2+(ti%5)*.7).toFixed(1)}s" repeatCount="indefinite"/></polyline>`})}}
       s+=`</g>`;
       // línea de la mayoría
-      s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${(tk==='PV'?today('PP')+today('VOX'):bl.IZ)>176?Y(176)+14:Y(176)-5}" style="fill:var(--fg);font-size:${mob?10:10.5}px;font-weight:700;${halo}">176 · mayoría absoluta</text>`;
+      s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)+13}" style="fill:var(--fg);font-size:${mob?10:10.5}px;font-weight:700;${halo}">176 · mayoría absoluta</text>`;
       if(HD.length)HD.forEach(h=>{const x=xs_(dd(h.f)),ch=h.cambio&&h.cambio.dEsc&&h.cambio.dEsc[tk]!==0;s+=`<line x1="${x}" x2="${x}" y1="${Y(h.hi[tk])}" y2="${Y(h.lo[tk])}" stroke="var(--fg)" stroke-width="2" opacity=".35" stroke-linecap="round"/>${ch?`<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${RC+3.5}" fill="var(--fg)" opacity=".18"/>`:''}<circle cx="${x}" cy="${Y(h.esc[tk])}" r="${ch?RC:RD}" fill="var(--fg)" stroke="var(--bg)" stroke-width="${ch?2:0}"/>`});
       // etiquetas por partido al final (separadas para que no se pisen)
       let acc=0;const lb=pr.map(([k,n,pc_])=>{const v=pval(proj[proj.length-1].o,k),y=Y((Math.max(acc,lo)+acc+v)/2);acc+=v;return{n,v,c:pc_,y}});
       for(let i=1;i<lb.length;i++)if(lb[i].y>lb[i-1].y-12)lb[i].y=lb[i-1].y-12;
-      lb.forEach(l=>{s+=`<text class="lab" x="${xe+8}" y="${l.y+4}" style="fill:${l.c==='var(--muted)'?'var(--fg)':l.c};font-size:${mob?9.5:11.5}px">${l.n} ${l.v}</text>`});
+      lb.forEach(l=>{s+=`<text class="lab" x="${xe+8}" y="${l.y+4}" style="fill:${l.c==='var(--muted)'?'var(--fg)':l.c};font-size:${mob?9.5:10.5}px">${l.n} ${l.v}</text>`});
     });
-    const T1=34+8+22,TB=34+sub+22+ph;
+    const T1=34+8+46,TB=34+sub+46+ph;
     s+=`<g class="tt" style="display:none;pointer-events:none"><line class="ttl" y1="${T1}" y2="${TB}" stroke="var(--fg)" stroke-width="1"/><rect class="ttb" rx="5" height="48" fill="var(--panel)" stroke="var(--line)" stroke-width="1"/><text class="tt1" style="fill:var(--fg);font-size:11px;font-weight:600"></text><text class="tt2" style="font-size:10.5px"></text><text class="tt3" style="font-size:10.5px"></text></g><rect class="hit" x="${x0}" y="${T1}" width="${xe-x0}" height="${TB-T1}" fill="transparent"/>`;
     if(HD.length)s+=`<rect class="hzone" data-k="MAY" x="${L-4}" y="0" width="${x0+5-L+4}" height="${TB}" fill="transparent" style="cursor:pointer"/>`;
     return `<svg class="pg" data-k="MAY" data-x0="${x0}" data-pw="${pw}" viewBox="0 0 ${W} ${H}" role="img" aria-label="Mayoría absoluta el 29-N: PP más Vox ${E.ppVox.c} escaños (${E.ppVox.p10} a ${E.ppVox.p90}); PSOE, Sumar, Podemos y socios de 2023 ${E.izq.c} (${E.izq.p10} a ${E.izq.p90}); la mayoría absoluta es 176"><title>Mayoría absoluta</title>${s}</svg>`;
