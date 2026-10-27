@@ -192,7 +192,7 @@
     });
   }
   let drawn=false,lastW=0;const OPEN={};
-  const PH='<p class="hph">Desliza la barra de arriba: verás qué cambió cada día y por qué.</p>';
+  const PH='';
   function draw(){
     const box=document.getElementById('pgrid'),w=box.clientWidth||720,cols=w>=600?2:1,W=Math.floor((w-(cols-1)*12)/cols);
     box.style.gridTemplateColumns=`repeat(${cols},minmax(0,1fr))`;
