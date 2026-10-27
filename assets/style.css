@@ -953,3 +953,5 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
 :root[data-theme="dark"]{--dock:rgba(23,28,35,.3)}
 @media(max-width:640px){nav.tabs{-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8);border-color:color-mix(in srgb,var(--fg) 14%,transparent);border-color:rgba(128,136,150,.35)}
   nav.tabs a:not(.mbar) svg,nav.tabs .more svg{stroke-width:2.6;filter:drop-shadow(0 0 1px var(--panel)) drop-shadow(0 0 4px var(--panel))}nav.tabs a[aria-current="page"] svg{filter:none}}
+/* Dock: iconos de trazo normal */
+@media(max-width:640px){nav.tabs a:not(.mbar) svg,nav.tabs .more svg{stroke-width:1.9;filter:drop-shadow(0 0 2px var(--panel))}nav.tabs a[aria-current="page"] svg{filter:none}}
