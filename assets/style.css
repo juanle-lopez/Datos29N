@@ -996,3 +996,4 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
 .wapill b{font-weight:700;color:var(--fg)}
 .wapill svg{width:14px;height:14px;fill:none;stroke:#1fa855;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .wapill:hover{background:#e7f7ee}
+.newdom{text-decoration:none;cursor:pointer}.newdom:hover b{text-decoration:underline}
