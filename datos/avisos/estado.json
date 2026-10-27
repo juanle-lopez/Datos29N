@@ -1,0 +1,63 @@
+{
+ "dia": "2026-10-27",
+ "hora": "13:42",
+ "esc": {
+  "PP": 133,
+  "PSOE": 108,
+  "VOX": 66,
+  "SUMAR": 10,
+  "PV": 199,
+  "IZ": 150
+ },
+ "voto": {
+  "PP": 31.8,
+  "PSOE": 26.7,
+  "VOX": 19,
+  "SUMAR": 9.3
+ },
+ "encuestas": [
+  "NC Report / La Razón",
+  "Sigma Dos / El Mundo",
+  "Ateneo del Dato / elDiario.es",
+  "IMOP / El Confidencial",
+  "GESOP / Prensa Ibérica",
+  "GAD3 / ABC",
+  "SocioMétrica / EL ESPAÑOL",
+  "Target Point / El Debate",
+  "Hamalgama Métrica / Vozpópuli",
+  "DYM / 20minutos",
+  "40dB / EL PAÍS–SER",
+  "InvyMark / laSexta",
+  "Data10 / OKDiario"
+ ],
+ "noticias": [
+  "https://www.infobae.com/espana/2026/10/27/asi-estan-las-encuestas-para-el-29-de-noviembre-pp-y-vox-mantienen-la-mayoria-absoluta-el-psoe-gana-terreno-y-la-izquierda-fragmentada-no-logra-remontar/|Así están los sondeos para el 29-N: PP y Vox mantienen la mayoría absoluta, el PSOE gana terreno y la izquierda fragmentada no logra remontar",
+  "https://www.elespanol.com/espana/20261027/elecciones-generales-directo-ultima-hora-pedro-sanchez-sondeos-voto-correo-actos-precampana-pp-psoe-vox-encuestas-partidos-espana-2026-pactos-listas/1003744435718_10.html|Buxadé (Vox), en RNE: la «prioridad nacional» y reducir ministerios estarán en las negociaciones con el PP para formar Gobierno",
+  "https://www.elespanol.com/espana/20261027/elecciones-generales-directo-ultima-hora-pedro-sanchez-sondeos-voto-correo-actos-precampana-pp-psoe-vox-encuestas-partidos-espana-2026-pactos-listas/1003744435718_10.html|Feijóo, en Onda Cero, atribuye el pacto con Vox en el Senado a la alianza de PSOE y Frente Amplio",
+  "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos|Cerrado el plazo de candidaturas: el BOE las publica el miércoles y las listas definitivas se conocerán el 3 de noviembre",
+  "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos|El PSOE califica de «coalición fraudulenta» el pacto PP-Vox en el Senado; Vox lo niega",
+  "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos|Nogueras (Junts): el partido podría facilitar un Gobierno socialista si Pedro Sánchez se aparta",
+  "https://www.elmundo.es/elecciones/elecciones-generales/2026/10/26/6adfc1a4fdddff58628b4571.html|El pacto de PP y Vox acerca a la derecha al control total del Senado: la fórmula elegida puede ser decisiva en 13 provincias",
+  "https://www.moncloa.com/2026/10/26/encuestas-vox-pp-caida-popular-3455763/|Encuestas Vox PP: Vox consolida su subida, el PP cae y la derecha retiene la mayoría (recoge Sigma Dos, NC Report, Ateneo del Dato y SocioMétrica)",
+  "https://www.elespanol.com/espana/20261026/elecciones-generales-directo-ultima-hora-pedro-sanchez-actos-psoe-pp-vox-encuestas-listas-sondeos-voto-correo/1003744434228_10.html|Elecciones generales del 29-N, en directo: PP y Vox pactan no competir entre sí en varias provincias y hoy vence el plazo para presentar listas",
+  "https://www.cope.es/programas/fin-de-semana/audios/sanchez-apela-amor-feijoo-promete-bajar-impuestos-abascal-endurecer-inmigracion-asi-posicionan-candidatos-29-n-20261025_3462246.html|Sánchez apela al «amor», Feijóo promete bajar impuestos y Abascal endurecer la inmigración: así se posicionan los candidatos ante el 29-N",
+  "https://www.periodistadigital.com/politica/parlamento/20261025/barometro-29-n-pronostican-encuestas-cinco-semanas-elecciones-generales-noticia-689405260131/|Barómetro 29-N: ¿Qué pronostican las encuestas a cinco semanas de las elecciones generales?",
+  "https://alicanteplaza.es/alicanteplaza/espana/irene-montero-y-rufian-estrenan-alianza-con-su-primer-acto-de-precampana-conjunto-el-proximo-sabado-en-barcelona|Irene Montero y Rufián estrenan alianza con su primer acto de precampaña conjunto en Barcelona",
+  "https://www.elespanol.com/espana/20261023/elecciones-generales-directo-ultima-hora-adelanto-electoral-espana-pedro-sanchez-actos-psoe-pp-vox-encuestas-voto-correo-sondeos-2026-partidos-por/1003744431749_10.html|Directo 29-N: Feijóo promete en Valencia bajar el IRPF y un millón de viviendas; Sánchez acepta la entrevista de Jordi Wild",
+  "https://www.infobae.com/espana/agencias/2026/10/23/temas-del-dia-de-efe-espana-del-sabado-24-de-octubre/|Agenda del sábado: Sánchez en Granada, Feijóo en Vigo, Abascal en Palma e Ibiza",
+  "https://elespanol.com/espana/politica/20261022/feijoo-completa-plan-vivienda-medidas-jovenes-emancipen-lograr-espana-propietarios/1003744429961_0.amp.html|Feijóo completa un plan de vivienda con 23 medidas para que los jóvenes se emancipen y lograr la España de propietarios",
+  "https://www.infobae.com/espana/2026/10/23/elecciones-generales-en-espana-29-n-en-directo-ultima-hora-de-los-sondeos-los-debates-y-las-entrevistas-a-pedro-sanchez-y-feijoo/|Elecciones generales en España 29-N, en directo: última hora de los sondeos, los debates y las entrevistas a Pedro Sánchez y Feijóo",
+  "https://democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-imop-psoe-frente-amplio-vox-pp-octubre-2026|Encuesta elecciones generales: el PP baja al 28,5% y el PSOE recorta distancias hasta el 27,1%, según IMOP",
+  "https://www.infobae.com/espana/2026/10/22/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-propuestas-de-los-partidos-y-actos-de-los-candidatos/|Elecciones generales 29-N, en directo: El PSOE acepta el cara a cara entre Sánchez y Feijóo propuesto para el 16 de noviembre",
+  "https://www.moncloa.com/2026/10/22/elecciones-generales-29n-guia-censo-calendario-3453357|El Ministerio del Interior publica la guía electoral del 29N: 38.728.356 votantes y calendario oficial",
+  "https://es.euronews.com/2026/10/22/29n-listas-candidatos-partidos-generales|Quién es quién en el 29N: estos son los candidatos de los partidos para las elecciones generales en España",
+  "https://www.elespanol.com/espana/20261022/elecciones-generales-espana-ultima-hora-directo-encuestas-electorales-pedro-sanchez-listas-actos-pp-psoe-vox-frente-amplio/1003744430302_10.html|Elecciones generales en España, 29-N, en directo",
+  "https://www.moncloa.com/2026/10/21/plazo-listas-29n-registro-candidaturas-3452548/|El plazo para las listas del 29N ya está abierto: los partidos tienen hasta el lunes 26 a medianoche",
+  "https://www.eldiario.es/politica/constitucional-rechaza-peticion-defensor-pueblo-reactivar-voto-160-000-nacionalizados_1_13597189.html|El Constitucional rechaza la petición del Defensor del Pueblo de reactivar el voto de 160.000 nacionalizados",
+  "https://www.infobae.com/espana/2026/10/21/elecciones-generales-29-n-en-directo-ultima-hora-de-los-sondeos-las-propuestas-y-la-visita-de-milei-a-espana/|Elecciones generales 29-N, en directo: Ayuso recibe a Javier Milei en el Canal de Isabel II",
+  "https://okdiario.com/espana/ultima-hora-huelgas-elecciones-generales-del-29-n-actualidad-politica-hoy-comienza-plazo-presentar-candidaturas-20596020|Última hora de las huelgas, elecciones generales del 29-N y actualidad política hoy: comienza el plazo para presentar las candidaturas",
+  "https://electomania.es/encuesta-al-senado-sigma-dos-20oct-pp-y-vox-a-6-escanos-del-control-total/|Encuesta al Senado (Sigma Dos, 20 oct): PP y Vox, a 6 escaños del control total",
+  "https://www.infobae.com/espana/2026/10/20/asi-estan-los-sondeos-de-las-elecciones-generales-de-espana-2026/|Así están los sondeos de las elecciones generales de España 2026",
+  "https://elgeneracionalpost.com/politica/2026/1019/287369/estos-son-los-candidatos-de-los-partidos-para-el-29-n.html|Estos son los candidatos de los partidos para el 29-N"
+ ]
+}
