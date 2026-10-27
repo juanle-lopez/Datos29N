@@ -1,7 +1,49 @@
 {
- "actualizado": "2026-10-25",
+ "actualizado": "2026-10-27",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae",
+   "fecha": "27 oct",
+   "url": "https://www.infobae.com/espana/2026/10/27/asi-estan-las-encuestas-para-el-29-de-noviembre-pp-y-vox-mantienen-la-mayoria-absoluta-el-psoe-gana-terreno-y-la-izquierda-fragmentada-no-logra-remontar/",
+   "titular": "Así están los sondeos para el 29-N: PP y Vox mantienen la mayoría absoluta, el PSOE gana terreno y la izquierda fragmentada no logra remontar",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "El Español",
+   "fecha": "27 oct",
+   "url": "https://www.elespanol.com/espana/20261027/elecciones-generales-directo-ultima-hora-pedro-sanchez-sondeos-voto-correo-actos-precampana-pp-psoe-vox-encuestas-partidos-espana-2026-pactos-listas/1003744435718_10.html",
+   "titular": "Buxadé (Vox), en RNE: la «prioridad nacional» y reducir ministerios estarán en las negociaciones con el PP para formar Gobierno",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "El Español",
+   "fecha": "27 oct",
+   "url": "https://www.elespanol.com/espana/20261027/elecciones-generales-directo-ultima-hora-pedro-sanchez-sondeos-voto-correo-actos-precampana-pp-psoe-vox-encuestas-partidos-espana-2026-pactos-listas/1003744435718_10.html",
+   "titular": "Feijóo, en Onda Cero, atribuye el pacto con Vox en el Senado a la alianza de PSOE y Frente Amplio",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "27 oct",
+   "url": "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos",
+   "titular": "Cerrado el plazo de candidaturas: el BOE las publica el miércoles y las listas definitivas se conocerán el 3 de noviembre",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "27 oct",
+   "url": "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos",
+   "titular": "El PSOE califica de «coalición fraudulenta» el pacto PP-Vox en el Senado; Vox lo niega",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "27 oct",
+   "url": "https://infobae.com/espana/2026/10/27/elecciones-generales-espana-29-n-en-directo-ultima-hora-de-las-listas-al-congreso-y-al-senado-los-sondeos-y-los-candidatos",
+   "titular": "Nogueras (Junts): el partido podría facilitar un Gobierno socialista si Pedro Sánchez se aparta",
+   "tema": "Campaña"
+  },
   {
    "medio": "El Mundo",
    "fecha": "26 oct",

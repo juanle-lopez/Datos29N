@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){
   var list=document.getElementById('nlist'),hl=document.getElementById('hlast');if(!list&&!hl)return;
   var MES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  fetch('assets/noticias.json?v=26').then(function(r){return r.json()}).then(function(d){
+  fetch('assets/noticias.json?v=28').then(function(r){return r.json()}).then(function(d){
     var it=d.items||[],f=d.actualizado.split('-'),fl=+f[2]+' de '+MES[+f[1]-1]+' de '+f[0];
     var card=function(n){return '<li class="nitem" data-t="'+esc(n.tema)+'"><div class="nmeta"><span class="ntag">'+esc(n.tema)+'</span>'+esc(n.medio)+' · '+esc(n.fecha)+'</div><a href="'+esc(n.url)+'" target="_blank" rel="noopener">'+esc(n.titular)+'</a></li>'};
     if(list){
@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 12:16 (GMT+1)';
+const ACT='27 de octubre de 2026 · 13:40 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||document.querySelector('.act'))return;

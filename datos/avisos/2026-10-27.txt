@@ -1,7 +1,7 @@
 🗳️ *DATOS 29N · 27 oct*
 _Escaños según la media de las encuestas de hoy_
 
-🔵 PP  ▸  *133* escaños  · rango 130–135 · 31,9 %
+🔵 PP  ▸  *133* escaños  · rango 130–135 · 31,8 %
 🔴 PSOE  ▸  *108* escaños  · rango 104–110 · 26,7 %
 🟢 Vox  ▸  *66* escaños  · rango 65–68 · 19,0 %
 🟣 Sumar + Podemos  ▸  *10* escaños  · rango 9–11 · 9,3 %
@@ -15,11 +15,11 @@ PSOE + Sumar + Podemos + socios  *150*
 🔭 Proyección al 29-N: PP + Vox *194* (179–211)
 
 📰 *Últimas noticias*
-▫️ El pacto de PP y Vox acerca a la derecha al control total del Senado: la fórmula elegida puede ser… (El Mundo)
+▫️ Así están los sondeos para el 29-N: PP y Vox mantienen la mayoría absoluta, el PSOE gana terreno y la… (Infobae)
 👉 https://datos29n.juanle.net/noticias.html
-▫️ Encuestas Vox PP: Vox consolida su subida, el PP cae y la derecha retiene la mayoría (recoge Sigma Dos, NC… (Moncloa.com)
+▫️ Buxadé (Vox), en RNE: la «prioridad nacional» y reducir ministerios estarán en las negociaciones con el PP… (El Español)
 👉 https://datos29n.juanle.net/noticias.html
-▫️ Elecciones generales del 29-N, en directo: PP y Vox pactan no competir entre sí en varias provincias y hoy… (El Español)
+▫️ Feijóo, en Onda Cero, atribuye el pacto con Vox en el Senado a la alianza de PSOE y Frente Amplio (El Español)
 👉 https://datos29n.juanle.net/noticias.html
 
 📈 Detalle día a día y fuentes:

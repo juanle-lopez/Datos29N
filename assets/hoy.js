@@ -10,6 +10,6 @@
   box.innerHTML=`<p class="hk">Previsión de hoy · ${fch(h.f)}</p><p class="ht">Con las encuestas de hoy, <b>PP + Vox suman ${h.esc.PV}</b> escaños y <b>PSOE + Sumar + Podemos + socios de 2023, ${h.esc.IZ}</b>. La mayoría absoluta está en <b>176</b>.</p>`+
     `<div class="hrs">${row('PP + Vox',h.esc.PV,['var(--pp)','var(--vox)'])}${row('PSOE + Sumar + Podemos + socios',h.esc.IZ,['var(--psoe)','var(--muted)'])}<div class="hax"><span style="left:${176/240*100}%">176 · mayoría</span></div></div>`;
   box.insertAdjacentHTML('beforeend',`<p class="hc"><b>Lo nuevo de hoy.</b> ${ch} Es una suma aritmética, sin presuponer pactos.</p><a class="hl" href="prediccion.html">Ver la previsión completa →</a>`);
-  fetch('assets/noticias.json?v=27').then(r=>r.json()).then(j=>{const n=(j.items||[])[0];if(!n)return;
+  fetch('assets/noticias.json?v=28').then(r=>r.json()).then(j=>{const n=(j.items||[])[0];if(!n)return;
     box.querySelector('.hc').insertAdjacentHTML('afterend',`<p class="hnw"><b>Última noticia</b> (${n.fecha} · ${n.medio}): <a href="${n.url}" target="_blank" rel="noopener">${n.titular.replace(/</g,'&lt;')}</a></p>`)}).catch(()=>{});
 })();
