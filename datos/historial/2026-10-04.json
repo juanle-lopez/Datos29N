@@ -2,16 +2,16 @@
  "fecha": "2026-10-04",
  "metodo": 3,
  "t": "reconstruido",
- "n": 6,
+ "n": 4,
  "voto": {
-  "PP": 33.7,
-  "PSOE": 26.03,
-  "VOX": 18.17,
-  "SUMAR": 9.05
+  "PP": 33.78,
+  "PSOE": 25.83,
+  "VOX": 18,
+  "SUMAR": 8.9
  },
  "esc": {
   "PP": 143,
-  "PSOE": 104,
+  "PSOE": 103,
   "VOX": 61,
   "SUMAR": 10,
   "PV": 204,
@@ -19,18 +19,18 @@
  },
  "lo": {
   "PP": 142,
-  "PSOE": 101,
-  "VOX": 61,
-  "SUMAR": 9,
+  "PSOE": 99,
+  "VOX": 60,
+  "SUMAR": 8,
   "PV": 203,
-  "IZ": 142
+  "IZ": 141
  },
  "hi": {
-  "PP": 145,
+  "PP": 147,
   "PSOE": 104,
   "VOX": 62,
   "SUMAR": 11,
-  "PV": 207,
+  "PV": 208,
   "IZ": 146
  },
  "encuestas": [
@@ -41,14 +41,6 @@
   {
    "e": "Sigma Dos / El Mundo",
    "f": "2026-10-04"
-  },
-  {
-   "e": "Ateneo del Dato / elDiario.es",
-   "f": "2026-10-03"
-  },
-  {
-   "e": "Celeste-Tel / Onda Cero",
-   "f": "2026-09-24"
   },
   {
    "e": "DYM / 20minutos",
@@ -80,28 +72,6 @@
     "PSOE": 25.6,
     "VOX": 18.3,
     "SUMAR": 9.9
-   }
-  },
-  {
-   "h": "Ateneo del Dato",
-   "e": "Ateneo del Dato / elDiario.es",
-   "f": "2026-10-03",
-   "voto": {
-    "PP": 33.2,
-    "PSOE": 27.5,
-    "VOX": 19.2,
-    "SUMAR": 10.3
-   }
-  },
-  {
-   "h": "Celeste-Tel",
-   "e": "Celeste-Tel / Onda Cero",
-   "f": "2026-09-24",
-   "voto": {
-    "PP": 33.9,
-    "PSOE": 25.4,
-    "VOX": 17.8,
-    "SUMAR": 8.4
    }
   },
   {

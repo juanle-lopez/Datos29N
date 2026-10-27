@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 10:45 (GMT+1)';
+const ACT='27 de octubre de 2026 · 10:51 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||p==='prediccion.html'||document.querySelector('.act'))return;
@@ -160,4 +160,12 @@ const ACT='27 de octubre de 2026 · 10:45 (GMT+1)';
   if(!h)return;
   const e=document.createElement('p');e.className='eyebrow act';e.textContent='Actualizado el '+ACT;
   (h.classList.contains('sech')?h.parentNode:h).insertBefore(e,h.classList.contains('sech')?h:h.firstChild);
+})();
+
+/* Recuentos y fechas de las encuestas: salen de PRED, nunca escritos a mano */
+(function(){
+  const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],ff=f=>{const[y,m,d]=f.split('-').map(Number);return d+'-'+MES[m-1]};
+  const go=()=>{if(typeof PRED==='undefined'||!PRED.privadas)return;const fs=PRED.privadas.map(p=>p.f).sort(),r=ff(fs[0])+' al '+ff(fs[fs.length-1]);window.PRED_RNG=r;
+    document.querySelectorAll('.npol').forEach(e=>e.textContent=PRED.n);document.querySelectorAll('.rngp').forEach(e=>e.textContent=r)};
+  document.addEventListener('DOMContentLoaded',go);window.addEventListener('load',go);
 })();

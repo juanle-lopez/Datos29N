@@ -93,7 +93,7 @@
   <section class="sec" id="p_pred" aria-label="Predicción hasta el 29-N">
     <div class="sech"><span class="num" id="pupd">Predicción</span><h2>Escaños hacia el 29‑N</h2><p class="lead">Cuántos escaños resultarían de las encuestas publicadas hasta hoy, con su margen de error y el modelo explicado paso a paso.</p></div>
     <div class="exec">
-      <p class="eyebrow" style="margin:0 0 10px">Actualizado el 27 de octubre de 2026 · 10:45 (GMT+1)</p>
+      <p class="eyebrow" style="margin:0 0 10px">Actualizado el 27 de octubre de 2026 · 10:51 (GMT+1)</p>
       <p class="banner"><b>Modelo experimental, no es una previsión oficial.</b> Mismas reglas para todos los partidos; el orden es el del simulador y no implica nada. Se retira el 24-nov por la ley electoral (no se pueden publicar encuestas en los cinco días previos).</p>
       <div id="hid" class="banner" style="margin-top:14px"><b>Sección retirada.</b> Desde el 24-nov no se publican encuestas ni proyecciones basadas en ellas, a la espera de que se confirme el plazo exacto con la Junta Electoral Central.</div>
       <div id="pbody">
@@ -133,8 +133,8 @@
       <h3 style="margin:26px 0 6px">Cómo funciona el modelo</h3>
       <details class="pdet"><summary>Los cinco pasos</summary>
         <ol class="steps">
-          <li><b>Datos.</b><span>Las 14 encuestas privadas más recientes (<span id="rng2">24-sep a 26-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
-          <li><b>Media.</b><span>Media simple de las 14 privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
+          <li><b>Datos.</b><span>Las <span class="npol">13</span> encuestas privadas más recientes (<span id="rng2">24-sep a 26-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
+          <li><b>Media.</b><span>Media simple de las <span class="npol">13</span> privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Corrección histórica (20-oct).</b><span>Las medias de encuestas de la última semana se equivocaron en 2019 (abril y noviembre) y 2023 casi siempre en la misma dirección para PSOE y Vox. El centro del 29-N se corrige con la media de esos errores, reducida según lo mucho que varían entre elecciones, y entra poco a poco: hoy es la media de las encuestas. Hoy: PSOE +1,0, PP −0,6, Vox −0,6 puntos; Sumar + Podemos no se corrige (solo hay una elección con dato). Es una apuesta apoyada en tres elecciones.</span></li>
           <li><b>Sin tendencia.</b><span>Esa corrección aparte, la previsión central no prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
           <li><b>Error.</b><span>Crece poco a poco con los días: la deriva de la opinión y el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media al llegar al 29-N) se reparten a lo largo del tiempo, así que el tubo se abre de forma gradual y no da un salto el último día. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
@@ -154,12 +154,12 @@
         <p>Solo compiten los partidos con al menos un 3 % del voto de esa provincia (método D’Hondt).</p>
         <p><b>3. Voto proyectado en la fecha t.</b></p>
         <div class="frm">V(k,t) = M(k) + δ(k) × t / T</div>
-        <p>M(k) es la media de las 14 encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
+        <p>M(k) es la media de las <span class="npol">13</span> encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
         <p>δ(k) es la corrección histórica: la media de los errores de las medias de encuestas de la última semana (resultado menos media) en abril de 2019, noviembre de 2019 y julio de 2023, multiplicada por m²/(m²+v/n), con m esa media y v/n la varianza de la media entre elecciones. Se corrige más lo que se repite con el mismo signo (PSOE y Vox) y menos lo que cambia de signo (PP). T es el número de días hasta el 29-N. Los errores salen de las tablas de encuestas de Wikipedia (<a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_Spanish_general_election">2023</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_November_2019_Spanish_general_election">nov. 2019</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_April_2019_Spanish_general_election">abr. 2019</a>), con muestras incompletas y sin contrastar con las fuentes originales.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40) / (100·R)²
 + en el 29-N se suma además 1,9² / (100·R)²</div>
-        <p>s(k) es el error de la media actual (la desviación de las 14 encuestas entre sí, dividida por √14; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; y solo se suma el día de la votación.</p>
+        <p>s(k) es el error de la media actual (la desviación de las <span class="npol">13</span> encuestas entre sí, dividida por √<span class="npol">13</span>; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; y solo se suma el día de la votación.</p>
         <p>Este σ está en escala logit: p es la fracción de voto del partido, y R = 0,161 es la media cuadrática de p(1−p) en los 8 resultados de 2019 y 2023 con los que se midió el 1,9, de modo que el error medio en puntos sigue siendo 1,9 pero un partido grande tiene más margen en puntos que uno pequeño.</p>
         <p><b>5. Simulaciones.</b> 4.000 veces para el 29-N (1.500 por cada fecha anterior de los gráficos): se sortea, en escala logit, el voto de cada partido y del resto, se vuelve a porcentajes y se reescala para que todo sume 100 (así, si uno sube, otro baja); se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
       </details>
@@ -193,10 +193,10 @@
   <a class="nextp" href="index.html"><small>Inicio</small><b>Lo que dicen las encuestas hoy</b></a>
   <footer class="credit"><b>Datos 29N</b> · por <b>JuanLe</b>. Proyecto independiente y sin publicidad. Datos de fuentes enlazadas (ver Método: aviso y fuentes consultadas). Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. Primera versión publicada el 18-oct-2026; el historial de cambios es público en <a href="https://github.com/juanle-lopez/Datos29N/commits/main">GitHub</a>.</footer>
 </div>
-<script src="assets/core.js?v=10271045"></script>
+<script src="assets/core.js?v=10271051"></script>
 <script src="assets/prediccion-data.js?v=20261027a"></script>
 <script src="assets/historial-data.js?v=20261027"></script>
-<script src="assets/prediccion.js?v=67"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
+<script src="assets/prediccion.js?v=68"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

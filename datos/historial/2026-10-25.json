@@ -2,38 +2,42 @@
  "fecha": "2026-10-25",
  "metodo": 3,
  "t": "reconstruido",
- "n": 13,
+ "n": 12,
  "voto": {
-  "PP": 32.16,
-  "PSOE": 26.55,
-  "VOX": 18.89,
-  "SUMAR": 9.24
+  "PP": 31.83,
+  "PSOE": 26.69,
+  "VOX": 19,
+  "SUMAR": 9.17
  },
  "esc": {
-  "PP": 135,
-  "PSOE": 107,
+  "PP": 133,
+  "PSOE": 109,
   "VOX": 65,
   "SUMAR": 10,
-  "PV": 200,
-  "IZ": 149
+  "PV": 198,
+  "IZ": 151
  },
  "lo": {
-  "PP": 132,
-  "PSOE": 104,
-  "VOX": 64,
+  "PP": 130,
+  "PSOE": 105,
+  "VOX": 65,
   "SUMAR": 9,
   "PV": 197,
-  "IZ": 146
+  "IZ": 147
  },
  "hi": {
-  "PP": 137,
-  "PSOE": 109,
-  "VOX": 67,
+  "PP": 136,
+  "PSOE": 110,
+  "VOX": 68,
   "SUMAR": 11,
-  "PV": 203,
+  "PV": 202,
   "IZ": 152
  },
  "encuestas": [
+  {
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-25"
+  },
   {
    "e": "IMOP / El Confidencial",
    "f": "2026-10-23"
@@ -75,19 +79,22 @@
    "f": "2026-10-09"
   },
   {
-   "e": "NC Report / La Razón",
-   "f": "2026-10-08"
-  },
-  {
    "e": "Data10 / OKDiario",
    "f": "2026-10-05"
-  },
-  {
-   "e": "Ateneo del Dato / elDiario.es",
-   "f": "2026-10-03"
   }
  ],
  "encDetalle": [
+  {
+   "h": "Ateneo del Dato",
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-10-25",
+   "voto": {
+    "PP": 31.1,
+    "PSOE": 27.6,
+    "VOX": 19.8,
+    "SUMAR": 9.5
+   }
+  },
   {
    "h": "IMOP",
    "e": "IMOP / El Confidencial",
@@ -199,17 +206,6 @@
    }
   },
   {
-   "h": "NC Report",
-   "e": "NC Report / La Razón",
-   "f": "2026-10-08",
-   "voto": {
-    "PP": 34.1,
-    "PSOE": 25,
-    "VOX": 18.2,
-    "SUMAR": 9.2
-   }
-  },
-  {
    "h": "Data10",
    "e": "Data10 / OKDiario",
    "f": "2026-10-05",
@@ -219,24 +215,44 @@
     "VOX": 18.6,
     "SUMAR": 9.5
    }
-  },
-  {
-   "h": "Ateneo del Dato",
-   "e": "Ateneo del Dato / elDiario.es",
-   "f": "2026-10-03",
-   "voto": {
-    "PP": 33.2,
-    "PSOE": 27.5,
-    "VOX": 19.2,
-    "SUMAR": 10.3
-   }
   }
  ],
  "proy": null,
  "contexto": [],
  "cambio": {
-  "entran": [],
+  "entran": [
+   {
+    "e": "Ateneo del Dato / elDiario.es",
+    "f": "2026-10-25",
+    "voto": {
+     "PP": 31.1,
+     "PSOE": 27.6,
+     "VOX": 19.8,
+     "SUMAR": 9.5
+    },
+    "antes": {
+     "e": "Ateneo del Dato / elDiario.es",
+     "f": "2026-10-03",
+     "voto": {
+      "PP": 33.2,
+      "PSOE": 27.5,
+      "VOX": 19.2,
+      "SUMAR": 10.3
+     }
+    }
+   }
+  ],
   "salen": [
+   {
+    "e": "NC Report / La Razón",
+    "f": "2026-10-08",
+    "voto": {
+     "PP": 34.1,
+     "PSOE": 25,
+     "VOX": 18.2,
+     "SUMAR": 9.2
+    }
+   },
    {
     "e": "Celeste-Tel / Onda Cero",
     "f": "2026-09-24",
@@ -249,18 +265,18 @@
    }
   ],
   "dVoto": {
-   "PP": -0.13,
-   "PSOE": 0.08,
-   "VOX": 0.08,
-   "SUMAR": 0.06
+   "PP": -0.46,
+   "PSOE": 0.22,
+   "VOX": 0.19,
+   "SUMAR": -0.01
   },
   "dEsc": {
-   "PP": 0,
-   "PSOE": 0,
+   "PP": -2,
+   "PSOE": 2,
    "VOX": 0,
    "SUMAR": 0,
-   "PV": 0,
-   "IZ": 0
+   "PV": -2,
+   "IZ": 2
   },
   "huboCambio": true
  }
