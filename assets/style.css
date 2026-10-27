@@ -309,7 +309,7 @@ nav.tabs a[aria-current="page"]{color:var(--fg);background:var(--bg)}
 }
 /* ---------- secciones ---------- */
 section.sec{scroll-margin-top:72px;display:flex;flex-direction:column;gap:20px}
-.sech{padding-top:clamp(22px,5vw,56px)}
+.sech{padding-top:clamp(12px,2.4vw,32px)}
 .sech .num{font-family:var(--mono);font-size:13px;letter-spacing:.14em;color:var(--muted);display:flex;align-items:center;gap:12px}
 .sech .num::after{content:"";height:2px;width:56px;background:linear-gradient(90deg,var(--pp),var(--psoe),var(--vox),var(--sumar));border-radius:2px}
 .sech h2{font-family:var(--disp);font-size:clamp(32px,8vw,60px);letter-spacing:-.035em;line-height:1;text-transform:none;color:var(--fg);font-weight:800;margin:10px 0 10px;text-wrap:balance}
@@ -349,7 +349,7 @@ section.sec{scroll-margin-top:72px;display:flex;flex-direction:column;gap:20px}
   .hin{gap:14px}
   .ticker{margin-inline:-16px}
   section.sec{scroll-margin-top:12px}
-  .sech{padding-top:40px}
+  .sech{padding-top:14px}
 }
 @media(max-width:480px){.hero .cdg span{font-size:9px;letter-spacing:0}.hero .cdg div{padding-inline:0}}
 
