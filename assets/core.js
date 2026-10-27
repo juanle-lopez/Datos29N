@@ -68,6 +68,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     ['entrevistas.html','Entrevistas y debates','Wild y el resto: fechas, estado y fuentes','<path d="M12 3a3 3 0 013 3v5a3 3 0 01-6 0V6a3 3 0 013-3zM6 11a6 6 0 0012 0M12 17v4M9 21h6"/>'],
     ['casos.html','Casos','Casos judiciales y su estado, con presunción de inocencia y fuentes','<path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/>'],
     ['mesas.html','Mesas electorales','Si te toca: plazos, causas para no ir y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
+    ['lideres.html','Currículums','Estudios, empleos y cargos de los líderes, con fuentes','<circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0114 0"/>'],
     ['guia.html','Cómo leer Datos 29N','Qué puedes concluir con cada apartado y qué no','<path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5zM12 6v13.5"/>'],
     ['metodo.html','Método y fuentes','Cómo se hace y de dónde sale cada dato','<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>']];
   var sh=document.createElement('div');sh.className='msheet';sh.id='moresheet';sh.hidden=true;
@@ -152,7 +153,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 13:40 (GMT+1)';
+const ACT='27 de octubre de 2026 · 17:19 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||document.querySelector('.act'))return;
