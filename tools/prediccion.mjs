@@ -80,17 +80,17 @@ function escenario(clave,trend,N=4000){
       .filter(x=>x.p>=5).sort((a,b)=>b.p-a.p);}
   // 40 trayectorias conjuntas coherentes con el abanico: error inicial de la media + deriva aleatoria + error final de las encuestas
   if(clave==='priv'){
-    const NP=40;out.trayectorias={PP:[],PSOE:[],VOX:[],SUMAR:[]};
+    const NP=40;out.trayectorias={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};
     for(let i=0;i<NP;i++){
       const L=inp.errorLogit,cb={};K.forEach(k=>cb[k]=base[clave][k]);const z0={},W={O:0};K.forEach(k=>{z0[k]=(L?s0[clave][k]/(100*cb[k]/100*(1-cb[k]/100)):s0[clave][k])*gauss();W[k]=0});
       const eF={};[...K,'O'].forEach(k=>eF[k]=(L?inp.sdError/(100*REF):inp.sdError)*gauss());
-      const arr={PP:[],PSOE:[],VOX:[],SUMAR:[]};let prev=0;
+      const arr={PP:[],PSOE:[],VOX:[],SUMAR:[],PV:[],IZ:[]};let prev=0;
       ds.forEach((d,j)=>{
         const dt=d-prev;prev=d;[...K,'O'].forEach(k=>{W[k]+=Math.sqrt(volDay*dt)/(L?100*REF:1)*gauss()});
         let v;if(L){const cc={},e={O:W.O+eFt(eF.O,d)};K.forEach(k=>{cc[k]=base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d);e[k]=z0[k]+W[k]+eFt(eF[k],d)});v=compon(cc,e)}else{v={};K.forEach(k=>v[k]=Math.max(0.5,base[clave][k]+trd[k]*damp(d)+sesgoAt(clave,k,d)+z0[k]+W[k]+eFt(eF[k],d)))}
-        const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));
+        const t=simulate(DATA,v).tot;K.forEach(k=>arr[k].push(t[k]));arr.PV.push(t.PP+t.VOX);arr.IZ.push(IZ(t));
       });
-      K.forEach(k=>out.trayectorias[k].push(arr[k]));
+      [...K,'PV','IZ'].forEach(k=>out.trayectorias[k].push(arr[k]));
     }
     // histograma de escaños el 29-N (de las 4.000 simulaciones), normalizado a 1
     out.hist={};K.forEach(k=>{const v=f.dr[k].filter((x,_,A)=>true),mn=pct(f.dr[k],.025),mx=pct(f.dr[k],.975),c=new Array(mx-mn+1).fill(0);v.forEach(x=>{if(x>=mn&&x<=mx)c[x-mn]++});const w=[1,2,3,4,3,2,1],sm=c.map((_,i)=>w.reduce((a,wi,j)=>{const t=i+j-3;return a+(t>=0&&t<c.length?wi*c[t]:0)},0)),m=Math.max(...sm);out.hist[k]={min:mn,c:sm.map(x=>round(x/m,3))}});

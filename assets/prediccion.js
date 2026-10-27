@@ -19,7 +19,7 @@
   const WA=(a,v)=>{const q=v.split(";");return `<animate attributeName="${a}" from="${q[0]}" to="${q[1]}" dur="14s" begin="0s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".3 .3 .55 .9"/>`};
   function panel(k,name,c,W,animate){
     const H=W<420?246:270,L=30,R=W<420?86:96,T=W<420?52:50,B=24,pw=W-L-R,ph=H-T-B,DW=W<420?38:46;
-    const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=E.trayectorias[k];
+    const E=PRED.escPrivadas,rP=E.ruta[k],rC=PRED.escCIS.ruta[k],ev=E.escanos[k],base=PRED.escBase.priv[k],hg=E.hist[k],tr=repOrder(E.trayectorias[k]);
     const vals=[ev.p10,ev.p90,base,hg.min,hg.min+hg.c.length-1];dots.forEach(p=>vals.push(p.esc[k]));rP.forEach(r=>vals.push(r.lo95,r.hi95));
     const lo=Math.max(0,Math.floor((Math.min(...vals)-4)/10)*10),hi=Math.ceil((Math.max(...vals)+4)/10)*10;
     const X=t=>xs(t,L,pw),Y=v=>T+(1-(v-lo)/(hi-lo))*ph,step=(hi-lo)>80?20:10;
@@ -98,12 +98,13 @@
   }
 
   // Quinto gráfico: la pregunta clave, ¿quién llega a la mayoría absoluta (176)? Dos bloques sumados, con el mismo tubo y el mismo historial.
+  const repOrder=tr=>{const n=tr.length,fin=tr.map(a=>a[a.length-1]),sr=[...fin].sort((a,b)=>a-b),med=(sr[(n-1)>>1]+sr[n>>1])/2,idx=tr.map((_,i)=>i).sort((i,j)=>Math.abs(fin[i]-med)-Math.abs(fin[j]-med)),pk=(m,src)=>Array.from({length:m},(_,q)=>src[Math.min(src.length-1,Math.floor((q+.5)/m*src.length))]),p30=pk(Math.min(30,n),idx),p14=pk(14,p30).map((_,q,a)=>a[(q*5)%14]),rest=p30.filter(i=>!p14.includes(i));return [...p14,...rest].map(i=>tr[i])};
   const BL=[['PV','PP + Vox','var(--pp)'],['IZ','PSOE + Sumar + Podemos + socios 2023','var(--psoe)']];
   // Cada bloque se dibuja apilado, con el color de cada partido que lo forma; el tubo del total va encima.
   const PARTS={PV:[['PP','PP','var(--pp)'],['VOX','Vox','var(--vox)']],IZ:[['PSOE','PSOE','var(--psoe)'],['SUMAR','Sumar+Pod.','var(--sumar)'],['SOC','Socios','var(--muted)']]};
   const pval=(o,k)=>k==='SOC'?o.IZ-o.PSOE-o.SUMAR:o[k];
   function panelMay(W,animate){
-    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?140:156,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
+    const mob=W<420,L=30,R=mob?96:110,pw=W-L-R,ph=mob?200:210,sub=28+ph+(mob?26:28),H=34+2*sub+10,E=PRED.escPrivadas;
     const hi=240,lo=0,xs_=t=>xs(t,L,pw),x0=xs_(TH),xe=xs_(D1),Yf=(T,v)=>T+(1-(v-lo)/(hi-lo))*ph;
     const today=k=>PRED.escBase.priv[k],bl=PRED.escBaseBloq.priv;
     // series de partes: historial (HD) y proyección (ruta)
@@ -124,10 +125,14 @@
       if(hist.length)s+=`<g clip-path="url(#pc-${bi})">${stack(hist,.9)}</g>`;
       {const tv=tk==='PV'?today('PP')+today('VOX'):bl.IZ;s+=`<circle cx="${x0}" cy="${Y(tv)}" r="5.5" fill="${c}" stroke="var(--bg)" stroke-width="2.5"/><text x="${x0-9}" y="${Y(tv)+24}" text-anchor="end" style="fill:${c};font-size:13px;font-weight:800;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round">hoy ${tv}</text>`}
       const base={t:TH,o:{PP:today('PP'),VOX:today('VOX'),PSOE:today('PSOE'),SUMAR:today('SUMAR'),IZ:bl.IZ}};
-      s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.62)}</g>`;
+      s+=`<g ${animate?'mask="url(#cp-may)"':'clip-path="url(#cp-may)"'}>`+`<g clip-path="url(#pc-${bi})">${stack([base,...proj.slice(1)],.78)}</g>`;
       const poly=(a,b2)=>r.map(q=>xs_(dd(q.d))+','+Y(q[b2])).join(' ')+' '+[...r].reverse().map(q=>xs_(dd(q.d))+','+Y(q[a])).join(' ');
       s+=`<polygon points="${poly('lo95','hi95')}" fill="var(--fg)" opacity=".08"/><polygon points="${poly('lo','hi')}" fill="var(--fg)" opacity=".16"/><polygon points="${poly('lo50','hi50')}" fill="var(--fg)" opacity=".28"/>`;
       s+=`<polyline fill="none" stroke="var(--fg)" stroke-width="2" points="${x0},${Y(bl[tk])} ${r.map(q=>xs_(dd(q.d))+','+Y(q.esc)).join(' ')}"/>`;
+      {const TR=E.trayectorias&&E.trayectorias[tk];if(TR&&TR.length){const sm=t=>t.map((v,i)=>i===0||i===t.length-1?v:(t[i-1]+v+t[i+1])/3),P=a=>a.map((v,i)=>xs_(dd(r[i].d))+','+Y(v)).join(' '),R=repOrder(TR).slice(0,24);
+        R.forEach((t,ti)=>{const a=sm(t),b=sm(R[(ti+11)%R.length]),du=(9+(ti%7)*1.8).toFixed(1),bg=(1.8-ti*.7).toFixed(2),mv=`<animate attributeName="points" values="${P(a)};${P(b)};${P(a)}" dur="${du}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".45 0 .55 1;.45 0 .55 1"/>`;
+          s+=`<polyline fill="none" stroke="${c}" stroke-width="1.5" opacity=".5" stroke-linejoin="round" points="${P(a)}">${animate?`${mv}<animate attributeName="opacity" values=".25;.85;.25" dur="${(du*.6).toFixed(1)}s" begin="${bg}s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.5;1" keySplines=".4 0 .6 1;.4 0 .6 1"/>`:''}</polyline>`;
+          if(animate&&ti<10)s+=`<polyline fill="none" stroke="${c}" stroke-width="5.6" stroke-linecap="round" stroke-linejoin="round" opacity=".9" stroke-dasharray="0.01 77.99" points="${P(a)}">${mv}<animate attributeName="stroke-dashoffset" from="0" to="-78" dur="${(4.2+(ti%5)*.7).toFixed(1)}s" repeatCount="indefinite"/></polyline>`})}}
       s+=`</g>`;
       // línea de la mayoría
       s+=`<line x1="${L}" x2="${L+pw}" y1="${Y(176)}" y2="${Y(176)}" stroke="var(--fg)" stroke-width="1.6" stroke-dasharray="6 4"/><text x="${L+4}" y="${Y(176)-5}" style="fill:var(--fg);font-size:10.5px;font-weight:700;${halo}">176</text>`;
