@@ -49,7 +49,7 @@
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
     s+=`<path class="cloud" d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
     {const q=rP[rP.length-1],tx=X(D1)-6,halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;font-size:10px',yA=Math.max(T+9,Y(q.hi)-3),yB=Math.max(T+9,Math.min(Y(q.hi95)-3,yA-12));
-      s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">Lo más probable</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">Aún posible</text>`}
+      s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">Rango probable</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">Rango amplio</text>`}
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos) y otras encuestas (puntos). Un valor fuera de escala se dibuja pegado al borde
