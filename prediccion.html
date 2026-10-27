@@ -53,6 +53,19 @@
 .pbar button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
 #pgrid.simple .trj,#pgrid.simple .cloud{display:none}
 #pgrid.used .hint{display:none}
+.hsl{position:relative;height:56px;margin-top:2px}
+.hsl input{-webkit-appearance:none;appearance:none;width:100%;height:30px;margin:0;background:transparent;cursor:grab;touch-action:pan-y}
+.hsl input::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:color-mix(in srgb,var(--c) 28%,var(--line))}
+.hsl input::-moz-range-track{height:8px;border-radius:4px;background:color-mix(in srgb,var(--c) 28%,var(--line))}
+.hsl input::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-11px;border-radius:50%;background:var(--c);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--c),0 2px 6px rgba(0,0,0,.3)}
+.hsl input::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--c);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--c)}
+.hsl input:focus-visible{outline:2px solid var(--c);outline-offset:6px;border-radius:6px}
+.hsl .hand{position:absolute;top:26px;right:0;display:flex;align-items:center;gap:4px;font-size:22px;line-height:1;pointer-events:none;color:var(--c);animation:hnd 2.6s ease-in-out infinite}
+.hsl .hand b{font-size:12.5px;font-weight:700}
+@keyframes hnd{0%,15%{right:0}70%,100%{right:50%}}
+#pgrid.used .hand{display:none}
+@media (prefers-reduced-motion:reduce){.hsl .hand{animation:none}}
+
 .howto{margin:12px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:14px;line-height:1.5}
 .howto ul{margin:6px 0 0;padding-left:18px}.howto li{margin:0 0 4px;max-width:none}
 .hdet{position:relative;margin-top:6px;padding:10px 34px 8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:13px;line-height:1.45}
@@ -74,12 +87,12 @@
   <section class="sec" id="p_pred" aria-label="Predicción hasta el 29-N">
     <div class="sech"><span class="num" id="pupd">Predicción</span><h2>Escaños hacia el 29‑N</h2><p class="lead">Cuántos escaños resultarían de las encuestas publicadas hasta hoy, con su margen de error y el modelo explicado paso a paso.</p></div>
     <div class="exec">
-      <p class="eyebrow" style="margin:0 0 10px">Actualizado el 27 de octubre de 2026 · 09:21 (GMT+1)</p>
+      <p class="eyebrow" style="margin:0 0 10px">Actualizado el 27 de octubre de 2026 · 09:23 (GMT+1)</p>
       <p class="banner"><b>Modelo experimental, no es una previsión oficial.</b> Mismas reglas para todos los partidos; el orden es el del simulador y no implica nada. Se retira el 24-nov por la ley electoral (no se pueden publicar encuestas en los cinco días previos).</p>
       <div id="hid" class="banner" style="margin-top:14px"><b>Sección retirada.</b> Desde el 24-nov no se publican encuestas ni proyecciones basadas en ellas, a la espera de que se confirme el plazo exacto con la Junta Electoral Central.</div>
       <div id="pbody">
       <h3 style="margin:18px 0 6px">Escaños estimados hasta el 29-N</h3>
-      <p class="note">Un gráfico por partido, con su propia escala, y uno final con la pregunta clave: quién llega a la mayoría absoluta. Pasa el cursor o toca para ver cada fecha. El movimiento es solo visual; no son datos en directo.</p>
+      <p class="note">Un gráfico por partido, con su propia escala, y uno final con la pregunta clave: quién llega a la mayoría absoluta. Desliza la barra bajo cada gráfico para ver cada fecha. El movimiento es solo visual; no son datos en directo.</p>
       <div class="psum" id="psum"></div>
       <div class="kcard" id="pkey"></div>
       <div class="kcard cm" id="pcomo"></div>
@@ -87,7 +100,7 @@
       <div class="howto" id="howto"><b>Cómo usar los gráficos</b>
         <ul>
           <li><b>Hacia la derecha de «hoy»:</b> la proyección hasta el 29-N. Pasa el cursor o toca para ver cada fecha, con su margen de error.</li>
-          <li><b>Hacia la izquierda (desde el 1-oct):</b> el historial diario de la media. Toca para ver <b>qué cambió ese día</b>: qué encuesta entra o sale y qué pasó esos días. Los aros son los días con cambio de escaños; «‹ ›» pasa de uno a otro.</li>
+          <li><b>Hacia la izquierda (desde el 1-oct):</b> el historial diario de la media. Desliza la barra para ver <b>qué cambió ese día</b>: qué encuesta entra o sale y qué pasó esos días. Los aros son los días con cambio de escaños; «‹ ›» pasa de uno a otro.</li>
           <li><b>Lo que pasó cada día es contexto, no prueba de causa.</b></li>
         </ul></div>
       <div class="pbar"><button type="button" id="psimple" aria-pressed="false">Vista simple</button><span class="note" style="margin:0">Oculta las trayectorias y la nube para ver solo la línea central y su margen.</span></div>
@@ -181,7 +194,7 @@
 <script src="assets/core.js?v=61"></script>
 <script src="assets/prediccion-data.js?v=20261027a"></script>
 <script src="assets/historial-data.js?v=20261024"></script>
-<script src="assets/prediccion.js?v=44"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
+<script src="assets/prediccion.js?v=45"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

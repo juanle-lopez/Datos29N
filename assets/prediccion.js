@@ -30,7 +30,6 @@
     MES.forEach(([d,l])=>{s+=`<text x="${X(dd(d))}" y="${H-7}">${l}</text>`});
     s+=`<line x1="${x0}" x2="${x0}" y1="${T}" y2="${T+ph}" stroke="var(--muted)" stroke-dasharray="2 3" opacity=".7"/><text x="${x0}" y="${T-5}" text-anchor="middle">hoy</text>`;
     s+=`<line x1="${X(D1)}" x2="${X(D1)}" y1="${T}" y2="${T+ph}" stroke="var(--fg)" opacity=".45"/><text x="${X(D1)}" y="${T-5}" text-anchor="middle">29-N</text>`;
-    if(HD.length)s+=`<text class="hint" x="${x0-14}" y="${T-5}" text-anchor="end" style="fill:${c};font-size:10.5px">← toca un día</text><text class="hint" x="${x0+14}" y="${T-5}" style="fill:${c};font-size:10.5px">toca aquí →</text>`;
     const poly=(a,b)=>`${rP.map(r=>X(dd(r.d))+','+Y(r[b])).join(' ')} ${[...rP].reverse().map(r=>X(dd(r.d))+','+Y(r[a])).join(' ')}`;
     const cen=rP.map(r=>X(dd(r.d))+','+Y(r.esc)).join(' ');
     // Todo lo proyectado (tubo, hilos, resplandor, línea punteada) se descubre de izquierda a derecha
@@ -196,11 +195,18 @@
       g.innerHTML=`<line x1="${px}" x2="${px}" y1="0" y2="${vb.height}" stroke="var(--fg)" stroke-width="1.4" stroke-dasharray="3 3" opacity=".6"/><rect x="${px-22}" y="0" width="44" height="14" rx="7" fill="var(--fg)"/><text x="${px}" y="10.5" text-anchor="middle" style="fill:var(--bg);font-size:9.5px;font-weight:700">${fecha(f).replace(/ de .*/,'')}</text>`;
       svg.insertBefore(g,svg.querySelector('.hzone'))};
     const abrir=(cell,k,f,restore)=>{const d=cell.querySelector('.hdet'),nm=(K.find(q=>q[0]===k)||[])[1],pv=cambios.filter(x=>x<f).pop(),nx=cambios.find(x=>x>f);
-      box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;OPEN[k]=f;marca(cell,k,f);
+      box.classList.add('used');d.innerHTML=(k==='MAY'?hdetailM(f):hdetail(k,nm,f))+`<div class="hnav"><button type="button" class="hp"${pv?'':' disabled'}>‹ Cambio anterior</button><button type="button" class="hs"${nx?'':' disabled'}>Cambio siguiente ›</button></div>`;d.hidden=false;OPEN[k]=f;marca(cell,k,f);{const sl=cell.querySelector('.hsl input');if(sl)sl.value=Math.round((dd(f)-D0)/864e5)}
       if(!restore){const r=d.getBoundingClientRect();if(r.bottom>innerHeight-70||r.top<0)d.scrollIntoView({block:'nearest',behavior:REDUCE?'auto':'smooth'})}
       d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true;delete OPEN[k];marca(cell,k,null)});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
     box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
+    {const nD=Math.round((TH-D0)/864e5);
+      box.querySelectorAll('.pcell').forEach(cell=>{const svg=cell.querySelector('svg.pg');if(!svg||!dias.length)return;
+        const k=svg.dataset.k,vw=svg.viewBox.baseVal.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,ini=x0-pw*FH,col=(K.find(q=>q[0]===k)||[])[2]||'var(--fg)',nm=(K.find(q=>q[0]===k)||[])[1]||'PP + Vox';
+        const w=document.createElement('div');w.className='hsl';w.style.cssText=`margin-left:calc(${(ini/vw*100).toFixed(2)}% - 15px);width:calc(${(pw*FH/vw*100).toFixed(2)}% + 30px);--c:${col}`;
+        w.innerHTML=`<input type="range" min="0" max="${nD}" step="1" value="${nD}" aria-label="Desliza para ver qué pasó cada día: ${nm}"><span class="hand" aria-hidden="true">\u{1F446}<b>Desliza</b></span>`;
+        cell.insertBefore(w,cell.querySelector('.hdet'));
+        w.querySelector('input').addEventListener('input',e=>{const t=D0+(+e.target.value)*864e5;let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(cell,k,bf,true)})})}
     Object.entries(OPEN).forEach(([k,f])=>{const sv=box.querySelector('svg.pg[data-k="'+k+'"]');if(sv)abrir(sv.closest('.pcell'),k,f,true)});
   }
   {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
