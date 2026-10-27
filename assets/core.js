@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 11:00 (GMT+1)';
+const ACT='27 de octubre de 2026 · 11:01 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||p==='prediccion.html'||document.querySelector('.act'))return;
@@ -167,5 +167,11 @@ const ACT='27 de octubre de 2026 · 11:00 (GMT+1)';
   const MES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'],ff=f=>{const[y,m,d]=f.split('-').map(Number);return d+'-'+MES[m-1]};
   const go=()=>{if(typeof PRED==='undefined'||!PRED.privadas)return;const fs=PRED.privadas.map(p=>p.f).sort(),r=ff(fs[0])+' al '+ff(fs[fs.length-1]);window.PRED_RNG=r;
     document.querySelectorAll('.npol').forEach(e=>e.textContent=PRED.n);document.querySelectorAll('.rngp').forEach(e=>e.textContent=r)};
+  document.addEventListener('DOMContentLoaded',go);window.addEventListener('load',go);
+})();
+
+/* Menú inferior solo con iconos: cada botón conserva su nombre para lectores de pantalla y para el toque largo */
+(function(){
+  const go=()=>document.querySelectorAll('nav.tabs a:not(.mbar),nav.tabs .more').forEach(a=>{const s=a.querySelector('span');if(s&&!a.getAttribute('aria-label')){a.setAttribute('aria-label',s.textContent.trim());a.title=s.textContent.trim()}});
   document.addEventListener('DOMContentLoaded',go);window.addEventListener('load',go);
 })();

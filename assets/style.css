@@ -921,3 +921,17 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
 
 .perr{display:grid;gap:10px;margin:8px 0}.perr .pe{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}.perr .pe.hoy{border-color:var(--fg)}
 .perr .pet{margin:0 0 6px;font-weight:700;font-size:14px}.perr .pes{margin:8px 0 0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--muted)}.perr .pes b{color:var(--fg);font-family:var(--mono)}
+
+/* Menú móvil: dock flotante. Solo el apartado activo muestra su nombre; el resto, icono. La franja de escaños queda en el borde superior. */
+@media(max-width:640px){
+  body{padding-bottom:calc(104px + env(safe-area-inset-bottom,0px))}
+  nav.tabs{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;justify-content:space-between;align-items:center;gap:2px;padding:15px 6px 6px;border:1px solid var(--line);border-radius:24px;background:color-mix(in srgb,var(--panel) 90%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(10,14,22,.18),0 2px 6px rgba(10,14,22,.08)}
+  nav.tabs a:not(.mbar),nav.tabs .more{flex:1 1 0;min-width:0;min-height:44px;flex-direction:row;justify-content:center;gap:0;padding:0;border-radius:16px;transition:flex-grow .25s ease,background .2s ease,color .2s ease}
+  nav.tabs a:not(.mbar) span,nav.tabs .more span{display:none;font-size:13px;font-weight:700;letter-spacing:0;white-space:nowrap}
+  nav.tabs a:not(.mbar) svg,nav.tabs .more svg{width:23px;height:23px;flex:none}
+  nav.tabs a[aria-current="page"],nav.tabs .more[data-on]:not(:hover){background:none}
+  nav.tabs a[aria-current="page"]{flex:0 0 auto;gap:7px;padding:0 14px;background:var(--fg);color:var(--bg)}
+  nav.tabs a[aria-current="page"] span{display:inline}
+  nav.tabs .more[data-on]{color:var(--muted);background:none}
+  nav.tabs a.mbar{left:18px;right:18px;top:5px}
+}
