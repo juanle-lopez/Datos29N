@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     ['metodo.html','Método y fuentes','Cómo se hace y de dónde sale cada dato','<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>']];
   var sh=document.createElement('div');sh.className='msheet';sh.id='moresheet';sh.hidden=true;
   sh.innerHTML='<div class="msbg" data-close></div><div class="msp" role="dialog" aria-modal="true" aria-label="Más apartados"><div class="msh"><b>Más en Datos 29N</b><button type="button" class="msx" data-close aria-label="Cerrar">✕</button></div>'+
-    L.map(function(l){return '<a class="msl" href="'+l[0]+'"'+(l[0]===here?' aria-current="page"':'')+'><svg viewBox="0 0 24 24" aria-hidden="true">'+l[3]+'</svg><span><b>'+l[1]+'</b><small>'+l[2]+'</small></span></a>'}).join('')+'</div>';
+    L.filter(function(l){return !(l[0]==='promesas.html'&&innerWidth<980)}).map(function(l){return '<a class="msl" href="'+l[0]+'"'+(l[0]===here?' aria-current="page"':'')+'><svg viewBox="0 0 24 24" aria-hidden="true">'+l[3]+'</svg><span><b>'+l[1]+'</b><small>'+l[2]+'</small></span></a>'}).join('')+'</div>';
   document.body.appendChild(sh);
   function set(o){sh.hidden=!o;btn.setAttribute('aria-expanded',o);document.documentElement.classList.toggle('msopen',o);if(o){var a=sh.querySelector('.msl');a&&a.focus()}else btn.focus()}
   btn.addEventListener('click',function(){set(sh.hidden)});
@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='27 de octubre de 2026 · 11:08 (GMT+1)';
+const ACT='27 de octubre de 2026 · 11:12 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||p==='prediccion.html'||document.querySelector('.act'))return;
