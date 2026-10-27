@@ -9,14 +9,14 @@
 <meta property="og:description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://datos29n.juanle.net/prediccion.html">
-<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272100">
+<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272105">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Datos 29N">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Predicción de escaños 29-N 2026 y mayoría absoluta · Datos 29N">
-<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272100">
+<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=10272105">
 <link rel="canonical" href="https://datos29n.juanle.net/prediccion.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -111,7 +111,7 @@
       <a class="mesa-cta wacta" style="margin:22px 0 0" href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener"><span><b>Recibe los avisos por WhatsApp</b><small>Cada vez que cambie la previsión o haya una encuesta importante. Un mensaje, sin opiniones.</small></span><span class="go">Seguir el canal →</span></a>
       <h3 style="margin:26px 0 6px">Si las encuestas fallan</h3><p class="note" style="max-width:72ch">Qué saldría si la media de hoy se equivocara como en elecciones pasadas. Es un ejercicio de sensibilidad, no una previsión: aplica a cada partido el error que tuvo entonces la media de encuestas (resultado − media).</p><div id="perr"></div><p class="note" id="perrn" style="max-width:72ch"></p>
       <h3 style="margin:26px 0 6px">Escaños, partido a partido</h3>
-      <p class="note" style="max-width:72ch">Escaños de 350; mayoría absoluta: 176. «Hoy» = media actual; «29-N» = proyección, con su rango del 80 %. <b>El rango del 80 % es un intervalo calculado con los supuestos del modelo, no una garantía de que el resultado caiga dentro:</b> solo recoge el error de las encuestas, no el de pasar del voto nacional a los escaños en cada provincia (en 2023, con los porcentajes reales, el modelo se desvió en varios partidos).</p>
+      <p class="note" style="max-width:72ch">Escaños de 350; mayoría absoluta: 176. «Hoy» = media actual; «29-N» = proyección, con su rango del 80 %. <b>El rango del 80 % es un intervalo calculado con los supuestos del modelo, no una garantía de que el resultado caiga dentro.</b> Recoge el error de las encuestas, la deriva de la opinión y un error común del bloque, pero <b>no</b> recoge que el voto se mueva distinto por territorios, candidaturas nuevas o cambiadas, voto útil ni el error de convertir el voto nacional en escaños (en 2023, con los porcentajes reales, el modelo se desvió 12 escaños en el PP).</p>
       <div class="tw" style="margin-top:8px"><table class="ptab" id="ptab"></table></div>
 
       <details class="pdet" style="margin-top:10px"><summary>Día a día: la tabla de los gráficos</summary><div id="pdias"></div></details>
@@ -158,9 +158,9 @@
         <p>M(k) es la media de las <span class="npol">13</span> encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
         <p>δ(k) es la corrección histórica: la media de los errores de las medias de encuestas de la última semana (resultado menos media) en abril de 2019, noviembre de 2019 y julio de 2023, multiplicada por m²/(m²+v/n), con m esa media y v/n la varianza de la media entre elecciones. Se corrige más lo que se repite con el mismo signo (PSOE y Vox) y menos lo que cambia de signo (PP). T es el número de días hasta el 29-N. Los errores salen de las tablas de encuestas de Wikipedia (<a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_Spanish_general_election">2023</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_November_2019_Spanish_general_election">nov. 2019</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_April_2019_Spanish_general_election">abr. 2019</a>), con muestras incompletas y sin contrastar con las fuentes originales.</p>
         <p><b>4. Incertidumbre.</b></p>
-        <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40) / (100·R)²
-+ en el 29-N se suma además 1,9² / (100·R)²</div>
-        <p>s(k) es el error de la media actual (la desviación de las <span class="npol">13</span> encuestas entre sí, dividida por √<span class="npol">13</span>; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; y solo se suma el día de la votación.</p>
+        <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40 + 1,9² × t / T) / (100·R)²
++ error común del bloque: b(t) = 1,0 × √(t / T) / (100·R), con PP y Vox +b y PSOE y Sumar −b</div>
+        <p>s(k) es el error de la media actual (la desviación de las <span class="npol">13</span> encuestas entre sí, dividida por √<span class="npol">13</span>; en el CIS se toma 0,7). El 1,0 es la deriva posible de la opinión en 40 días. El 1,9 es el error histórico de las encuestas de la última semana; desde el 27-oct se reparte poco a poco entre hoy (t = 0) y el 29-N (t = T), de modo que su varianza crece con los días y el 29-N alcanza el valor completo (antes se sumaba de golpe ese último día). El error común del bloque (1,0 puntos, calibrado solo con 2019 y 2023) se aplica con el mismo ritmo.</p>
         <p>Este σ está en escala logit: p es la fracción de voto del partido, y R = 0,161 es la media cuadrática de p(1−p) en los 8 resultados de 2019 y 2023 con los que se midió el 1,9, de modo que el error medio en puntos sigue siendo 1,9 pero un partido grande tiene más margen en puntos que uno pequeño.</p>
         <p><b>5. Simulaciones.</b> 4.000 veces para el 29-N (1.500 por cada fecha anterior de los gráficos): se sortea, en escala logit, el voto de cada partido y del resto, se vuelve a porcentajes y se reescala para que todo sume 100 (así, si uno sube, otro baja); se aplican los pasos 1 y 2, y se anotan los escaños. El valor central es el reparto con V(k,29-N) sin sortear, y el rango es de los percentiles 10 a 90 de las 4.000 simulaciones.</p>
       </details>
@@ -194,7 +194,7 @@
   <a class="nextp" href="index.html"><small>Inicio</small><b>Lo que dicen las encuestas hoy</b></a>
   <footer class="credit"><b>Datos 29N</b> es un proyecto independiente de elaboración propia, creado por <b>JuanLe</b>: el modelo, el análisis y el diseño son originales y no reproducen ninguna otra web. Se basa en datos abiertos obtenidos de fuentes públicas, enlazadas en cada apartado (ver Método). Sin publicidad ni vínculo con partidos o medios. © 2026 JuanLe. Todos los derechos reservados. Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. <a href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener">Canal de WhatsApp</a>.</footer>
 </div>
-<script src="assets/core.js?v=10272200"></script>
+<script src="assets/core.js?v=10272205"></script>
 <script src="assets/prediccion-data.js?v=20261027a"></script>
 <script src="assets/historial-data.js?v=20261027"></script>
 <script src="assets/prediccion.js?v=69"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
