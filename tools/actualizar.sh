@@ -11,6 +11,7 @@ node tools/prediccion.mjs "$HOY" >/dev/null      # proyección + datos/encuestas
 node tools/historial.mjs "$HOY"                  # historial diario hasta hoy (rellena días que falten)
 sed -i -E "s/(prediccion-data|barra-data|historial-data)\.js\?v=[0-9]+/\1.js?v=$V/g" *.html
 sh tools/sellar-fecha.sh >/dev/null
+node tools/og.mjs >/dev/null 2>&1 || echo "AVISO: no se pudieron regenerar las imágenes de vista previa"
 # Comprobaciones: nada puede quedarse atrasado
 G=$(grep -o '"generado":"[0-9-]*"' assets/prediccion-data.js | head -1 | grep -o '[0-9]\{4\}-[0-9-]*')
 L=$(ls datos/historial/20*.json | tail -1 | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}')
