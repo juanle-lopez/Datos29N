@@ -48,8 +48,6 @@
     // nube de densidad el 29-N: cuántas de las 4.000 simulaciones acaban en cada número de escaños
     const xe=X(D1)+5;let dp=`M${xe},${Y(hg.min)}`;hg.c.forEach((v,i)=>{dp+=` L${xe+v*DW},${Y(hg.min+i)}`});dp+=` L${xe},${Y(hg.min+hg.c.length-1)} Z`;
     s+=`<path class="cloud" d="${dp}" fill="${c}" opacity=".38" stroke="${c}" stroke-width="1.2">${animate?AN('.32;.44;.32','15s'):''}</path>`;
-    {const q=rP[rP.length-1],tx=X(D1)-6,halo='paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;font-size:10px',yA=Math.max(T+9,Y(q.hi)-3),yB=Math.max(T+9,Math.min(Y(q.hi95)-3,yA-12));
-      s+=`<text class="blab" x="${tx}" y="${yA}" text-anchor="end" style="fill:${c};${halo}">Rango probable</text><text class="blab" x="${tx}" y="${yB}" text-anchor="end" style="fill:${c};${halo};opacity:.8">Rango amplio</text>`}
     s+=`</g>`;
     if(animate){s+=`<circle cx="${X(TH)}" cy="${Y(base)}" r="4.4" fill="none" stroke="${c}" stroke-width="1.5"><animate attributeName="r" values="4.4;16;16" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/><animate attributeName="opacity" values=".7;0;0" keyTimes="0;.5;1" dur="9s" repeatCount="indefinite"/></circle>`}
     // histórico: CIS (rombos) y otras encuestas (puntos). Un valor fuera de escala se dibuja pegado al borde
@@ -200,10 +198,10 @@
       d.querySelector('.hx').addEventListener('click',()=>{d.hidden=true;delete OPEN[k];marca(cell,k,null)});d.querySelector('.hp').addEventListener('click',()=>pv&&abrir(cell,k,pv));d.querySelector('.hs').addEventListener('click',()=>nx&&abrir(cell,k,nx))};
     box.querySelectorAll('.hzone').forEach(el=>el.addEventListener('click',e=>{if(!dias.length)return;const svg=el.ownerSVGElement,r=svg.getBoundingClientRect(),vb=svg.viewBox.baseVal,px=(e.clientX-r.left)*vb.width/r.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,t=px>=x0?TH+(px-x0)/(pw*(1-FH))*(D1-TH):TH-(x0-px)/(pw*FH)*(TH-D0);
       let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(el.closest('.pcell'),el.dataset.k,bf)}));
-    {const nD=Math.round((TH-D0)/864e5);
+    {const nD=Math.round((dd(dias[dias.length-1])-D0)/864e5),fr=nD/Math.max(1,Math.round((TH-D0)/864e5));
       box.querySelectorAll('.pcell').forEach(cell=>{const svg=cell.querySelector('svg.pg');if(!svg||!dias.length)return;
         const k=svg.dataset.k,vw=svg.viewBox.baseVal.width,x0=+svg.dataset.x0,pw=+svg.dataset.pw,ini=x0-pw*FH,col=(K.find(q=>q[0]===k)||[])[2]||'var(--fg)',nm=(K.find(q=>q[0]===k)||[])[1]||'PP + Vox';
-        const w=document.createElement('div');w.className='hsl';w.style.cssText=`margin-left:calc(${(ini/vw*100).toFixed(2)}% - 15px);width:calc(${(pw*FH/vw*100).toFixed(2)}% + 30px);--c:${col}`;
+        const w=document.createElement('div');w.className='hsl';w.style.cssText=`margin-left:calc(${(ini/vw*100).toFixed(2)}% - 15px);width:calc(${(pw*FH*fr/vw*100).toFixed(2)}% + 30px);--c:${col}`;
         w.innerHTML=`<input type="range" min="0" max="${nD}" step="1" value="${nD}" aria-label="Desliza para ver qué pasó cada día: ${nm}"><span class="hand" aria-hidden="true">\u{1F446}<b>Desliza</b></span>`;
         cell.insertBefore(w,cell.querySelector('.hdet'));
         w.querySelector('input').addEventListener('input',e=>{const t=D0+(+e.target.value)*864e5;let bf=dias[0],bd=1e18;dias.forEach(f=>{const dx=Math.abs(dd(f)-t);if(dx<bd){bd=dx;bf=f}});abrir(cell,k,bf,true)})})}
