@@ -20,3 +20,5 @@ echo "previsión: $G · historial: $L · última noticia: $N · hoy: $HOY"
 [ "$G" = "$HOY" ] || { echo "ERROR: la previsión no es de hoy"; exit 1; }
 [ "$L" = "$HOY" ] || { echo "ERROR: el historial no llega a hoy"; exit 1; }
 echo "OK. Falta: revisar noticias/encuestas nuevas, commit y push."
+
+node tools/aviso.mjs   # aviso listo para pegar en el canal de WhatsApp
