@@ -972,3 +972,9 @@ button.cl2{background:none;color:var(--muted);display:inline-flex;align-items:ce
 @media(prefers-reduced-motion:reduce){.newdom{animation:none;border-color:#e08a00}}
 
 .hero + .addhome{margin-top:12px}
+/* banner del icono: arriba, más discreto */
+.addhome{gap:9px;margin:0 0 8px;padding:5px 6px 5px 12px;border-radius:99px;font-size:13px;line-height:1.2}
+.addhome svg{width:18px;height:18px}
+.addhome i{font-size:12px;padding:4px 10px}
+.hero + .addhome{margin-top:0}
+.addhome + .hero{margin-top:-12px}
