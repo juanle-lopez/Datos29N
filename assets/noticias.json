@@ -3,6 +3,27 @@
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
   {
+   "medio": "Democrata",
+   "fecha": "28 oct",
+   "url": "https://democrata.es/elecciones-generales-espana/tragedia-urda-campana-29n-cronica-sanchez-feijoo-abascal",
+   "titular": "PSOE, PP, Frente Amplio y Podemos suspenden sus actos de precampaña tras el accidente de Urda; Vox mantiene el de Valladolid con un minuto de silencio",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Democrata",
+   "fecha": "28 oct",
+   "url": "https://democrata.es/elecciones-generales-espana/tragedia-urda-campana-29n-cronica-sanchez-feijoo-abascal",
+   "titular": "El Gobierno decreta tres días de luto nacional, del 29 al 31 de octubre",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "Castilla-La Mancha Media",
+   "fecha": "28 oct",
+   "url": "https://cmmedia.es/noticias/castilla-la-mancha/toledo/ultima-hora-accidente-tren-urda-toledo-fallecidos.html",
+   "titular": "Urda: Page eleva a 64 los fallecidos confirmados (24 en el tren de Renfe y 40 en el de Iryo) y fuentes regionales hablan de 58 heridos; un juzgado de Orgaz investiga",
+   "tema": "Proceso"
+  },
+  {
    "medio": "El Español",
    "fecha": "28 oct",
    "url": "https://www.elespanol.com/espana/20261028/elecciones-generales-directo-ultima-hora-pedro-sanchez-voto-correo-actos-precampana-pp-psoe-vox-frente-amplio/1003744437342_10.html",
