@@ -1,7 +1,42 @@
 {
- "actualizado": "2026-10-28",
+ "actualizado": "2026-10-29",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "Urda: al menos 68 muertos según elDiario.es; las primeras informaciones apuntan a un fallo técnico seguido de un posible error de un operador, sin que se haya confirmado oficialmente la causa",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "Rufián (ERC): «un fallo humano es el reflejo de un sistema de seguridad fallido»; Montero (Podemos) cuestiona poner «toda la responsabilidad en un trabajador»; Frente Amplio pedirá que Puente comparezca en la Diputación Permanente",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "OKDiario",
+   "fecha": "28 oct",
+   "url": "https://okdiario.com/espana/ultima-hora-elecciones-generales-del-29-n-actualidad-politica-hoy-acaba-plazo-del-tribunal-supremo-entregar-listas-ley-nietos-20645948",
+   "titular": "Feijóo considera «insuficientes» las explicaciones de Sánchez sobre Urda; Abascal acusa al Gobierno de ser una «organización criminal»; Vox se persona en la causa para pedir la protección de pruebas",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Mundiario",
+   "fecha": "29 oct",
+   "url": "https://www.mundiario.com/politica/sanchez-promete-llegar-final-urda-es-asumible-sufrir-dos-tragedias-ano/20261029042034449677.html",
+   "titular": "Sánchez, en Urda: «no es asumible sufrir dos tragedias en un año» y promete llegar hasta el final de la investigación",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "OKDiario",
+   "fecha": "28 oct",
+   "url": "https://okdiario.com/espana/ultima-hora-elecciones-generales-del-29-n-actualidad-politica-hoy-acaba-plazo-del-tribunal-supremo-entregar-listas-ley-nietos-20645948",
+   "titular": "El BOE publica las candidaturas al Congreso y al Senado, aún no definitivas: las juntas electorales tienen dos días para comunicar irregularidades y los partidos 48 horas para subsanarlas; la proclamación se publicará el 3 de noviembre",
+   "tema": "Proceso"
+  },
   {
    "medio": "Democrata",
    "fecha": "28 oct",
