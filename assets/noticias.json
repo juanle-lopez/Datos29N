@@ -1,7 +1,35 @@
 {
- "actualizado": "2026-10-29",
+ "actualizado": "2026-10-30",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "Urda: Page eleva a 69 los muertos; la información publicada apunta a una avería técnica seguida de una cadena de errores humanos, sin confirmación oficial de la causa",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "Vox presenta una querella contra Óscar Puente en el Tribunal Supremo por homicidio y lesiones imprudentes por omisión; Frente Amplio, ERC y Podemos piden que Puente comparezca en la Diputación Permanente",
+   "tema": "Proceso"
+  },
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "Feijóo exige responsabilidades políticas sin esperar a la investigación; el PP (Sémper) dice que la responsabilidad «trasciende de Óscar Puente»; el PNV pide asumirlas «al máximo nivel»",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "elDiario.es",
+   "fecha": "29 oct",
+   "url": "https://www.eldiario.es/politica/ultima-hora-actualidad-politica-directo_6_13623441.html",
+   "titular": "El PSOE cancela los actos de precampaña de Sánchez en Cádiz, A Coruña y Vitoria; la mayoría de partidos mantiene suspendida su agenda, con Vox como excepción",
+   "tema": "Campaña"
+  },
   {
    "medio": "elDiario.es",
    "fecha": "29 oct",
