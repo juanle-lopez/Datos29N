@@ -2,7 +2,7 @@
 (function(){
   const CUT='2026-11-24';
   let hoy='';try{hoy=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Madrid'}).format(new Date())}catch(e){hoy=new Date().toISOString().slice(0,10)}
-  if(hoy>=CUT){document.getElementById('pbody').style.display='none';document.getElementById('hid').style.display='block';return}
+  if(hoy>=CUT){document.getElementById('hid').style.display='block'}
   const K=[['PP','PP','var(--pp)'],['PSOE','PSOE','var(--psoe)'],['VOX','Vox','var(--vox)'],['SUMAR','Sumar + Podemos','var(--sumar)']];
   const dd=s=>{const [y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d)};
   const DI='2026-10-01',D0=dd(DI),D1=dd('2026-11-29'),TH=dd(PRED.generado);

@@ -6,6 +6,11 @@
 cd "$(dirname "$0")/.." || exit 1
 HOY=${1:-$(TZ=Europe/Madrid date +%F)}
 V=$(echo "$HOY" | tr -d -)
+if [ "$HOY" \> "2026-11-23" ]; then
+  echo "CONGELADO: desde el 24-nov no se publican encuestas ni cálculos nuevos. No se recalcula la previsión ni el historial; solo noticias y otros módulos."
+  sh tools/sellar-fecha.sh >/dev/null
+  exit 0
+fi
 set -e
 node tools/prediccion.mjs "$HOY" >/dev/null      # proyección + datos/encuestas.csv + barra
 node tools/historial.mjs "$HOY"                  # historial diario hasta hoy (rellena días que falten)

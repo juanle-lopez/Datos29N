@@ -36,11 +36,11 @@
     const has=R&&R.esc&&R.esc.PP!=null;
     drawHemi(has?R:null);
     $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Datos oficiales provisionales; la página se actualiza cada pocos minutos.`:
-      VEDA?`<b>Veda electoral.</b> Desde el 24-nov la ley no permite publicar encuestas ni proyecciones basadas en ellas; nuestra previsión vuelve a aparecer aquí a las 20:00 del 29-N, junto a los primeros resultados.`:
+      VEDA?`<b>Previsión congelada.</b> Desde el 24-nov no se publican encuestas nuevas ni cálculos nuevos; aquí se mantiene el último cálculo publicado (23-nov), sin actualizar, junto al escrutinio cuando empiece.`:
       PRE?`<b>Esta página se activa el día de las elecciones, el 29 de noviembre.</b> Hasta entonces muestra la previsión de hoy; los resultados oficiales aparecerán al lado en cuanto el Ministerio del Interior empiece a publicar el escrutinio.`:
       `<b>Esperando los primeros datos oficiales.</b> Esta página se actualiza sola.`;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
-    const showP=P&&!VEDA,cell=k=>{if(!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k];return `<td class="m"><b>${e.c}</b><small>${e.p10}–${e.p90}</small></td>`};
+    const showP=!!P,cell=k=>{if(!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k];return `<td class="m"><b>${e.c}</b><small>${e.p10}–${e.p90}</small></td>`};
     const res=k=>{if(!has)return null;if(k==='SUMAR')return R.esc.SUMAR==null?null:R.esc.SUMAR+(R.esc.POD||0);return R.esc[k]!=null?R.esc[k]:null};
     const dif=k=>{const r=res(k);if(r==null||!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k],d=r-e.c,inR=r>=e.p10&&r<=e.p90;return `<td class="m"><span class="${inR?'ok':'ko'}">${d>0?'+':d<0?'−':'±'}${Math.abs(d)}</span><small>${inR?'en rango':'fuera'}</small></td>`};
     let rows=BIG.map(k=>`<tr><td><b style="color:${COL[k]}">${NM[k]}</b></td>${cell(k)}<td class="m"><b>${res(k)??'—'}</b></td>${dif(k)}</tr>`).join('');
