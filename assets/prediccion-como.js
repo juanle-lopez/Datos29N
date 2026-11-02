@@ -33,12 +33,12 @@
     dur:5500,go(){let s=axis();K.forEach(([k,,c],i)=>{const y=dotsY(k,i);pol[k].forEach((v,j)=>{s+=`<circle class="cmd drop" cx="${X(v)}" cy="${y[j]}" r="4.3" style="fill:${c};animation-delay:${(j*0.07+i*0.18).toFixed(2)}s"/>`})});
       s+=`<text x="${W}" y="14" text-anchor="end" class="cmbig fade" style="animation-delay:1.6s">${n} encuestas</text>`;return svg(s,`Las ${n} encuestas, un punto cada una, por partido`)}});
   // 2. Media y corrección
-  S.push({t:'Hacemos la media',p:`Promediamos las ${n} (los puntos se juntan en el centro). Esa media es el centro de la previsión: <b>no la corregimos</b> con errores de elecciones pasadas, así que se mueve con cada encuesta nueva.`,
+  S.push({t:'Hacemos la media y añadimos la tendencia',p:`Promediamos las ${n} (los puntos se juntan en el centro). Después añadimos la <b>tendencia reciente</b>, amortiguada: PP ${sg(fin.PP-base.PP)}, PSOE ${sg(fin.PSOE-base.PSOE)}, Vox ${sg(fin.VOX-base.VOX)} puntos hasta el 29-N. Es un supuesto: que lo que han hecho las encuestas estas semanas continúa, atenuado.`,
     dur:8000,go(){let s=axis();K.forEach(([k,,c],i)=>{const y=dotsY(k,i),m=base[k],f=fin[k];
         pol[k].forEach((v,j)=>{s+=`<circle class="cmd mv" cx="${X(v)}" cy="${y[j]}" r="4.3" style="fill:${c};--tx:${(X(m)-X(v)).toFixed(1)}px;--ty:${(RY(i)-y[j]).toFixed(1)}px"/>`});
         s+=`<g class="fade" style="animation-delay:1.5s"><rect x="${X(m)-1.5}" y="${RY(i)-17}" width="3" height="34" rx="1.5" fill="${c}" opacity=".35"/><text x="${X(m)}" y="${RY(i)-21}" text-anchor="middle" class="cmv" style="fill:var(--muted)">${nf(m)}</text></g>`;
         s+=`<g class="slide" style="--tx:${(X(f)-X(m)).toFixed(1)}px;animation-delay:3.2s"><rect x="${X(m)-2.5}" y="${RY(i)-17}" width="5" height="34" rx="2.5" fill="${c}"/><text x="${X(m)}" y="${RY(i)+34}" text-anchor="middle" class="cmv" style="fill:var(--fg);font-weight:800">${nf(f)}</text></g>`});
-      s+=`<text x="${W}" y="14" text-anchor="end" class="cmbig fade" style="animation-delay:1.5s">media</text>`;return svg(s,'Los puntos se juntan en la media y esta es el centro de la previsión')},
+      s+=`<text x="${W}" y="14" text-anchor="end" class="cmbig fade" style="animation-delay:1.5s">media</text>`;return svg(s,'Los puntos se juntan en la media y la tendencia la desplaza hasta el centro del 29-N')},
     tick(){}});
   // 3. Margen de error
   S.push({t:'Medimos cuánto nos podemos equivocar',p:`Las encuestas fallan, y casi siempre todas a la vez. Por eso no damos una cifra sola: dibujamos una <b>campana</b> con lo más probable en el centro y una <b>franja del 80 %</b> alrededor. Recoge el error típico de 2019 y 2023 (±${nf(PRED.sdError)} puntos) que las encuestas suelen fallar a la vez en el mismo sentido (error común de bloque) y que la opinión puede moverse hasta el 29-N.`,

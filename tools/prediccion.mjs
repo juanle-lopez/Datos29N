@@ -31,7 +31,21 @@ function tendencia(tipo){
     K.forEach(k=>{const v=arr.filter(h=>h[k]!=null);if(v.length>=2){const a=v[v.length-2],b=v[v.length-1];tr[k].push((b[k]-a[k])/(day(b.f)-day(a.f)));usadas.push(`${e} ${k}: ${a.f}→${b.f}`)}})});
   const o={};K.forEach(k=>o[k]=tr[k].length?mean(tr[k]):0);return {tr:o,usadas};
 }
-const trP=tendencia('privada'),trC=tendencia('cis');
+// Tendencia agrupada (2-nov): pendiente común de todas las encuestas privadas de los últimos 45 días, con un efecto fijo por empresa
+// (se compara cada empresa consigo misma). Se contrae por b²/(b²+se²): lo que no se distingue del ruido casi no cuenta.
+function tendenciaAgrupada(){
+  const vistos=new Set(),todas=[...inp.privadas,...inp.historial.filter(h=>h.tipo!=='cis'&&!h.aprox)].filter(p=>{const c=p.e+p.f;if(vistos.has(c))return false;vistos.add(c);return D0-day(p.f)<=(inp.ventanaTendencia||45)});
+  const emp=p=>p.e.split(' /')[0],tr={},det={};
+  K.forEach(k=>{const g={};todas.filter(p=>p[k]!=null).forEach(p=>(g[emp(p)]=g[emp(p)]||[]).push(p));
+    const gs=Object.values(g).filter(a=>a.length>=2);let sxy=0,sxx=0,n=0;
+    const cen=a=>({mx:mean(a.map(p=>day(p.f))),my:mean(a.map(p=>p[k]))});
+    gs.forEach(a=>{const {mx,my}=cen(a);a.forEach(p=>{sxy+=(day(p.f)-mx)*(p[k]-my);sxx+=(day(p.f)-mx)**2;n++})});
+    if(!sxx||n-gs.length-1<1){tr[k]=0;return}
+    const b=sxy/sxx;let ss=0;gs.forEach(a=>{const {mx,my}=cen(a);a.forEach(p=>{ss+=(p[k]-my-b*(day(p.f)-mx))**2})});
+    const se=Math.sqrt(ss/(n-gs.length-1)/sxx),w=b*b/(b*b+se*se);tr[k]=b*w;det[k]={b:round(b,4),se:round(se,4),w:round(w,2),empresas:gs.length,n}});
+  return {tr,usadas:[],detalle:det};
+}
+const trP=inp.tendenciaAgrupada?tendenciaAgrupada():tendencia('privada'),trC=inp.tendenciaAgrupada?{tr:Object.fromEntries(K.map(k=>[k,0])),usadas:[]}:tendencia('cis');
 const priv=inp.privadas;
 // Corrección por el error histórico de las encuestas (media de errores contraída: peso m²/(m²+var/n); solo con ≥2 elecciones)
 const delta={};K.forEach(k=>{const e=(inp.sesgo&&inp.usarSesgo?inp.sesgo.err[k]:null)||[];if(e.length<2){delta[k]=0;return}const m=mean(e),v=sdev(e)**2/e.length;delta[k]=m*m/(m*m+v)*m});
