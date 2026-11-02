@@ -401,7 +401,8 @@
     ],
     "limites": "Muestras incompletas y no contrastadas con las fuentes originales; 2019 sin Unidas Podemos; solo tres elecciones."
   },
-  "usarSesgo": true,
+  "usarSesgo": false,
   "sdBloque": 1.0,
-  "sdBloqueNota": "Error común del bloque (PP y Vox suben o bajan juntos, PSOE y Sumar al contrario), en puntos de voto, solo el 29-N. Calibrado con las dos elecciones disponibles: la media de encuestas de la última semana se desvió en PP+Vox 2,7 pts (nov-2019) y 1,8 pts (jul-2023), y en escaños 2023 pasó 184 frente a 170 reales, fuera del rango del 80 % anterior. Con solo dos elecciones es una estimación gruesa."
+  "sdBloqueNota": "Error común del bloque (PP y Vox suben o bajan juntos, PSOE y Sumar al contrario), en puntos de voto, solo el 29-N. Calibrado con las dos elecciones disponibles: la media de encuestas de la última semana se desvió en PP+Vox 2,7 pts (nov-2019) y 1,8 pts (jul-2023), y en escaños 2023 pasó 184 frente a 170 reales, fuera del rango del 80 % anterior. Con solo dos elecciones es una estimación gruesa.",
+  "sesgoNota": "Desde el 2-nov la corrección histórica está desactivada: con solo tres elecciones fijaba el 29-N y no reaccionaba a las encuestas nuevas. Los errores pasados se conservan solo para la tabla de validación."
 }

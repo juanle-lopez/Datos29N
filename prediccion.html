@@ -9,14 +9,14 @@
 <meta property="og:description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://datos29n.juanle.net/prediccion.html">
-<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11021644">
+<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11021650">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Datos 29N">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Predicción de escaños 29-N 2026 y mayoría absoluta · Datos 29N">
-<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11021644">
+<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11021650">
 <link rel="canonical" href="https://datos29n.juanle.net/prediccion.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -134,12 +134,12 @@
         <ol class="steps">
           <li><b>Datos.</b><span>Las <span class="npol">13</span> encuestas privadas más recientes (<span id="rng2">5-oct a 26-oct</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las <span class="npol">13</span> privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
-          <li><b>Corrección histórica (20-oct).</b><span>Las medias de encuestas de la última semana se equivocaron en 2019 (abril y noviembre) y 2023 casi siempre en la misma dirección para PSOE y Vox. El centro del 29-N se corrige con la media de esos errores, reducida según lo mucho que varían entre elecciones, y entra poco a poco: hoy es la media de las encuestas. Hoy: PSOE +1,0, PP −0,6, Vox −0,6 puntos; Sumar + Podemos no se corrige (solo hay una elección con dato). Es una apuesta apoyada en tres elecciones.</span></li>
-          <li><b>Sin tendencia.</b><span>Esa corrección aparte, la previsión central no prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
+          <li><b>Sin corrección histórica (desde el 2-nov).</b><span>Del 20-oct al 2-nov el centro del 29-N se corregía con el error medio de las encuestas en 2019 y 2023 (+1,0 al PSOE, −0,6 a PP y Vox). Se ha quitado: con solo tres elecciones, esa corrección fijaba el 29-N y apenas reaccionaba a las encuestas nuevas. Ahora el centro del 29-N es la media de hoy y se mueve con cada encuesta.</span></li>
+          <li><b>Sin tendencia.</b><span>La previsión central no prolonga la subida o bajada reciente, porque el cambio entre dos encuestas seguidas de una misma empresa es casi todo ruido. Lo que crece con los días es la incertidumbre.</span></li>
           <li><b>Error.</b><span>Crece poco a poco con los días: la deriva de la opinión y el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media al llegar al 29-N) se reparten a lo largo del tiempo, así que el tubo se abre de forma gradual y no da un salto el último día. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones del resultado del 29-N con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
           <li><b>Cuántas simulaciones.</b><span>Son 4.000 solo para el 29-N: de ellas salen el valor central, el rango del 80 % de las tablas y la animación del paso 6. Las líneas día a día de los gráficos usan 1.500 simulaciones por cada fecha, y las líneas finas (30 por partido, 24 en los gráficos de mayoría) son simulaciones completas elegidas de un total de 40, dibujadas solo como ejemplo de cómo se abre el abanico; las cifras salen de las 4.000 simulaciones, no de esas líneas.</span></li>
-          <li><b>Cambio de método (20-oct).</b><span>Desde el 20-oct no se usa la tendencia, se añade la corrección histórica, Podemos va en lista propia y el error depende del tamaño de cada partido. Todo el historial diario se ha recalculado.</span></li>
+          <li><b>Cambios de método.</b><span>20-oct: se quita la tendencia, se añade la corrección histórica, Podemos va en lista propia y el error depende del tamaño de cada partido. 2-nov: se quita la corrección histórica. Todo el historial diario se ha recalculado.</span></li>
           <li><b>Cambio de método (27-oct).</b><span>El error de las encuestas y el del bloque (PP + Vox frente a PSOE + Sumar + Podemos + socios) se reparten de forma gradual entre hoy y el 29-N, en vez de aplicarse de golpe el último día. Los rangos finales no cambian; solo la forma en que se abre el tubo. Se añade además la trayectoria de cada bloque para el gráfico de mayoría.</span></li>
         </ol>
       </details>
@@ -152,9 +152,9 @@
         <div class="frm">cociente(k) = voto'(p,k) / (escaños ya asignados a k + 1)</div>
         <p>Solo compiten los partidos con al menos un 3 % del voto de esa provincia (método D’Hondt).</p>
         <p><b>3. Voto proyectado en la fecha t.</b></p>
-        <div class="frm">V(k,t) = M(k) + δ(k) × t / T</div>
+        <div class="frm">V(k,t) = M(k)</div>
         <p>M(k) es la media de las <span class="npol">13</span> encuestas (o el barómetro del CIS, en su escenario). Hasta el 20-oct se sumaba una tendencia (el cambio diario entre las dos últimas encuestas de una misma empresa); se quitó porque esa diferencia es casi todo ruido de muestreo.</p>
-        <p>δ(k) es la corrección histórica: la media de los errores de las medias de encuestas de la última semana (resultado menos media) en abril de 2019, noviembre de 2019 y julio de 2023, multiplicada por m²/(m²+v/n), con m esa media y v/n la varianza de la media entre elecciones. Se corrige más lo que se repite con el mismo signo (PSOE y Vox) y menos lo que cambia de signo (PP). T es el número de días hasta el 29-N. Los errores salen de las tablas de encuestas de Wikipedia (<a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2023_Spanish_general_election">2023</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_November_2019_Spanish_general_election">nov. 2019</a>, <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_April_2019_Spanish_general_election">abr. 2019</a>), con muestras incompletas y sin contrastar con las fuentes originales.</p>
+        <p>Entre el 20-oct y el 2-nov se sumaba además una corrección histórica δ(k) × t / T, calculada con los errores de las encuestas en abril y noviembre de 2019 y julio de 2023. Se ha desactivado el 2-nov: apoyada en tres elecciones, mantenía el 29-N casi fijo cuando las encuestas cambiaban. T sigue siendo el número de días hasta el 29-N.</p>
         <p><b>4. Incertidumbre.</b></p>
         <div class="frm">σ(k,t)² = [s(k) / (100·p(1−p))]² + (1,0² × t / 40 + 1,9² × t / T) / (100·R)²
 + error común del bloque: b(t) = 1,0 × √(t / T) / (100·R), con PP y Vox +b y PSOE y Sumar −b</div>
@@ -192,7 +192,7 @@
       <details class="pdet"><summary>Qué no incluye (límites)</summary>
         <ol>
           <li><b>Error del modelo.</b> El reparto por provincias escala el voto de 2023 por igual en todo el país; no recoge voto útil, cambios en las listas, partidos nuevos o escindidos, ni que unas provincias se muevan más que otras. En las pruebas, ese error fue de entre 2 y 12 escaños por partido.</li>
-          <li><b>La corrección histórica.</b> Se apoya en solo tres elecciones y en encuestas tomadas de Wikipedia. Si esta vez las encuestas aciertan, la corrección empeora la proyección. Favorece al PSOE y resta a PP y Vox porque así fueron los errores pasados, no por una preferencia nuestra.</li>
+          <li><b>Sin corrección de sesgo.</b> La previsión central es la media actual de las encuestas. Si las encuestas se equivocan de forma sistemática, como en 2023 (PSOE +3 puntos sobre la media), el centro también se equivocará; ese riesgo está en el rango del 80 %, no en el centro.</li>
           <li><b>Errores comunes de las encuestas.</b> Los partidos se compensan entre sí (suman 100) y, además, se simula un error común de bloque de 1 punto (PP y Vox suben o bajan juntos; PSOE y Sumar al contrario), porque las encuestas suelen equivocarse a la vez en el mismo sentido: la media de la última semana se desvió en PP + Vox 2,7 puntos en 2019 y 1,8 en 2023 (en escaños de 2023: 184 frente a 170 reales). Con solo dos elecciones, ese 1 punto es una estimación gruesa. No cambia la cifra central, solo ensancha el rango de PP + Vox.</li>
           <li><b>Campaña.</b> No se modelan acontecimientos concretos de la campaña (empieza el 13-nov) más allá de la deriva genérica.</li>
           <li><b>El CIS.</b> Su diferencia con las encuestas privadas es de unos 7 puntos en el PSOE. No sabemos cuál se acercará más; por eso se muestran por separado.</li>
@@ -206,7 +206,7 @@
   <a class="nextp" href="index.html"><small>Inicio</small><b>Lo que dicen las encuestas hoy</b></a>
   <footer class="credit"><b>Datos 29N</b> es un proyecto independiente de elaboración propia, creado por <b>JuanLe</b>: el modelo, el análisis y el diseño son originales y no reproducen ninguna otra web. Se basa en datos abiertos obtenidos de fuentes públicas, enlazadas en cada apartado (ver Método). Sin publicidad ni vínculo con partidos o medios. © 2026 JuanLe. Todos los derechos reservados. Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. <a href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener">Canal de WhatsApp</a>.</footer>
 </div>
-<script src="assets/core.js?v=11021744"></script>
+<script src="assets/core.js?v=11021750"></script>
 <script src="assets/prediccion-data.js?v=20261102a"></script>
 <script src="assets/historial-data.js?v=20261102"></script>
 <script src="assets/prediccion.js?v=69"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
