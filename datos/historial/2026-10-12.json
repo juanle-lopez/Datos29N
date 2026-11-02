@@ -2,12 +2,12 @@
  "fecha": "2026-10-12",
  "metodo": 3,
  "t": "reconstruido",
- "n": 11,
+ "n": 10,
  "voto": {
-  "PP": 32.1,
-  "PSOE": 26.55,
-  "VOX": 18.8,
-  "SUMAR": 9.13
+  "PP": 32.11,
+  "PSOE": 26.62,
+  "VOX": 18.81,
+  "SUMAR": 9.01
  },
  "esc": {
   "PP": 135,
@@ -21,12 +21,12 @@
   "PP": 132,
   "PSOE": 104,
   "VOX": 64,
-  "SUMAR": 9,
+  "SUMAR": 8,
   "PV": 197,
   "IZ": 146
  },
  "hi": {
-  "PP": 137,
+  "PP": 138,
   "PSOE": 110,
   "VOX": 67,
   "SUMAR": 11,
@@ -49,10 +49,6 @@
   {
    "e": "Sigma Dos / El Mundo",
    "f": "2026-10-12"
-  },
-  {
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11"
   },
   {
    "e": "Hamalgama Métrica / Vozpópuli",
@@ -122,17 +118,6 @@
     "PSOE": 25.3,
     "VOX": 19.1,
     "SUMAR": 10.7
-   }
-  },
-  {
-   "h": "Target Point",
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11",
-   "voto": {
-    "PP": 32,
-    "PSOE": 25.9,
-    "VOX": 18.7,
-    "SUMAR": 10.3
    }
   },
   {
@@ -312,18 +297,18 @@
   ],
   "salen": [],
   "dVoto": {
-   "PP": -0.62,
-   "PSOE": -0.14,
-   "VOX": 0.11,
-   "SUMAR": 0.24
+   "PP": -0.7,
+   "PSOE": -0.17,
+   "VOX": 0.12,
+   "SUMAR": 0.3
   },
   "dEsc": {
-   "PP": -3,
-   "PSOE": 1,
+   "PP": -2,
+   "PSOE": 0,
    "VOX": 1,
    "SUMAR": 1,
-   "PV": -2,
-   "IZ": 2
+   "PV": -1,
+   "IZ": 1
   },
   "huboCambio": true
  }

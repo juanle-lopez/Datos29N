@@ -2,23 +2,23 @@
  "fecha": "2026-10-11",
  "metodo": 3,
  "t": "reconstruido",
- "n": 9,
+ "n": 8,
  "voto": {
-  "PP": 32.72,
-  "PSOE": 26.69,
+  "PP": 32.81,
+  "PSOE": 26.79,
   "VOX": 18.69,
-  "SUMAR": 8.89
+  "SUMAR": 8.71
  },
  "esc": {
-  "PP": 138,
-  "PSOE": 106,
+  "PP": 137,
+  "PSOE": 107,
   "VOX": 64,
   "SUMAR": 9,
-  "PV": 202,
-  "IZ": 147
+  "PV": 201,
+  "IZ": 148
  },
  "lo": {
-  "PP": 135,
+  "PP": 134,
   "PSOE": 104,
   "VOX": 62,
   "SUMAR": 8,
@@ -26,18 +26,14 @@
   "IZ": 145
  },
  "hi": {
-  "PP": 141,
-  "PSOE": 109,
+  "PP": 142,
+  "PSOE": 110,
   "VOX": 65,
-  "SUMAR": 11,
+  "SUMAR": 10,
   "PV": 204,
   "IZ": 150
  },
  "encuestas": [
-  {
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11"
-  },
   {
    "e": "Hamalgama Métrica / Vozpópuli",
    "f": "2026-10-11"
@@ -72,17 +68,6 @@
   }
  ],
  "encDetalle": [
-  {
-   "h": "Target Point",
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11",
-   "voto": {
-    "PP": 32,
-    "PSOE": 25.9,
-    "VOX": 18.7,
-    "SUMAR": 10.3
-   }
-  },
   {
    "h": "Hamalgama Métrica",
    "e": "Hamalgama Métrica / Vozpópuli",
@@ -177,17 +162,6 @@
  "cambio": {
   "entran": [
    {
-    "e": "Target Point / El Debate",
-    "f": "2026-10-11",
-    "voto": {
-     "PP": 32,
-     "PSOE": 25.9,
-     "VOX": 18.7,
-     "SUMAR": 10.3
-    },
-    "antes": null
-   },
-   {
     "e": "Hamalgama Métrica / Vozpópuli",
     "f": "2026-10-11",
     "voto": {
@@ -201,18 +175,18 @@
   ],
   "salen": [],
   "dVoto": {
-   "PP": -0.01,
-   "PSOE": -0.31,
+   "PP": 0.08,
+   "PSOE": -0.21,
    "VOX": 0.13,
-   "SUMAR": 0.18
+   "SUMAR": 0
   },
   "dEsc": {
-   "PP": 1,
-   "PSOE": -2,
+   "PP": 0,
+   "PSOE": -1,
    "VOX": 1,
    "SUMAR": 0,
-   "PV": 2,
-   "IZ": -2
+   "PV": 1,
+   "IZ": -1
   },
   "huboCambio": true
  }

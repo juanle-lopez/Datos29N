@@ -48,21 +48,25 @@
     },
     {
       "e": "Target Point / El Debate",
-      "f": "2026-10-11",
-      "PP": 32.0,
-      "PSOE": 25.9,
-      "VOX": 18.7,
-      "SUMAR": 10.3
+      "f": "2026-11-02",
+      "PP": 31.8,
+      "PSOE": 25.5,
+      "VOX": 19.9,
+      "SUMAR": 9.0,
+      "nota": "Publicada 2-nov; campo 28 oct (18:00) a 30 oct (posterior al accidente de Urda), 1.024 entrevistas. Sumar/Frente Amplio 6,6 + Podemos 2,4 (el 2,4 es derivado por diferencia a partir de cifras redondeadas). PROVISIONAL: cifras vía Demócrata; original de El Debate no comprobado.",
+      "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-target-point-urda-vox-72-escanos-psoe-29n/",
+      "provisional": true
     },
     {
       "e": "Sigma Dos / El Mundo",
-      "f": "2026-10-26",
-      "PP": 30.6,
-      "PSOE": 26.1,
-      "VOX": 19.9,
-      "SUMAR": 11.0,
-      "nota": "Publicada 25-26 oct; campo 8–22 oct, 3.122 entrevistas, margen ±2,1. Sigma Dos publica PP 128, PSOE 107, Vox 68 y Frente Amplio + Compromís-FV + Podemos 16 escaños con el 11 % del voto. Los escaños del modelo se recalculan aquí con el mismo método para todas las encuestas.",
-      "fuente": "https://www.que.es/2026/10/26/elecciones-generales-29n-encuestas/"
+      "f": "2026-11-01",
+      "PP": 31.1,
+      "PSOE": 24.6,
+      "VOX": 19.3,
+      "SUMAR": 9.0,
+      "nota": "Publicada 1-nov; campo 29–30 oct (posterior al accidente de Urda), 2.505 entrevistas. Frente Amplio 7,1 + Podemos 1,9. Escaños según la fuente: PP 138, PSOE 99, Vox 65. PROVISIONAL: cifras vía Demócrata (2-nov); original de El Mundo no comprobado.",
+      "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-sigma-dos-urda-psoe-99-escanos-pp-vox/",
+      "provisional": true
     },
     {
       "e": "SocioMétrica / EL ESPAÑOL",
@@ -101,13 +105,13 @@
     },
     {
       "e": "NC Report / La Razón",
-      "f": "2026-10-26",
-      "PP": 32.9,
-      "PSOE": 25.8,
-      "VOX": 19.0,
-      "SUMAR": 9.2,
-      "nota": "Campo 22–24 oct, 1.000 entrevistas. Sumar 6,6 + Podemos 2,6. Fecha de publicación inferida del enlace (26-oct). PROVISIONAL: Demócrata daba PP 33,1; Infobae (27-oct) recoge 32,9 y se usa esta cifra; original de La Razón no comprobado.",
-      "fuente": "https://www.larazon.es/espana/18-votantes-socialistas-apoyan-hoy-vox_202610266adea62a3eef771e1ac8d43d.html",
+      "f": "2026-11-02",
+      "PP": 32.6,
+      "PSOE": 25.6,
+      "VOX": 19.3,
+      "SUMAR": 9.3,
+      "nota": "Publicada 2-nov (Demócrata); campo 26–29 oct, en parte posterior al accidente de Urda (28-oct). Frente Amplio 6,9 + Podemos 2,4. Escaños según la fuente: PP 138–140, PSOE 100–102, Vox 66–68. PROVISIONAL: cifras vía Demócrata; muestra no indicada; original de La Razón no comprobado.",
+      "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
       "provisional": true
     },
     {
@@ -332,6 +336,35 @@
       "SUMAR": 8.4,
       "nota": "Publicada 24-sep; campo 16–21 sep, 1.100 entrevistas. Sumar 5,1 + Podemos 3,3. Leída en el PDF de la empresa.",
       "fuente": "https://www.celeste-tel.es/wp-content/uploads/2026/09/Bar%C3%B3metro-Electoral-MensualSEP2026.pdf"
+    },
+    {
+      "e": "Target Point / El Debate",
+      "f": "2026-10-11",
+      "PP": 32.0,
+      "PSOE": 25.9,
+      "VOX": 18.7,
+      "SUMAR": 10.3
+    },
+    {
+      "e": "Sigma Dos / El Mundo",
+      "f": "2026-10-26",
+      "PP": 30.6,
+      "PSOE": 26.1,
+      "VOX": 19.9,
+      "SUMAR": 11.0,
+      "nota": "Publicada 25-26 oct; campo 8–22 oct, 3.122 entrevistas, margen ±2,1. Sigma Dos publica PP 128, PSOE 107, Vox 68 y Frente Amplio + Compromís-FV + Podemos 16 escaños con el 11 % del voto. Los escaños del modelo se recalculan aquí con el mismo método para todas las encuestas.",
+      "fuente": "https://www.que.es/2026/10/26/elecciones-generales-29n-encuestas/"
+    },
+    {
+      "e": "NC Report / La Razón",
+      "f": "2026-10-26",
+      "PP": 32.9,
+      "PSOE": 25.8,
+      "VOX": 19.0,
+      "SUMAR": 9.2,
+      "nota": "Campo 22–24 oct, 1.000 entrevistas. Sumar 6,6 + Podemos 2,6. Fecha de publicación inferida del enlace (26-oct). PROVISIONAL: Demócrata daba PP 33,1; Infobae (27-oct) recoge 32,9 y se usa esta cifra; original de La Razón no comprobado.",
+      "fuente": "https://www.larazon.es/espana/18-votantes-socialistas-apoyan-hoy-vox_202610266adea62a3eef771e1ac8d43d.html",
+      "provisional": true
     }
   ],
   "sesgo": {

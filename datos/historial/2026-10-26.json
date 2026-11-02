@@ -2,46 +2,38 @@
  "fecha": "2026-10-26",
  "metodo": 3,
  "t": "reconstruido",
- "n": 13,
+ "n": 11,
  "voto": {
-  "PP": 31.84,
-  "PSOE": 26.68,
+  "PP": 31.81,
+  "PSOE": 26.76,
   "VOX": 19.03,
-  "SUMAR": 9.25
+  "SUMAR": 9.07
  },
  "esc": {
-  "PP": 133,
-  "PSOE": 108,
+  "PP": 132,
+  "PSOE": 109,
   "VOX": 66,
   "SUMAR": 10,
-  "PV": 199,
-  "IZ": 150
+  "PV": 198,
+  "IZ": 151
  },
  "lo": {
   "PP": 130,
   "PSOE": 105,
   "VOX": 65,
-  "SUMAR": 9,
-  "PV": 197,
+  "SUMAR": 8,
+  "PV": 196,
   "IZ": 147
  },
  "hi": {
-  "PP": 135,
-  "PSOE": 110,
+  "PP": 136,
+  "PSOE": 111,
   "VOX": 68,
   "SUMAR": 11,
   "PV": 202,
-  "IZ": 152
+  "IZ": 153
  },
  "encuestas": [
-  {
-   "e": "NC Report / La Razón",
-   "f": "2026-10-26"
-  },
-  {
-   "e": "Sigma Dos / El Mundo",
-   "f": "2026-10-26"
-  },
   {
    "e": "Ateneo del Dato / elDiario.es",
    "f": "2026-10-25"
@@ -49,6 +41,10 @@
   {
    "e": "IMOP / El Confidencial",
    "f": "2026-10-23"
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-19"
   },
   {
    "e": "GESOP / Prensa Ibérica",
@@ -61,10 +57,6 @@
   {
    "e": "SocioMétrica / EL ESPAÑOL",
    "f": "2026-10-12"
-  },
-  {
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11"
   },
   {
    "e": "Hamalgama Métrica / Vozpópuli",
@@ -89,28 +81,6 @@
  ],
  "encDetalle": [
   {
-   "h": "NC Report",
-   "e": "NC Report / La Razón",
-   "f": "2026-10-26",
-   "voto": {
-    "PP": 32.9,
-    "PSOE": 25.8,
-    "VOX": 19,
-    "SUMAR": 9.2
-   }
-  },
-  {
-   "h": "Sigma Dos",
-   "e": "Sigma Dos / El Mundo",
-   "f": "2026-10-26",
-   "voto": {
-    "PP": 30.6,
-    "PSOE": 26.1,
-    "VOX": 19.9,
-    "SUMAR": 11
-   }
-  },
-  {
    "h": "Ateneo del Dato",
    "e": "Ateneo del Dato / elDiario.es",
    "f": "2026-10-25",
@@ -130,6 +100,17 @@
     "PSOE": 27.1,
     "VOX": 20,
     "SUMAR": 10.8
+   }
+  },
+  {
+   "h": "Sigma Dos",
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-10-19",
+   "voto": {
+    "PP": 31.5,
+    "PSOE": 25.3,
+    "VOX": 19.5,
+    "SUMAR": 10
    }
   },
   {
@@ -163,17 +144,6 @@
     "PSOE": 26.2,
     "VOX": 18.8,
     "SUMAR": 7.7
-   }
-  },
-  {
-   "h": "Target Point",
-   "e": "Target Point / El Debate",
-   "f": "2026-10-11",
-   "voto": {
-    "PP": 32,
-    "PSOE": 25.9,
-    "VOX": 18.7,
-    "SUMAR": 10.3
    }
   },
   {
@@ -235,54 +205,22 @@
  "proy": null,
  "contexto": [],
  "cambio": {
-  "entran": [
-   {
-    "e": "NC Report / La Razón",
-    "f": "2026-10-26",
-    "voto": {
-     "PP": 32.9,
-     "PSOE": 25.8,
-     "VOX": 19,
-     "SUMAR": 9.2
-    },
-    "antes": null
-   },
-   {
-    "e": "Sigma Dos / El Mundo",
-    "f": "2026-10-26",
-    "voto": {
-     "PP": 30.6,
-     "PSOE": 26.1,
-     "VOX": 19.9,
-     "SUMAR": 11
-    },
-    "antes": {
-     "e": "Sigma Dos / El Mundo",
-     "f": "2026-10-19",
-     "voto": {
-      "PP": 31.5,
-      "PSOE": 25.3,
-      "VOX": 19.5,
-      "SUMAR": 10
-     }
-    }
-   }
-  ],
+  "entran": [],
   "salen": [],
   "dVoto": {
-   "PP": 0.01,
-   "PSOE": -0.01,
-   "VOX": 0.03,
-   "SUMAR": 0.08
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0
   },
   "dEsc": {
    "PP": 0,
-   "PSOE": -1,
-   "VOX": 1,
+   "PSOE": 0,
+   "VOX": 0,
    "SUMAR": 0,
-   "PV": 1,
-   "IZ": -1
+   "PV": 0,
+   "IZ": 0
   },
-  "huboCambio": true
+  "huboCambio": false
  }
 }
