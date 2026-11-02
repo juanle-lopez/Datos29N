@@ -1,29 +1,29 @@
 {
- "dia": "2026-10-31",
- "hora": "13:55",
+ "dia": "2026-11-02",
+ "hora": "17:45",
  "esc": {
   "PP": 133,
-  "PSOE": 108,
-  "VOX": 66,
+  "PSOE": 106,
+  "VOX": 68,
   "SUMAR": 10,
-  "PV": 199,
-  "IZ": 150
+  "PV": 201,
+  "IZ": 148
  },
  "voto": {
   "PP": 31.8,
-  "PSOE": 26.7,
-  "VOX": 19,
-  "SUMAR": 9.3
+  "PSOE": 26.5,
+  "VOX": 19.1,
+  "SUMAR": 9
  },
  "encuestas": [
   "NC Report / La Razón",
+  "Target Point / El Debate",
   "Sigma Dos / El Mundo",
   "Ateneo del Dato / elDiario.es",
   "IMOP / El Confidencial",
   "GESOP / Prensa Ibérica",
   "GAD3 / ABC",
   "SocioMétrica / EL ESPAÑOL",
-  "Target Point / El Debate",
   "Hamalgama Métrica / Vozpópuli",
   "DYM / 20minutos",
   "40dB / EL PAÍS–SER",
