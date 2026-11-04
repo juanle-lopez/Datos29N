@@ -1,7 +1,49 @@
 {
-  "actualizado": "2026-11-03",
+  "actualizado": "2026-11-04",
   "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
   "items": [
+    {
+      "medio": "Nuevatribuna",
+      "fecha": "4 nov",
+      "url": "https://www.nuevatribuna.es/actualidad/diez-pildoras-dia-campana-electoral-29n/20261104192528255921.html",
+      "titular": "Según Nuevatribuna, Sánchez nombra a Carlos Cuerpo ministro de Transportes y Movilidad Sostenible tras la dimisión de Puente; el Supremo archiva la querella de Vox por Ceuta",
+      "tema": "Proceso"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "4 nov",
+      "url": "https://www.infobae.com/espana/2026/11/04/reacciones-a-la-dimision-de-oscar-puente-en-directo-ultima-hora-del-accidente-de-urda-y-las-elecciones-generales-en-espana-el-29-n/",
+      "titular": "El presidente de Adif, Luis Pedro Marco de la Peña, presenta su dimisión a Carlos Cuerpo tras el accidente de Urda (titular de Infobae)",
+      "tema": "Proceso"
+    },
+    {
+      "medio": "Democrata",
+      "fecha": "4 nov",
+      "url": "https://www.democrata.es/politica/dirigentes-del-psoe-acogen-con-alivio-la-dimision-de-puente-y-confian-en-que-ayude-a-remontar-en-plena-campana/",
+      "titular": "Según fuentes del PSOE sin identificar (Europa Press), el partido ve en la dimisión de Puente una oportunidad para remontar y pasa a un tono más sobrio; «No somos iguales» podría ser su lema",
+      "tema": "Campaña"
+    },
+    {
+      "medio": "Press Digital",
+      "fecha": "4 nov",
+      "url": "https://www.pressdigital.es/articulo/politica/2026-11-04/6078410-feijoo-estara-14-noviembre-gran-acto-campana-electoral-santiago-compostela",
+      "titular": "Feijóo estará el 14 de noviembre en un «gran acto» de campaña en Santiago de Compostela",
+      "tema": "Agenda"
+    },
+    {
+      "medio": "Infobae (EFE)",
+      "fecha": "3 nov",
+      "url": "https://www.infobae.com/espana/agencias/2026/11/03/puente-dimite-por-sorpresa-6-dias-despues-de-urda-tras-una-dura-comparecencia-en-congreso/",
+      "titular": "Según EFE, el PP y Vox critican a Puente; Sumar, PNV y ERC reclamaban responsabilidades; Bildu pide una investigación exhaustiva y Podemos culpa a la liberalización ferroviaria",
+      "tema": "Proceso"
+    },
+    {
+      "medio": "Infobae (EFE)",
+      "fecha": "3 nov",
+      "url": "https://www.infobae.com/espana/agencias/2026/11/03/puente-dimite-por-sorpresa-6-dias-despues-de-urda-tras-una-dura-comparecencia-en-congreso/",
+      "titular": "Puente dimite como ministro de Transportes al final de una comparecencia de más de cuatro horas y renuncia a ir en las listas: «Es una cuestión de dignidad política, coherencia y empatía con las víctimas» (EFE)",
+      "tema": "Proceso"
+    },
     {
       "medio": "Democrata",
       "fecha": "3 nov",
