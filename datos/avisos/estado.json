@@ -1,6 +1,6 @@
 {
- "dia": "2026-11-03",
- "hora": "12:13",
+ "dia": "2026-11-04",
+ "hora": "23:38",
  "esc": {
   "PP": 133,
   "PSOE": 106,
@@ -22,8 +22,8 @@
   "Ateneo del Dato / elDiario.es",
   "IMOP / El Confidencial",
   "GESOP / Prensa Ibérica",
-  "GAD3 / ABC",
   "SocioMétrica / EL ESPAÑOL",
+  "GAD3 / ABC",
   "Hamalgama Métrica / Vozpópuli",
   "DYM / 20minutos",
   "40dB / EL PAÍS–SER",
@@ -31,6 +31,12 @@
   "Data10 / OKDiario"
  ],
  "noticias": [
+  "https://www.nuevatribuna.es/actualidad/diez-pildoras-dia-campana-electoral-29n/20261104192528255921.html|Según Nuevatribuna, Sánchez nombra a Carlos Cuerpo ministro de Transportes y Movilidad Sostenible tras la dimisión de Puente; el Supremo archiva la querella de Vox por Ceuta",
+  "https://www.infobae.com/espana/2026/11/04/reacciones-a-la-dimision-de-oscar-puente-en-directo-ultima-hora-del-accidente-de-urda-y-las-elecciones-generales-en-espana-el-29-n/|El presidente de Adif, Luis Pedro Marco de la Peña, presenta su dimisión a Carlos Cuerpo tras el accidente de Urda (titular de Infobae)",
+  "https://www.democrata.es/politica/dirigentes-del-psoe-acogen-con-alivio-la-dimision-de-puente-y-confian-en-que-ayude-a-remontar-en-plena-campana/|Según fuentes del PSOE sin identificar (Europa Press), el partido ve en la dimisión de Puente una oportunidad para remontar y pasa a un tono más sobrio; «No somos iguales» podría ser su lema",
+  "https://www.pressdigital.es/articulo/politica/2026-11-04/6078410-feijoo-estara-14-noviembre-gran-acto-campana-electoral-santiago-compostela|Feijóo estará el 14 de noviembre en un «gran acto» de campaña en Santiago de Compostela",
+  "https://www.infobae.com/espana/agencias/2026/11/03/puente-dimite-por-sorpresa-6-dias-despues-de-urda-tras-una-dura-comparecencia-en-congreso/|Según EFE, el PP y Vox critican a Puente; Sumar, PNV y ERC reclamaban responsabilidades; Bildu pide una investigación exhaustiva y Podemos culpa a la liberalización ferroviaria",
+  "https://www.infobae.com/espana/agencias/2026/11/03/puente-dimite-por-sorpresa-6-dias-despues-de-urda-tras-una-dura-comparecencia-en-congreso/|Puente dimite como ministro de Transportes al final de una comparecencia de más de cuatro horas y renuncia a ir en las listas: «Es una cuestión de dignidad política, coherencia y empatía con las víctimas» (EFE)",
   "https://www.democrata.es/politica/congreso-y-senado/oscar-puente-comparece-este-martes-en-el-congreso-por-el-accidente-ferroviario-de-urda/|Óscar Puente comparece este martes ante la Diputación Permanente del Congreso por el accidente ferroviario de Urda (17:00, según Democrata)",
   "https://www.infobae.com/espana/2026/11/03/oscar-puente-comparece-en-el-congreso-por-el-accidente-de-trenes-de-urda-en-directo-ultima-hora-del-consejo-de-ministros-y-las-primeras-medidas-tras-la-tragedia/|Según Infobae, Sánchez adelantó un decreto con ayudas que duplicarán el seguro obligatorio de viajeros y un mecanismo para acelerar las indemnizaciones; la causa de Urda sigue sin esclarecerse",
   "https://www.elmundo.es/espana/encuestas/2026/11/01/6ae77446e4d4d8f3698b458a.html|Sigma Dos para El Mundo, primera encuesta con campo íntegramente posterior a Urda (29-30 oct, 2.505 entrevistas): PP 31,1 %, PSOE 24,6 %, Vox 19,3 %",
