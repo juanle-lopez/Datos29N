@@ -92,17 +92,6 @@
       "SUMAR": 10.6
     },
     {
-      "e": "Data10 / OKDiario",
-      "f": "2026-10-05",
-      "PP": 34.0,
-      "PSOE": 26.1,
-      "VOX": 18.6,
-      "SUMAR": 9.5,
-      "nota": "Publicada 5-oct; campo 2-oct, 1.000 entrevistas. Sumar 5,2 + Podemos 4,3. PROVISIONAL: OKDiario no da el % de voto de Vox y Sumar; esos vienen de Electográfica.",
-      "fuente": "https://okdiario.com/espana/efecto-maricarmen-resucita-sanchez-hasta-110-escanos-pero-ni-todos-sus-socios-alcanzan-pp-vox-que-suman-203-20469916",
-      "provisional": true
-    },
-    {
       "e": "NC Report / La Razón",
       "f": "2026-11-02",
       "PP": 32.6,
@@ -363,6 +352,17 @@
       "SUMAR": 9.2,
       "nota": "Campo 22–24 oct, 1.000 entrevistas. Sumar 6,6 + Podemos 2,6. Fecha de publicación inferida del enlace (26-oct). PROVISIONAL: Demócrata daba PP 33,1; Infobae (27-oct) recoge 32,9 y se usa esta cifra; original de La Razón no comprobado.",
       "fuente": "https://www.larazon.es/espana/18-votantes-socialistas-apoyan-hoy-vox_202610266adea62a3eef771e1ac8d43d.html",
+      "provisional": true
+    },
+    {
+      "e": "Data10 / OKDiario",
+      "f": "2026-10-05",
+      "PP": 34.0,
+      "PSOE": 26.1,
+      "VOX": 18.6,
+      "SUMAR": 9.5,
+      "nota": "Publicada 5-oct; campo 2-oct, 1.000 entrevistas. Sumar 5,2 + Podemos 4,3. PROVISIONAL: OKDiario no da el % de voto de Vox y Sumar; esos vienen de Electográfica.",
+      "fuente": "https://okdiario.com/espana/efecto-maricarmen-resucita-sanchez-hasta-110-escanos-pero-ni-todos-sus-socios-alcanzan-pp-vox-que-suman-203-20469916",
       "provisional": true
     }
   ],

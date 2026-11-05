@@ -2,35 +2,35 @@
  "fecha": "2026-10-10",
  "metodo": 3,
  "t": "reconstruido",
- "n": 7,
+ "n": 6,
  "voto": {
-  "PP": 32.73,
-  "PSOE": 27,
-  "VOX": 18.56,
-  "SUMAR": 8.71
+  "PP": 32.52,
+  "PSOE": 27.15,
+  "VOX": 18.55,
+  "SUMAR": 8.58
  },
  "esc": {
-  "PP": 137,
-  "PSOE": 108,
-  "VOX": 63,
-  "SUMAR": 9,
+  "PP": 136,
+  "PSOE": 109,
+  "VOX": 64,
+  "SUMAR": 8,
   "PV": 200,
   "IZ": 149
  },
  "lo": {
   "PP": 133,
-  "PSOE": 105,
-  "VOX": 61,
-  "SUMAR": 8,
+  "PSOE": 106,
+  "VOX": 62,
+  "SUMAR": 7,
   "PV": 197,
-  "IZ": 146
+  "IZ": 147
  },
  "hi": {
-  "PP": 141,
-  "PSOE": 110,
+  "PP": 140,
+  "PSOE": 111,
   "VOX": 65,
   "SUMAR": 10,
-  "PV": 203,
+  "PV": 202,
   "IZ": 152
  },
  "encuestas": [
@@ -49,10 +49,6 @@
   {
    "e": "DYM / 20minutos",
    "f": "2026-10-09"
-  },
-  {
-   "e": "Data10 / OKDiario",
-   "f": "2026-10-05"
   },
   {
    "e": "SocioMétrica / EL ESPAÑOL",
@@ -106,17 +102,6 @@
     "PSOE": 28.2,
     "VOX": 18.2,
     "SUMAR": 6.2
-   }
-  },
-  {
-   "h": "Data10",
-   "e": "Data10 / OKDiario",
-   "f": "2026-10-05",
-   "voto": {
-    "PP": 34,
-    "PSOE": 26.1,
-    "VOX": 18.6,
-    "SUMAR": 9.5
    }
   },
   {
