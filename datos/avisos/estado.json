@@ -1,21 +1,22 @@
 {
- "dia": "2026-11-05",
- "hora": "13:50",
+ "dia": "2026-11-06",
+ "hora": "19:45",
  "esc": {
-  "PP": 132,
-  "PSOE": 107,
-  "VOX": 68,
+  "PP": 130,
+  "PSOE": 108,
+  "VOX": 69,
   "SUMAR": 10,
-  "PV": 200,
-  "IZ": 149
+  "PV": 199,
+  "IZ": 150
  },
  "voto": {
-  "PP": 31.7,
+  "PP": 31.4,
   "PSOE": 26.6,
-  "VOX": 19.1,
-  "SUMAR": 9
+  "VOX": 19.3,
+  "SUMAR": 9.1
  },
  "encuestas": [
+  "More in Common",
   "NC Report / La Razón",
   "Target Point / El Debate",
   "Sigma Dos / El Mundo",
@@ -30,6 +31,12 @@
   "InvyMark / laSexta"
  ],
  "noticias": [
+  "https://www.elprogreso.es/articulo/espana/feijoo-estara-hormiguero/202611061455092012277.html|Feijóo estará en «El Hormiguero» el día de la huelga general (11 de noviembre) y Abascal visitará a Broncano (titular de El Progreso)",
+  "https://www.democrata.es/actualidad/huelga-general-11-noviembre-quien-convoca-cuanto-dura-cuales-son-motivos/|Huelga general del 11 de noviembre, convocada por los sindicatos por el coste de la vivienda: quién la convoca, cuánto dura y motivos (según Democrata)",
+  "https://www.moncloa.com/2026/11/06/feijoo-abascal-distancias-suma-derecha-3462781/|Feijóo marca distancias con Abascal para ampliar la suma de la derecha antes del 29-N (titular de Moncloa.com)",
+  "https://www.infobae.com/espana/2026/11/06/elecciones-generales-29-n-en-directo-ultima-hora-del-reinicio-de-la-campana-el-accidente-de-urda-o-el-caso-koldo/|Según Infobae, la UCO detuvo a seis personas en el caso Koldo, entre ellas la pareja de Ábalos, que quedaron en libertad horas después; Sánchez dijo que no tienen «nada que ver» con él. Cadena SER recoge que Koldo García afirma que el PP le ofreció un millón de euros por declarar contra Sánchez; el PP lo niega",
+  "https://www.infobae.com/espana/2026/11/06/elecciones-generales-29-n-en-directo-ultima-hora-del-reinicio-de-la-campana-el-accidente-de-urda-o-el-caso-koldo/|Urda: las autoridades han entregado a las familias los cuerpos de 66 de las 69 víctimas, según el Centro Integrado de Datos (Infobae)",
+  "https://www.electografica.com/2026/11/encuesta-more-in-common-261103.html|More in Common (campo 21–25 oct, anterior a Urda, 2.210 entrevistas): PP 28,3 %, PSOE 27,6 %, Vox 20,8 %, Frente Amplio 7,8 %, Podemos 2,6 %",
   "https://www.moncloa.com/2026/11/05/sanchez-transportes-cuerpo-3461580|Según Moncloa.com, Sánchez encarga Transportes a Carlos Cuerpo de forma transitoria: mantiene Economía y la vicepresidencia primera hasta el nuevo Gobierno; real decreto en un BOE extraordinario",
   "https://www.elespanol.com/espana/20261105/elecciones-generales-directo-ultima-hora-adelanto-electoral-encuestas-pedro-sanchez-actos-pp-psoe-vox-voto-correo/1003744446770_10.html|Ada Colau (Frente Amplio) propone un gravamen del 2 % a patrimonios de más de un millón de euros y del 3 % a los de más de 50 millones, para recaudar más de 10.000 millones (según El Español)",
   "https://www.elespanol.com/espana/20261105/elecciones-generales-directo-ultima-hora-adelanto-electoral-encuestas-pedro-sanchez-actos-pp-psoe-vox-voto-correo/1003744446770_10.html|El ministro de Cultura, Ernest Urtasun, plantea volver a unificar Renfe y Adif y frenar la liberalización ferroviaria (según El Español)",
