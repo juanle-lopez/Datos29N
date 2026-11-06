@@ -1,7 +1,49 @@
 {
-  "actualizado": "2026-11-05",
+  "actualizado": "2026-11-06",
   "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
   "items": [
+    {
+      "medio": "El Progreso",
+      "fecha": "6 nov",
+      "url": "https://www.elprogreso.es/articulo/espana/feijoo-estara-hormiguero/202611061455092012277.html",
+      "titular": "Feijóo estará en «El Hormiguero» el día de la huelga general (11 de noviembre) y Abascal visitará a Broncano (titular de El Progreso)",
+      "tema": "Agenda"
+    },
+    {
+      "medio": "Democrata",
+      "fecha": "6 nov",
+      "url": "https://www.democrata.es/actualidad/huelga-general-11-noviembre-quien-convoca-cuanto-dura-cuales-son-motivos/",
+      "titular": "Huelga general del 11 de noviembre, convocada por los sindicatos por el coste de la vivienda: quién la convoca, cuánto dura y motivos (según Democrata)",
+      "tema": "Agenda"
+    },
+    {
+      "medio": "Moncloa.com",
+      "fecha": "6 nov",
+      "url": "https://www.moncloa.com/2026/11/06/feijoo-abascal-distancias-suma-derecha-3462781/",
+      "titular": "Feijóo marca distancias con Abascal para ampliar la suma de la derecha antes del 29-N (titular de Moncloa.com)",
+      "tema": "Campaña"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "6 nov",
+      "url": "https://www.infobae.com/espana/2026/11/06/elecciones-generales-29-n-en-directo-ultima-hora-del-reinicio-de-la-campana-el-accidente-de-urda-o-el-caso-koldo/",
+      "titular": "Según Infobae, la UCO detuvo a seis personas en el caso Koldo, entre ellas la pareja de Ábalos, que quedaron en libertad horas después; Sánchez dijo que no tienen «nada que ver» con él. Cadena SER recoge que Koldo García afirma que el PP le ofreció un millón de euros por declarar contra Sánchez; el PP lo niega",
+      "tema": "Proceso"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "6 nov",
+      "url": "https://www.infobae.com/espana/2026/11/06/elecciones-generales-29-n-en-directo-ultima-hora-del-reinicio-de-la-campana-el-accidente-de-urda-o-el-caso-koldo/",
+      "titular": "Urda: las autoridades han entregado a las familias los cuerpos de 66 de las 69 víctimas, según el Centro Integrado de Datos (Infobae)",
+      "tema": "Proceso"
+    },
+    {
+      "medio": "Electografica",
+      "fecha": "3 nov",
+      "url": "https://www.electografica.com/2026/11/encuesta-more-in-common-261103.html",
+      "titular": "More in Common (campo 21–25 oct, anterior a Urda, 2.210 entrevistas): PP 28,3 %, PSOE 27,6 %, Vox 20,8 %, Frente Amplio 7,8 %, Podemos 2,6 %",
+      "tema": "Encuestas"
+    },
     {
       "medio": "Moncloa.com",
       "fecha": "5 nov",
