@@ -34,7 +34,7 @@ function tendencia(tipo){
 // Tendencia agrupada (2-nov): pendiente común de todas las encuestas privadas de los últimos 45 días, con un efecto fijo por empresa
 // (se compara cada empresa consigo misma). Se contrae por b²/(b²+se²): lo que no se distingue del ruido casi no cuenta.
 function tendenciaAgrupada(){
-  const vistos=new Set(),todas=[...inp.privadas,...inp.historial.filter(h=>h.tipo!=='cis'&&!h.aprox)].filter(p=>{const c=p.e+p.f;if(vistos.has(c))return false;vistos.add(c);return D0-day(p.f)<=(inp.ventanaTendencia||45)});
+  const vistos=new Set(),todas=[...inp.privadas,...inp.historial.filter(h=>h.tipo!=='cis'&&!h.aprox)].filter(p=>{const c=p.e+p.f;if(vistos.has(c))return false;vistos.add(c);return D0-day(p.f)<=(inp.ventanaTendencia||45)&&(!inp.tendenciaDesde||(p.campoFin||p.f)>=inp.tendenciaDesde)});
   const emp=p=>p.e.split(' /')[0],tr={},det={};
   K.forEach(k=>{const g={};todas.filter(p=>p[k]!=null).forEach(p=>(g[emp(p)]=g[emp(p)]||[]).push(p));
     const gs=Object.values(g).filter(a=>a.length>=2);let sxy=0,sxx=0,n=0;
@@ -125,6 +125,7 @@ const escBaseBloq={priv:(t=>({PV:t.PP+t.VOX,IZ:IZ(t)}))(seatsOf(base.priv)),cis:
 const escBase={priv:Object.fromEntries(K.map(k=>[k,seatsOf(base.priv)[k]])),cis:Object.fromEntries(K.map(k=>[k,seatsOf(base.cis)[k]]))};
 const errSc=(inp.sesgo&&inp.sesgo.elecciones||[]).map((el,i)=>{const v={},er={};K.forEach(k=>{const e=inp.sesgo.err[k];er[k]=e&&e[i]!==undefined?e[i]:null;v[k]=base.priv[k]+(er[k]||0)});const t=seatsOf(v);return {e:el.replace(/ \(.*\)/,''),err:er,esc:Object.fromEntries(K.map(k=>[k,t[k]])),PV:t.PP+t.VOX,IZ:IZ(t)}});
 const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv.length,privadas:priv,historial:inp.historial,cis:inp.cis,
+  postUrda:(()=>{const q=inp.privadas.filter(p=>inp.tendenciaDesde&&(p.campoFin||p.f)>=inp.tendenciaDesde);if(!q.length)return null;const v={};K.forEach(k=>v[k]=round(mean(q.map(p=>p[k])),2));const t=seatsOf(v);return {desde:inp.tendenciaDesde,n:q.length,empresas:q.map(p=>p.e),voto:v,esc:Object.fromEntries(K.map(k=>[k,t[k]]))}})(),
   base,sesgo:{delta:Object.fromEntries(K.map(k=>[k,round(delta[k],2)])),err:inp.sesgo?inp.sesgo.err:null,elecciones:inp.sesgo?inp.sesgo.elecciones:null},tendencia:{priv:Object.fromEntries(K.map(k=>[k,round(trP.tr[k],4)])),cis:Object.fromEntries(K.map(k=>[k,round(trC.tr[k],4)])),usadasPriv:trP.usadas,usadasCis:trC.usadas},
   escPrivadas:escenario('priv',trP),escCIS:escenario('cis',trC),escHist,escPriv,escBase,escBaseBloq,errSc};
 // Sincroniza la portada con la media de las encuestas (antes estaba a mano y se desfasaba): valor del simulador y texto de método.

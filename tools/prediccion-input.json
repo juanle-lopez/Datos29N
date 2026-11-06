@@ -55,7 +55,8 @@
       "SUMAR": 9.0,
       "nota": "Publicada 2-nov; campo 28 oct (18:00) a 30 oct (posterior al accidente de Urda), 1.024 entrevistas. Sumar/Frente Amplio 6,6 + Podemos 2,4 (el 2,4 es derivado por diferencia a partir de cifras redondeadas). PROVISIONAL: cifras vía Demócrata; original de El Debate no comprobado.",
       "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-target-point-urda-vox-72-escanos-psoe-29n/",
-      "provisional": true
+      "provisional": true,
+      "campoFin": "2026-10-30"
     },
     {
       "e": "Sigma Dos / El Mundo",
@@ -65,7 +66,8 @@
       "VOX": 19.3,
       "SUMAR": 9.0,
       "nota": "Publicada 1-nov (actualizada 2-nov 09:42); campo 29–30 oct (posterior al accidente de Urda), 2.505 entrevistas, mixta CATI + panel online, margen ±2,1. Frente Amplio 7,1 + Podemos 1,9. Escaños según El Mundo: PP 138 (133–139), PSOE 99 (97–103), Vox 65 (63–69), Frente Amplio 9–11, Podemos 0–1. Verificada con el texto y la ficha técnica de El Mundo.",
-      "fuente": "https://www.elmundo.es/espana/encuestas/2026/11/01/6ae77446e4d4d8f3698b458a.html"
+      "fuente": "https://www.elmundo.es/espana/encuestas/2026/11/01/6ae77446e4d4d8f3698b458a.html",
+      "campoFin": "2026-10-30"
     },
     {
       "e": "SocioMétrica / EL ESPAÑOL",
@@ -100,7 +102,8 @@
       "SUMAR": 9.3,
       "nota": "Publicada 2-nov (Demócrata); campo 26–29 oct, en parte posterior al accidente de Urda (28-oct). Frente Amplio 6,9 + Podemos 2,4. Escaños según la fuente: PP 138–140, PSOE 100–102, Vox 66–68. PROVISIONAL: cifras vía Demócrata; muestra no indicada; original de La Razón no comprobado.",
       "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
-      "provisional": true
+      "provisional": true,
+      "campoFin": "2026-10-29"
     },
     {
       "e": "Ateneo del Dato / elDiario.es",
@@ -122,7 +125,8 @@
       "SUMAR": 10.4,
       "nota": "Publicada 3-nov; campo 21–25 oct (anterior al accidente de Urda), 2.210 entrevistas online, margen ±2,1. Frente Amplio 7,8 + Podemos 2,6. PROVISIONAL: cifras vía Electografica; original de More in Common no comprobado.",
       "fuente": "https://www.electografica.com/2026/11/encuesta-more-in-common-261103.html",
-      "provisional": true
+      "provisional": true,
+      "campoFin": "2026-10-25"
     }
   ],
   "cis": {
@@ -140,7 +144,7 @@
   "sdDerivaNota": "Supuesto: desviación típica de la deriva real de la media en 40 días, tras descontar el ruido de muestreo de comparar dos encuestas (observado en cambios entre encuestas de la misma empresa: 1,7 puntos; ruido esperado ~1,4). Estimación gruesa.",
   "sdMuestreoCIS": 0.7,
   "usarTendencia": true,
-  "tendenciaNota": "Desde el 2-nov la previsión central añade una tendencia amortiguada: pendiente común de las encuestas privadas de los últimos 45 días con un efecto fijo por empresa, contraída según su incertidumbre (b²/(b²+se²)) y amortiguada con una constante de 14 días (el recorrido total no supera 14 días de pendiente). Se aplica solo al escenario de encuestas privadas.",
+  "tendenciaNota": "Desde el 6-nov la tendencia amortiguada solo usa encuestas con campo posterior al accidente de Urda (28-oct). Mientras no haya al menos dos mediciones posteriores de una misma empresa, la tendencia es cero y el 29-N parte de la media de hoy.",
   "podemosFrac": 0.35,
   "podemosNota": "Podemos concurre por separado de Sumar/Frente Amplio salvo en Canarias y C. Valenciana, y dentro de las listas de ERC en Cataluña (Infobae, 17-oct-2026). Fracción de Podemos dentro de «Sumar + Podemos»: media de las 7 encuestas privadas con desglose (Sigma Dos 26-ago, 4-oct y 12-oct; Demoscopia 27-ago; NC Report 7-sep; DYM 24-sep; SocioMétrica 4-oct) = 0,35. Se reparte por provincia en proporción al voto de Sumar en 2023 (supuesto).",
   "podemosFuente": "https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/",
@@ -416,5 +420,6 @@
   "sdBloqueNota": "Error común del bloque (PP y Vox suben o bajan juntos, PSOE y Sumar al contrario), en puntos de voto, solo el 29-N. Calibrado con las dos elecciones disponibles: la media de encuestas de la última semana se desvió en PP+Vox 2,7 pts (nov-2019) y 1,8 pts (jul-2023), y en escaños 2023 pasó 184 frente a 170 reales, fuera del rango del 80 % anterior. Con solo dos elecciones es una estimación gruesa.",
   "sesgoNota": "Desde el 2-nov la corrección histórica está desactivada: con solo tres elecciones fijaba el 29-N y no reaccionaba a las encuestas nuevas. Los errores pasados se conservan solo para la tabla de validación.",
   "tendenciaAgrupada": true,
-  "ventanaTendencia": 45
+  "ventanaTendencia": 45,
+  "tendenciaDesde": "2026-10-28"
 }

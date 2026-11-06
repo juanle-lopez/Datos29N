@@ -56,6 +56,11 @@
     el.innerHTML=`<div class="kt">Esta semana <small>del ${fecha(a.f)} al ${fecha(h.f)}</small></div><div class="swr">${ch}</div>`+
       (ent.length?`<p class="note" style="margin:6px 0 0">Entra${ent.length>1?'n':''} ${ent.map(e=>`<b>${e.e}</b> (${fecha(e.f)}: PP ${n1(e.voto.PP)} · PSOE ${n1(e.voto.PSOE)} · Vox ${n1(e.voto.VOX)}${e.antes?`; antes ${n1(e.antes.voto.PP)} · ${n1(e.antes.voto.PSOE)} · ${n1(e.antes.voto.VOX)}`:''})`).join('; ')}. Toca ese día en los gráficos para ver el detalle.</p>`:`<p class="note" style="margin:6px 0 0">No ha entrado ninguna encuesta nueva esta semana.</p>`);}}
 
+  // Solo encuestas con campo posterior al accidente de Urda (se muestra aparte; no sustituye a la media)
+  {const el=$('ppost'),q=PRED.postUrda;if(el&&q){const b=PRED.base.priv,eb=PRED.escBase.priv;
+    const ch=P.map(([k,nm,c])=>`<span class="sw"><b style="color:${c}">${nm}</b> <span class="m">${n1(q.voto[k])} % · ${q.esc[k]} esc.</span> <small class="${q.voto[k]-b[k]>0?'up':q.voto[k]-b[k]<0?'dn':''}">${sg(q.voto[k]-b[k])} pts</small></span>`).join('');
+    el.innerHTML=`<div class="kt">Solo encuestas con campo posterior a Urda <small>${q.n} encuestas, desde el ${fecha(q.desde)}</small></div><div class="swr">${ch}</div><p class="note" style="margin:6px 0 0">Media de ${q.empresas.join(', ')}. Son pocas y cada empresa aparece una vez: no sustituye a la media de las ${PRED.privadas.length}, que es la cifra del modelo. La diferencia en puntos es respecto a esa media.</p>`}}
+
   // 3. Las encuestas, una a una: ventaja y diferencia con la media
   {const el=$('penc');if(el){
     const b=PRED.base.priv,E=PRED.escPriv,rows=PRED.privadas.map((p,i)=>({p,e:E[i]})).sort((x,y)=>y.p.f.localeCompare(x.p.f)||x.p.e.localeCompare(y.p.e));

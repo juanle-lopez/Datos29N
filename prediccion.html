@@ -9,14 +9,14 @@
 <meta property="og:description" content="Predicción experimental de escaños hasta el 29-N, con el modelo explicado paso a paso, su margen de error y sus límites.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://datos29n.juanle.net/prediccion.html">
-<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11061845">
+<meta property="og:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11061850">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:site_name" content="Datos 29N">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Predicción de escaños 29-N 2026 y mayoría absoluta · Datos 29N">
-<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11061845">
+<meta name="twitter:image" content="https://datos29n.juanle.net/assets/og-prediccion.png?v=11061850">
 <link rel="canonical" href="https://datos29n.juanle.net/prediccion.html">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -102,6 +102,7 @@
       <div class="kcard" id="pkey"></div>
       <div class="kcard cm" id="pcomo"></div>
       <div class="kcard" id="psemana"></div>
+      <div class="kcard" id="ppost"></div>
       <p class="note" id="howto" style="margin:12px 0 0"><b>Cómo usarlos:</b> desliza la barra bajo cada gráfico para ver qué cambió cada día. A la derecha de «hoy», la proyección hasta el 29-N.</p>
       <div style="margin-top:10px"><div class="zleg" aria-label="Qué significan las zonas de color"><span class="zbar"><span class="zb"><em>Menos probable</em><i></i><em>Más probable</em></span><span>Más oscuro = más simulaciones pasan por ahí.</span></span><span><svg viewBox="0 0 26 14" width="26" height="14" aria-hidden="true"><circle cx="13" cy="7" r="5.5" fill="currentColor"/></svg><span><b>Punto grande:</b> la media de las encuestas</span></span><span><svg viewBox="0 0 26 14" width="26" height="14" aria-hidden="true"><circle cx="13" cy="7" r="3" fill="currentColor" opacity=".45"/></svg><span><b>Punto pequeño:</b> una encuesta</span></span><span><svg viewBox="0 0 26 14" width="26" height="14" aria-hidden="true"><path d="M1 10 L9 4 L17 8 L25 3" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".6"/></svg><span><b>Línea fina:</b> una simulación de ejemplo</span></span><span><svg viewBox="0 0 26 14" width="26" height="14" aria-hidden="true"><rect x="9" y="3" width="8" height="8" transform="rotate(45 13 7)" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span><b>Rombo:</b> barómetro del CIS</span></span></div>
       <div id="pgrid" style="display:grid;gap:12px"></div>
@@ -135,7 +136,7 @@
           <li><b>Datos.</b><span>Las <span class="npol">13</span> encuestas privadas más recientes (<span id="rng2">9-oct a 3-nov</span>) y el CIS del 14-oct, con su historial. En los gráficos, Sumar y Podemos se muestran juntos, como en el simulador, pero sus escaños se calculan con listas separadas (ver «Escaños»).</span></li>
           <li><b>Media.</b><span>Media simple de las <span class="npol">13</span> privadas (la última de cada empresa). El CIS no entra: se muestra aparte como segundo escenario.</span></li>
           <li><b>Sin corrección histórica (desde el 2-nov).</b><span>Del 20-oct al 2-nov el centro del 29-N se corregía con el error medio de las encuestas en 2019 y 2023 (+1,0 al PSOE, −0,6 a PP y Vox). Se ha quitado: con solo tres elecciones, esa corrección fijaba el 29-N y apenas reaccionaba a las encuestas nuevas.</span></li>
-          <li><b>Tendencia amortiguada (desde el 2-nov).</b><span>Para que el 29-N no sea solo la foto de hoy, se añade la tendencia reciente: la pendiente común de las encuestas privadas de los últimos 45 días, comparando cada empresa consigo misma. Se contrae según lo distinguible que sea del ruido y se amortigua (constante de 14 días), así que el recorrido total es pequeño. Hoy: PP −0,7, Vox +0,5, Sumar + Podemos −0,2 puntos hasta el 29-N; el PSOE casi no se mueve (+0,1). Es un supuesto: asume que la tendencia reciente continúa de forma atenuada.</span></li>
+          <li><b>Tendencia amortiguada (desde el 2-nov).</b><span>Para que el 29-N no sea solo la foto de hoy, se añade la tendencia reciente: la pendiente común de las encuestas privadas, comparando cada empresa consigo misma, contraída según lo distinguible que sea del ruido y amortiguada (constante de 14 días). Desde el 6-nov solo cuentan las encuestas con campo posterior al accidente de Urda (28-oct); mientras no haya dos mediciones posteriores de una misma empresa, la tendencia es cero y el 29-N parte de la media de hoy. Es un supuesto: asume que la tendencia reciente continúa de forma atenuada.</span></li>
           <li><b>Error.</b><span>Crece poco a poco con los días: la deriva de la opinión y el error histórico de las encuestas en 2019 y 2023 (±1,9 puntos de media al llegar al 29-N) se reparten a lo largo del tiempo, así que el tubo se abre de forma gradual y no da un salto el último día. Es proporcional al tamaño de cada partido (unos ±2,6 puntos para el PP y ±1 para Sumar + Podemos), y los partidos se compensan entre sí: si uno sube, otro baja.</span></li>
           <li><b>Escaños.</b><span>4.000 simulaciones del resultado del 29-N con D’Hondt por provincia, como en el simulador. Se muestra el valor central y el rango del 80 %. A diferencia del simulador, Podemos va en lista propia, con el 35 % del voto «Sumar + Podemos» (media de las encuestas que lo desglosan), salvo en Canarias y la C. Valenciana, donde van juntos, y en Cataluña, donde Podemos va en las listas de ERC (<a href="https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/">acuerdos del 17-oct</a>). Al dividirse, el reparto D’Hondt les da menos escaños que si fueran juntos.</span></li>
           <li><b>Cuántas simulaciones.</b><span>Son 4.000 solo para el 29-N: de ellas salen el valor central, el rango del 80 % de las tablas y la animación del paso 6. Las líneas día a día de los gráficos usan 1.500 simulaciones por cada fecha, y las líneas finas (30 por partido, 24 en los gráficos de mayoría) son simulaciones completas elegidas de un total de 40, dibujadas solo como ejemplo de cómo se abre el abanico; las cifras salen de las 4.000 simulaciones, no de esas líneas.</span></li>
@@ -206,7 +207,7 @@
   <a class="nextp" href="index.html"><small>Inicio</small><b>Lo que dicen las encuestas hoy</b></a>
   <footer class="credit"><b>Datos 29N</b> es un proyecto independiente de elaboración propia, creado por <b>JuanLe</b>: el modelo, el análisis y el diseño son originales y no reproducen ninguna otra web. Se basa en datos abiertos obtenidos de fuentes públicas, enlazadas en cada apartado (ver Método). Sin publicidad ni vínculo con partidos o medios. © 2026 JuanLe. Todos los derechos reservados. Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. <a href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener">Canal de WhatsApp</a>.</footer>
 </div>
-<script src="assets/core.js?v=11061944"></script>
+<script src="assets/core.js?v=11061950"></script>
 <script src="assets/prediccion-data.js?v=20261106a"></script>
 <script src="assets/historial-data.js?v=20261106"></script>
 <script src="assets/prediccion.js?v=69"></script><script src="assets/prediccion-extra.js?v=17"></script><script src="assets/prediccion-como.js?v=9"></script>
