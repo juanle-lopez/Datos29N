@@ -1,21 +1,23 @@
 {
- "dia": "2026-11-06",
- "hora": "19:45",
+ "dia": "2026-11-09",
+ "hora": "18:23",
  "esc": {
-  "PP": 130,
-  "PSOE": 108,
+  "PP": 131,
+  "PSOE": 107,
   "VOX": 69,
   "SUMAR": 10,
-  "PV": 199,
-  "IZ": 150
+  "PV": 200,
+  "IZ": 149
  },
  "voto": {
-  "PP": 31.4,
-  "PSOE": 26.6,
-  "VOX": 19.3,
-  "SUMAR": 9.1
+  "PP": 31.2,
+  "PSOE": 26.4,
+  "VOX": 19.4,
+  "SUMAR": 9.2
  },
  "encuestas": [
+  "Data10 / OKDiario",
+  "40dB / EL PAÍS–SER",
   "More in Common",
   "NC Report / La Razón",
   "Target Point / El Debate",
@@ -25,12 +27,13 @@
   "GESOP / Prensa Ibérica",
   "SocioMétrica / EL ESPAÑOL",
   "GAD3 / ABC",
-  "Hamalgama Métrica / Vozpópuli",
-  "DYM / 20minutos",
-  "40dB / EL PAÍS–SER",
-  "InvyMark / laSexta"
+  "Hamalgama Métrica / Vozpópuli"
  ],
  "noticias": [
+  "https://www.infobae.com/espana/2026/11/09/el-psoe-se-quedaria-cerca-de-ganar-las-elecciones-al-recortarle-2-puntos-la-ventaja-al-pp-segun-las-encuestas-posteriores-al-accidente-ferroviario-de-urda/|Primeras encuestas con campo posterior a la dimisión de Puente: 40dB (El País/SER, 2–4 nov) da PP 31,9 % y PSOE 29,9 %; GAD3 (ABC, 3–5 nov) PP 31,9 % y PSOE 25,9 %; Sigma Dos (El Mundo) PP 31,0 % y PSOE 25,2 % (según Infobae y Público)",
+  "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/|Feijóo (PP), en The Objective: confía en que los sindicatos acepten el resultado si hay cambio de gobierno y califica de «gravísimo error» mantener la huelga general del 11-N en precampaña",
+  "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/|Irene Montero (Podemos) critica que el Frente Amplio se deje «comer» por el PSOE en las listas al Senado (RNE); Sánchez estará esta noche en La Séptima y Abascal en La Revuelta",
+  "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/|El PSOE ofrece un debate organizado por la Academia de Televisión si el PP no acepta hacerlo en TVE (titular de Infobae)",
   "https://www.elprogreso.es/articulo/espana/feijoo-estara-hormiguero/202611061455092012277.html|Feijóo estará en «El Hormiguero» el día de la huelga general (11 de noviembre) y Abascal visitará a Broncano (titular de El Progreso)",
   "https://www.democrata.es/actualidad/huelga-general-11-noviembre-quien-convoca-cuanto-dura-cuales-son-motivos/|Huelga general del 11 de noviembre, convocada por los sindicatos por el coste de la vivienda: quién la convoca, cuánto dura y motivos (según Democrata)",
   "https://www.moncloa.com/2026/11/06/feijoo-abascal-distancias-suma-derecha-3462781/|Feijóo marca distancias con Abascal para ampliar la suma de la derecha antes del 29-N (titular de Moncloa.com)",
