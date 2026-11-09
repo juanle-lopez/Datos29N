@@ -225,9 +225,9 @@
   }
   {const E=PRED.escPrivadas,pv=E.ppVox,ps=document.getElementById('psum');
     if(ps){const f1=x=>x.toFixed(1).replace('.',','),bp=PRED.base&&PRED.base.priv;
-      ps.innerHTML=`<div class="ph">29-N según la media de las ${PRED.privadas.length} encuestas</div><div class="pst"><div class="psr hd"><span>Partido</span><span>Escaños <i>(80 %)</i></span><span>Voto medio</span></div>`+
-      K.map(([k,n,c])=>`<div class="psr"><span style="color:${c};font-weight:700">${n}</span><span><b class="n">${E.escanos[k].c}</b> <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span></span><span>${bp?`<b class="n">${f1(bp[k])} %</b>`:''}</span></div>`).join('')+
-      `</div><div class="pm"><span>PP + Vox <b class="n">${pv.c}</b> <span class="r">(${pv.p10}–${pv.p90})</span></span><span class="r">Mayoría absoluta: 176 escaños</span></div>`}
+      ps.innerHTML=`<div class="ph">Media de las ${PRED.privadas.length} encuestas: hoy y proyección al 29-N</div><div class="pst"><div class="psr hd"><span>Partido</span><span>Hoy <i>(media)</i></span><span>29-N <i>(rango 80 %)</i></span></div>`+
+      K.map(([k,n,c])=>`<div class="psr"><span style="color:${c};font-weight:700">${n}</span><span><b class="n">${PRED.escBase.priv[k]}</b> esc.<br><span class="r">${bp?f1(bp[k])+'\u00a0%':''} del voto</span></span><span><b class="n">${E.escanos[k].c}</b> esc. <span class="r">(${E.escanos[k].p10}–${E.escanos[k].p90})</span><br><span class="r">${f1(E.votoFin[k])}\u00a0% del voto</span></span></div>`).join('')+
+      `</div><div class="pm"><span>PP + Vox: <b class="n">${PRED.escBaseBloq.priv.PV}</b> hoy → <b class="n">${pv.c}</b> el 29-N <span class="r">(${pv.p10}–${pv.p90})</span></span><span class="r">Mayoría absoluta: 176 escaños</span></div>`}
     const bt=document.getElementById('psimple');if(bt)bt.addEventListener('click',()=>{const on=bt.getAttribute('aria-pressed')!=='true';bt.setAttribute('aria-pressed',String(on));document.getElementById('pgrid').classList.toggle('simple',on)})}
   draw();let rt=null;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{const b=document.getElementById('pgrid');if(b&&(b.clientWidth||720)===lastW)return;draw()},150)});
   const lg=document.getElementById('leg');if(lg)lg.remove();
