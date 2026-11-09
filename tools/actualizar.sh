@@ -26,4 +26,5 @@ echo "previsión: $G · historial: $L · última noticia: $N · hoy: $HOY"
 [ "$L" = "$HOY" ] || { echo "ERROR: el historial no llega a hoy"; exit 1; }
 echo "OK. Falta: revisar noticias/encuestas nuevas, commit y push."
 
+node tools/coherencia.mjs || exit 1   # las cifras de todas las secciones deben coincidir
 node tools/aviso.mjs   # aviso listo para pegar en el canal de WhatsApp
