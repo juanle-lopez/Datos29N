@@ -5,22 +5,6 @@
   "sdNota": "Raíz del error cuadrático medio de las medias de encuestas de la última semana frente al resultado real en nov-2019 (PP, PSOE, Vox, Cs) y jul-2023 (PP, PSOE, Vox, Sumar): 8 valores, mismos para todos los partidos.",
   "privadas": [
     {
-      "e": "InvyMark / laSexta",
-      "f": "2026-10-09",
-      "PP": 32.8,
-      "PSOE": 28.0,
-      "VOX": 18.8,
-      "SUMAR": 9.5
-    },
-    {
-      "e": "40dB / EL PAÍS–SER",
-      "f": "2026-10-09",
-      "PP": 31.9,
-      "PSOE": 28.1,
-      "VOX": 18.9,
-      "SUMAR": 7.6
-    },
-    {
       "e": "IMOP / El Confidencial",
       "f": "2026-10-23",
       "PP": 28.5,
@@ -29,14 +13,6 @@
       "SUMAR": 10.8,
       "nota": "Publicada 23-oct (07:28 según Demócrata); campo y muestra no indicados en la fuente. Frente Amplio 8,9 + Podemos 1,9. Escaños según la fuente: PP 123, PSOE 113, Vox 72, Frente Amplio 14, Podemos 1.",
       "fuente": "https://democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-imop-psoe-frente-amplio-vox-pp-octubre-2026"
-    },
-    {
-      "e": "DYM / 20minutos",
-      "f": "2026-10-09",
-      "PP": 34.0,
-      "PSOE": 28.2,
-      "VOX": 18.2,
-      "SUMAR": 6.2
     },
     {
       "e": "Hamalgama Métrica / Vozpópuli",
@@ -100,7 +76,7 @@
       "PSOE": 25.6,
       "VOX": 19.3,
       "SUMAR": 9.3,
-      "nota": "Publicada 2-nov (Demócrata); campo 26–29 oct, en parte posterior al accidente de Urda (28-oct). Frente Amplio 6,9 + Podemos 2,4. Escaños según la fuente: PP 138–140, PSOE 100–102, Vox 66–68. PROVISIONAL: cifras vía Demócrata; muestra no indicada; original de La Razón no comprobado.",
+      "nota": "Publicada 2-nov (Demócrata); campo 26–29 oct, en parte posterior al accidente de Urda (28-oct). Frente Amplio 6,9 + Podemos 2,4. Escaños según la fuente: PP 138–140, PSOE 100–102, Vox 66–68. PROVISIONAL: cifras vía Demócrata; muestra no indicada; original de La Razón no comprobado. AVISO: Demócrata (2-nov) da campo 26–29 oct; Infobae (9-nov) da 2–5 nov con las mismas cifras. Fecha de campo sin aclarar.",
       "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-pierde-tres-escanos-vox-gana-dos-psoe-resiste-en-cien-segun-nc-report/",
       "provisional": true,
       "campoFin": "2026-10-29"
@@ -127,6 +103,30 @@
       "fuente": "https://www.electografica.com/2026/11/encuesta-more-in-common-261103.html",
       "provisional": true,
       "campoFin": "2026-10-25"
+    },
+    {
+      "e": "40dB / EL PAÍS–SER",
+      "f": "2026-11-09",
+      "PP": 31.9,
+      "PSOE": 29.9,
+      "VOX": 18.0,
+      "SUMAR": 6.2,
+      "campoFin": "2026-11-04",
+      "nota": "Publicada 9-nov; campo 2–4 nov (posterior a la dimisión de Puente), 2.000 entrevistas online. Frente Amplio 5,0 + Podemos 1,2. Escaños según la fuente: PP 129, PSOE 119, Vox 61, Frente Amplio 10. PROVISIONAL: cifras vía Infobae y Público; original de El País/SER no comprobado.",
+      "fuente": "https://www.infobae.com/espana/2026/11/09/el-psoe-se-quedaria-cerca-de-ganar-las-elecciones-al-recortarle-2-puntos-la-ventaja-al-pp-segun-las-encuestas-posteriores-al-accidente-ferroviario-de-urda/",
+      "provisional": true
+    },
+    {
+      "e": "Data10 / OKDiario",
+      "f": "2026-11-09",
+      "PP": 32.4,
+      "PSOE": 24.7,
+      "VOX": 19.8,
+      "SUMAR": 10.0,
+      "campoFin": "2026-11-03",
+      "nota": "Publicada 9-nov; campo 2–3 nov, 1.500 entrevistas. Frente Amplio 6,9 + Podemos 3,1. Escaños según la fuente: PP 134, PSOE 97, Vox 69, Frente Amplio 14, Podemos 2. PROVISIONAL: cifras vía Demócrata; original de OKDiario no comprobado.",
+      "fuente": "https://www.democrata.es/encuestas/elecciones-generales/data10-9-noviembre-2026-psoe-97-pp-vox-203/",
+      "provisional": true
     }
   ],
   "cis": {
@@ -144,7 +144,7 @@
   "sdDerivaNota": "Supuesto: desviación típica de la deriva real de la media en 40 días, tras descontar el ruido de muestreo de comparar dos encuestas (observado en cambios entre encuestas de la misma empresa: 1,7 puntos; ruido esperado ~1,4). Estimación gruesa.",
   "sdMuestreoCIS": 0.7,
   "usarTendencia": true,
-  "tendenciaNota": "Desde el 6-nov la tendencia amortiguada solo usa encuestas con campo posterior al accidente de Urda (28-oct). Mientras no haya al menos dos mediciones posteriores de una misma empresa, la tendencia es cero y el 29-N parte de la media de hoy.",
+  "tendenciaNota": "Tendencia amortiguada: pendiente común de las encuestas privadas de los últimos 45 días con un efecto fijo por empresa, contraída según su incertidumbre y amortiguada (14 días). Desde el 9-nov vuelve a usar todas las encuestas de la ventana (el 6-nov se limitó a las posteriores a Urda, lo que la dejaba en cero).",
   "podemosFrac": 0.35,
   "podemosNota": "Podemos concurre por separado de Sumar/Frente Amplio salvo en Canarias y C. Valenciana, y dentro de las listas de ERC en Cataluña (Infobae, 17-oct-2026). Fracción de Podemos dentro de «Sumar + Podemos»: media de las 7 encuestas privadas con desglose (Sigma Dos 26-ago, 4-oct y 12-oct; Demoscopia 27-ago; NC Report 7-sep; DYM 24-sep; SocioMétrica 4-oct) = 0,35. Se reparte por provincia en proporción al voto de Sumar en 2023 (supuesto).",
   "podemosFuente": "https://www.infobae.com/espana/2026/10/17/asi-quedan-los-acuerdos-de-la-izquierda-para-las-elecciones-generales-del-29-n-estas-son-las-listas-a-la-izquierda-del-psoe-en-cada-comunidad-autonoma/",
@@ -379,6 +379,30 @@
       "nota": "Publicada 5-oct; campo 2-oct, 1.000 entrevistas. Sumar 5,2 + Podemos 4,3. PROVISIONAL: OKDiario no da el % de voto de Vox y Sumar; esos vienen de Electográfica.",
       "fuente": "https://okdiario.com/espana/efecto-maricarmen-resucita-sanchez-hasta-110-escanos-pero-ni-todos-sus-socios-alcanzan-pp-vox-que-suman-203-20469916",
       "provisional": true
+    },
+    {
+      "e": "40dB / EL PAÍS–SER",
+      "f": "2026-10-09",
+      "PP": 31.9,
+      "PSOE": 28.1,
+      "VOX": 18.9,
+      "SUMAR": 7.6
+    },
+    {
+      "e": "InvyMark / laSexta",
+      "f": "2026-10-09",
+      "PP": 32.8,
+      "PSOE": 28.0,
+      "VOX": 18.8,
+      "SUMAR": 9.5
+    },
+    {
+      "e": "DYM / 20minutos",
+      "f": "2026-10-09",
+      "PP": 34.0,
+      "PSOE": 28.2,
+      "VOX": 18.2,
+      "SUMAR": 6.2
     }
   ],
   "sesgo": {
@@ -421,5 +445,5 @@
   "sesgoNota": "Desde el 2-nov la corrección histórica está desactivada: con solo tres elecciones fijaba el 29-N y no reaccionaba a las encuestas nuevas. Los errores pasados se conservan solo para la tabla de validación.",
   "tendenciaAgrupada": true,
   "ventanaTendencia": 45,
-  "tendenciaDesde": "2026-10-28"
+  "posteriorDesde": "2026-10-28"
 }

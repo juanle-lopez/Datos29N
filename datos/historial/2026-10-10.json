@@ -2,52 +2,40 @@
  "fecha": "2026-10-10",
  "metodo": 3,
  "t": "reconstruido",
- "n": 6,
+ "n": 4,
  "voto": {
-  "PP": 32.52,
-  "PSOE": 27.15,
-  "VOX": 18.55,
-  "SUMAR": 8.58
+  "PP": 32.78,
+  "PSOE": 26.23,
+  "VOX": 18.18,
+  "SUMAR": 9.1
  },
  "esc": {
-  "PP": 136,
-  "PSOE": 109,
-  "VOX": 64,
-  "SUMAR": 8,
-  "PV": 200,
-  "IZ": 149
- },
- "lo": {
-  "PP": 133,
-  "PSOE": 106,
-  "VOX": 62,
-  "SUMAR": 7,
-  "PV": 197,
-  "IZ": 147
- },
- "hi": {
-  "PP": 140,
-  "PSOE": 111,
-  "VOX": 65,
+  "PP": 141,
+  "PSOE": 105,
+  "VOX": 61,
   "SUMAR": 10,
   "PV": 202,
-  "IZ": 152
+  "IZ": 147
+ },
+ "lo": {
+  "PP": 135,
+  "PSOE": 103,
+  "VOX": 61,
+  "SUMAR": 9,
+  "PV": 199,
+  "IZ": 144
+ },
+ "hi": {
+  "PP": 143,
+  "PSOE": 108,
+  "VOX": 65,
+  "SUMAR": 11,
+  "PV": 205,
+  "IZ": 150
  },
  "encuestas": [
   {
-   "e": "40dB / EL PAÍS–SER",
-   "f": "2026-10-09"
-  },
-  {
-   "e": "InvyMark / laSexta",
-   "f": "2026-10-09"
-  },
-  {
    "e": "IMOP / El Confidencial",
-   "f": "2026-10-09"
-  },
-  {
-   "e": "DYM / 20minutos",
    "f": "2026-10-09"
   },
   {
@@ -57,31 +45,13 @@
   {
    "e": "Sigma Dos / El Mundo",
    "f": "2026-10-04"
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-09-24"
   }
  ],
  "encDetalle": [
-  {
-   "h": "40dB",
-   "e": "40dB / EL PAÍS–SER",
-   "f": "2026-10-09",
-   "voto": {
-    "PP": 31.9,
-    "PSOE": 28.1,
-    "VOX": 18.9,
-    "SUMAR": 7.6
-   }
-  },
-  {
-   "h": "InvyMark",
-   "e": "InvyMark / laSexta",
-   "f": "2026-10-09",
-   "voto": {
-    "PP": 32.8,
-    "PSOE": 28,
-    "VOX": 18.8,
-    "SUMAR": 9.5
-   }
-  },
   {
    "h": "IMOP",
    "e": "IMOP / El Confidencial",
@@ -91,17 +61,6 @@
     "PSOE": 26.5,
     "VOX": 19,
     "SUMAR": 9.9
-   }
-  },
-  {
-   "h": "DYM",
-   "e": "DYM / 20minutos",
-   "f": "2026-10-09",
-   "voto": {
-    "PP": 34,
-    "PSOE": 28.2,
-    "VOX": 18.2,
-    "SUMAR": 6.2
    }
   },
   {
@@ -124,6 +83,17 @@
     "PSOE": 25.6,
     "VOX": 18.3,
     "SUMAR": 9.9
+   }
+  },
+  {
+   "h": "DYM",
+   "e": "DYM / 20minutos",
+   "f": "2026-09-24",
+   "voto": {
+    "PP": 34.7,
+    "PSOE": 26.3,
+    "VOX": 17.3,
+    "SUMAR": 8.2
    }
   }
  ],

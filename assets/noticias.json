@@ -1,7 +1,35 @@
 {
-  "actualizado": "2026-11-06",
+  "actualizado": "2026-11-09",
   "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
   "items": [
+    {
+      "medio": "Infobae",
+      "fecha": "9 nov",
+      "url": "https://www.infobae.com/espana/2026/11/09/el-psoe-se-quedaria-cerca-de-ganar-las-elecciones-al-recortarle-2-puntos-la-ventaja-al-pp-segun-las-encuestas-posteriores-al-accidente-ferroviario-de-urda/",
+      "titular": "Primeras encuestas con campo posterior a la dimisión de Puente: 40dB (El País/SER, 2–4 nov) da PP 31,9 % y PSOE 29,9 %; GAD3 (ABC, 3–5 nov) PP 31,9 % y PSOE 25,9 %; Sigma Dos (El Mundo) PP 31,0 % y PSOE 25,2 % (según Infobae y Público)",
+      "tema": "Encuestas"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "9 nov",
+      "url": "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/",
+      "titular": "Feijóo (PP), en The Objective: confía en que los sindicatos acepten el resultado si hay cambio de gobierno y califica de «gravísimo error» mantener la huelga general del 11-N en precampaña",
+      "tema": "Campaña"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "9 nov",
+      "url": "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/",
+      "titular": "Irene Montero (Podemos) critica que el Frente Amplio se deje «comer» por el PSOE en las listas al Senado (RNE); Sánchez estará esta noche en La Séptima y Abascal en La Revuelta",
+      "tema": "Campaña"
+    },
+    {
+      "medio": "Infobae",
+      "fecha": "9 nov",
+      "url": "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/",
+      "titular": "El PSOE ofrece un debate organizado por la Academia de Televisión si el PP no acepta hacerlo en TVE (titular de Infobae)",
+      "tema": "Agenda"
+    },
     {
       "medio": "El Progreso",
       "fecha": "6 nov",
