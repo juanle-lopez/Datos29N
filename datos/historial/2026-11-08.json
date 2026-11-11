@@ -2,48 +2,60 @@
  "fecha": "2026-11-08",
  "metodo": 3,
  "t": "reconstruido",
- "n": 10,
+ "n": 11,
  "voto": {
-  "PP": 30.95,
-  "PSOE": 26.2,
-  "VOX": 19.46,
-  "SUMAR": 9.47
+  "PP": 31.05,
+  "PSOE": 26.18,
+  "VOX": 19.44,
+  "SUMAR": 9.02
  },
  "esc": {
   "PP": 130,
-  "PSOE": 106,
+  "PSOE": 107,
   "VOX": 70,
-  "SUMAR": 11,
+  "SUMAR": 10,
   "PV": 200,
   "IZ": 149
  },
  "lo": {
-  "PP": 126,
+  "PP": 127,
   "PSOE": 104,
   "VOX": 69,
-  "SUMAR": 10,
-  "PV": 198,
+  "SUMAR": 9,
+  "PV": 199,
   "IZ": 147
  },
  "hi": {
   "PP": 133,
   "PSOE": 108,
   "VOX": 72,
-  "SUMAR": 13,
+  "SUMAR": 11,
   "PV": 202,
-  "IZ": 151
+  "IZ": 150
  },
  "encuestas": [
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-08"
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-08"
+  },
+  {
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06"
+  },
   {
    "e": "More in Common",
    "f": "2026-11-03"
   },
   {
-   "e": "NC Report / La Razón",
+   "e": "Target Point / El Debate",
    "f": "2026-11-02"
   },
   {
-   "e": "Target Point / El Debate",
+   "e": "NC Report / La Razón",
    "f": "2026-11-02"
   },
   {
@@ -55,15 +67,7 @@
    "f": "2026-10-25"
   },
   {
-   "e": "IMOP / El Confidencial",
-   "f": "2026-10-23"
-  },
-  {
    "e": "GESOP / Prensa Ibérica",
-   "f": "2026-10-12"
-  },
-  {
-   "e": "SocioMétrica / EL ESPAÑOL",
    "f": "2026-10-12"
   },
   {
@@ -77,6 +81,39 @@
  ],
  "encDetalle": [
   {
+   "h": "SocioMétrica",
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-08",
+   "voto": {
+    "PP": 32,
+    "PSOE": 27.7,
+    "VOX": 18.9,
+    "SUMAR": 5.6
+   }
+  },
+  {
+   "h": "IMOP",
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-08",
+   "voto": {
+    "PP": 29.8,
+    "PSOE": 25.9,
+    "VOX": 19.9,
+    "SUMAR": 9.3
+   }
+  },
+  {
+   "h": "Celeste-Tel",
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06",
+   "voto": {
+    "PP": 31.4,
+    "PSOE": 25.7,
+    "VOX": 19.2,
+    "SUMAR": 8.1
+   }
+  },
+  {
    "h": "More in Common",
    "e": "More in Common",
    "f": "2026-11-03",
@@ -88,17 +125,6 @@
    }
   },
   {
-   "h": "NC Report",
-   "e": "NC Report / La Razón",
-   "f": "2026-11-02",
-   "voto": {
-    "PP": 32.6,
-    "PSOE": 25.6,
-    "VOX": 19.3,
-    "SUMAR": 9.3
-   }
-  },
-  {
    "h": "Target Point",
    "e": "Target Point / El Debate",
    "f": "2026-11-02",
@@ -107,6 +133,17 @@
     "PSOE": 25.5,
     "VOX": 19.9,
     "SUMAR": 9
+   }
+  },
+  {
+   "h": "NC Report",
+   "e": "NC Report / La Razón",
+   "f": "2026-11-02",
+   "voto": {
+    "PP": 32.6,
+    "PSOE": 25.6,
+    "VOX": 19.3,
+    "SUMAR": 9.3
    }
   },
   {
@@ -132,17 +169,6 @@
    }
   },
   {
-   "h": "IMOP",
-   "e": "IMOP / El Confidencial",
-   "f": "2026-10-23",
-   "voto": {
-    "PP": 28.5,
-    "PSOE": 27.1,
-    "VOX": 20,
-    "SUMAR": 10.8
-   }
-  },
-  {
    "h": "GESOP",
    "e": "GESOP / Prensa Ibérica",
    "f": "2026-10-12",
@@ -151,17 +177,6 @@
     "PSOE": 26.1,
     "VOX": 18.9,
     "SUMAR": 10.6
-   }
-  },
-  {
-   "h": "SocioMétrica",
-   "e": "SocioMétrica / EL ESPAÑOL",
-   "f": "2026-10-12",
-   "voto": {
-    "PP": 32.6,
-    "PSOE": 26.2,
-    "VOX": 18.8,
-    "SUMAR": 7.7
    }
   },
   {
@@ -190,22 +205,63 @@
  "proy": null,
  "contexto": [],
  "cambio": {
-  "entran": [],
+  "entran": [
+   {
+    "e": "SocioMétrica / EL ESPAÑOL",
+    "f": "2026-11-08",
+    "voto": {
+     "PP": 32,
+     "PSOE": 27.7,
+     "VOX": 18.9,
+     "SUMAR": 5.6
+    },
+    "antes": {
+     "e": "SocioMétrica / EL ESPAÑOL",
+     "f": "2026-10-12",
+     "voto": {
+      "PP": 32.6,
+      "PSOE": 26.2,
+      "VOX": 18.8,
+      "SUMAR": 7.7
+     }
+    }
+   },
+   {
+    "e": "IMOP / El Confidencial",
+    "f": "2026-11-08",
+    "voto": {
+     "PP": 29.8,
+     "PSOE": 25.9,
+     "VOX": 19.9,
+     "SUMAR": 9.3
+    },
+    "antes": {
+     "e": "IMOP / El Confidencial",
+     "f": "2026-10-23",
+     "voto": {
+      "PP": 28.5,
+      "PSOE": 27.1,
+      "VOX": 20,
+      "SUMAR": 10.8
+     }
+    }
+   }
+  ],
   "salen": [],
   "dVoto": {
-   "PP": 0,
-   "PSOE": 0,
+   "PP": 0.06,
+   "PSOE": 0.03,
    "VOX": 0,
-   "SUMAR": 0
+   "SUMAR": -0.33
   },
   "dEsc": {
    "PP": 0,
-   "PSOE": 0,
+   "PSOE": 1,
    "VOX": 0,
-   "SUMAR": 0,
+   "SUMAR": -1,
    "PV": 0,
    "IZ": 0
   },
-  "huboCambio": false
+  "huboCambio": true
  }
 }

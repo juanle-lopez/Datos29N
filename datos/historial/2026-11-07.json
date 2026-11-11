@@ -2,12 +2,12 @@
  "fecha": "2026-11-07",
  "metodo": 3,
  "t": "reconstruido",
- "n": 10,
+ "n": 11,
  "voto": {
-  "PP": 30.95,
-  "PSOE": 26.2,
-  "VOX": 19.46,
-  "SUMAR": 9.47
+  "PP": 30.99,
+  "PSOE": 26.15,
+  "VOX": 19.44,
+  "SUMAR": 9.35
  },
  "esc": {
   "PP": 130,
@@ -20,7 +20,7 @@
  "lo": {
   "PP": 126,
   "PSOE": 104,
-  "VOX": 68,
+  "VOX": 69,
   "SUMAR": 10,
   "PV": 198,
   "IZ": 147
@@ -35,15 +35,19 @@
  },
  "encuestas": [
   {
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06"
+  },
+  {
    "e": "More in Common",
    "f": "2026-11-03"
   },
   {
-   "e": "NC Report / La Razón",
+   "e": "Target Point / El Debate",
    "f": "2026-11-02"
   },
   {
-   "e": "Target Point / El Debate",
+   "e": "NC Report / La Razón",
    "f": "2026-11-02"
   },
   {
@@ -77,6 +81,17 @@
  ],
  "encDetalle": [
   {
+   "h": "Celeste-Tel",
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06",
+   "voto": {
+    "PP": 31.4,
+    "PSOE": 25.7,
+    "VOX": 19.2,
+    "SUMAR": 8.1
+   }
+  },
+  {
    "h": "More in Common",
    "e": "More in Common",
    "f": "2026-11-03",
@@ -88,17 +103,6 @@
    }
   },
   {
-   "h": "NC Report",
-   "e": "NC Report / La Razón",
-   "f": "2026-11-02",
-   "voto": {
-    "PP": 32.6,
-    "PSOE": 25.6,
-    "VOX": 19.3,
-    "SUMAR": 9.3
-   }
-  },
-  {
    "h": "Target Point",
    "e": "Target Point / El Debate",
    "f": "2026-11-02",
@@ -107,6 +111,17 @@
     "PSOE": 25.5,
     "VOX": 19.9,
     "SUMAR": 9
+   }
+  },
+  {
+   "h": "NC Report",
+   "e": "NC Report / La Razón",
+   "f": "2026-11-02",
+   "voto": {
+    "PP": 32.6,
+    "PSOE": 25.6,
+    "VOX": 19.3,
+    "SUMAR": 9.3
    }
   },
   {
@@ -190,7 +205,19 @@
  "proy": null,
  "contexto": [],
  "cambio": {
-  "entran": [],
+  "entran": [
+   {
+    "e": "Celeste-Tel / Onda Cero",
+    "f": "2026-11-06",
+    "voto": {
+     "PP": 31.4,
+     "PSOE": 25.7,
+     "VOX": 19.2,
+     "SUMAR": 8.1
+    },
+    "antes": null
+   }
+  ],
   "salen": [
    {
     "e": "DYM / 20minutos",
@@ -224,10 +251,10 @@
    }
   ],
   "dVoto": {
-   "PP": -0.45,
-   "PSOE": -0.44,
-   "VOX": 0.19,
-   "SUMAR": 0.39
+   "PP": -0.41,
+   "PSOE": -0.49,
+   "VOX": 0.17,
+   "SUMAR": 0.27
   },
   "dEsc": {
    "PP": 0,
