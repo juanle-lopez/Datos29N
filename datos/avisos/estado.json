@@ -1,35 +1,45 @@
 {
- "dia": "2026-11-09",
- "hora": "18:23",
+ "dia": "2026-11-11",
+ "hora": "18:43",
  "esc": {
-  "PP": 131,
-  "PSOE": 107,
-  "VOX": 69,
-  "SUMAR": 10,
-  "PV": 200,
-  "IZ": 149
+  "PP": 130,
+  "PSOE": 111,
+  "VOX": 67,
+  "SUMAR": 9,
+  "PV": 197,
+  "IZ": 152
  },
  "voto": {
-  "PP": 31.2,
-  "PSOE": 26.4,
-  "VOX": 19.4,
-  "SUMAR": 9.2
+  "PP": 31,
+  "PSOE": 27,
+  "VOX": 19.1,
+  "SUMAR": 8.6
  },
  "encuestas": [
+  "SW Demoscopia / La Séptima",
+  "DYM / 20minutos",
   "Data10 / OKDiario",
   "40dB / EL PAÍS–SER",
-  "More in Common",
   "NC Report / La Razón",
-  "Target Point / El Debate",
-  "Sigma Dos / El Mundo",
   "Ateneo del Dato / elDiario.es",
+  "Sigma Dos / El Mundo",
   "IMOP / El Confidencial",
-  "GESOP / Prensa Ibérica",
   "SocioMétrica / EL ESPAÑOL",
-  "GAD3 / ABC",
-  "Hamalgama Métrica / Vozpópuli"
+  "Celeste-Tel / Onda Cero",
+  "More in Common",
+  "Target Point / El Debate",
+  "GESOP / Prensa Ibérica",
+  "GAD3 / ABC"
  ],
  "noticias": [
+  "https://democrata.es/politica/sanchez-arranca-campana-en-sevilla-feijoo-en-badalona-y-abascal-colau-y-montero-optan-por-madrid|La campaña del 29-N arranca a medianoche: Sánchez abre en Sevilla (Auditorio Fibes), Feijóo en Badalona con Xavier García Albiol, Abascal en la Plaza de Colón de Madrid, y Colau y Montero también en Madrid",
+  "https://www.elindependiente.com/espana/2026/11/11/gobierno-secunda-huelga-general-agenda-ministros/|Huelga general del 11-N (CCOO y UGT, primera desde 2012): Sánchez y sus ministros no tienen actos públicos ese día «por respeto a los trabajadores», según Moncloa; el PSOE la apoya pero no acude como organización a la manifestación de Madrid (18:00, Atocha)",
+  "https://www.moncloa.com/2026/11/11/huelga-general-11n-gobierno-congreso-3465923/|Moncloa.com: el Gobierno y sus socios en el Congreso respaldan la huelga del 11-N; PP, Vox y Junts critican a los sindicatos y CEOE y Cepyme la rechazan. Fuentes de la dirección del PSOE dicen que no va dirigida contra el Gobierno",
+  "https://www.elindependiente.com/espana/2026/11/11/gobierno-secunda-huelga-general-agenda-ministros/|El Consejo de Ministros aprueba cuatro decretos leyes el martes 10: familias monoparentales (820 M€), dependencia (7.240 M€ para 2027), afectados por la dana «Adam» y seguridad ferroviaria; habrá Consejos extraordinarios el 13 y el 20",
+  "https://www.democrata.es/encuestas/elecciones-generales/dym-10-noviembre-2026-pp-psoe-bajan-vox-sube/|Nueva tanda de sondeos (6–10 nov): DYM/20minutos (campo 4–6 nov) da PP 33,1 %, PSOE 27,3 %, Vox 18,6 %; SW Demoscopia/La Séptima (6.000 entrevistas, campo hasta el 9-nov) da PSOE 31,2 %, PP 28,3 %, Vox 17,5 %",
+  "https://cronicaglobal.elespanol.com/politica/20261111/huelga-general-empate-televisivo-sanchez-abascal-puigdemont/1003742810737_0.html|Según una columna de Crónica Global, las apariciones televisivas de Sánchez (La Séptima, 14,2 % de cuota) y Abascal (TVE) del lunes quedaron «empatadas» en audiencia; Feijóo presentó su programa electoral el día anterior",
+  "https://www.moncloa.com/2026/11/09/encuestas-pp-vox-mayoria-absoluta-29n-3464532|Moncloa.com titula que el PSOE «se hunde por debajo de los 100 escaños»: Data10 le da 97 escaños, NC Report 99–101; 40dB le da 119 y ABC (GAD3) 103 (cifras según Moncloa.com)",
+  "https://www.moncloa.com/2026/11/09/encuesta-psoe-pp-29n-190-escanos-3464561/|Moncloa.com sobre 40dB (El País/SER): «Sánchez recorta distancias pero la derecha rebasa los 190 escaños»; el PSOE queda a dos puntos del PP, dentro del margen de error",
   "https://www.infobae.com/espana/2026/11/09/el-psoe-se-quedaria-cerca-de-ganar-las-elecciones-al-recortarle-2-puntos-la-ventaja-al-pp-segun-las-encuestas-posteriores-al-accidente-ferroviario-de-urda/|Primeras encuestas con campo posterior a la dimisión de Puente: 40dB (El País/SER, 2–4 nov) da PP 31,9 % y PSOE 29,9 %; GAD3 (ABC, 3–5 nov) PP 31,9 % y PSOE 25,9 %; Sigma Dos (El Mundo) PP 31,0 % y PSOE 25,2 % (según Infobae y Público)",
   "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/|Feijóo (PP), en The Objective: confía en que los sindicatos acepten el resultado si hay cambio de gobierno y califica de «gravísimo error» mantener la huelga general del 11-N en precampaña",
   "https://www.infobae.com/espana/2026/11/09/elecciones-generales-29-n-en-directo-feijoo-confia-en-que-los-sindicatos-acepten-el-resultado-electoral-si-hay-cambio-de-gobierno/|Irene Montero (Podemos) critica que el Frente Amplio se deje «comer» por el PSOE en las listas al Senado (RNE); Sánchez estará esta noche en La Séptima y Abascal en La Revuelta",
