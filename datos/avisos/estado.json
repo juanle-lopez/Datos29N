@@ -1,19 +1,19 @@
 {
- "dia": "2026-11-11",
- "hora": "18:43",
+ "dia": "2026-11-12",
+ "hora": "13:53",
  "esc": {
-  "PP": 130,
+  "PP": 131,
   "PSOE": 111,
   "VOX": 67,
-  "SUMAR": 9,
-  "PV": 197,
-  "IZ": 152
+  "SUMAR": 8,
+  "PV": 198,
+  "IZ": 151
  },
  "voto": {
-  "PP": 31,
-  "PSOE": 27,
-  "VOX": 19.1,
-  "SUMAR": 8.6
+  "PP": 31.2,
+  "PSOE": 27.1,
+  "VOX": 19.2,
+  "SUMAR": 8.4
  },
  "encuestas": [
   "SW Demoscopia / La Séptima",
@@ -23,15 +23,14 @@
   "NC Report / La Razón",
   "Ateneo del Dato / elDiario.es",
   "Sigma Dos / El Mundo",
-  "IMOP / El Confidencial",
   "SocioMétrica / EL ESPAÑOL",
+  "IMOP / El Confidencial",
   "Celeste-Tel / Onda Cero",
   "More in Common",
-  "Target Point / El Debate",
-  "GESOP / Prensa Ibérica",
-  "GAD3 / ABC"
+  "Target Point / El Debate"
  ],
  "noticias": [
+  "https://fuentesinformadas.com/la-septima-y-el-cis-situan-al-psoe-primero-pero-otros-sondeos-dan-la-mayoria-a-la-derecha|Seguimiento de SW Demoscopia para La Séptima (difundido el 11-nov): PSOE 31,4 % y 132 escaños, PP 28,1 % y 111, Vox 17,5 % y 63; PP + Vox suman 174, dos por debajo de la mayoría absoluta (177 con UPN y CC). Otros sondeos recientes, según el mismo medio, los sitúan por encima de 176",
   "https://democrata.es/politica/sanchez-arranca-campana-en-sevilla-feijoo-en-badalona-y-abascal-colau-y-montero-optan-por-madrid|La campaña del 29-N arranca a medianoche: Sánchez abre en Sevilla (Auditorio Fibes), Feijóo en Badalona con Xavier García Albiol, Abascal en la Plaza de Colón de Madrid, y Colau y Montero también en Madrid",
   "https://www.elindependiente.com/espana/2026/11/11/gobierno-secunda-huelga-general-agenda-ministros/|Huelga general del 11-N (CCOO y UGT, primera desde 2012): Sánchez y sus ministros no tienen actos públicos ese día «por respeto a los trabajadores», según Moncloa; el PSOE la apoya pero no acude como organización a la manifestación de Madrid (18:00, Atocha)",
   "https://www.moncloa.com/2026/11/11/huelga-general-11n-gobierno-congreso-3465923/|Moncloa.com: el Gobierno y sus socios en el Congreso respaldan la huelga del 11-N; PP, Vox y Junts critican a los sindicatos y CEOE y Cepyme la rechazan. Fuentes de la dirección del PSOE dicen que no va dirigida contra el Gobierno",
