@@ -1,0 +1,9 @@
+/* ================= PROGRAMAS OFICIALES (render) ================= */
+document.getElementById('pgest').innerHTML=PG.map(p=>`<article class="star" style="--c:${p.c}"><h3>${esc(p.n)} <span class="pst${p.ok?' ok':''}">${esc(p.est)}</span></h3><div class="big2">${esc(p.big)}</div><ul class="fch">${p.ficha.map(f=>`<li>${esc(f)}</li>`).join('')}</ul></article>`).join('');
+document.getElementById('pgmed').innerHTML=PG.map(p=>`<article class="star" style="--c:${p.c}"><h3>${esc(p.n)}</h3>${p.chips.length?`<div class="chips">${p.chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div>`:`<div class="cost">Sin medidas que mostrar hasta que el partido publique su programa.</div>`}<div class="cost">${esc(p.nota)}</div></article>`).join('');
+document.getElementById('pgdet').innerHTML=PG.map(p=>{
+  const tem=PG_TEMAS.filter(t=>p.t[t]);const sin=PG_TEMAS.filter(t=>!p.t[t]);
+  const nm=tem.reduce((a,t)=>a+p.t[t].length,0);
+  const body=nm?tem.map(t=>`<h4>${esc(t)}</h4><ul>${p.t[t].map(([x,f])=>`<li>${esc(x)} <sup><a href="${p.fuentes[f-1][1]}" target="_blank" rel="noopener" title="${esc(p.fuentes[f-1][0])}">[${f}]</a></sup></li>`).join('')}</ul>`).join('')+(sin.length?`<p class="foot">Temas sin medidas en las fuentes consultadas: ${sin.map(esc).join(', ')}. No significa que el partido no tenga postura.</p>`:''):`<p class="foot">Todavía no hay medidas que detallar.</p>`;
+  return `<details class="pgd" style="--c:${p.c}" id="pg_${p.k}"><summary><b>${esc(p.n)}</b><span class="pst${p.ok?' ok':''}">${esc(p.est)}</span><small>${nm?nm+' medidas resumidas':'Pendiente'}</small></summary><div class="pgb">${body}<p class="sources"><b>Fuentes:</b> ${p.fuentes.map((f,i)=>`[${i+1}] <a href="${f[1]}" target="_blank" rel="noopener">${esc(f[0])}</a>`).join(' · ')}</p></div></details>`}).join('');
+if(location.hash){const d=document.querySelector(location.hash);if(d&&d.tagName==='DETAILS')d.open=true}

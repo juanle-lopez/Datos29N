@@ -1041,3 +1041,17 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 .cvopen,.cvopen body{overflow:hidden}
 @media(max-width:560px){.cvr{grid-template-columns:auto 1fr}.cvr .cvt{grid-column:1/-1}.cvd{padding-top:5px}}
 
+/* Programas oficiales */
+.pst{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border:1px solid var(--line);border-radius:999px;margin-left:6px;vertical-align:2px;color:var(--muted);white-space:nowrap}
+.pst.ok{border-color:var(--fg);color:var(--fg)}
+.fch{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.pgd{margin-top:10px;border-left:4px solid var(--c)}
+.pgd>summary{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;padding:12px 14px;list-style:none}
+.pgd>summary::-webkit-details-marker{display:none}
+.pgd>summary::after{content:"Ver detalle ▾";margin-left:auto;font-size:12px;font-weight:700}
+.pgd[open]>summary::after{content:"Cerrar ▴"}
+.pgd small{color:var(--muted);font-weight:400}
+.pgb{padding:0 14px 14px}
+.pgb h4{margin:16px 0 6px;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+.pgb ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.pgb sup a{font-weight:700;text-decoration:none}
