@@ -4,32 +4,32 @@
  "t": "reconstruido",
  "n": 11,
  "voto": {
-  "PP": 30.99,
-  "PSOE": 26.15,
-  "VOX": 19.44,
-  "SUMAR": 9.35
+  "PP": 30.86,
+  "PSOE": 26.25,
+  "VOX": 19.46,
+  "SUMAR": 9.05
  },
  "esc": {
-  "PP": 130,
-  "PSOE": 106,
+  "PP": 129,
+  "PSOE": 108,
   "VOX": 70,
-  "SUMAR": 11,
-  "PV": 200,
-  "IZ": 149
+  "SUMAR": 10,
+  "PV": 199,
+  "IZ": 150
  },
  "lo": {
   "PP": 126,
-  "PSOE": 104,
+  "PSOE": 105,
   "VOX": 69,
-  "SUMAR": 10,
+  "SUMAR": 9,
   "PV": 198,
   "IZ": 147
  },
  "hi": {
   "PP": 133,
-  "PSOE": 108,
+  "PSOE": 109,
   "VOX": 72,
-  "SUMAR": 13,
+  "SUMAR": 12,
   "PV": 202,
   "IZ": 151
  },
@@ -48,6 +48,10 @@
   },
   {
    "e": "NC Report / La Razón",
+   "f": "2026-11-02"
+  },
+  {
+   "e": "Hamalgama Métrica / Vozpópuli",
    "f": "2026-11-02"
   },
   {
@@ -73,10 +77,6 @@
   {
    "e": "GAD3 / ABC",
    "f": "2026-10-12"
-  },
-  {
-   "e": "Hamalgama Métrica / Vozpópuli",
-   "f": "2026-10-11"
   }
  ],
  "encDetalle": [
@@ -122,6 +122,17 @@
     "PSOE": 25.6,
     "VOX": 19.3,
     "SUMAR": 9.3
+   }
+  },
+  {
+   "h": "Hamalgama Métrica",
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-11-02",
+   "voto": {
+    "PP": 32,
+    "PSOE": 26.4,
+    "VOX": 19.9,
+    "SUMAR": 5.4
    }
   },
   {
@@ -189,17 +200,6 @@
     "VOX": 18.2,
     "SUMAR": 9.7
    }
-  },
-  {
-   "h": "Hamalgama Métrica",
-   "e": "Hamalgama Métrica / Vozpópuli",
-   "f": "2026-10-11",
-   "voto": {
-    "PP": 33.4,
-    "PSOE": 25.3,
-    "VOX": 19.6,
-    "SUMAR": 8.7
-   }
   }
  ],
  "proy": null,
@@ -216,6 +216,26 @@
      "SUMAR": 8.1
     },
     "antes": null
+   },
+   {
+    "e": "Hamalgama Métrica / Vozpópuli",
+    "f": "2026-11-02",
+    "voto": {
+     "PP": 32,
+     "PSOE": 26.4,
+     "VOX": 19.9,
+     "SUMAR": 5.4
+    },
+    "antes": {
+     "e": "Hamalgama Métrica / Vozpópuli",
+     "f": "2026-10-11",
+     "voto": {
+      "PP": 33.4,
+      "PSOE": 25.3,
+      "VOX": 19.6,
+      "SUMAR": 8.7
+     }
+    }
    }
   ],
   "salen": [
@@ -251,18 +271,18 @@
    }
   ],
   "dVoto": {
-   "PP": -0.41,
-   "PSOE": -0.49,
-   "VOX": 0.17,
-   "SUMAR": 0.27
+   "PP": -0.54,
+   "PSOE": -0.39,
+   "VOX": 0.19,
+   "SUMAR": -0.03
   },
   "dEsc": {
-   "PP": 0,
-   "PSOE": -2,
+   "PP": -1,
+   "PSOE": 0,
    "VOX": 1,
-   "SUMAR": 1,
-   "PV": 1,
-   "IZ": -1
+   "SUMAR": 0,
+   "PV": 0,
+   "IZ": 0
   },
   "huboCambio": true
  }

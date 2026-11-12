@@ -2,24 +2,24 @@
  "fecha": "2026-11-10",
  "metodo": 3,
  "t": "reconstruido",
- "n": 15,
+ "n": 16,
  "voto": {
-  "PP": 31.17,
-  "PSOE": 26.85,
-  "VOX": 19.11,
-  "SUMAR": 8.62
+  "PP": 31.03,
+  "PSOE": 26.91,
+  "VOX": 19.12,
+  "SUMAR": 8.18
  },
  "esc": {
-  "PP": 130,
+  "PP": 131,
   "PSOE": 111,
   "VOX": 67,
-  "SUMAR": 9,
-  "PV": 197,
-  "IZ": 152
+  "SUMAR": 8,
+  "PV": 198,
+  "IZ": 151
  },
  "lo": {
   "PP": 127,
-  "PSOE": 106,
+  "PSOE": 108,
   "VOX": 66,
   "SUMAR": 8,
   "PV": 195,
@@ -27,7 +27,7 @@
  },
  "hi": {
   "PP": 133,
-  "PSOE": 113,
+  "PSOE": 114,
   "VOX": 70,
   "SUMAR": 10,
   "PV": 201,
@@ -35,11 +35,11 @@
  },
  "encuestas": [
   {
-   "e": "SW Demoscopia / La Séptima",
+   "e": "DYM / 20minutos",
    "f": "2026-11-10"
   },
   {
-   "e": "DYM / 20minutos",
+   "e": "SW Demoscopia / La Séptima",
    "f": "2026-11-10"
   },
   {
@@ -63,6 +63,14 @@
    "f": "2026-11-09"
   },
   {
+   "e": "GAD3 / ABC",
+   "f": "2026-11-09"
+  },
+  {
+   "e": "Sondaxe / La Voz de Galicia",
+   "f": "2026-11-08"
+  },
+  {
    "e": "IMOP / El Confidencial",
    "f": "2026-11-08"
   },
@@ -83,30 +91,15 @@
    "f": "2026-11-02"
   },
   {
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-11-02"
+  },
+  {
    "e": "GESOP / Prensa Ibérica",
    "f": "2026-10-12"
-  },
-  {
-   "e": "GAD3 / ABC",
-   "f": "2026-10-12"
-  },
-  {
-   "e": "Hamalgama Métrica / Vozpópuli",
-   "f": "2026-10-11"
   }
  ],
  "encDetalle": [
-  {
-   "h": "SW Demoscopia",
-   "e": "SW Demoscopia / La Séptima",
-   "f": "2026-11-10",
-   "voto": {
-    "PP": 28.3,
-    "PSOE": 31.2,
-    "VOX": 17.5,
-    "SUMAR": 9.2
-   }
-  },
   {
    "h": "DYM",
    "e": "DYM / 20minutos",
@@ -116,6 +109,17 @@
     "PSOE": 27.3,
     "VOX": 18.6,
     "SUMAR": 7.5
+   }
+  },
+  {
+   "h": "SW Demoscopia",
+   "e": "SW Demoscopia / La Séptima",
+   "f": "2026-11-10",
+   "voto": {
+    "PP": 28.3,
+    "PSOE": 31.2,
+    "VOX": 17.5,
+    "SUMAR": 9.2
    }
   },
   {
@@ -174,6 +178,28 @@
    }
   },
   {
+   "h": "GAD3",
+   "e": "GAD3 / ABC",
+   "f": "2026-11-09",
+   "voto": {
+    "PP": 31.9,
+    "PSOE": 25.9,
+    "VOX": 18.6,
+    "SUMAR": 7.5
+   }
+  },
+  {
+   "h": "Sondaxe",
+   "e": "Sondaxe / La Voz de Galicia",
+   "f": "2026-11-08",
+   "voto": {
+    "PP": 29.7,
+    "PSOE": 27.3,
+    "VOX": 18.6,
+    "SUMAR": 7.1
+   }
+  },
+  {
    "h": "IMOP",
    "e": "IMOP / El Confidencial",
    "f": "2026-11-08",
@@ -229,6 +255,17 @@
    }
   },
   {
+   "h": "Hamalgama Métrica",
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-11-02",
+   "voto": {
+    "PP": 32,
+    "PSOE": 26.4,
+    "VOX": 19.9,
+    "SUMAR": 5.4
+   }
+  },
+  {
    "h": "GESOP",
    "e": "GESOP / Prensa Ibérica",
    "f": "2026-10-12",
@@ -238,45 +275,12 @@
     "VOX": 18.9,
     "SUMAR": 10.6
    }
-  },
-  {
-   "h": "GAD3",
-   "e": "GAD3 / ABC",
-   "f": "2026-10-12",
-   "voto": {
-    "PP": 31.4,
-    "PSOE": 26.4,
-    "VOX": 18.2,
-    "SUMAR": 9.7
-   }
-  },
-  {
-   "h": "Hamalgama Métrica",
-   "e": "Hamalgama Métrica / Vozpópuli",
-   "f": "2026-10-11",
-   "voto": {
-    "PP": 33.4,
-    "PSOE": 25.3,
-    "VOX": 19.6,
-    "SUMAR": 8.7
-   }
   }
  ],
  "proy": null,
  "contexto": [],
  "cambio": {
   "entran": [
-   {
-    "e": "SW Demoscopia / La Séptima",
-    "f": "2026-11-10",
-    "voto": {
-     "PP": 28.3,
-     "PSOE": 31.2,
-     "VOX": 17.5,
-     "SUMAR": 9.2
-    },
-    "antes": null
-   },
    {
     "e": "DYM / 20minutos",
     "f": "2026-11-10",
@@ -285,6 +289,17 @@
      "PSOE": 27.3,
      "VOX": 18.6,
      "SUMAR": 7.5
+    },
+    "antes": null
+   },
+   {
+    "e": "SW Demoscopia / La Séptima",
+    "f": "2026-11-10",
+    "voto": {
+     "PP": 28.3,
+     "PSOE": 31.2,
+     "VOX": 17.5,
+     "SUMAR": 9.2
     },
     "antes": null
    },
@@ -349,6 +364,37 @@
     }
    },
    {
+    "e": "GAD3 / ABC",
+    "f": "2026-11-09",
+    "voto": {
+     "PP": 31.9,
+     "PSOE": 25.9,
+     "VOX": 18.6,
+     "SUMAR": 7.5
+    },
+    "antes": {
+     "e": "GAD3 / ABC",
+     "f": "2026-10-12",
+     "voto": {
+      "PP": 31.4,
+      "PSOE": 26.4,
+      "VOX": 18.2,
+      "SUMAR": 9.7
+     }
+    }
+   },
+   {
+    "e": "Sondaxe / La Voz de Galicia",
+    "f": "2026-11-08",
+    "voto": {
+     "PP": 29.7,
+     "PSOE": 27.3,
+     "VOX": 18.6,
+     "SUMAR": 7.1
+    },
+    "antes": null
+   },
+   {
     "e": "IMOP / El Confidencial",
     "f": "2026-11-08",
     "voto": {
@@ -398,22 +444,42 @@
      "SUMAR": 8.1
     },
     "antes": null
+   },
+   {
+    "e": "Hamalgama Métrica / Vozpópuli",
+    "f": "2026-11-02",
+    "voto": {
+     "PP": 32,
+     "PSOE": 26.4,
+     "VOX": 19.9,
+     "SUMAR": 5.4
+    },
+    "antes": {
+     "e": "Hamalgama Métrica / Vozpópuli",
+     "f": "2026-10-11",
+     "voto": {
+      "PP": 33.4,
+      "PSOE": 25.3,
+      "VOX": 19.6,
+      "SUMAR": 8.7
+     }
+    }
    }
   ],
   "salen": [],
   "dVoto": {
-   "PP": 0.02,
-   "PSOE": 0.47,
-   "VOX": -0.26,
-   "SUMAR": -0.62
+   "PP": -0.12,
+   "PSOE": 0.53,
+   "VOX": -0.25,
+   "SUMAR": -1.06
   },
   "dEsc": {
-   "PP": -1,
+   "PP": 0,
    "PSOE": 4,
    "VOX": -2,
-   "SUMAR": -1,
-   "PV": -3,
-   "IZ": 3
+   "SUMAR": -2,
+   "PV": -2,
+   "IZ": 2
   },
   "huboCambio": true
  }

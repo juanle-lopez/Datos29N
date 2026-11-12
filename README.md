@@ -100,3 +100,5 @@ Por **JuanLe**. Proyecto independiente y sin publicidad.
 `sh tools/actualizar.sh` regenera la previsión, completa el historial diario hasta hoy, actualiza versiones de los datos y la fecha, y falla si algo no está al día. Después: commit y push.
 
 Regla: las cifras no pueden discrepar entre secciones; lo que mezcle fechas rotula «Hoy» y «29-N». `tools/coherencia.mjs` lo comprueba dentro de `actualizar.sh`.
+
+Regla: se incluyen TODAS las encuestas nacionales, aunque solo publiquen los partidos principales; si falta el % de Podemos, «Sumar + Podemos» usa solo Frente Amplio y la ficha lo indica.
