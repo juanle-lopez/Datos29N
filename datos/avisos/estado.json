@@ -1,6 +1,6 @@
 {
  "dia": "2026-11-12",
- "hora": "13:53",
+ "hora": "13:56",
  "esc": {
   "PP": 131,
   "PSOE": 111,
@@ -11,22 +11,25 @@
  },
  "voto": {
   "PP": 31.2,
-  "PSOE": 27.1,
-  "VOX": 19.2,
-  "SUMAR": 8.4
+  "PSOE": 27,
+  "VOX": 19.1,
+  "SUMAR": 7.9
  },
  "encuestas": [
   "SW Demoscopia / La Séptima",
   "DYM / 20minutos",
+  "GAD3 / ABC",
   "Data10 / OKDiario",
   "40dB / EL PAÍS–SER",
   "NC Report / La Razón",
   "Ateneo del Dato / elDiario.es",
   "Sigma Dos / El Mundo",
+  "Sondaxe / La Voz de Galicia",
   "SocioMétrica / EL ESPAÑOL",
   "IMOP / El Confidencial",
   "Celeste-Tel / Onda Cero",
   "More in Common",
+  "Hamalgama Métrica / Vozpópuli",
   "Target Point / El Debate"
  ],
  "noticias": [
