@@ -17,14 +17,6 @@
    "campoFin": "2026-10-30"
   },
   {
-   "e": "GESOP / Prensa Ibérica",
-   "f": "2026-10-12",
-   "PP": 28.7,
-   "PSOE": 26.1,
-   "VOX": 18.9,
-   "SUMAR": 10.6
-  },
-  {
    "e": "More in Common",
    "f": "2026-11-03",
    "PP": 28.3,
@@ -528,6 +520,25 @@
    "VOX": 19.6,
    "SUMAR": 8.7,
    "tipo": "privada"
+  },
+  {
+   "e": "GESOP / Prensa Ibérica",
+   "f": "2026-10-12",
+   "PP": 28.7,
+   "PSOE": 26.1,
+   "VOX": 18.9,
+   "SUMAR": 10.6,
+   "tipo": "privada"
+  },
+  {
+   "e": "SW Demoscopia / La Séptima",
+   "tipo": "privada",
+   "f": "2026-11-11",
+   "PP": 28.1,
+   "PSOE": 31.4,
+   "VOX": 17.5,
+   "fuente": "https://www.hispanidad.com/politica/espana/encuestas-generales-29-n-en-semana-septima-consigue-vox-pp_20001701_102.html",
+   "nota": "Seguimiento difundido el 11-nov. Frente Amplio 7,4; el % de Podemos no se publica (queda en «otros» 15,6 %), por eso no sustituye en la media a la oleada del 10-nov. Escaños según la fuente: PSOE 132, PP 111, Vox 63, Frente Amplio 10; PP + Vox 174 (177 con UPN y CC). Algunos medios reproducen 129/113/65/11, que son los de la oleada anterior."
   }
  ],
  "sesgo": {

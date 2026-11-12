@@ -1,7 +1,14 @@
 {
- "actualizado": "2026-11-11",
+ "actualizado": "2026-11-12",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Fuentes Informadas",
+   "fecha": "12 nov",
+   "url": "https://fuentesinformadas.com/la-septima-y-el-cis-situan-al-psoe-primero-pero-otros-sondeos-dan-la-mayoria-a-la-derecha",
+   "titular": "Seguimiento de SW Demoscopia para La Séptima (difundido el 11-nov): PSOE 31,4 % y 132 escaños, PP 28,1 % y 111, Vox 17,5 % y 63; PP + Vox suman 174, dos por debajo de la mayoría absoluta (177 con UPN y CC). Otros sondeos recientes, según el mismo medio, los sitúan por encima de 176",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Demócrata",
    "fecha": "11 nov",
