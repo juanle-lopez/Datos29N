@@ -1,7 +1,56 @@
 {
- "actualizado": "2026-11-12",
+ "actualizado": "2026-11-16",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae / Europa Press",
+   "fecha": "15 nov",
+   "url": "https://www.infobae.com/espana/agencias/2026/11/15/dia-3-sanchez-presenta-el-programa-del-psoe-y-pide-el-voto-de-la-gente-moderada/",
+   "titular": "Sánchez presenta en Alcorcón el programa del PSOE y pide el voto de la «gente moderada»",
+   "tema": "Propuestas"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "16 nov",
+   "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+   "titular": "Pablo Bustinduy presenta hoy el programa del Frente Amplio; Colau interviene en un acto sobre vivienda en Madrid",
+   "tema": "Propuestas"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "16 nov",
+   "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+   "titular": "Agenda del lunes: Feijóo en Lleida y en un mitin PP-UPN en Pamplona; Abascal en Tenerife; Sánchez, entrevistado en Telecinco",
+   "tema": "Agenda"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "16 nov",
+   "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+   "titular": "Debates: cara a cara Sánchez–Feijóo el jueves 19-nov a las 22:00 en RTVE; debate a cuatro el 26-nov (Academia de TV)",
+   "tema": "Agenda"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "16 nov",
+   "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+   "titular": "Según Infobae, Yolanda Díaz ha quedado fuera de las listas y deja la política nacional",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Infobae",
+   "fecha": "16 nov",
+   "url": "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/",
+   "titular": "Canarias atiende a más de 2.500 migrantes en un fin de semana, récord en 30 años según Infobae; la sentencia del caso Kitchen podría conocerse en la recta final",
+   "tema": "Campaña"
+  },
+  {
+   "medio": "Mapa Electoral / Demócrata",
+   "fecha": "16 nov",
+   "url": "https://www.democrata.es/",
+   "titular": "Nuevas encuestas: 40dB, Sigma Dos, SocioMétrica, SW Demoscopia, IMOP, NC Report y Sondaxe; el promedio pasa a 15 empresas",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Fuentes Informadas",
    "fecha": "12 nov",
