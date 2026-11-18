@@ -3,17 +3,17 @@
   const $=id=>document.getElementById(id);
   const NM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos',POD:'Podemos',OTROS:'Otros',ERC:'ERC',JUNTS:'Junts',BILDU:'EH Bildu',PNV:'PNV',BNG:'BNG',CCa:'CC',UPN:'UPN'};
   const COL={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)'};
-  const BIG=['PP','PSOE','VOX','SUMAR'],REG=['ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN'];
+  const BIG=['PP','PSOE','VOX','SUMAR'],REG=['ERC','JUNTS','BILDU','PNV','BNG','CCa'];
   // momento en Madrid
   let now='';try{const f=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Madrid',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});now=f.format(new Date()).replace(' ','T')}catch(e){now=new Date().toISOString().slice(0,16)}
   const VEDA=now>='2026-11-24'&&now<'2026-11-29T20:00',PRE=now<'2026-11-29T20:00';
   const P=typeof PRED!=='undefined'?PRED.escPrivadas:null;
   const fmt=s=>{if(!s)return'';const d=new Date(s);try{return d.toLocaleString('es-ES',{timeZone:'Europe/Madrid',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}catch(e){return s}};
   // ---- hemiciclo y tarjetas de todos los partidos (vacíos hasta el escrutinio)
-  const HO=['SUMAR','POD','PSOE','ERC','BILDU','BNG','PNV','JUNTS','CCa','OTROS','UPN','PP','VOX'];
+  const HO=['SUMAR','POD','PSOE','ERC','BILDU','BNG','PNV','JUNTS','CCa','OTROS','PP','VOX'];
   const C={PP:'var(--pp)',PSOE:'var(--psoe)',VOX:'var(--vox)',SUMAR:'var(--sumar)',POD:'#7b3f98',ERC:'#d19a2a',JUNTS:'#2a9aa0',BILDU:'#6a8f3a',PNV:'#3f7f5a',BNG:'#5aa0d8',CCa:'#c9b33a',UPN:'#4a5a9a',OTROS:'var(--reg)'};
-  const S23={PP:137,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1,UPN:1};
-  const CARDS=['PP','PSOE','VOX','SUMAR','POD','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN','OTROS'];
+  const S23={PP:138,PSOE:121,VOX:33,SUMAR:31,ERC:7,JUNTS:7,BILDU:6,PNV:5,BNG:1,CCa:1};
+  const CARDS=['PP','PSOE','VOX','SUMAR','POD','ERC','JUNTS','BILDU','PNV','BNG','CCa','OTROS'];
   const SEATS=(function(){const n=350,rows=11,r0=.42,Rr=190,cx=200,cy=200,radii=[];for(let i=0;i<rows;i++)radii.push(r0+(1-r0)*i/(rows-1));
     const sr=radii.reduce((a,b)=>a+b,0);const counts=radii.map(r=>Math.round(n*r/sr));counts[rows-1]+=n-counts.reduce((a,b)=>a+b,0);
     const seats=[];radii.forEach((r,i)=>{for(let k=0;k<counts[i];k++){const th=Math.PI*(1-k/(counts[i]-1));seats.push({x:cx+Rr*r*Math.cos(th),y:cy-Rr*r*Math.sin(th),th,r})}});
