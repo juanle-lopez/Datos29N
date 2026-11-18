@@ -10,28 +10,28 @@
   "SUMAR": 8.58
  },
  "esc": {
-  "PP": 130,
+  "PP": 131,
   "PSOE": 108,
   "VOX": 70,
-  "SUMAR": 10,
-  "PV": 200,
-  "IZ": 150
+  "SUMAR": 9,
+  "PV": 201,
+  "IZ": 149
  },
  "lo": {
   "PP": 128,
   "PSOE": 106,
   "VOX": 69,
   "SUMAR": 8,
-  "PV": 199,
-  "IZ": 148
+  "PV": 200,
+  "IZ": 147
  },
  "hi": {
-  "PP": 133,
-  "PSOE": 109,
-  "VOX": 72,
+  "PP": 134,
+  "PSOE": 108,
+  "VOX": 73,
   "SUMAR": 10,
-  "PV": 202,
-  "IZ": 151
+  "PV": 203,
+  "IZ": 150
  },
  "encuestas": [
   {
@@ -281,12 +281,12 @@
    "SUMAR": -0.47
   },
   "dEsc": {
-   "PP": 0,
+   "PP": 1,
    "PSOE": 0,
    "VOX": 0,
-   "SUMAR": 0,
-   "PV": 0,
-   "IZ": 0
+   "SUMAR": -1,
+   "PV": 1,
+   "IZ": -1
   },
   "huboCambio": true
  }
