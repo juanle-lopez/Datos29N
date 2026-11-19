@@ -1,38 +1,45 @@
 {
- "dia": "2026-11-16",
- "hora": "08:28",
+ "dia": "2026-11-19",
+ "hora": "11:51",
  "esc": {
-  "PP": 133,
-  "PSOE": 111,
-  "VOX": 66,
-  "SUMAR": 7,
-  "PV": 199,
-  "IZ": 150
+  "PP": 131,
+  "PSOE": 114,
+  "VOX": 65,
+  "SUMAR": 8,
+  "PV": 196,
+  "IZ": 154
  },
  "voto": {
-  "PP": 31.3,
-  "PSOE": 27.1,
+  "PP": 31.2,
+  "PSOE": 27.5,
   "VOX": 19,
-  "SUMAR": 7.6
+  "SUMAR": 7.8
  },
  "encuestas": [
   "40dB / EL PAÍS–SER",
-  "NC Report / La Razón",
-  "IMOP / El Confidencial",
   "SW Demoscopia / La Séptima",
   "Sondaxe / La Voz de Galicia",
-  "SocioMétrica / EL ESPAÑOL",
   "Sigma Dos / El Mundo",
+  "InvyMark / laSexta",
+  "Data10 / OKDiario",
+  "Target Point / El Debate",
+  "NC Report / La Razón",
+  "IMOP / El Confidencial",
+  "SocioMétrica / EL ESPAÑOL",
   "DYM / 20minutos",
   "GAD3 / ABC",
-  "Data10 / OKDiario",
   "Ateneo del Dato / elDiario.es",
   "Celeste-Tel / Onda Cero",
   "More in Common",
-  "Hamalgama Métrica / Vozpópuli",
-  "Target Point / El Debate"
+  "Hamalgama Métrica / Vozpópuli"
  ],
  "noticias": [
+  "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/|Hoy, cara a cara Sánchez–Feijóo, su único debate; el jueves es el último día para solicitar el voto por correo",
+  "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/|Agenda del jueves: Colau en Benetússer y Catarroja, Abascal en Zamora y Gijón, Rufián en Vila-real, Montero en Bilbao, Nogueras en Tortosa",
+  "https://democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-40db-19-noviembre-2026|Nuevo seguimiento de 40dB (19-nov): PP 32,4 %, PSOE 30,4 %, Vox 17,2 %",
+  "https://mapaelectoral.es/encuestas/|Nuevos datos de InvyMark, Target Point, Data10, Sigma Dos, Sondaxe y SW Demoscopia; el promedio pasa a 16 empresas",
+  "https://www.democrata.es/politica/frente-amplio-propone-comedor-escolar-gratis-y-un-fondo-energetico-soberano-para-vivienda-y-pensiones/|El Frente Amplio presenta su programa: comedor escolar gratuito, prestación de 200 € por hijo y un fondo energético soberano",
+  "https://www.democrata.es/economia/frente-amplio-propone-mas-fondos-autonomicos-y-perdonar-parte-de-la-deuda-ligada-a-vivienda/|El Frente Amplio propone más fondos autonómicos, condonar parte de la deuda autonómica y elevar la participación municipal",
   "https://www.infobae.com/espana/agencias/2026/11/15/dia-3-sanchez-presenta-el-programa-del-psoe-y-pide-el-voto-de-la-gente-moderada/|Sánchez presenta en Alcorcón el programa del PSOE y pide el voto de la «gente moderada»",
   "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/|Pablo Bustinduy presenta hoy el programa del Frente Amplio; Colau interviene en un acto sobre vivienda en Madrid",
   "https://www.infobae.com/espana/2026/11/16/elecciones-generales-espana-2026-en-directo-ultima-hora-de-la-visita-de-lula-da-silva-el-futuro-de-yolanda-diaz-y-el-programa-del-frente-amplio/|Agenda del lunes: Feijóo en Lleida y en un mitin PP-UPN en Pamplona; Abascal en Tenerife; Sánchez, entrevistado en Telecinco",
