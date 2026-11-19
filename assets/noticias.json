@@ -1,7 +1,49 @@
 {
- "actualizado": "2026-11-16",
+ "actualizado": "2026-11-19",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Infobae / Europa Press",
+   "fecha": "19 nov",
+   "url": "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/",
+   "titular": "Hoy, cara a cara Sánchez–Feijóo, su único debate; el jueves es el último día para solicitar el voto por correo",
+   "tema": "Agenda"
+  },
+  {
+   "medio": "Infobae / Europa Press",
+   "fecha": "19 nov",
+   "url": "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/",
+   "titular": "Agenda del jueves: Colau en Benetússer y Catarroja, Abascal en Zamora y Gijón, Rufián en Vila-real, Montero en Bilbao, Nogueras en Tortosa",
+   "tema": "Agenda"
+  },
+  {
+   "medio": "Demócrata",
+   "fecha": "19 nov",
+   "url": "https://democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-40db-19-noviembre-2026",
+   "titular": "Nuevo seguimiento de 40dB (19-nov): PP 32,4 %, PSOE 30,4 %, Vox 17,2 %",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Mapa Electoral",
+   "fecha": "19 nov",
+   "url": "https://mapaelectoral.es/encuestas/",
+   "titular": "Nuevos datos de InvyMark, Target Point, Data10, Sigma Dos, Sondaxe y SW Demoscopia; el promedio pasa a 16 empresas",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Demócrata",
+   "fecha": "16 nov",
+   "url": "https://www.democrata.es/politica/frente-amplio-propone-comedor-escolar-gratis-y-un-fondo-energetico-soberano-para-vivienda-y-pensiones/",
+   "titular": "El Frente Amplio presenta su programa: comedor escolar gratuito, prestación de 200 € por hijo y un fondo energético soberano",
+   "tema": "Propuestas"
+  },
+  {
+   "medio": "Demócrata",
+   "fecha": "16 nov",
+   "url": "https://www.democrata.es/economia/frente-amplio-propone-mas-fondos-autonomicos-y-perdonar-parte-de-la-deuda-ligada-a-vivienda/",
+   "titular": "El Frente Amplio propone más fondos autonómicos, condonar parte de la deuda autonómica y elevar la participación municipal",
+   "tema": "Propuestas"
+  },
   {
    "medio": "Infobae / Europa Press",
    "fecha": "15 nov",

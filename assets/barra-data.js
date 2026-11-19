@@ -1,2 +1,2 @@
 /* Generado por tools/prediccion.mjs; no editar a mano. */
-window.BARRA={"pp":134,"vox":67,"iz":149,"pv":201,"f":"2026-11-18"};
+window.BARRA={"pp":130,"vox":67,"iz":153,"pv":197,"f":"2026-11-19"};
