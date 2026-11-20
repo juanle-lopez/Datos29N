@@ -29,14 +29,14 @@
   },
   {
    "e": "Data10 / OKDiario",
-   "f": "2026-11-19",
-   "PP": 31.5,
-   "PSOE": 26.9,
-   "VOX": 19.4,
-   "SUMAR": 8.6,
-   "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Publicada 19-nov; muestra 2.600. Sumar/Frente Amplio 6,5 + Podemos 2,1. Campo no indicado. PROVISIONAL: cifras vía Mapa Electoral; original de OKDiario no comprobado para esta ola.",
-   "provisional": true
+   "f": "2026-11-20",
+   "PP": 32.5,
+   "PSOE": 26.5,
+   "VOX": 18.8,
+   "SUMAR": 6.8,
+   "fuente": "https://www.democrata.es/en/general-elections-spain/the-pp-rises-by-eight-seats-and-extends-its-advantage-over-the-psoe-to-six-points-according-to-data10-s-daily-tracking/",
+   "provisional": true,
+   "nota": "Sondeo «exprés» posterior al debate, difundido el 20-nov (primera encuesta con campo posterior al debate). Frente Amplio 6,8 (según Demócrata, incluye coaliciones territoriales); Podemos no consta: en «Sumar + Podemos» solo cuenta Frente Amplio (decisión editorial; afecta solo a esa columna). Escaños según la fuente: PP 137, PSOE 106, Vox 62, Frente Amplio 12. Campo y muestra no indicados. PROVISIONAL: cifras vía Demócrata (resumen del avance de OKDiario); original no comprobado."
   },
   {
    "e": "DYM / 20minutos",
@@ -752,6 +752,17 @@
    "SUMAR": 8.1,
    "fuente": "https://mapaelectoral.es/encuestas/",
    "nota": "Seguimiento difundido el 18-nov; muestra 1.000. Frente Amplio 7,1 + Podemos 1,0. Mapa Electoral lista dos entradas del 18-nov; se usa la más reciente (la serie baja cada día para el PP). Campo no indicado. PROVISIONAL: original de La Voz de Galicia no comprobado.",
+   "tipo": "privada"
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-19",
+   "PP": 31.5,
+   "PSOE": 26.9,
+   "VOX": 19.4,
+   "SUMAR": 8.6,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Publicada 19-nov; muestra 2.600. Sumar/Frente Amplio 6,5 + Podemos 2,1. Campo no indicado. PROVISIONAL: cifras vía Mapa Electoral; original de OKDiario no comprobado para esta ola.",
    "tipo": "privada"
   }
  ],
