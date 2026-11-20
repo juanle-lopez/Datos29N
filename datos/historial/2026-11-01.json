@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-01",
- "metodo": 3,
+ "metodo": 4,
  "t": "reconstruido",
  "n": 7,
  "voto": {
@@ -22,16 +22,16 @@
   "PSOE": 104,
   "VOX": 67,
   "SUMAR": 10,
-  "PV": 199,
+  "PV": 198,
   "IZ": 147
  },
  "hi": {
-  "PP": 136,
-  "PSOE": 108,
+  "PP": 135,
+  "PSOE": 109,
   "VOX": 72,
   "SUMAR": 13,
   "PV": 203,
-  "IZ": 151
+  "IZ": 152
  },
  "encuestas": [
   {
@@ -157,90 +157,29 @@
     },
     "antes": {
      "e": "Sigma Dos / El Mundo",
-     "f": "2026-10-26",
+     "f": "2026-10-19",
      "voto": {
-      "PP": 30.6,
-      "PSOE": 26.1,
-      "VOX": 19.9,
-      "SUMAR": 11
+      "PP": 31.5,
+      "PSOE": 25.3,
+      "VOX": 19.5,
+      "SUMAR": 10
      }
     }
    }
   ],
-  "salen": [
-   {
-    "e": "NC Report / La Razón",
-    "f": "2026-10-26",
-    "voto": {
-     "PP": 32.9,
-     "PSOE": 25.8,
-     "VOX": 19,
-     "SUMAR": 9.2
-    }
-   },
-   {
-    "e": "Target Point / El Debate",
-    "f": "2026-10-11",
-    "voto": {
-     "PP": 32,
-     "PSOE": 25.9,
-     "VOX": 18.7,
-     "SUMAR": 10.3
-    }
-   },
-   {
-    "e": "DYM / 20minutos",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 34,
-     "PSOE": 28.2,
-     "VOX": 18.2,
-     "SUMAR": 6.2
-    }
-   },
-   {
-    "e": "40dB / EL PAÍS–SER",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 31.9,
-     "PSOE": 28.1,
-     "VOX": 18.9,
-     "SUMAR": 7.6
-    }
-   },
-   {
-    "e": "InvyMark / laSexta",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 32.8,
-     "PSOE": 28,
-     "VOX": 18.8,
-     "SUMAR": 9.5
-    }
-   },
-   {
-    "e": "Data10 / OKDiario",
-    "f": "2026-10-05",
-    "voto": {
-     "PP": 34,
-     "PSOE": 26.1,
-     "VOX": 18.6,
-     "SUMAR": 9.5
-    }
-   }
-  ],
+  "salen": [],
   "dVoto": {
-   "PP": -0.87,
-   "PSOE": -0.49,
-   "VOX": 0.2,
-   "SUMAR": 0.18
+   "PP": -0.06,
+   "PSOE": -0.1,
+   "VOX": -0.03,
+   "SUMAR": -0.14
   },
   "dEsc": {
-   "PP": -1,
-   "PSOE": -2,
-   "VOX": 3,
-   "SUMAR": 1,
-   "PV": 2,
+   "PP": 1,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": -1,
+   "PV": 1,
    "IZ": -1
   },
   "huboCambio": true

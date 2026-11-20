@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-07",
- "metodo": 3,
+ "metodo": 4,
  "t": "reconstruido",
  "n": 11,
  "voto": {
@@ -21,14 +21,14 @@
   "PP": 127,
   "PSOE": 105,
   "VOX": 69,
-  "SUMAR": 8,
+  "SUMAR": 9,
   "PV": 199,
   "IZ": 147
  },
  "hi": {
   "PP": 134,
-  "PSOE": 108,
-  "VOX": 73,
+  "PSOE": 109,
+  "VOX": 72,
   "SUMAR": 12,
   "PV": 203,
   "IZ": 151
@@ -205,85 +205,22 @@
  "proy": null,
  "contexto": [],
  "cambio": {
-  "entran": [
-   {
-    "e": "Celeste-Tel / Onda Cero",
-    "f": "2026-11-06",
-    "voto": {
-     "PP": 31.4,
-     "PSOE": 25.7,
-     "VOX": 19.2,
-     "SUMAR": 8.1
-    },
-    "antes": null
-   },
-   {
-    "e": "Hamalgama Métrica / Vozpópuli",
-    "f": "2026-11-02",
-    "voto": {
-     "PP": 32,
-     "PSOE": 26.4,
-     "VOX": 19.9,
-     "SUMAR": 5.4
-    },
-    "antes": {
-     "e": "Hamalgama Métrica / Vozpópuli",
-     "f": "2026-10-11",
-     "voto": {
-      "PP": 33.4,
-      "PSOE": 25.3,
-      "VOX": 19.6,
-      "SUMAR": 8.7
-     }
-    }
-   }
-  ],
-  "salen": [
-   {
-    "e": "DYM / 20minutos",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 34,
-     "PSOE": 28.2,
-     "VOX": 18.2,
-     "SUMAR": 6.2
-    }
-   },
-   {
-    "e": "40dB / EL PAÍS–SER",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 31.9,
-     "PSOE": 28.1,
-     "VOX": 18.9,
-     "SUMAR": 7.6
-    }
-   },
-   {
-    "e": "InvyMark / laSexta",
-    "f": "2026-10-09",
-    "voto": {
-     "PP": 32.8,
-     "PSOE": 28,
-     "VOX": 18.8,
-     "SUMAR": 9.5
-    }
-   }
-  ],
+  "entran": [],
+  "salen": [],
   "dVoto": {
-   "PP": -0.54,
-   "PSOE": -0.39,
-   "VOX": 0.19,
-   "SUMAR": -0.03
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0
   },
   "dEsc": {
    "PP": 0,
    "PSOE": 0,
-   "VOX": 1,
+   "VOX": 0,
    "SUMAR": 0,
-   "PV": 1,
+   "PV": 0,
    "IZ": 0
   },
-  "huboCambio": true
+  "huboCambio": false
  }
 }

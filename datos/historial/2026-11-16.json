@@ -1,41 +1,53 @@
 {
  "fecha": "2026-11-16",
- "metodo": 3,
- "t": "registrado",
- "n": 15,
+ "metodo": 4,
+ "t": "reconstruido",
+ "n": 16,
  "voto": {
-  "PP": 31.29,
-  "PSOE": 27.1,
-  "VOX": 19.02,
-  "SUMAR": 7.55
+  "PP": 31.23,
+  "PSOE": 27.31,
+  "VOX": 18.99,
+  "SUMAR": 7.4
  },
  "esc": {
-  "PP": 133,
+  "PP": 134,
   "PSOE": 111,
   "VOX": 66,
   "SUMAR": 7,
-  "PV": 199,
+  "PV": 200,
   "IZ": 150
  },
  "lo": {
-  "PP": 129,
-  "PSOE": 108,
+  "PP": 130,
+  "PSOE": 110,
   "VOX": 65,
   "SUMAR": 7,
   "PV": 196,
-  "IZ": 148
+  "IZ": 149
  },
  "hi": {
-  "PP": 134,
+  "PP": 135,
   "PSOE": 114,
-  "VOX": 69,
+  "VOX": 68,
   "SUMAR": 8,
   "PV": 201,
-  "IZ": 153
+  "IZ": 154
  },
  "encuestas": [
   {
+   "e": "InvyMark / laSexta",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-16"
+  },
+  {
    "e": "40dB / EL PAÍS–SER",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "Target Point / El Debate",
    "f": "2026-11-16"
   },
   {
@@ -71,10 +83,6 @@
    "f": "2026-11-09"
   },
   {
-   "e": "Data10 / OKDiario",
-   "f": "2026-11-09"
-  },
-  {
    "e": "Ateneo del Dato / elDiario.es",
    "f": "2026-11-09"
   },
@@ -89,13 +97,31 @@
   {
    "e": "Hamalgama Métrica / Vozpópuli",
    "f": "2026-11-02"
-  },
-  {
-   "e": "Target Point / El Debate",
-   "f": "2026-11-02"
   }
  ],
  "encDetalle": [
+  {
+   "h": "InvyMark",
+   "e": "InvyMark / laSexta",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 32.2,
+    "PSOE": 28.2,
+    "VOX": 19.1,
+    "SUMAR": 6.4
+   }
+  },
+  {
+   "h": "Data10",
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 31.7,
+    "PSOE": 25.5,
+    "VOX": 20.4,
+    "SUMAR": 8.8
+   }
+  },
   {
    "h": "40dB",
    "e": "40dB / EL PAÍS–SER",
@@ -105,6 +131,17 @@
     "PSOE": 30.3,
     "VOX": 18,
     "SUMAR": 4.8
+   }
+  },
+  {
+   "h": "Target Point",
+   "e": "Target Point / El Debate",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 30.6,
+    "PSOE": 27,
+    "VOX": 18.7,
+    "SUMAR": 8.9
    }
   },
   {
@@ -196,17 +233,6 @@
    }
   },
   {
-   "h": "Data10",
-   "e": "Data10 / OKDiario",
-   "f": "2026-11-09",
-   "voto": {
-    "PP": 32.4,
-    "PSOE": 24.7,
-    "VOX": 19.8,
-    "SUMAR": 10
-   }
-  },
-  {
    "h": "Ateneo del Dato",
    "e": "Ateneo del Dato / elDiario.es",
    "f": "2026-11-09",
@@ -249,74 +275,43 @@
     "VOX": 19.9,
     "SUMAR": 5.4
    }
-  },
-  {
-   "h": "Target Point",
-   "e": "Target Point / El Debate",
-   "f": "2026-11-02",
-   "voto": {
-    "PP": 31.8,
-    "PSOE": 25.5,
-    "VOX": 19.9,
-    "SUMAR": 9
-   }
   }
  ],
- "proy": {
-  "privadas": {
-   "PP": {
-    "c": 132,
-    "p10": 117,
-    "p90": 146
-   },
-   "PSOE": {
-    "c": 111,
-    "p10": 96,
-    "p90": 126
-   },
-   "VOX": {
-    "c": 67,
-    "p10": 59,
-    "p90": 81
-   },
-   "SUMAR": {
-    "c": 7,
-    "p10": 4,
-    "p90": 9
-   }
-  },
-  "cis": {
-   "PP": {
-    "c": 90,
-    "p10": 78,
-    "p90": 107
-   },
-   "PSOE": {
-    "c": 154,
-    "p10": 135,
-    "p90": 169
-   },
-   "VOX": {
-    "c": 64,
-    "p10": 52,
-    "p90": 74
-   },
-   "SUMAR": {
-    "c": 10,
-    "p10": 8,
-    "p90": 18
-   }
-  },
-  "ppVox": {
-   "c": 199,
-   "p10": 184,
-   "p50": 199,
-   "p90": 215
-  }
- },
+ "proy": null,
  "contexto": [],
  "cambio": {
   "entran": [
+   {
+    "e": "InvyMark / laSexta",
+    "f": "2026-11-16",
+    "voto": {
+     "PP": 32.2,
+     "PSOE": 28.2,
+     "VOX": 19.1,
+     "SUMAR": 6.4
+    },
+    "antes": null
+   },
+   {
+    "e": "Data10 / OKDiario",
+    "f": "2026-11-16",
+    "voto": {
+     "PP": 31.7,
+     "PSOE": 25.5,
+     "VOX": 20.4,
+     "SUMAR": 8.8
+    },
+    "antes": {
+     "e": "Data10 / OKDiario",
+     "f": "2026-11-09",
+     "voto": {
+      "PP": 32.4,
+      "PSOE": 24.7,
+      "VOX": 19.8,
+      "SUMAR": 10
+     }
+    }
+   },
    {
     "e": "40dB / EL PAÍS–SER",
     "f": "2026-11-16",
@@ -334,6 +329,26 @@
       "PSOE": 29.9,
       "VOX": 18,
       "SUMAR": 6.2
+     }
+    }
+   },
+   {
+    "e": "Target Point / El Debate",
+    "f": "2026-11-16",
+    "voto": {
+     "PP": 30.6,
+     "PSOE": 27,
+     "VOX": 18.7,
+     "SUMAR": 8.9
+    },
+    "antes": {
+     "e": "Target Point / El Debate",
+     "f": "2026-11-02",
+     "voto": {
+      "PP": 31.8,
+      "PSOE": 25.5,
+      "VOX": 19.9,
+      "SUMAR": 9
      }
     }
    },
@@ -380,10 +395,10 @@
   ],
   "salen": [],
   "dVoto": {
-   "PP": 0.06,
-   "PSOE": 0.13,
-   "VOX": -0.08,
-   "SUMAR": -0.21
+   "PP": 0,
+   "PSOE": 0.34,
+   "VOX": -0.11,
+   "SUMAR": -0.36
   },
   "dEsc": {
    "PP": 2,

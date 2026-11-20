@@ -17,11 +17,12 @@ const iso=n=>new Date(n*864e5).toISOString().slice(0,10);
 const pct=(a,p)=>{const s=[...a].sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.max(0,Math.round(p*(s.length-1))))]};
 function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 const hoy=process.argv[2]||new Date().toISOString().slice(0,10);
-const METODO=3;   // 2 (20-oct-2026): sin tendencia y con Podemos en lista propia; 3: añade los bloques PV (PP+Vox) e IZ (PSOE+Sumar+Podemos+socios 2023). Los días de un método anterior se recalculan (quedan como reconstruidos).
+const METODO=4;   // 4 (20-nov-2026): Navarra con PP-UPN en coalición y escaños corregidos de Madrid (37) y Cádiz (9); todos los días se recalculan con el mismo modelo. 2 (20-oct-2026): sin tendencia y con Podemos en lista propia; 3: añade los bloques PV (PP+Vox) e IZ (PSOE+Sumar+Podemos+socios 2023). Los días de un método anterior se recalculan (quedan como reconstruidos).
 const START='2026-10-04';   // primer día con 7 empresas distintas (antes hay muy pocas para una media fiable)
 const stem=e=>e.split(' /')[0].trim();
 const completo=p=>K.every(k=>p[k]!=null);
 const polls=[];[...inp.historial.filter(h=>h.tipo==='privada'&&!h.aprox&&completo(h)),...inp.privadas].forEach(p=>{if(!polls.some(q=>q.e===p.e&&q.f===p.f))polls.push(p)});
+K.forEach(k=>{const v=inp.privadas.filter(p=>p[k]!=null).map(p=>p[k]);if(!v.length)return;const m=r2(mean(v));polls.forEach(p=>{if(p[k]==null)p[k]=m})});   // encuesta sin alguna cifra: se rellena con la media de las demás (como en prediccion.mjs)
 polls.sort((a,b)=>a.f<b.f?-1:1);
 // Lo que se conocía el día D: la última encuesta de cada empresa publicada hasta D
 const VENTANA=30;   // como en el modelo: solo cuentan las encuestas de los últimos 30 días (la última de cada empresa)

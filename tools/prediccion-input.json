@@ -206,7 +206,7 @@
    "SUMAR": null,
    "fuente": "https://mapaelectoral.es/encuestas/",
    "provisional": true,
-   "nota": "Publicada 19-nov. Solo publica PP, PSOE y Vox: no constan Sumar/Frente Amplio ni Podemos, por eso no cuenta en la media de «Sumar + Podemos». Muestra no indicada. PROVISIONAL: cifras vía Mapa Electoral."
+   "nota": "Publicada 19-nov. Solo publica PP, PSOE y Vox: no constan Sumar/Frente Amplio ni Podemos. Cuenta en la media de PP, PSOE y Vox; para «Sumar + Podemos» no aporta cifra propia (se rellena con la media del resto solo para calcular sus escaños, sin cambiar esa media; en la tabla sale con asterisco). Muestra no indicada. PROVISIONAL: cifras vía Mapa Electoral."
   }
  ],
  "cis": {
@@ -738,20 +738,20 @@
    "PP": 30.7,
    "PSOE": 26.7,
    "VOX": 19.7,
-   "SUMAR": 9.5,
+   "SUMAR": 7.7,
    "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Seguimiento difundido el 18-nov; muestra 4.511. Frente Amplio 8,7 + Podemos 0,8. Campo no indicado. Seguimiento diario con oscilaciones (Frente Amplio 6,7 el 17-nov). PROVISIONAL: cifras vía Mapa Electoral; original de El Mundo no comprobado.",
+   "nota": "Seguimiento difundido el 18-nov; campo 11–17 nov, muestra 4.511. Frente Amplio en torno a 6,9 (Demócrata: +0,2 sobre el día anterior) + Podemos 0,8 = 7,7. Corregido el 20-nov: antes figuraba 9,5, tomado de Mapa Electoral, cuya casilla «Sumar» incluye otras candidaturas. PROVISIONAL.",
    "tipo": "privada"
   },
   {
    "e": "Sondaxe / La Voz de Galicia",
    "f": "2026-11-18",
-   "PP": 28.5,
-   "PSOE": 27.8,
-   "VOX": 19.6,
-   "SUMAR": 8.1,
+   "PP": 29.0,
+   "PSOE": 27.0,
+   "VOX": 19.4,
+   "SUMAR": 8.7,
    "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Seguimiento difundido el 18-nov; muestra 1.000. Frente Amplio 7,1 + Podemos 1,0. Mapa Electoral lista dos entradas del 18-nov; se usa la más reciente (la serie baja cada día para el PP). Campo no indicado. PROVISIONAL: original de La Voz de Galicia no comprobado.",
+   "nota": "Seguimiento difundido el 18-nov; muestra 1.000. Sumar/Frente Amplio 7,5 + Podemos 1,2. Corregido el 20-nov: antes figuraban aquí por error las cifras del 19-nov. PROVISIONAL: cifras vía Mapa Electoral.",
    "tipo": "privada"
   },
   {

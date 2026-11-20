@@ -1,6 +1,6 @@
 {
  "fecha": "2026-11-08",
- "metodo": 3,
+ "metodo": 4,
  "t": "reconstruido",
  "n": 12,
  "voto": {
@@ -10,28 +10,28 @@
   "SUMAR": 8.58
  },
  "esc": {
-  "PP": 131,
+  "PP": 130,
   "PSOE": 108,
   "VOX": 70,
-  "SUMAR": 9,
-  "PV": 201,
-  "IZ": 149
+  "SUMAR": 10,
+  "PV": 200,
+  "IZ": 150
  },
  "lo": {
   "PP": 128,
   "PSOE": 106,
   "VOX": 69,
   "SUMAR": 8,
-  "PV": 200,
-  "IZ": 147
+  "PV": 199,
+  "IZ": 148
  },
  "hi": {
-  "PP": 134,
-  "PSOE": 108,
-  "VOX": 73,
+  "PP": 133,
+  "PSOE": 109,
+  "VOX": 72,
   "SUMAR": 10,
-  "PV": 203,
-  "IZ": 150
+  "PV": 202,
+  "IZ": 151
  },
  "encuestas": [
   {
@@ -281,12 +281,12 @@
    "SUMAR": -0.47
   },
   "dEsc": {
-   "PP": 1,
+   "PP": 0,
    "PSOE": 0,
    "VOX": 0,
-   "SUMAR": -1,
-   "PV": 1,
-   "IZ": -1
+   "SUMAR": 0,
+   "PV": 0,
+   "IZ": 0
   },
   "huboCambio": true
  }

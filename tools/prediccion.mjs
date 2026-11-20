@@ -47,6 +47,8 @@ function tendenciaAgrupada(){
 }
 const trP=inp.tendenciaAgrupada?tendenciaAgrupada():tendencia('privada'),trC=inp.tendenciaAgrupada?{tr:Object.fromEntries(K.map(k=>[k,0])),usadas:[]}:tendencia('cis');
 const priv=inp.privadas;
+// Encuesta sin alguna cifra (p. ej. Metroscopia sin Sumar): se rellena con la media de las que sí la publican, solo para poder calcular sus escaños y las dispersiones. No cambia la media de esa cifra. Se marca en p.imp.
+K.forEach(k=>{const v=priv.filter(p=>p[k]!=null).map(p=>p[k]);if(!v.length)return;const m=round(mean(v),2);priv.forEach(p=>{if(p[k]==null){p[k]=m;(p.imp=p.imp||[]).push(k)}})});
 // Corrección por el error histórico de las encuestas (media de errores contraída: peso m²/(m²+var/n); solo con ≥2 elecciones)
 const delta={};K.forEach(k=>{const e=(inp.sesgo&&inp.usarSesgo?inp.sesgo.err[k]:null)||[];if(e.length<2){delta[k]=0;return}const m=mean(e),v=sdev(e)**2/e.length;delta[k]=m*m/(m*m+v)*m});
 const sesgoAt=(clave,k,d)=>clave==='priv'?delta[k]*Math.min(1,d/T):0;   // entra linealmente: 0 hoy, completa el 29-N
@@ -136,7 +138,7 @@ const out={generado:hoy,sdError:inp.sdError,tau,sdDeriva40:inp.sdDeriva40,n:priv
     i2=ih.replace(/PP [\d,]+ · PSOE [\d,]+ · Vox [\d,]+ · Sumar y Podemos agrupados \([\d,]+\)/,`PP ${c('PP')} · PSOE ${c('PSOE')} · Vox ${c('VOX')} · Sumar y Podemos agrupados (${c('SUMAR')})`);
   if(i2!==ih)fs.writeFileSync(ip,i2)}
 {const pc=x=>String(x).replace('.',','),rows=[['empresa','fecha','PP','PSOE','Vox','Sumar+Podemos','esc_PP','esc_PSOE','esc_Vox','esc_Sumar+Podemos','esc_PP+Vox','esc_bloque_investidura_2023'].join(';')];
-  inp.privadas.forEach((p,i)=>{const e=escPriv[i];rows.push([p.e,p.f,pc(p.PP),pc(p.PSOE),pc(p.VOX),pc(p.SUMAR),e.esc.PP,e.esc.PSOE,e.esc.VOX,e.esc.SUMAR,e.PV,e.IZ].join(';'))});
+  inp.privadas.forEach((p,i)=>{const e=escPriv[i];rows.push([p.e,p.f,pc(p.PP),pc(p.PSOE),pc(p.VOX),(p.imp&&p.imp.includes("SUMAR")?"":pc(p.SUMAR)),e.esc.PP,e.esc.PSOE,e.esc.VOX,e.esc.SUMAR,e.PV,e.IZ].join(';'))});
   fs.writeFileSync(root+'datos/encuestas.csv','\ufeff'+rows.join('\n')+'\n')}
 {const e=out.escPrivadas;fs.writeFileSync(root+'assets/barra-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nwindow.BARRA='+JSON.stringify({pp:e.escanos.PP.c,vox:e.escanos.VOX.c,iz:out.escPrivadas.izq.c,pv:out.escPrivadas.ppVox.c,f:out.generado})+';\n')}
 fs.writeFileSync(root+'assets/prediccion-data.js','/* Generado por tools/prediccion.mjs; no editar a mano. */\nconst PRED='+JSON.stringify(out)+';\n');
