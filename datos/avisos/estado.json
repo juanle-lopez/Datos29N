@@ -1,27 +1,29 @@
 {
- "dia": "2026-11-19",
- "hora": "11:51",
+ "dia": "2026-11-20",
+ "hora": "15:16",
  "esc": {
-  "PP": 131,
+  "PP": 130,
   "PSOE": 114,
-  "VOX": 65,
-  "SUMAR": 8,
-  "PV": 196,
-  "IZ": 154
+  "VOX": 67,
+  "SUMAR": 7,
+  "PV": 197,
+  "IZ": 153
  },
  "voto": {
-  "PP": 31.2,
-  "PSOE": 27.5,
+  "PP": 31,
+  "PSOE": 27.7,
   "VOX": 19,
-  "SUMAR": 7.8
+  "SUMAR": 7.3
  },
  "encuestas": [
+  "Metroscopia",
+  "Public First / Politico",
+  "Data10 / OKDiario",
   "40dB / EL PAÍS–SER",
-  "SW Demoscopia / La Séptima",
   "Sondaxe / La Voz de Galicia",
   "Sigma Dos / El Mundo",
+  "SW Demoscopia / La Séptima",
   "InvyMark / laSexta",
-  "Data10 / OKDiario",
   "Target Point / El Debate",
   "NC Report / La Razón",
   "IMOP / El Confidencial",
@@ -34,6 +36,13 @@
   "Hamalgama Métrica / Vozpópuli"
  ],
  "noticias": [
+  "https://www.elespanol.com/espana/20261120/elecciones-generales-directo-ultima-hora-pedro-sanchez-feijoo-reacciones-debate-campana-encuestas-sondeos-voto-correo/1003744465426_10.html|Debate Sánchez–Feijóo del 19-nov: 10,15 millones de espectadores de media y 70,8 % de cuota, según Barlovento",
+  "https://www.elespanol.com/espana/20261120/elecciones-generales-directo-ultima-hora-pedro-sanchez-feijoo-reacciones-debate-campana-encuestas-sondeos-voto-correo/1003744465426_10.html|Tras el debate, Abascal, Rufián, Colau y Mónica García opinan que Feijóo se impuso; el PP dice que ganó «cinco a cero»",
+  "https://www.elplural.com/politica/espana/quien-gano-debate-entre-sanchez-feijoo-segun-encuestas-medios-comunicacion-hacemos-repaso_804774102|Votaciones voluntarias de lectores sobre el debate: Feijóo gana en ABC, La Razón, El País, Demócrata, El Plural, elDiario.es y HuffPost (no son encuestas representativas)",
+  "https://www.elespanol.com/espana/20261120/elecciones-generales-directo-ultima-hora-pedro-sanchez-feijoo-reacciones-debate-campana-encuestas-sondeos-voto-correo/1003744465426_10.html|Voto por correo: 1.099.687 solicitudes admitidas (+11,5 % sobre 2019, −58 % sobre 2023); el plazo para depositarlo llega hasta el 26-nov a las 14:00",
+  "https://www.elespanol.com/espana/20261120/elecciones-generales-directo-ultima-hora-pedro-sanchez-feijoo-reacciones-debate-campana-encuestas-sondeos-voto-correo/1003744465426_10.html|La JEC confirma que Podemos no participará en el debate a cuatro de la Academia de TV (PP, PSOE, Vox y Frente Amplio)",
+  "https://www.elespanol.com/espana/20261120/elecciones-generales-directo-ultima-hora-pedro-sanchez-feijoo-reacciones-debate-campana-encuestas-sondeos-voto-correo/1003744465426_10.html|Feijóo pregunta a Sánchez en el debate si Anticorrupción investiga contratos de Defensa con Indra; Sánchez no lo confirma ni lo desmiente",
+  "https://mapaelectoral.es/encuestas/|Nuevas encuestas del 19-nov: Metroscopia (PP 30,0 %, PSOE 30,0 %), Public First/Politico, Data10, Sigma Dos y Sondaxe; el promedio pasa a 18 empresas",
   "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/|Hoy, cara a cara Sánchez–Feijóo, su único debate; el jueves es el último día para solicitar el voto por correo",
   "https://www.infobae.com/espana/agencias/2026/11/19/dia-7-sanchez-y-feijoo-debaten-cara-a-cara-y-el-resto-de-candidatos-continuan-su-campana/|Agenda del jueves: Colau en Benetússer y Catarroja, Abascal en Zamora y Gijón, Rufián en Vila-real, Montero en Bilbao, Nogueras en Tortosa",
   "https://democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-40db-19-noviembre-2026|Nuevo seguimiento de 40dB (19-nov): PP 32,4 %, PSOE 30,4 %, Vox 17,2 %",
