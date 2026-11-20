@@ -9,7 +9,7 @@ document.documentElement.classList.add('js');
 const RV_SEL='.sech,.exec,.banner,.dt>h2,.dt .rowf,.panel,.star,.pc,.cc,.sr2,.meth details,.foot,.bars>div,.stg,.pos,.bloc,.credit,.gcard,.gk>div';
 let rvIO=null;
 if('IntersectionObserver' in window&&!REDUCE){
-  rvIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rvIO.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  rvIO=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting&&(e.intersectionRatio>=.12||e.boundingClientRect.height>innerHeight*2)){e.target.classList.add('in');rvIO.unobserve(e.target)}})},{threshold:[0,.12],rootMargin:'0px 0px -6% 0px'});
 }
 function rvScan(){
   document.querySelectorAll(RV_SEL).forEach(el=>{
@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
 (function(){var b=document.getElementById('rfbtn');if(!b)return;b.addEventListener('click',function(){b.classList.add('spin');fetch(location.pathname,{cache:'no-store'}).catch(function(){}).then(function(){location.reload()})})})();
 
 /* ===== Fecha única «Actualizado el…» (la sella tools/sellar-fecha.sh) ===== */
-const ACT='20 de noviembre de 2026 · 19:09 (GMT+1)';
+const ACT='20 de noviembre de 2026 · 19:18 (GMT+1)';
 (function(){
   const p=location.pathname.split('/').pop()||'index.html';
   if(p==='index.html'||document.querySelector('.act'))return;
