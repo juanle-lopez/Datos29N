@@ -64,7 +64,7 @@
   // 3. Las encuestas, una a una: ventaja y diferencia con la media
   {const el=$('penc');if(el){
     const b=PRED.base.priv,E=PRED.escPriv,rows=PRED.privadas.map((p,i)=>({p,e:E[i]})).sort((x,y)=>y.p.f.localeCompare(x.p.f)||x.p.e.localeCompare(y.p.e));
-    const td=(p,k)=>{const d=p[k]-b[k];return `<td class="m">${n1(p[k])}<small class="${Math.abs(d)>=1.5?'big':''}">${sg(d)}</small></td>`};
+    const td=(p,k)=>{if(p[k]==null)return '<td class="m" title="No publica esta cifra">—</td>';const d=p[k]-b[k];return `<td class="m">${n1(p[k])}<small class="${Math.abs(d)>=1.5?'big':''}">${sg(d)}</small></td>`};
     el.innerHTML=`<div class="tw"><table class="etab"><thead><tr><th>Encuesta</th><th>Fecha</th>${P.map(([k,nm])=>`<th>${nm}</th>`).join('')}<th>Ventaja PP</th><th>PP + Vox (esc.)</th></tr></thead><tbody>`+
       rows.map(({p,e})=>`<tr><td>${p.e}</td><td class="m">${fecha(p.f)}</td>${P.map(([k])=>td(p,k)).join('')}<td class="m">${sg(p.PP-p.PSOE)}</td><td class="m"><b style="color:${e.PV>=MAJ?'var(--pp)':'var(--psoe)'}">${e.PV}</b></td></tr>`).join('')+
       `<tr class="avg"><td>Media de las ${rows.length}</td><td></td>${P.map(([k])=>`<td class="m">${n1(b[k])}</td>`).join('')}<td class="m">${sg(b.PP-b.PSOE)}</td><td class="m"><b>${PRED.escBaseBloq.priv.PV}</b></td></tr></tbody></table></div>`+
