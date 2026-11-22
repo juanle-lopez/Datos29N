@@ -1,7 +1,42 @@
 {
- "actualizado": "2026-11-20",
+ "actualizado": "2026-11-22",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Euronews",
+   "fecha": "22 nov",
+   "url": "https://es.euronews.com/2026/11/22/los-ultimos-sondeos-situan-al-pp-por-delante-del-psoe",
+   "titular": "Los últimos sondeos sitúan al PP por delante del PSOE y otorgan a la derecha entre 190 y 210 escaños",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Demócrata / ABC",
+   "fecha": "22 nov",
+   "url": "https://www.democrata.es/encuestas/elecciones-generales/gad3-29n-psoe-recorta-distancia-pp-vox-194-escanos/",
+   "titular": "Encuesta de las elecciones generales: el PSOE recorta 12 escaños de distancia al PP, pero Feijóo suma 194 con Vox, según GAD3",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Demócrata / OKDiario",
+   "fecha": "22 nov",
+   "url": "https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-data10-22-noviembre-2026/",
+   "titular": "Encuesta elecciones generales: Sánchez recorta, pero Feijóo suma 196 escaños con Vox, según Data10",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Demócrata / Vozpópuli",
+   "fecha": "22 nov",
+   "url": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-psoe-cae-por-debajo-100-escanos-pp-vox-suman-210-segun-hamalgama/",
+   "titular": "Encuesta de las elecciones generales: el PSOE cae por debajo de los 100 escaños y PP y Vox suman 210, según Hamalgama",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "EL PAÍS / 40dB",
+   "fecha": "22 nov",
+   "url": "https://ep00.epimg.net/infografias/encuestas40db/2026/11-tracking-electoral/informe_tracking_dia10.pdf",
+   "titular": "Tracking 29-N (día 10): informe de 40dB con campo del 17 al 21 de noviembre, 2.000 entrevistas",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Demócrata / OKDiario",
    "fecha": "20 nov",
