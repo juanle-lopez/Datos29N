@@ -1,6 +1,6 @@
 {
- "dia": "2026-11-22",
- "hora": "19:16",
+ "dia": "2026-11-23",
+ "hora": "08:55",
  "esc": {
   "PP": 130,
   "PSOE": 115,
@@ -11,32 +11,35 @@
  },
  "voto": {
   "PP": 31.1,
-  "PSOE": 28.1,
-  "VOX": 18.7,
-  "SUMAR": 7.5
+  "PSOE": 28.2,
+  "VOX": 18.6,
+  "SUMAR": 7.6
  },
  "encuestas": [
-  "Ipsos / La Vanguardia",
-  "GAD3 / ABC",
   "Data10 / OKDiario",
   "40dB / EL PAÍS–SER",
-  "Hamalgama Métrica / Vozpópuli",
+  "Winston / Artículo14",
+  "Ipsos / La Vanguardia",
+  "DYM / 20minutos",
   "SW Demoscopia / La Séptima",
-  "Sondaxe / La Voz de Galicia",
+  "GAD3 / ABC",
   "SocioMétrica / EL ESPAÑOL",
+  "Hamalgama Métrica / Vozpópuli",
   "Sigma Dos / El Mundo",
+  "Sondaxe / La Voz de Galicia",
   "More in Common",
   "Metroscopia",
   "Public First / Politico",
   "InvyMark / laSexta",
+  "IMOP / El Confidencial",
   "Target Point / El Debate",
   "NC Report / La Razón",
-  "IMOP / El Confidencial",
-  "DYM / 20minutos",
   "Ateneo del Dato / elDiario.es",
   "Celeste-Tel / Onda Cero"
  ],
  "noticias": [
+  "https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-data10-29n-pp-psoe-194-escanos/|Encuesta de las elecciones generales: el PSOE recorta diez escaños de distancia al PP en dos días y la derecha conserva 194",
+  "https://www.que.es/2026/11/23/encuesta-elecciones-generales-29n/|Encuesta de elecciones generales a una semana del 29N: PP y Vox suman mayoría absoluta y el PSOE queda al 28%",
   "https://es.euronews.com/2026/11/22/los-ultimos-sondeos-situan-al-pp-por-delante-del-psoe|Los últimos sondeos sitúan al PP por delante del PSOE y otorgan a la derecha entre 190 y 210 escaños",
   "https://www.democrata.es/encuestas/elecciones-generales/gad3-29n-psoe-recorta-distancia-pp-vox-194-escanos/|Encuesta de las elecciones generales: el PSOE recorta 12 escaños de distancia al PP, pero Feijóo suma 194 con Vox, según GAD3",
   "https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-data10-22-noviembre-2026/|Encuesta elecciones generales: Sánchez recorta, pero Feijóo suma 196 escaños con Vox, según Data10",
