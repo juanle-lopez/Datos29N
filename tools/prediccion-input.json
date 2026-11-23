@@ -16,18 +16,6 @@
    "provisional": true
   },
   {
-   "e": "DYM / 20minutos",
-   "f": "2026-11-10",
-   "campoFin": "2026-11-06",
-   "PP": 33.1,
-   "PSOE": 27.3,
-   "VOX": 18.6,
-   "SUMAR": 7.5,
-   "nota": "Publicada 10-nov; campo 4–6 nov; muestra no indicada. Frente Amplio 5,6 + Podemos 1,9. Escaños según la fuente: PP 135–139, PSOE 104–108, Vox 63–66, Frente Amplio 8–10, Podemos 1–2. PROVISIONAL: cifras vía Demócrata; original de 20minutos no comprobado.",
-   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/dym-10-noviembre-2026-pp-psoe-bajan-vox-sube/",
-   "provisional": true
-  },
-  {
    "e": "Celeste-Tel / Onda Cero",
    "f": "2026-11-06",
    "PP": 31.4,
@@ -108,28 +96,6 @@
    "nota": "Publicada 19-nov. Solo publica PP, PSOE y Vox: no constan Sumar/Frente Amplio ni Podemos. Cuenta en la media de PP, PSOE y Vox; para «Sumar + Podemos» no aporta cifra propia (se rellena con la media del resto solo para calcular sus escaños, sin cambiar esa media; en la tabla sale con asterisco). Muestra no indicada. PROVISIONAL: cifras vía Mapa Electoral."
   },
   {
-   "e": "40dB / EL PAÍS–SER",
-   "f": "2026-11-22",
-   "campoFin": "2026-11-21",
-   "PP": 31.9,
-   "PSOE": 31.6,
-   "VOX": 16.9,
-   "SUMAR": 4.6,
-   "fuente": "https://ep00.epimg.net/infografias/encuestas40db/2026/11-tracking-electoral/informe_tracking_dia10.pdf",
-   "nota": "Tracking 29-N (día 10), publicado el 22-nov; campo 17–21 nov, 2.000 entrevistas online (CAWI), margen ±2,2. Frente Amplio 3,6 + Podemos 1,0. Escaños según la fuente: PP 125 (119–130), Vox 54 (49–59). Informe original de 40dB comprobado."
-  },
-  {
-   "e": "Data10 / OKDiario",
-   "f": "2026-11-22",
-   "PP": 32.1,
-   "PSOE": 27.0,
-   "VOX": 19.0,
-   "SUMAR": 6.6,
-   "provisional": true,
-   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-data10-22-noviembre-2026/",
-   "nota": "Seguimiento difundido el 22-nov. Frente Amplio 6,6 (según Demócrata, incluye coaliciones territoriales); Podemos no consta: en «Sumar + Podemos» solo cuenta Frente Amplio (decisión editorial; afecta solo a esa columna). Escaños según la fuente: PP 133, PSOE 111, Vox 63, Frente Amplio y coaliciones territoriales 10. Campo y muestra no indicados. PROVISIONAL: cifras vía Demócrata; original de OKDiario no comprobado."
-  },
-  {
    "e": "GAD3 / ABC",
    "f": "2026-11-22",
    "PP": 31.1,
@@ -163,39 +129,6 @@
    "nota": "Publicada el 22-nov (PP incluye UPN). No publica el % de Frente Amplio ni de Podemos (solo 6 escaños para Frente Amplio): el dato falta y en «Sumar + Podemos» se imputa la media de las demás encuestas (marcado con asterisco). Escaños según la fuente: PP 127, PSOE 119, Vox 63. Campo y muestra no indicados. PROVISIONAL: cifras vía Demócrata; original de La Vanguardia no comprobado."
   },
   {
-   "e": "Sigma Dos / El Mundo",
-   "f": "2026-11-21",
-   "PP": 31.5,
-   "PSOE": 28.0,
-   "VOX": 18.3,
-   "SUMAR": 7.8,
-   "provisional": true,
-   "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Seguimiento difundido el 21-nov. Sumar/Frente Amplio 7,1 + Podemos 0,7. Escaños según La Región: PP 126–132, PSOE 112–118, Frente Amplio 9–12. Campo y muestra no indicados. PROVISIONAL: cifras vía Mapa Electoral; original de El Mundo no comprobado."
-  },
-  {
-   "e": "SocioMétrica / EL ESPAÑOL",
-   "f": "2026-11-21",
-   "PP": 31.8,
-   "PSOE": 28.5,
-   "VOX": 18.8,
-   "SUMAR": 6.9,
-   "provisional": true,
-   "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Difundida el 21-nov. Sumar/Frente Amplio 5,9 + Podemos 1,0. Escaños según Mapa Electoral: PP 134, PSOE 113, Vox 65 (Frente Amplio 7 según La Región). Campo y muestra no indicados. PROVISIONAL: cifras vía Mapa Electoral; original de El Español no comprobado para esta ola."
-  },
-  {
-   "e": "SW Demoscopia / La Séptima",
-   "f": "2026-11-21",
-   "PP": 29.7,
-   "PSOE": 32.5,
-   "VOX": 15.9,
-   "SUMAR": 8.4,
-   "provisional": true,
-   "fuente": "https://mapaelectoral.es/encuestas/",
-   "nota": "Seguimiento difundido el 21-nov. Sumar/Frente Amplio 6,8 + Podemos 1,6. Escaños según Mapa Electoral: PP 121–127, PSOE 131–136, Vox 47–55. Campo no indicado. PROVISIONAL: cifras vía Mapa Electoral; original de La Séptima no comprobado."
-  },
-  {
    "e": "Sondaxe / La Voz de Galicia",
    "f": "2026-11-21",
    "PP": 29.5,
@@ -216,6 +149,86 @@
    "provisional": true,
    "fuente": "https://mapaelectoral.es/encuestas/",
    "nota": "Difundida el 20-nov. Sumar/Frente Amplio 7,1 + Podemos 1,7. Campo y muestra no indicados. PROVISIONAL: cifras vía Mapa Electoral; original de More in Common no comprobado."
+  },
+  {
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-11-23",
+   "PP": 31.8,
+   "PSOE": 30.9,
+   "VOX": 17.3,
+   "SUMAR": null,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Tracking 29-N publicado el 23-nov (2.000 entrevistas online según la serie de 40dB). PP, PSOE y Vox vía Mapa Electoral. El % de Frente Amplio y Podemos de esta ola no se ha podido comprobar (la fuente agrega otras candidaturas): se imputa la media de las demás encuestas (marcado con asterisco). Último dato verificado en el informe original (22-nov): Frente Amplio 3,6 + Podemos 1,0. Escaños según Mapa Electoral: PP 127–136, PSOE 116–127, Vox 51–61. PROVISIONAL."
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-23",
+   "campoFin": "2026-11-22",
+   "PP": 31.7,
+   "PSOE": 27.3,
+   "VOX": 19.1,
+   "SUMAR": 6.5,
+   "provisional": true,
+   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-data10-29n-pp-psoe-194-escanos/",
+   "nota": "Seguimiento publicado el 23-nov; respuestas del 19 al 22 de noviembre, participación estimada 73,2 %. Frente Amplio 6,5; Podemos no consta: en «Sumar + Podemos» solo cuenta Frente Amplio (decisión editorial; afecta solo a esa columna). Escaños según la fuente: PP 130, PSOE 113, Vox 64, Frente Amplio 9. Muestra no indicada. PROVISIONAL: cifras vía Demócrata; original de OKDiario no comprobado."
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-11-22",
+   "PP": 31.7,
+   "PSOE": 28.3,
+   "VOX": 17.9,
+   "SUMAR": 7.9,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Seguimiento difundido el 22-nov (4.616 entrevistas). Sumar/Frente Amplio 7,2 + Podemos 0,7. Escaños según Mapa Electoral: PP 132, PSOE 117, Vox 58. PROVISIONAL: cifras vía Mapa Electoral; original de El Mundo no comprobado."
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-22",
+   "PP": 31.7,
+   "PSOE": 28.7,
+   "VOX": 18.4,
+   "SUMAR": 5.9,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Difundida el 22-nov (7.266 entrevistas, serie acumulada). PP, PSOE y Vox vía Mapa Electoral. Sumar + Podemos 5,9 en total (Frente Amplio 4,9 + Podemos 1,0 según la serie de El Español en otra fuente; corrige el 6,9 de la ola anterior, que sumaba dos veces Podemos). Escaños según Mapa Electoral: PP 134, PSOE 114, Vox 63. PROVISIONAL: original de El Español no comprobado para esta ola."
+  },
+  {
+   "e": "SW Demoscopia / La Séptima",
+   "f": "2026-11-22",
+   "PP": 29.9,
+   "PSOE": 32.5,
+   "VOX": 15.8,
+   "SUMAR": 6.8,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Seguimiento difundido el 22-nov (12.000 entrevistas, serie acumulada). Frente Amplio 6,8; la encuesta no mide Podemos por separado: en «Sumar + Podemos» solo cuenta Frente Amplio (decisión editorial; afecta solo a esa columna). Escaños según Mapa Electoral: PP 125, PSOE 134, Vox 50. PROVISIONAL: original de La Séptima no comprobado."
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-11-22",
+   "campoFin": "2026-11-19",
+   "PP": 33.0,
+   "PSOE": 28.0,
+   "VOX": 18.0,
+   "SUMAR": 8.2,
+   "provisional": true,
+   "fuente": "https://elvotoutil.org/encuestas/",
+   "nota": "Publicada el 22-nov; campo 17–19 nov, 1.010 entrevistas. Frente Amplio 6,9 + Podemos 1,3. Escaños según Mapa Electoral: PP 132–139, PSOE 107–114, Vox 58–64. PROVISIONAL: cifras vía El Voto Útil y Mapa Electoral; original de Henneo no comprobado."
+  },
+  {
+   "e": "Winston / Artículo14",
+   "f": "2026-11-22",
+   "campoFin": "2026-11-19",
+   "PP": 31.1,
+   "PSOE": 28.2,
+   "VOX": 17.7,
+   "SUMAR": 8.0,
+   "provisional": true,
+   "fuente": "https://elvotoutil.org/encuestas/",
+   "nota": "Publicada el 22-nov; campo 17–19 nov, 1.482 entrevistas. Frente Amplio 6,4 + Podemos 1,6. Escaños según Mapa Electoral: PP 130, PSOE 116, Vox 61. Encuesta nueva en la media. PROVISIONAL: cifras vía El Voto Útil y Mapa Electoral; original de Artículo14 no comprobado."
   }
  ],
  "cis": {
@@ -882,6 +895,79 @@
    "fuente": "https://mapaelectoral.es/encuestas/",
    "nota": "Seguimiento difundido el 19-nov; muestra 1.000. Sumar/Frente Amplio 7,4 + Podemos 1,0. Campo no indicado. PROVISIONAL: original de La Voz de Galicia no comprobado.",
    "provisional": true,
+   "tipo": "privada"
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-11-10",
+   "campoFin": "2026-11-06",
+   "PP": 33.1,
+   "PSOE": 27.3,
+   "VOX": 18.6,
+   "SUMAR": 7.5,
+   "nota": "Publicada 10-nov; campo 4–6 nov; muestra no indicada. Frente Amplio 5,6 + Podemos 1,9. Escaños según la fuente: PP 135–139, PSOE 104–108, Vox 63–66, Frente Amplio 8–10, Podemos 1–2. PROVISIONAL: cifras vía Demócrata; original de 20minutos no comprobado.",
+   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/dym-10-noviembre-2026-pp-psoe-bajan-vox-sube/",
+   "provisional": true,
+   "tipo": "privada"
+  },
+  {
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-11-22",
+   "campoFin": "2026-11-21",
+   "PP": 31.9,
+   "PSOE": 31.6,
+   "VOX": 16.9,
+   "SUMAR": 4.6,
+   "fuente": "https://ep00.epimg.net/infografias/encuestas40db/2026/11-tracking-electoral/informe_tracking_dia10.pdf",
+   "nota": "Tracking 29-N (día 10), publicado el 22-nov; campo 17–21 nov, 2.000 entrevistas online (CAWI), margen ±2,2. Frente Amplio 3,6 + Podemos 1,0. Escaños según la fuente: PP 125 (119–130), Vox 54 (49–59). Informe original de 40dB comprobado.",
+   "tipo": "privada"
+  },
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-22",
+   "PP": 32.1,
+   "PSOE": 27.0,
+   "VOX": 19.0,
+   "SUMAR": 6.6,
+   "provisional": true,
+   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/tracking-encuesta-29n-hoy-data10-22-noviembre-2026/",
+   "nota": "Seguimiento difundido el 22-nov. Frente Amplio 6,6 (según Demócrata, incluye coaliciones territoriales); Podemos no consta: en «Sumar + Podemos» solo cuenta Frente Amplio (decisión editorial; afecta solo a esa columna). Escaños según la fuente: PP 133, PSOE 111, Vox 63, Frente Amplio y coaliciones territoriales 10. Campo y muestra no indicados. PROVISIONAL: cifras vía Demócrata; original de OKDiario no comprobado.",
+   "tipo": "privada"
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-11-21",
+   "PP": 31.5,
+   "PSOE": 28.0,
+   "VOX": 18.3,
+   "SUMAR": 7.8,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Seguimiento difundido el 21-nov. Sumar/Frente Amplio 7,1 + Podemos 0,7. Escaños según La Región: PP 126–132, PSOE 112–118, Frente Amplio 9–12. Campo y muestra no indicados. PROVISIONAL: cifras vía Mapa Electoral; original de El Mundo no comprobado.",
+   "tipo": "privada"
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-21",
+   "PP": 31.8,
+   "PSOE": 28.5,
+   "VOX": 18.8,
+   "SUMAR": 6.9,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Difundida el 21-nov. Sumar/Frente Amplio 5,9 + Podemos 1,0. Escaños según Mapa Electoral: PP 134, PSOE 113, Vox 65 (Frente Amplio 7 según La Región). Campo y muestra no indicados. PROVISIONAL: cifras vía Mapa Electoral; original de El Español no comprobado para esta ola.",
+   "tipo": "privada"
+  },
+  {
+   "e": "SW Demoscopia / La Séptima",
+   "f": "2026-11-21",
+   "PP": 29.7,
+   "PSOE": 32.5,
+   "VOX": 15.9,
+   "SUMAR": 8.4,
+   "provisional": true,
+   "fuente": "https://mapaelectoral.es/encuestas/",
+   "nota": "Seguimiento difundido el 21-nov. Sumar/Frente Amplio 6,8 + Podemos 1,6. Escaños según Mapa Electoral: PP 121–127, PSOE 131–136, Vox 47–55. Campo no indicado. PROVISIONAL: cifras vía Mapa Electoral; original de La Séptima no comprobado.",
    "tipo": "privada"
   }
  ],

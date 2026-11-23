@@ -1,0 +1,544 @@
+{
+ "fecha": "2026-11-23",
+ "metodo": 4,
+ "t": "registrado",
+ "n": 20,
+ "voto": {
+  "PP": 31.07,
+  "PSOE": 28.15,
+  "VOX": 18.63,
+  "SUMAR": 7.63
+ },
+ "esc": {
+  "PP": 130,
+  "PSOE": 115,
+  "VOX": 66,
+  "SUMAR": 7,
+  "PV": 196,
+  "IZ": 154
+ },
+ "lo": {
+  "PP": 128,
+  "PSOE": 114,
+  "VOX": 65,
+  "SUMAR": 7,
+  "PV": 194,
+  "IZ": 153
+ },
+ "hi": {
+  "PP": 132,
+  "PSOE": 117,
+  "VOX": 67,
+  "SUMAR": 8,
+  "PV": 197,
+  "IZ": 156
+ },
+ "encuestas": [
+  {
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-23"
+  },
+  {
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-11-23"
+  },
+  {
+   "e": "Winston / Artículo14",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "Ipsos / La Vanguardia",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "DYM / 20minutos",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "SW Demoscopia / La Séptima",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "GAD3 / ABC",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-11-22"
+  },
+  {
+   "e": "Sondaxe / La Voz de Galicia",
+   "f": "2026-11-21"
+  },
+  {
+   "e": "More in Common",
+   "f": "2026-11-20"
+  },
+  {
+   "e": "Metroscopia",
+   "f": "2026-11-19"
+  },
+  {
+   "e": "Public First / Politico",
+   "f": "2026-11-19"
+  },
+  {
+   "e": "InvyMark / laSexta",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "Target Point / El Debate",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "NC Report / La Razón",
+   "f": "2026-11-16"
+  },
+  {
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-11-09"
+  },
+  {
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06"
+  }
+ ],
+ "encDetalle": [
+  {
+   "h": "Data10",
+   "e": "Data10 / OKDiario",
+   "f": "2026-11-23",
+   "voto": {
+    "PP": 31.7,
+    "PSOE": 27.3,
+    "VOX": 19.1,
+    "SUMAR": 6.5
+   }
+  },
+  {
+   "h": "40dB",
+   "e": "40dB / EL PAÍS–SER",
+   "f": "2026-11-23",
+   "voto": {
+    "PP": 31.8,
+    "PSOE": 30.9,
+    "VOX": 17.3,
+    "SUMAR": 7.63
+   }
+  },
+  {
+   "h": "Winston",
+   "e": "Winston / Artículo14",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 31.1,
+    "PSOE": 28.2,
+    "VOX": 17.7,
+    "SUMAR": 8
+   }
+  },
+  {
+   "h": "Ipsos",
+   "e": "Ipsos / La Vanguardia",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 30.3,
+    "PSOE": 29.8,
+    "VOX": 17.9,
+    "SUMAR": 7.63
+   }
+  },
+  {
+   "h": "DYM",
+   "e": "DYM / 20minutos",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 33,
+    "PSOE": 28,
+    "VOX": 18,
+    "SUMAR": 8.2
+   }
+  },
+  {
+   "h": "SW Demoscopia",
+   "e": "SW Demoscopia / La Séptima",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 29.9,
+    "PSOE": 32.5,
+    "VOX": 15.8,
+    "SUMAR": 6.8
+   }
+  },
+  {
+   "h": "GAD3",
+   "e": "GAD3 / ABC",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 31.1,
+    "PSOE": 28.4,
+    "VOX": 18.1,
+    "SUMAR": 7.1
+   }
+  },
+  {
+   "h": "SocioMétrica",
+   "e": "SocioMétrica / EL ESPAÑOL",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 31.7,
+    "PSOE": 28.7,
+    "VOX": 18.4,
+    "SUMAR": 5.9
+   }
+  },
+  {
+   "h": "Hamalgama Métrica",
+   "e": "Hamalgama Métrica / Vozpópuli",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 31.8,
+    "PSOE": 25.4,
+    "VOX": 20.6,
+    "SUMAR": 7.7
+   }
+  },
+  {
+   "h": "Sigma Dos",
+   "e": "Sigma Dos / El Mundo",
+   "f": "2026-11-22",
+   "voto": {
+    "PP": 31.7,
+    "PSOE": 28.3,
+    "VOX": 17.9,
+    "SUMAR": 7.9
+   }
+  },
+  {
+   "h": "Sondaxe",
+   "e": "Sondaxe / La Voz de Galicia",
+   "f": "2026-11-21",
+   "voto": {
+    "PP": 29.5,
+    "PSOE": 27.9,
+    "VOX": 19.8,
+    "SUMAR": 6.8
+   }
+  },
+  {
+   "h": "More in Common",
+   "e": "More in Common",
+   "f": "2026-11-20",
+   "voto": {
+    "PP": 28.9,
+    "PSOE": 28,
+    "VOX": 19.8,
+    "SUMAR": 8.8
+   }
+  },
+  {
+   "h": "Metroscopia",
+   "e": "Metroscopia",
+   "f": "2026-11-19",
+   "voto": {
+    "PP": 30,
+    "PSOE": 30,
+    "VOX": 19,
+    "SUMAR": 7.63
+   }
+  },
+  {
+   "h": "Public First",
+   "e": "Public First / Politico",
+   "f": "2026-11-19",
+   "voto": {
+    "PP": 29.5,
+    "PSOE": 27.2,
+    "VOX": 19.6,
+    "SUMAR": 8.1
+   }
+  },
+  {
+   "h": "InvyMark",
+   "e": "InvyMark / laSexta",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 32.2,
+    "PSOE": 28.2,
+    "VOX": 19.1,
+    "SUMAR": 6.4
+   }
+  },
+  {
+   "h": "IMOP",
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 31.5,
+    "PSOE": 26.9,
+    "VOX": 19,
+    "SUMAR": 7.8
+   }
+  },
+  {
+   "h": "Target Point",
+   "e": "Target Point / El Debate",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 30.6,
+    "PSOE": 27,
+    "VOX": 18.7,
+    "SUMAR": 8.9
+   }
+  },
+  {
+   "h": "NC Report",
+   "e": "NC Report / La Razón",
+   "f": "2026-11-16",
+   "voto": {
+    "PP": 32.1,
+    "PSOE": 26.1,
+    "VOX": 19,
+    "SUMAR": 9.1
+   }
+  },
+  {
+   "h": "Ateneo del Dato",
+   "e": "Ateneo del Dato / elDiario.es",
+   "f": "2026-11-09",
+   "voto": {
+    "PP": 31.5,
+    "PSOE": 28.6,
+    "VOX": 18.6,
+    "SUMAR": 7.6
+   }
+  },
+  {
+   "h": "Celeste-Tel",
+   "e": "Celeste-Tel / Onda Cero",
+   "f": "2026-11-06",
+   "voto": {
+    "PP": 31.4,
+    "PSOE": 25.7,
+    "VOX": 19.2,
+    "SUMAR": 8.1
+   }
+  }
+ ],
+ "proy": {
+  "privadas": {
+   "PP": {
+    "c": 129,
+    "p10": 116,
+    "p90": 145
+   },
+   "PSOE": {
+    "c": 117,
+    "p10": 100,
+    "p90": 131
+   },
+   "VOX": {
+    "c": 66,
+    "p10": 56,
+    "p90": 77
+   },
+   "SUMAR": {
+    "c": 7,
+    "p10": 5,
+    "p90": 10
+   }
+  },
+  "cis": {
+   "PP": {
+    "c": 91,
+    "p10": 79,
+    "p90": 107
+   },
+   "PSOE": {
+    "c": 154,
+    "p10": 134,
+    "p90": 170
+   },
+   "VOX": {
+    "c": 64,
+    "p10": 53,
+    "p90": 74
+   },
+   "SUMAR": {
+    "c": 10,
+    "p10": 8,
+    "p90": 18
+   }
+  },
+  "ppVox": {
+   "c": 195,
+   "p10": 181,
+   "p50": 196,
+   "p90": 211
+  }
+ },
+ "contexto": [],
+ "cambio": {
+  "entran": [
+   {
+    "e": "Data10 / OKDiario",
+    "f": "2026-11-23",
+    "voto": {
+     "PP": 31.7,
+     "PSOE": 27.3,
+     "VOX": 19.1,
+     "SUMAR": 6.5
+    },
+    "antes": {
+     "e": "Data10 / OKDiario",
+     "f": "2026-11-22",
+     "voto": {
+      "PP": 32.1,
+      "PSOE": 27,
+      "VOX": 19,
+      "SUMAR": 6.6
+     }
+    }
+   },
+   {
+    "e": "40dB / EL PAÍS–SER",
+    "f": "2026-11-23",
+    "voto": {
+     "PP": 31.8,
+     "PSOE": 30.9,
+     "VOX": 17.3,
+     "SUMAR": 7.63
+    },
+    "antes": {
+     "e": "40dB / EL PAÍS–SER",
+     "f": "2026-11-22",
+     "voto": {
+      "PP": 31.9,
+      "PSOE": 31.6,
+      "VOX": 16.9,
+      "SUMAR": 4.6
+     }
+    }
+   },
+   {
+    "e": "Winston / Artículo14",
+    "f": "2026-11-22",
+    "voto": {
+     "PP": 31.1,
+     "PSOE": 28.2,
+     "VOX": 17.7,
+     "SUMAR": 8
+    },
+    "antes": null
+   },
+   {
+    "e": "DYM / 20minutos",
+    "f": "2026-11-22",
+    "voto": {
+     "PP": 33,
+     "PSOE": 28,
+     "VOX": 18,
+     "SUMAR": 8.2
+    },
+    "antes": {
+     "e": "DYM / 20minutos",
+     "f": "2026-11-10",
+     "voto": {
+      "PP": 33.1,
+      "PSOE": 27.3,
+      "VOX": 18.6,
+      "SUMAR": 7.5
+     }
+    }
+   },
+   {
+    "e": "SW Demoscopia / La Séptima",
+    "f": "2026-11-22",
+    "voto": {
+     "PP": 29.9,
+     "PSOE": 32.5,
+     "VOX": 15.8,
+     "SUMAR": 6.8
+    },
+    "antes": {
+     "e": "SW Demoscopia / La Séptima",
+     "f": "2026-11-21",
+     "voto": {
+      "PP": 29.7,
+      "PSOE": 32.5,
+      "VOX": 15.9,
+      "SUMAR": 8.4
+     }
+    }
+   },
+   {
+    "e": "SocioMétrica / EL ESPAÑOL",
+    "f": "2026-11-22",
+    "voto": {
+     "PP": 31.7,
+     "PSOE": 28.7,
+     "VOX": 18.4,
+     "SUMAR": 5.9
+    },
+    "antes": {
+     "e": "SocioMétrica / EL ESPAÑOL",
+     "f": "2026-11-21",
+     "voto": {
+      "PP": 31.8,
+      "PSOE": 28.5,
+      "VOX": 18.8,
+      "SUMAR": 6.9
+     }
+    }
+   },
+   {
+    "e": "Sigma Dos / El Mundo",
+    "f": "2026-11-22",
+    "voto": {
+     "PP": 31.7,
+     "PSOE": 28.3,
+     "VOX": 17.9,
+     "SUMAR": 7.9
+    },
+    "antes": {
+     "e": "Sigma Dos / El Mundo",
+     "f": "2026-11-21",
+     "voto": {
+      "PP": 31.5,
+      "PSOE": 28,
+      "VOX": 18.3,
+      "SUMAR": 7.8
+     }
+    }
+   }
+  ],
+  "salen": [],
+  "dVoto": {
+   "PP": -0.01,
+   "PSOE": 0.04,
+   "VOX": -0.1,
+   "SUMAR": 0.09
+  },
+  "dEsc": {
+   "PP": 0,
+   "PSOE": 0,
+   "VOX": 0,
+   "SUMAR": 0,
+   "PV": 0,
+   "IZ": 0
+  },
+  "huboCambio": true
+ }
+}

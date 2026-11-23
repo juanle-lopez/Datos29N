@@ -1,7 +1,21 @@
 {
- "actualizado": "2026-11-22",
+ "actualizado": "2026-11-23",
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
+  {
+   "medio": "Demócrata / OKDiario",
+   "fecha": "23 nov",
+   "url": "https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-data10-29n-pp-psoe-194-escanos/",
+   "titular": "Encuesta de las elecciones generales: el PSOE recorta diez escaños de distancia al PP en dos días y la derecha conserva 194",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "Qué!",
+   "fecha": "23 nov",
+   "url": "https://www.que.es/2026/11/23/encuesta-elecciones-generales-29n/",
+   "titular": "Encuesta de elecciones generales a una semana del 29N: PP y Vox suman mayoría absoluta y el PSOE queda al 28%",
+   "tema": "Encuestas"
+  },
   {
    "medio": "Euronews",
    "fecha": "22 nov",
