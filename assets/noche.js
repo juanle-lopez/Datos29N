@@ -107,8 +107,17 @@
     $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Se actualiza solo.`:PRE?`<b>Se activa el 29-N.</b> Los datos oficiales aparecerán aquí.`:`<b>Esperando datos oficiales.</b> Se actualiza solo.`;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
   }
-  function load(){lastCk=new Date();fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(R=>{lastData=R&&R.actualizado?hm(new Date(R.actualizado)):'';draw(R)}).catch(()=>draw(null));
-    fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
+  function load(){lastCk=new Date();
+    const p1=fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(R=>{lastData=R&&R.actualizado?hm(new Date(R.actualizado)):'';draw(R)}).catch(()=>draw(null));
+    const p2=fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap());
+    return Promise.all([p1,p2])}
+  // ---- botón de actualizar como barra de progreso con los colores del logotipo
+  let rfT=0;
+  function refresh(first){const b=$('rfb'),f=b.querySelector('i'),l=b.querySelector('span');clearTimeout(rfT);
+    b.classList.remove('done');b.classList.add('run');f.style.transition='none';f.style.width='0%';l.textContent='Actualizando…';
+    void f.offsetWidth;f.style.transition='width 1.6s cubic-bezier(.2,.7,.2,1)';f.style.width='88%';
+    const t0=Date.now();
+    load().then(()=>{const w=Math.max(0,700-(Date.now()-t0));rfT=setTimeout(()=>{f.style.transition='width .35s ease-out';f.style.width='100%';rfT=setTimeout(()=>{b.classList.remove('run');b.classList.add('done');l.textContent='Actualizado'},380)},w)})}
   // ---- compartir
   (function(){const url='https://datos29n.juanle.net/noche.html',tx='Resultados del 29-N en directo, por provincia, sin opiniones y con fuentes: ';
     const u=encodeURIComponent(url),t=encodeURIComponent(tx);
@@ -116,10 +125,10 @@
     const k=$('shk'),say=m=>{k.textContent=m;setTimeout(()=>{k.textContent=''},2500)};
     $('shc').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>say('Enlace copiado'),()=>{const i=document.createElement('input');i.value=url;document.body.appendChild(i);i.select();try{document.execCommand('copy');say('Enlace copiado')}catch(e){say(url)}i.remove()})});
     $('shb').addEventListener('click',()=>{if(navigator.share){navigator.share({title:'29-N en directo · Datos 29N',text:tx,url}).catch(()=>{})}else{$('shm').hidden=!$('shm').hidden}})})();
-  $('rfb').addEventListener('click',()=>{const b=$('rfb');b.classList.add('spin');load();setTimeout(()=>b.classList.remove('spin'),900)});
+  $('rfb').addEventListener('click',()=>refresh());
   document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
   $('nsel').addEventListener('change',e=>pick(e.target.value));
-  draw(null);drawMap();load();setInterval(tick,1000);
-  if(!PRE)setInterval(load,60000);
+  draw(null);drawMap();refresh();setInterval(tick,1000);
+  if(!PRE)setInterval(refresh,60000);
 })();

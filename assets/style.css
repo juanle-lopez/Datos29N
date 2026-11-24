@@ -1159,7 +1159,7 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 .rfb:hover{transform:translateY(-1px);border-color:var(--fg);box-shadow:0 6px 18px -6px rgba(15,23,42,.3)}
 .rfb:active{transform:scale(.97)}
 .rfb svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .9s cubic-bezier(.3,.7,.2,1)}
-.rfb.spin svg{transform:rotate(360deg)}
+
 .rfb.on{border-color:#e5484d}
 @media(max-width:520px){.rfb{padding:8px 12px 8px 10px;font-size:13px}}
 @media(prefers-reduced-motion:reduce){.rfb svg{transition:none}}
@@ -1177,3 +1177,14 @@ header.mini .rfb{margin-left:auto}
 .pbig{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}.pbig b{font:700 clamp(34px,9vw,48px) var(--mono);letter-spacing:-.02em}.pbig span{color:var(--muted);font-size:13.5px}.pbig.emp b{color:var(--line)}
 .pspark{width:100%;max-width:520px;height:auto;margin-top:6px}.pspark polyline{fill:none;stroke:var(--fg);stroke-width:2;stroke-linejoin:round}.pspark circle{fill:var(--bg);stroke:var(--fg);stroke-width:2}
 .plab{display:flex;justify-content:space-between;max-width:520px;font:11px var(--mono);color:var(--muted)}
+
+/* Actualizar: barra de progreso con los colores del logotipo */
+.rfb{position:relative;overflow:hidden;isolation:isolate;min-width:128px;justify-content:center}
+.rfb i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#4b9be0,#ef6a62,#74c063,#cf6fc0);z-index:-1;border-radius:999px}
+.rfb.run,.rfb.done{border-color:transparent;color:#fff}
+.rfb.run svg{animation:rfspin 1s linear infinite}.rfb.done svg{display:none}
+.rfb.done span,.rfb.run span{text-shadow:0 1px 2px rgba(0,0,0,.35)}
+@keyframes rfspin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.rfb.run svg{animation:none}.rfb i{transition:none!important}}
+.rfb.run{color:var(--fg)}.rfb.run span,.rfb.run svg{text-shadow:0 0 6px var(--bg),0 0 3px var(--bg)}.rfb.run svg{filter:drop-shadow(0 0 2px var(--bg))}
+.rfb.done{font-weight:700}
