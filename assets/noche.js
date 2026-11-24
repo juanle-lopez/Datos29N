@@ -59,11 +59,12 @@
   // ---- mapa de provincias
   let PV=null,sel='',met='win',MUN=null,msel='';
   const MET=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['part','Participación']];
-  const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;['PP','PSOE','VOX','SUMAR'].forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
+  const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;Object.keys(p.pct).forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
+  const colr=k=>C[k]||'var(--reg)',nmf=k=>k==='SUMAR'?'Sumar':(NM[k]||k);
   const mix=(c,x)=>`color-mix(in srgb,${c} ${Math.round(Math.max(12,Math.min(100,x)))}%,var(--line))`;
   const f1=v=>String(v).replace('.',',');
   function tileStyle(p){if(!p)return null;
-    if(met==='win'){const w=win(p);return w?{bg:C[w],tx:'#fff',tip:NM[w]}:null}
+    if(met==='win'){const w=win(p);return w?{bg:colr(w),tx:'#fff',tip:nmf(w)}:null}
     if(met==='part'){return p.part!=null?{bg:mix('var(--fg)',(p.part-45)*2.2),tx:p.part>62?'var(--bg)':'var(--fg)',tip:f1(p.part)+' %'}:null}
     const v=p.pct&&p.pct[met];return v!=null?{bg:mix(C[met],v*2.6),tx:v>22?'#fff':'var(--fg)',tip:f1(v)+' %'}:null}
   let svgOK=false;
@@ -76,8 +77,9 @@
       box.innerHTML=h;svgOK=true}
     $('nmet').innerHTML=MET.map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===met}">${l}</button>`).join('');
     const D=PV&&PV.prov||{};let any=false;
-    box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?C[wsel]:(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
-    $('plg').innerHTML=any?(met==='win'?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>':'<span>El mapa se colorea con los primeros resultados.</span>';
+    box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?colr(wsel):(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
+    const ws=new Set(MAIN);Object.keys(D).forEach(n=>{const w=win(D[n]);if(w)ws.add(w)});
+    $('plg').innerHTML=(met==='win'?[...ws].map(k=>`<span><i style="background:${colr(k)}"></i>${nmf(k)}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>';
     drawPanel()}
   const MAIN=['PP','PSOE','VOX','SUMAR'];
   const bars=(pc,es,p23)=>{pc=pc||{};
@@ -86,9 +88,9 @@
     return ks.map(k=>{const v=pc[k],col=C[k]||'var(--reg)',nm=k==='SUMAR'?'Sumar':(NM[k]||k);
       return `<div class="pb${v==null?' emp':''}"><span style="color:${col}"><b>${nm}</b></span><div class="db"><i style="width:${v==null?0:v/mx*100}%;background:${col}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('')};
   function drawPanel(){const el=$('ppan');
-    if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){const w=win(m);el.style.borderTopColor=w?C[w]:'var(--line)';el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
+    if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){const w=win(m);el.style.borderTopColor=w?colr(w):'var(--line)';el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
     if(!sel){el.style.borderTopColor='var(--line)';el.innerHTML='<p class="note" style="margin:0">Toca una provincia o elígela en la lista.</p>';return}
-    const p=PV&&PV.prov&&PV.prov[sel]||{};const w=win(p);el.style.borderTopColor=w?C[w]:'var(--line)';
+    const p=PV&&PV.prov&&PV.prov[sel]||{};const w=win(p);el.style.borderTopColor=w?colr(w):'var(--line)';
     el.innerHTML=`<h4>${sel}</h4>${bars(p.pct,p.esc)}<p class="note" style="margin:6px 0 0">${p.escrutado!=null?f1(p.escrutado)+' % escrutado':'Aún sin datos'}${p.part!=null?' · participación '+f1(p.part)+' %':''}</p>`}
   function loadMun(){const ms=$('nmun');msel='';MUN=null;ms.innerHTML='<option value="">Elige provincia</option>';ms.disabled=true;if(!sel)return;
     ms.innerHTML='<option value="">Cargando…</option>';const code=(window.CODES||{})[sel],mine=sel;
