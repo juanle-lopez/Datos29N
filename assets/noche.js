@@ -1,4 +1,4 @@
-// Día electoral: previsión congelada frente al escrutinio oficial (datos/resultados.json, se rellena el 29-N).
+// Día electoral: resultados oficiales (datos/resultados.json, se rellena el 29-N).
 (function(){
   const $=id=>document.getElementById(id);
   const NM={PP:'PP',PSOE:'PSOE',VOX:'Vox',SUMAR:'Sumar + Podemos',POD:'Podemos',OTROS:'Otros',ERC:'ERC',JUNTS:'Junts',BILDU:'EH Bildu',PNV:'PNV',BNG:'BNG',CCa:'CC',UPN:'UPN'};
@@ -32,25 +32,49 @@
       const sub=has?(b!=null?`${v-b>0?'+':v-b<0?'−':'±'}${Math.abs(v-b)} vs 2023`:'sin dato de 2023'):(b!=null?`2023: ${b}`:k==='POD'?'2023: dentro de Sumar':'2023: —');
       return `<div class="hs${has?'':' emp'}" style="--c:${C[k]}"><span>${NM[k]==='Sumar + Podemos'?'Sumar':NM[k]}</span><b>${has?v:'—'}</b><small>${sub}</small></div>`}).join('');
   }
+  // ---- cronología del día
+  const STEPS=[['09:00','Abren','2026-11-29T09:00'],['14:00','Participación','2026-11-29T14:00'],['18:00','Participación','2026-11-29T18:00'],['20:00','Cierran','2026-11-29T20:00'],['21:00','Resultados','2026-11-29T21:00'],['4 dic','Escrutinio final','2026-12-04T09:00']];
+  function drawTL(){let cur=-1;STEPS.forEach((s,i)=>{if(now>=s[2])cur=i});
+    $('ntl').innerHTML=STEPS.map((s,i)=>`<li class="${i<cur?'done':i===cur?'cur':''}"><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}
+  // ---- barras de participación
+  const PB=[['14:00','A las 14:00'],['18:00','A las 18:00'],['final','Final']];
+  function drawPart(R){const p=R&&R.part||{},m=R&&R.mesas||{};
+    let h=PB.map(([k,l])=>{const v=p[k];return `<div class="pb${v==null?' emp':''}"><span>${l}</span><div class="db"><i style="width:${v==null?0:v}%"></i></div><b>${v==null?'—':String(v).replace('.',',')+' %'}</b></div>`}).join('');
+    const mp=m.constituidas!=null&&m.total?Math.round(1000*m.constituidas/m.total)/10:null;
+    h+=`<div class="pb${mp==null?' emp':''}"><span>Mesas constituidas</span><div class="db"><i style="width:${mp==null?0:mp}%"></i></div><b>${mp==null?'—':String(mp).replace('.',',')+' %'}</b></div>`;
+    $('npart').innerHTML=h}
+  // ---- mayoría: dos barras hasta 176
+  function drawMaj(R){const E=R&&R.esc||{},has=E.PP!=null;
+    const a=has?(E.PP||0)+(E.VOX||0):null,b=has?(E.PSOE||0)+(E.SUMAR||0)+(E.POD||0)+(E.ERC||0)+(E.JUNTS||0)+(E.BILDU||0)+(E.PNV||0)+(E.BNG||0)+(E.CCa||0):null;
+    const row=(l,v,c)=>`<div class="mj"><span>${l}</span><div class="db"><i style="width:${v==null?0:Math.min(100,v/176*100)}%;background:${c}"></i><u></u></div><b>${v==null?'—':v}</b></div>`;
+    $('nmaj').innerHTML=row('PP + Vox',a,'var(--pp)')+row('PSOE + Sumar + Podemos + ERC, Junts, Bildu, PNV, BNG, CC',b,'var(--psoe)')+'<p class="note" style="margin:2px 0 0">La línea marca 176, la mayoría absoluta.</p>'}
+  // ---- mapa de provincias
+  const AB={'A Coruña':'CRU','Araba/Álava':'ÁLA','Illes Balears':'BAL','Las Palmas':'LPA','Santa Cruz de Tenerife':'TEN','La Rioja':'RIO','Ciudad Real':'CRE','Castellón':'CAS','Cádiz':'CÁD','Cáceres':'CÁC','Guadalajara':'GUA','Gipuzkoa':'GIP','Girona':'GIR','Granada':'GRA','Huesca':'HSC','Huelva':'HUV'};
+  const ab=n=>AB[n]||n.slice(0,3).toUpperCase();
+  let PV=null,sel='';
+  const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;['PP','PSOE','VOX','SUMAR'].forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
+  function drawMap(){const T=window.TILES||{},names=Object.keys(T);const sl=$('nsel');
+    if(sl.options.length<2)names.slice().sort((x,y)=>x.localeCompare(y,'es')).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sl.appendChild(o)});
+    const D=PV&&PV.prov||{};
+    $('pmap').innerHTML=names.map(n=>{const [c,r]=T[n],w=win(D[n]);return `<button type="button" class="pt${w?' w-'+w:''}${n===sel?' on':''}" data-n="${n}" style="grid-column:${c+1};grid-row:${r+1}" aria-label="${n}">${ab(n)}</button>`}).join('');
+    const any=names.some(n=>win(D[n]));
+    $('plg').innerHTML=any?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join('')+'<span><i style="background:var(--line)"></i>Sin datos</span>':'';
+    drawPanel()}
+  function drawPanel(){const el=$('ppan');if(!sel){el.innerHTML='<p class="note" style="margin:0">Toca una provincia.</p>';return}
+    const p=PV&&PV.prov&&PV.prov[sel]||{},pc=p.pct||{},es=p.esc||{};
+    const rows=['PP','PSOE','VOX','SUMAR'].map(k=>{const v=pc[k];return `<div class="pb${v==null?' emp':''}"><span style="color:${C[k]}"><b>${k==='SUMAR'?'Sumar':NM[k]}</b></span><div class="db"><i style="width:${v==null?0:Math.min(100,v*2)}%;background:${C[k]}"></i></div><b>${v==null?'—':String(v).replace('.',',')+' %'}</b><small>${es[k]!=null?es[k]+' esc.':''}</small></div>`}).join('');
+    el.innerHTML=`<h4>${sel}</h4>${rows}<p class="note" style="margin:6px 0 0">${p.escrutado!=null?String(p.escrutado).replace('.',',')+' % escrutado':'Aún sin datos'}${p.part!=null?' · participación '+String(p.part).replace('.',',')+' %':''}</p>`}
+  function pick(n){sel=n;$('nsel').value=n;drawMap()}
   function draw(R){
     const has=R&&R.esc&&R.esc.PP!=null;
-    drawHemi(has?R:null);
-    $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Datos oficiales provisionales; la página se actualiza cada pocos minutos.`:
-      VEDA?`<b>Previsión congelada.</b> Desde el 24-nov no se publican encuestas nuevas ni cálculos nuevos; aquí se mantiene el último cálculo publicado (23-nov), sin actualizar, junto al escrutinio cuando empiece.`:
-      PRE?`<b>Esta página se activa el día de las elecciones, el 29 de noviembre.</b> Los resultados oficiales aparecerán aquí en cuanto el Ministerio del Interior empiece a publicar el escrutinio.`:
-      `<b>Esperando los primeros datos oficiales.</b> Esta página se actualiza sola.`;
+    drawHemi(has?R:null);drawTL();drawPart(R);drawMaj(has?R:null);
+    $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Se actualiza solo.`:PRE?`<b>Se activa el 29-N.</b> Los datos oficiales aparecerán aquí.`:`<b>Esperando datos oficiales.</b> Se actualiza solo.`;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
-    const showP=!!P,cell=k=>{if(!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k];return `<td class="m"><b>${e.c}</b><small>${e.p10}–${e.p90}</small></td>`};
-    const res=k=>{if(!has)return null;if(k==='SUMAR')return R.esc.SUMAR==null?null:R.esc.SUMAR+(R.esc.POD||0);return R.esc[k]!=null?R.esc[k]:null};
-    const dif=k=>{const r=res(k);if(r==null||!showP||!P.escanos[k])return'<td class="m">—</td>';const e=P.escanos[k],d=r-e.c,inR=r>=e.p10&&r<=e.p90;return `<td class="m"><span class="${inR?'ok':'ko'}">${d>0?'+':d<0?'−':'±'}${Math.abs(d)}</span><small>${inR?'en rango':'fuera'}</small></td>`};
-    const y=k=>`<td class="m">${S23[k]??'—'}</td>`;
-    let rows=BIG.map(k=>`<tr><td><b style="color:${COL[k]}">${NM[k]}</b></td><td class="m"><b>${res(k)??'—'}</b></td>${y(k)}</tr>`).join('');
-    if(has)rows+=REG.filter(k=>R.esc[k]).map(k=>`<tr><td>${NM[k]}</td><td class="m"><b>${R.esc[k]}</b></td>${y(k)}</tr>`).join('');
-    const pvR=has?R.esc.PP+R.esc.VOX:null;
-    rows+=`<tr class="avg"><td>PP + Vox<small>mayoría: 176</small></td><td class="m"><b>${pvR??'—'}</b>${pvR!=null?(pvR>=176?'<small>mayoría</small>':'<small>sin mayoría</small>'):''}</td><td class="m">171</td></tr>`;
-    $('ntab').innerHTML=`<thead><tr><th>Partido</th><th>Escaños</th><th>2023</th></tr></thead><tbody>${rows}</tbody>`;
   }
-  function load(){fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(draw).catch(()=>draw(null))}
-  draw(null);load();
-  if(!PRE)setInterval(load,120000);
+  function load(){fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(draw).catch(()=>draw(null));
+    fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
+  document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.pt');if(t)pick(t.dataset.n)});
+  $('nsel').addEventListener('change',e=>pick(e.target.value));
+  draw(null);drawMap();load();
+  if(!PRE)setInterval(load,60000);
 })();
