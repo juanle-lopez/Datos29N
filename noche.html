@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-title" content="Datos 29N">
 <meta name="color-scheme" content="light dark">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Public+Sans:wght@400;500;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=nd25">
+<link rel="stylesheet" href="assets/style.css?v=nd27">
 </head>
 <body>
 <div class="wrap">
@@ -54,10 +54,33 @@
       <p class="sources" style="margin:14px 0 0">Fuente de los resultados: Ministerio del Interior (escrutinio provisional). El enlace oficial se añadirá aquí cuando el Ministerio lo publique. Datos históricos: <a href="https://infoelectoral.interior.gob.es/" rel="noopener">infoelectoral.interior.gob.es</a>.</p>
     </div>
   </section>
+  <section class="sec" id="p_comp" aria-label="Comparativa con elecciones anteriores">
+    <div class="sech"><h2>Comparativa con las elecciones anteriores</h2><p class="lead">Elige una elección (28-A y 10-N de 2019, 23-J de 2023) y mírala frente a la media de encuestas de hoy: escaños, evolución y las 52 circunscripciones, una a una.</p></div>
+    <div id="ncomp">
+      <div class="presets" id="cchips" role="group" aria-label="Elección con la que comparar"></div>
+      <p class="banner" id="csum" aria-live="polite"></p>
+      <div class="hstats ccards" id="ccards"></div>
+      <div class="two" style="margin-top:18px">
+        <div><h3 style="margin:0 0 8px">Escaños por partido</h3><div id="cbars"></div></div>
+        <div><h3 style="margin:0 0 8px">Cómo han cambiado</h3><div id="cevo"></div><p class="note" style="margin:6px 0 0">Toca un punto para comparar con esa elección.</p></div>
+      </div>
+      <h3 style="margin:24px 0 8px">Provincia a provincia</h3>
+      <div class="presets" id="cparty" role="group" aria-label="Partido a comparar"></div>
+      <div class="ctl">
+        <div class="presets" id="cmetric" role="group" aria-label="Qué medir"><button type="button" data-m="pct" aria-pressed="true">% de voto</button><button type="button" data-m="esc" aria-pressed="false">Escaños</button></div>
+        <label>Ordenar <select id="csort"><option value="dif">Mayor cambio</option><option value="up">Mayor subida</option><option value="down">Mayor bajada</option><option value="size">Más escaños</option><option value="name">Nombre</option></select></label>
+        <label>Buscar <input id="cq" type="search" placeholder="Provincia" autocomplete="off"></label>
+      </div>
+      <p class="note" id="cprovsum" style="margin:10px 0" aria-live="polite"></p>
+      <div class="tw cscroll"><table class="etab" id="ctab"></table></div>
+      <p class="note" style="margin:8px 0 0">«Hoy» es la media de encuestas del 23-nov repartida por provincias como en el simulador (no es una previsión de cada provincia). «Primera fuerza» compara solo PP, PSOE, Vox y Sumar/Unidas Podemos (y Cs en 2019): en el País Vasco, Navarra, Cataluña, Galicia y Canarias pueden ganar partidos que aquí no entran. En Navarra, PP y UPN van juntos el 29-N; en 2019 PP y Cs concurrieron en coalición y Navarra aparece en blanco para ellos. Podemos va en lista propia el 29-N, así que «Sumar / Podemos» agrupa ambas opciones; en 2019 es Unidas Podemos.</p>
+      <p class="sources" style="margin:10px 0 0">Resultados históricos: Wikipedia, <i>Results breakdown of the Spanish general election</i> (Congreso) de abril y noviembre de 2019 y de 2023; los escaños suman los totales oficiales. Contrasta con <a href="https://infoelectoral.interior.gob.es/" rel="noopener">Infoelectoral (Ministerio del Interior)</a>. Escaños de 2023: PP 137 en estas tablas (138 con el escaño de UPN, que concurrió por separado).</p>
+    </div>
+  </section>
   <a class="nextp" href="prediccion.html"><small>Siguiente</small><b>Escaños hacia el 29‑N</b></a>
   <footer class="credit"><b>Datos 29N</b> es un proyecto independiente de elaboración propia, creado por <b>JuanLe</b>: el modelo, el análisis y el diseño son originales y no reproducen ninguna otra web. Se basa en datos abiertos obtenidos de fuentes públicas, enlazadas en cada apartado (ver Método). Sin publicidad ni vínculo con partidos o medios. © 2026 JuanLe. Todos los derechos reservados. Esta web no recomienda voto y no está vinculada a ningún partido. Se actualiza a diario. <a href="https://whatsapp.com/channel/0029Vb91PiRDZ4LUf4EDCI0I" target="_blank" rel="noopener">Canal de WhatsApp</a>.</footer>
 </div>
-<script src="assets/core.js?v=11241616"></script><script src="assets/prediccion-data.js?v=20261123a"></script><script src="assets/noche.js?v=6"></script>
+<script src="assets/core.js?v=11241616"></script><script src="assets/prediccion-data.js?v=20261123a"></script><script src="assets/noche.js?v=6"></script><script src="assets/comp-data.js?v=1"></script><script src="assets/noche-comp.js?v=2"></script>
 <script data-goatcounter="https://juanle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -1055,3 +1055,26 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 .pgb h4{margin:16px 0 6px;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
 .pgb ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px}
 .pgb sup a{font-weight:700;text-decoration:none}
+
+/* Día electoral: comparativa */
+#ncomp .ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-top:4px}
+#ncomp .ctl .presets{margin:0}
+#ncomp .ctl label{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+#ncomp select,#ncomp input{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--fg);min-width:0;max-width:100%}
+#ncomp .ccards b i{font-style:normal;font-size:.62em;color:var(--muted);font-weight:600}
+#ncomp .cbr{display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px;align-items:center;margin:8px 0;font-size:13px;font-weight:700}
+#ncomp .cb{height:15px;border-radius:3px;margin:2px 0;min-width:2px;position:relative}
+#ncomp .cb em{position:absolute;left:calc(100% + 5px);top:-1px;font:600 11px/15px var(--mono);font-style:normal;color:var(--fg)}
+#ncomp .ck{display:inline-block;width:11px;height:11px;border-radius:2px;background:var(--fg);margin-right:4px;vertical-align:-1px}
+#ncomp .cevo{width:100%;height:auto;display:block}
+#ncomp .cgr{stroke:var(--line);stroke-width:1}
+#ncomp .cax{fill:var(--muted);font-size:10px;font-family:var(--mono)}
+#ncomp .cax.on{fill:var(--fg);font-weight:700}
+#ncomp .ctag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--c);color:var(--c)}
+#ncomp tr.chg td{background:color-mix(in srgb,var(--panel) 70%,transparent);font-weight:600}
+#ncomp .dv{position:relative;height:9px;min-width:90px;background:var(--line);border-radius:3px;overflow:hidden}
+#ncomp .dv i{position:absolute;top:0;bottom:0}
+#ncomp .cscroll{max-height:560px;overflow:auto;margin-top:6px}
+#ncomp .cscroll th{position:sticky;top:0;background:var(--bg);z-index:1}
+@media(max-width:560px){#ncomp .cbr{grid-template-columns:78px minmax(0,1fr)}}
+#ncomp .etab th,#ncomp .etab td{padding:6px 5px}#ncomp .dv{min-width:56px}#ncomp .etab td small{white-space:nowrap}
