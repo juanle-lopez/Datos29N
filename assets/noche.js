@@ -107,6 +107,13 @@
   }
   function load(){lastCk=new Date();fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(R=>{lastData=R&&R.actualizado?hm(new Date(R.actualizado)):'';draw(R)}).catch(()=>draw(null));
     fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
+  // ---- compartir
+  (function(){const url='https://datos29n.juanle.net/noche.html',tx='Resultados del 29-N en directo, por provincia, sin opiniones y con fuentes: ';
+    const u=encodeURIComponent(url),t=encodeURIComponent(tx);
+    $('shw').href='https://wa.me/?text='+t+u;$('sht').href='https://t.me/share/url?url='+u+'&text='+t;$('shs').href='sms:?&body='+t+u;
+    const k=$('shk'),say=m=>{k.textContent=m;setTimeout(()=>{k.textContent=''},2500)};
+    $('shc').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>say('Enlace copiado'),()=>{const i=document.createElement('input');i.value=url;document.body.appendChild(i);i.select();try{document.execCommand('copy');say('Enlace copiado')}catch(e){say(url)}i.remove()})});
+    $('shb').addEventListener('click',()=>{if(navigator.share){navigator.share({title:'29-N en directo · Datos 29N',text:tx,url}).catch(()=>{})}else{$('shm').hidden=!$('shm').hidden}})})();
   $('rfb').addEventListener('click',()=>{const b=$('rfb');b.classList.add('spin');load();setTimeout(()=>b.classList.remove('spin'),900)});
   document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});

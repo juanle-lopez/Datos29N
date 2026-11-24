@@ -1165,3 +1165,11 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 @media(prefers-reduced-motion:reduce){.rfb svg{transition:none}}
 
 header.mini .rfb{margin-left:auto}
+.shr{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
+.shb{display:inline-flex;align-items:center;justify-content:center;gap:10px;flex:1;min-width:230px;border:0;border-radius:999px;background:var(--fg);color:var(--bg);padding:14px 22px;font:700 15px var(--sans,inherit);cursor:pointer;box-shadow:0 8px 22px -10px rgba(15,23,42,.55);transition:transform .15s,box-shadow .2s}
+.shb:hover{transform:translateY(-1px);box-shadow:0 12px 26px -10px rgba(15,23,42,.6)}.shb:active{transform:scale(.98)}
+.shb svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.shm{display:flex;flex-wrap:wrap;gap:8px;width:100%}.shm[hidden]{display:none}
+.shm a,.shm button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:8px 16px;font:600 13.5px var(--sans,inherit);text-decoration:none;cursor:pointer}
+.shm a:hover,.shm button:hover{border-color:var(--fg)}
+.shk{width:100%;min-height:16px;color:var(--muted);font-size:12.5px;text-align:center}
