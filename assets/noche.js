@@ -79,7 +79,7 @@
     const D=PV&&PV.prov||{};let any=false;
     box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?colr(wsel):(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
     if(sel){const se=[...box.querySelectorAll('.gp')].find(e=>e.dataset.n===sel);if(se)se.parentNode.appendChild(se)}
-    const ws=new Set(MAIN);Object.keys(D).forEach(n=>{const w=win(D[n]);if(w)ws.add(w)});
+    const ws=new Set(['PP','PSOE','VOX','SUMAR','POD','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN']);Object.keys(D).forEach(n=>{const w=win(D[n]);if(w)ws.add(w)});
     $('plg').innerHTML=(met==='win'?[...ws].map(k=>`<span><i style="background:${colr(k)}"></i>${nmf(k)}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>';
     drawPanel()}
   const MAIN=['PP','PSOE','VOX','SUMAR'];
