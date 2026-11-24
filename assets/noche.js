@@ -42,7 +42,7 @@
     $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[3][1]?'Se está votando':t<EV[4][1]?'Colegios cerrados':'Escrutinio en directo';
     $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'':'Escrutinio general: 4–7 dic';
     $('lck').textContent=lastCk?(hm(lastCk)+(lastData?' · datos de '+lastData:'')):'—';
-    $('live').classList.toggle('on',t>=EV[0][1])}
+    $('live').classList.toggle('on',t>=EV[0][1]);$('rfb').classList.toggle('on',t>=EV[0][1])}
   function drawTL(){tick()}
   // ---- barras de participación
   const PB=[['14:00','A las 14:00'],['18:00','A las 18:00'],['final','Final']];
