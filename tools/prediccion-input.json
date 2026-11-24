@@ -39,18 +39,6 @@
    "provisional": true
   },
   {
-   "e": "IMOP / El Confidencial",
-   "f": "2026-11-16",
-   "campoFin": "2026-11-13",
-   "PP": 31.5,
-   "PSOE": 26.9,
-   "VOX": 19.0,
-   "SUMAR": 7.8,
-   "nota": "Publicada 16-nov (cuarta oleada); campo 10–13 nov. Frente Amplio y Compromís–Front Valencià 6,9 + Podemos 0,9. Escaños según la fuente: PP 128, PSOE 109, Vox 66, Frente Amplio y Compromís 11, Podemos 0. PROVISIONAL: cifras vía Demócrata; original de El Confidencial no comprobado.",
-   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-psoe-suben-vox-pierde-cuatro-escanos-derecha-mantiene-mayoria-segun-imop/",
-   "provisional": true
-  },
-  {
    "e": "NC Report / La Razón",
    "f": "2026-11-16",
    "campoFin": "2026-11-12",
@@ -229,17 +217,29 @@
    "provisional": true,
    "fuente": "https://elvotoutil.org/encuestas/",
    "nota": "Publicada el 22-nov; campo 17–19 nov, 1.482 entrevistas. Frente Amplio 6,4 + Podemos 1,6. Escaños según Mapa Electoral: PP 130, PSOE 116, Vox 61. Encuesta nueva en la media. PROVISIONAL: cifras vía El Voto Útil y Mapa Electoral; original de Artículo14 no comprobado."
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-23",
+   "campoFin": "2026-11-19",
+   "PP": 31.7,
+   "PSOE": 27.4,
+   "VOX": 18.3,
+   "SUMAR": 8.1,
+   "provisional": true,
+   "fuente": "https://www.electografica.com/2026/11/encuesta-imop-insights-261123.html",
+   "nota": "Publicada el 23-nov en El Confidencial; campo 17–19 nov, 1.200 entrevistas (teléfono + online), margen ±2,8. PP incluye UPN-PP. Frente Amplio (con Compromís-FV y UPC) 7,4 + Podemos 0,7. Escaños según la fuente: PP 131, PSOE 110, Vox 64, Frente Amplio 11 (PP + Vox 195). PROVISIONAL: cifras vía Electográfica; original de El Confidencial no comprobado."
   }
  ],
  "cis": {
-  "e": "CIS (barómetro de octubre)",
-  "f": "2026-10-14",
-  "campo": "1–6 oct",
-  "PP": 22.2,
-  "PSOE": 34.0,
-  "VOX": 17.1,
-  "SUMAR": 9.2,
-  "url": "https://elecciones29noviembre.com/encuestas/"
+  "e": "CIS (barómetro de noviembre)",
+  "f": "2026-11-23",
+  "campo": "10–17 nov",
+  "PP": 24.7,
+  "PSOE": 34.4,
+  "VOX": 15.6,
+  "SUMAR": 6.5,
+  "url": "https://www.eldiariodemadrid.es/politica/encuesta-cis-elecciones-29n-2026-psoe-pp-vox-intencion-voto/20261123143602147737.html"
  },
  "tau": 14,
  "sdDeriva40": 1.0,
@@ -968,6 +968,42 @@
    "provisional": true,
    "fuente": "https://mapaelectoral.es/encuestas/",
    "nota": "Seguimiento difundido el 21-nov. Sumar/Frente Amplio 6,8 + Podemos 1,6. Escaños según Mapa Electoral: PP 121–127, PSOE 131–136, Vox 47–55. Campo no indicado. PROVISIONAL: cifras vía Mapa Electoral; original de La Séptima no comprobado.",
+   "tipo": "privada"
+  },
+  {
+   "e": "CIS",
+   "tipo": "cis",
+   "f": "2026-10-30",
+   "PP": 25.5,
+   "PSOE": 33.3,
+   "VOX": 18.4,
+   "SUMAR": 5.8,
+   "fuente": "https://www.cis.es/en/w/el-psoe-lograr%C3%ADa-el-33-3-de-los-votos-en-las-elecciones-generales-del-29n",
+   "nota": "Preelectoral (estudio 3584), publicado el 12-nov; campo 7–30 oct, 45.074 entrevistas. Frente Amplio 4,7 + Podemos 1,1. Cifras vía eldiario.es y tupapeleta.es; la página del CIS no se pudo abrir."
+  },
+  {
+   "e": "CIS",
+   "tipo": "cis",
+   "f": "2026-11-17",
+   "campo": "10–17 nov",
+   "PP": 24.7,
+   "PSOE": 34.4,
+   "VOX": 15.6,
+   "SUMAR": 6.5,
+   "fuente": "https://www.democrata.es/en/center-of-surveys-and-electoral-polls/the-cis-gives-the-psoe-an-advantage-of-almost-ten-points-over-the-pp-six-days-before-the-elections-of-29n/",
+   "nota": "Barómetro de noviembre (estudio 3587), publicado el 23-nov; campo 10–17 nov, 8.034 entrevistas. Frente Amplio 5,7 + Podemos 0,8."
+  },
+  {
+   "e": "IMOP / El Confidencial",
+   "f": "2026-11-16",
+   "campoFin": "2026-11-13",
+   "PP": 31.5,
+   "PSOE": 26.9,
+   "VOX": 19.0,
+   "SUMAR": 7.8,
+   "nota": "Publicada 16-nov (cuarta oleada); campo 10–13 nov. Frente Amplio y Compromís–Front Valencià 6,9 + Podemos 0,9. Escaños según la fuente: PP 128, PSOE 109, Vox 66, Frente Amplio y Compromís 11, Podemos 0. PROVISIONAL: cifras vía Demócrata; original de El Confidencial no comprobado.",
+   "fuente": "https://www.democrata.es/encuestas/elecciones-generales/encuesta-elecciones-generales-pp-psoe-suben-vox-pierde-cuatro-escanos-derecha-mantiene-mayoria-segun-imop/",
+   "provisional": true,
    "tipo": "privada"
   }
  ],

@@ -3,6 +3,20 @@
  "nota": "Selección manual; titulares tal como los mostró el buscador; no ordenados por importancia.",
  "items": [
   {
+   "medio": "Demócrata / El Confidencial",
+   "fecha": "23 nov",
+   "url": "https://democrata.es/encuestas/elecciones-generales/imop-pp-vox-195-escanos-29n",
+   "titular": "Encuesta de las elecciones generales: el PP gana los ocho escaños que pierde Vox desde octubre y la derecha suma 195",
+   "tema": "Encuestas"
+  },
+  {
+   "medio": "El Diario de Madrid",
+   "fecha": "23 nov",
+   "url": "https://www.eldiariodemadrid.es/politica/encuesta-cis-elecciones-29n-2026-psoe-pp-vox-intencion-voto/20261123143602147737.html",
+   "titular": "Encuesta CIS elecciones 29N: PSOE 34,4 %, PP 24,7 % y Vox 15,6 %",
+   "tema": "Encuestas"
+  },
+  {
    "medio": "Demócrata / OKDiario",
    "fecha": "23 nov",
    "url": "https://www.democrata.es/encuestas/elecciones-generales/elecciones-generales-tracking-data10-29n-pp-psoe-194-escanos/",
