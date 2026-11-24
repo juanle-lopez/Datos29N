@@ -1146,3 +1146,14 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 @media(max-width:640px){#p_noche .exec{gap:28px}#p_noche .ntl li{font-size:10px}#p_noche .ntl li b{font-size:13px}#p_noche .pb{grid-template-columns:minmax(0,96px) 1fr 58px}}
 #p_noche .exec{display:block}#p_noche .exec>*+*{margin-top:14px}#p_noche .exec>.nh{margin-top:38px;margin-bottom:14px}#p_noche .exec>.ntl{margin-top:6px}
 #p_noche .ppan h4{font-weight:800}
+
+#p_noche .live{display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:16px;background:var(--panel);flex-wrap:wrap}
+#p_noche .live .ld{width:12px;height:12px;border-radius:50%;background:var(--muted);flex:none}
+#p_noche .live.on .ld{background:#e5484d;box-shadow:0 0 0 0 rgba(229,72,77,.6);animation:lpulse 1.6s infinite}
+@keyframes lpulse{70%{box-shadow:0 0 0 10px rgba(229,72,77,0)}100%{box-shadow:0 0 0 0 rgba(229,72,77,0)}}
+#p_noche .live .lt{flex:1;min-width:180px;display:grid;gap:2px}#p_noche .live .lt b{font:800 clamp(20px,5vw,26px) var(--head,inherit);letter-spacing:-.01em}
+#p_noche .live small{color:var(--muted);font-size:12.5px}
+#p_noche .live .lu{text-align:right;display:grid;gap:2px}#p_noche .live .lu b{font:600 14px var(--mono)}
+@media(max-width:520px){#p_noche .live .lu{text-align:left;width:100%}}
+@media(prefers-reduced-motion:reduce){#p_noche .live.on .ld{animation:none}}
+#p_noche .ppan{border-top:4px solid var(--line);transition:border-color .3s}#p_noche .gp.on{stroke-width:3}

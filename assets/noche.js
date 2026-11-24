@@ -32,10 +32,18 @@
       const sub=has?(b!=null?`${v-b>0?'+':v-b<0?'−':'±'}${Math.abs(v-b)} vs 2023`:'sin dato de 2023'):(b!=null?`2023: ${b}`:k==='POD'?'2023: dentro de Sumar':'2023: —');
       return `<div class="hs${has?'':' emp'}" style="--c:${C[k]}"><span>${NM[k]==='Sumar + Podemos'?'Sumar':NM[k]}</span><b>${has?v:'—'}</b><small>${sub}</small></div>`}).join('');
   }
-  // ---- cronología del día
-  const STEPS=[['09:00','Abren','2026-11-29T09:00'],['14:00','Participación','2026-11-29T14:00'],['18:00','Participación','2026-11-29T18:00'],['20:00','Cierran','2026-11-29T20:00'],['21:00','Resultados','2026-11-29T21:00'],['4 dic','Escrutinio final','2026-12-04T09:00']];
-  function drawTL(){let cur=-1;STEPS.forEach((s,i)=>{if(now>=s[2])cur=i});
-    $('ntl').innerHTML=STEPS.map((s,i)=>`<li class="${i<cur?'done':i===cur?'cur':''}"><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}
+  // ---- estado en vivo: fase, cuenta atrás y última comprobación
+  const EV=[['Abren los colegios','2026-11-29T09:00:00+01:00'],['Participación de las 14:00','2026-11-29T14:00:00+01:00'],['Participación de las 18:00','2026-11-29T18:00:00+01:00'],['Cierran los colegios','2026-11-29T20:00:00+01:00'],['Primeros resultados','2026-11-29T21:00:00+01:00']].map(e=>[e[0],Date.parse(e[1])]);
+  let lastCk=null,lastData='';
+  const dur=ms=>{const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),r=s%60;
+    return d?`${d} d ${h} h`:h?`${h} h ${String(m).padStart(2,'0')} min`:`${m} min ${String(r).padStart(2,'0')} s`};
+  const hm=d=>d.toLocaleTimeString('es-ES',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  function tick(){const t=Date.now(),nx=EV.find(e=>e[1]>t);
+    $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[3][1]?'Se está votando':t<EV[4][1]?'Colegios cerrados':'Escrutinio en directo';
+    $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'':'Escrutinio general: 4–7 dic';
+    $('lck').textContent=lastCk?(hm(lastCk)+(lastData?' · datos de '+lastData:'')):'—';
+    $('live').classList.toggle('on',t>=EV[0][1])}
+  function drawTL(){tick()}
   // ---- barras de participación
   const PB=[['14:00','A las 14:00'],['18:00','A las 18:00'],['final','Final']];
   function drawPart(R){const p=R&&R.part||{},m=R&&R.mesas||{};
@@ -68,7 +76,7 @@
       box.innerHTML=h;svgOK=true}
     $('nmet').innerHTML=MET.map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===met}">${l}</button>`).join('');
     const D=PV&&PV.prov||{};let any=false;
-    box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;el.style.fill=s?s.bg:'';el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
+    box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?C[wsel]:(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
     $('plg').innerHTML=any?(met==='win'?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>':'<span>El mapa se colorea con los primeros resultados.</span>';
     drawPanel()}
   const MAIN=['PP','PSOE','VOX','SUMAR'];
@@ -78,9 +86,9 @@
     return ks.map(k=>{const v=pc[k],col=C[k]||'var(--reg)',nm=k==='SUMAR'?'Sumar':(NM[k]||k);
       return `<div class="pb${v==null?' emp':''}"><span style="color:${col}"><b>${nm}</b></span><div class="db"><i style="width:${v==null?0:v/mx*100}%;background:${col}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('')};
   function drawPanel(){const el=$('ppan');
-    if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
-    if(!sel){el.innerHTML='<p class="note" style="margin:0">Toca una provincia o elígela en la lista.</p>';return}
-    const p=PV&&PV.prov&&PV.prov[sel]||{};
+    if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){const w=win(m);el.style.borderTopColor=w?C[w]:'var(--line)';el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
+    if(!sel){el.style.borderTopColor='var(--line)';el.innerHTML='<p class="note" style="margin:0">Toca una provincia o elígela en la lista.</p>';return}
+    const p=PV&&PV.prov&&PV.prov[sel]||{};const w=win(p);el.style.borderTopColor=w?C[w]:'var(--line)';
     el.innerHTML=`<h4>${sel}</h4>${bars(p.pct,p.esc)}<p class="note" style="margin:6px 0 0">${p.escrutado!=null?f1(p.escrutado)+' % escrutado':'Aún sin datos'}${p.part!=null?' · participación '+f1(p.part)+' %':''}</p>`}
   function loadMun(){const ms=$('nmun');msel='';MUN=null;ms.innerHTML='<option value="">Elige provincia</option>';ms.disabled=true;if(!sel)return;
     ms.innerHTML='<option value="">Cargando…</option>';const code=(window.CODES||{})[sel],mine=sel;
@@ -94,11 +102,11 @@
     $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Se actualiza solo.`:PRE?`<b>Se activa el 29-N.</b> Los datos oficiales aparecerán aquí.`:`<b>Esperando datos oficiales.</b> Se actualiza solo.`;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
   }
-  function load(){fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(draw).catch(()=>draw(null));
+  function load(){lastCk=new Date();fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(R=>{lastData=R&&R.actualizado?hm(new Date(R.actualizado)):'';draw(R)}).catch(()=>draw(null));
     fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
   document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
   $('nsel').addEventListener('change',e=>pick(e.target.value));
-  draw(null);drawMap();load();
+  draw(null);drawMap();load();setInterval(tick,1000);
   if(!PRE)setInterval(load,60000);
 })();
