@@ -1,5 +1,5 @@
 {
- "nota": "Escrutinio provisional del Ministerio del Interior. Se rellena la noche del 29-N; null = aún sin datos. SUMAR = Sumar y sus confluencias sin Podemos; POD = Podemos; OTROS = cualquier otra candidatura con escaños. En Navarra, PP y UPN concurren en coalición: sus escaños se cuentan en PP. part = % de participación en los cortes oficiales (14:00, 18:00, final); mesas = constituidas / total.",
+ "nota": "Escrutinio provisional del Ministerio del Interior. Se rellena la noche del 29-N; null = aún sin datos. SUMAR = Sumar y sus confluencias sin Podemos; POD = Podemos; OTROS = cualquier otra candidatura con escaños. En Navarra, PP y UPN concurren en coalición: sus escaños se cuentan en PP. part.serie = lecturas oficiales de participación, tantas como se publiquen: [{\"hora\":\"HH:MM\",\"v\":% de participación}], en orden. mesas = constituidas / total.",
  "actualizado": null,
  "escrutado": null,
  "fuente": null,
@@ -18,9 +18,7 @@
   "OTROS": null
  },
  "part": {
-  "14:00": null,
-  "18:00": null,
-  "final": null
+  "serie": []
  },
  "mesas": {
   "constituidas": null,

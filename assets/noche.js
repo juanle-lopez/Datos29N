@@ -33,23 +33,25 @@
       return `<div class="hs${has?'':' emp'}" style="--c:${C[k]}"><span>${NM[k]==='Sumar + Podemos'?'Sumar':NM[k]}</span><b>${has?v:'—'}</b><small>${sub}</small></div>`}).join('');
   }
   // ---- estado en vivo: fase, cuenta atrás y última comprobación
-  const EV=[['Abren los colegios','2026-11-29T09:00:00+01:00'],['Participación de las 14:00','2026-11-29T14:00:00+01:00'],['Participación de las 18:00','2026-11-29T18:00:00+01:00'],['Cierran los colegios','2026-11-29T20:00:00+01:00'],['Primeros resultados','2026-11-29T21:00:00+01:00']].map(e=>[e[0],Date.parse(e[1])]);
+  const EV=[['Abren los colegios','2026-11-29T09:00:00+01:00'],['Cierran los colegios','2026-11-29T20:00:00+01:00'],['Primeros resultados','2026-11-29T21:00:00+01:00']].map(e=>[e[0],Date.parse(e[1])]);
   let lastCk=null,lastData='';
   const dur=ms=>{const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),r=s%60;
     return d?`${d} d ${h} h`:h?`${h} h ${String(m).padStart(2,'0')} min`:`${m} min ${String(r).padStart(2,'0')} s`};
   const hm=d=>d.toLocaleTimeString('es-ES',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'});
   function tick(){const t=Date.now(),nx=EV.find(e=>e[1]>t);
-    $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[3][1]?'Se está votando':t<EV[4][1]?'Colegios cerrados':'Escrutinio en directo';
+    $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[1][1]?'Se está votando':t<EV[2][1]?'Colegios cerrados':'Escrutinio en directo';
     $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'':'Escrutinio general: 4–7 dic';
     $('lck').textContent=lastCk?(hm(lastCk)+(lastData?' · datos de '+lastData:'')):'—';
     $('live').classList.toggle('on',t>=EV[0][1]);$('rfb').classList.toggle('on',t>=EV[0][1])}
   function drawTL(){tick()}
-  // ---- barras de participación
-  const PB=[['14:00','A las 14:00'],['18:00','A las 18:00'],['final','Final']];
-  function drawPart(R){const p=R&&R.part||{},m=R&&R.mesas||{};
-    let h=PB.map(([k,l])=>{const v=p[k];return `<div class="pb${v==null?' emp':''}"><span>${l}</span><div class="db"><i style="width:${v==null?0:v}%"></i></div><b>${v==null?'—':String(v).replace('.',',')+' %'}</b></div>`}).join('');
+  // ---- participación: tantas lecturas como publique Interior (sin horas fijas)
+  function drawPart(R){const S=(R&&R.part&&R.part.serie||[]).filter(x=>x&&x.v!=null),m=R&&R.mesas||{};
+    const last=S[S.length-1];let h='';
+    h+=`<div class="pbig${last?'':' emp'}"><b>${last?f1(last.v)+' %':'—'}</b><span>${last?'participación a las '+last.hora:'participación: sin datos todavía'}</span></div>`;
+    if(S.length>1){const W=300,H=70,mx=Math.max(...S.map(x=>x.v),1)*1.1,pts=S.map((x,i)=>[8+i*(W-16)/(S.length-1),H-8-(x.v/mx)*(H-16)]);
+      h+=`<svg class="pspark" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución de la participación"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}"/>${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5"><title>${S[i].hora}: ${f1(S[i].v)} %</title></circle>`).join('')}</svg><div class="plab"><span>${S[0].hora}</span><span>${last.hora}</span></div>`}
     const mp=m.constituidas!=null&&m.total?Math.round(1000*m.constituidas/m.total)/10:null;
-    h+=`<div class="pb${mp==null?' emp':''}"><span>Mesas</span><div class="db"><i style="width:${mp==null?0:mp}%"></i></div><b>${mp==null?'—':String(mp).replace('.',',')+' %'}</b></div>`;
+    h+=`<div class="pb${mp==null?' emp':''}"><span>Mesas</span><div class="db"><i style="width:${mp==null?0:mp}%"></i></div><b>${mp==null?'—':f1(mp)+' %'}</b></div>`;
     $('npart').innerHTML=h}
   // ---- mayoría: dos barras hasta 176
   function drawMaj(R){const E=R&&R.esc||{},has=E.PP!=null;
