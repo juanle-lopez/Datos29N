@@ -49,8 +49,6 @@
     const row=(l,v,c)=>`<div class="mj"><span>${l}</span><div class="db"><i style="width:${v==null?0:Math.min(100,v/176*100)}%;background:${c}"></i><u></u></div><b>${v==null?'—':v}</b></div>`;
     $('nmaj').innerHTML=row('PP + Vox',a,'var(--pp)')+row('PSOE + Sumar + Podemos + ERC, Junts, Bildu, PNV, BNG, CC',b,'var(--psoe)')+'<p class="note" style="margin:2px 0 0">La línea marca 176, la mayoría absoluta.</p>'}
   // ---- mapa de provincias
-  const AB={'A Coruña':'CRU','Araba/Álava':'ÁLA','Illes Balears':'BAL','Las Palmas':'LPA','Santa Cruz de Tenerife':'TEN','La Rioja':'RIO','Ciudad Real':'CRE','Castellón':'CAS','Cádiz':'CÁD','Cáceres':'CÁC','Guadalajara':'GUA','Gipuzkoa':'GIP','Girona':'GIR','Granada':'GRA','Huesca':'HSC','Huelva':'HUV'};
-  const ab=n=>AB[n]||n.slice(0,3).toUpperCase();
   let PV=null,sel='',met='win',MUN=null,msel='';
   const MET=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['part','Participación']];
   const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;['PP','PSOE','VOX','SUMAR'].forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
@@ -60,11 +58,17 @@
     if(met==='win'){const w=win(p);return w?{bg:C[w],tx:'#fff',tip:NM[w]}:null}
     if(met==='part'){return p.part!=null?{bg:mix('var(--fg)',(p.part-45)*2.2),tx:p.part>62?'var(--bg)':'var(--fg)',tip:f1(p.part)+' %'}:null}
     const v=p.pct&&p.pct[met];return v!=null?{bg:mix(C[met],v*2.6),tx:v>22?'#fff':'var(--fg)',tip:f1(v)+' %'}:null}
-  function drawMap(){const T=window.TILES||{},names=Object.keys(T);const sl=$('nsel');
+  let svgOK=false;
+  function drawMap(){const G=GEO,names=Object.keys(G.p),box=$('pmap');const sl=$('nsel');
     if(sl.options.length<2)names.slice().sort((x,y)=>x.localeCompare(y,'es')).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sl.appendChild(o)});
+    if(!svgOK){let h=`<svg class="gm" viewBox="0 0 ${G.w} ${G.h}" role="group" aria-label="Mapa de España por provincias">`;
+      names.forEach(n=>{const q=n.replace(/"/g,'&quot;');if(n==='Ceuta'||n==='Melilla')return;h+=`<path class="gp" data-n="${q}" d="${G.p[n].d}"><title></title></path>`});
+      ['Ceuta','Melilla'].forEach(n=>{const c=G.p[n].c;h+=`<circle class="gp" data-n="${n}" cx="${c[0]}" cy="${c[1]}" r="9"><title></title></circle>`});
+      const f=G.inset;h+=`<rect class="ginset" x="${f[0]}" y="${f[1]}" width="${f[2]}" height="${f[3]}" rx="6"/><text class="gil" x="${f[0]+8}" y="${f[1]+16}">Canarias</text></svg>`;
+      box.innerHTML=h;svgOK=true}
     $('nmet').innerHTML=MET.map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===met}">${l}</button>`).join('');
     const D=PV&&PV.prov||{};let any=false;
-    $('pmap').innerHTML=names.map(n=>{const [c,r]=T[n],s=tileStyle(D[n]);if(s)any=true;return `<button type="button" class="pt${n===sel?' on':''}" data-n="${n}" title="${n}${s?' · '+s.tip:''}" style="grid-column:${c+1};grid-row:${r+1}${s?`;background:${s.bg};color:${s.tx}`:''}" aria-label="${n}${s?', '+s.tip:''}">${ab(n)}</button>`}).join('');
+    box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;el.style.fill=s?s.bg:'';el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
     $('plg').innerHTML=any?(met==='win'?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>':'<span>El mapa se colorea con los primeros resultados.</span>';
     drawPanel()}
   const bars=(pc,es,p23)=>['PP','PSOE','VOX','SUMAR'].map(k=>{const v=pc&&pc[k];return `<div class="pb${v==null?' emp':''}"><span style="color:${C[k]}"><b>${k==='SUMAR'?'Sumar':NM[k]}</b></span><div class="db"><i style="width:${v==null?0:Math.min(100,v*2)}%;background:${C[k]}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('');
@@ -87,7 +91,7 @@
   }
   function load(){fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(draw).catch(()=>draw(null));
     fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
-  document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.pt');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
+  document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
   $('nsel').addEventListener('change',e=>pick(e.target.value));
   draw(null);drawMap();load();
