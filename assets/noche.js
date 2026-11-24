@@ -62,7 +62,7 @@
     $('nmaj').innerHTML=row('PP + Vox',a,'var(--pp)')+row('PSOE + Sumar + Podemos + ERC, Junts, Bildu, PNV, BNG, CC',b,'var(--psoe)')+'<p class="note" style="margin:2px 0 0">La línea marca 176, la mayoría absoluta.</p>'}
   // ---- mapa de provincias
   let PV=null,sel='',met='win',MUN=null,msel='';
-  const MET=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['part','Participación']];
+  const MET=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['POD','Podemos'],['ERC','ERC'],['JUNTS','Junts'],['BILDU','EH Bildu'],['PNV','PNV'],['BNG','BNG'],['CCa','CC'],['UPN','UPN'],['part','Participación']];
   const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;Object.keys(p.pct).forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
   const colr=k=>C[k]||'var(--reg)',nmf=k=>k==='SUMAR'?'Sumar':(NM[k]||k);
   const mix=(c,x)=>`color-mix(in srgb,${c} ${Math.round(Math.max(12,Math.min(100,x)))}%,var(--line))`;
@@ -70,7 +70,7 @@
   function tileStyle(p){if(!p)return null;
     if(met==='win'){const w=win(p);return w?{bg:colr(w),tx:'#fff',tip:nmf(w)}:null}
     if(met==='part'){return p.part!=null?{bg:mix('var(--fg)',(p.part-45)*2.2),tx:p.part>62?'var(--bg)':'var(--fg)',tip:f1(p.part)+' %'}:null}
-    const v=p.pct&&p.pct[met];return v!=null?{bg:mix(C[met],v*2.6),tx:v>22?'#fff':'var(--fg)',tip:f1(v)+' %'}:null}
+    const v=p.pct&&p.pct[met];return v!=null?{bg:mix(colr(met),v*2.6),tx:v>22?'#fff':'var(--fg)',tip:f1(v)+' %'}:null}
   let svgOK=false;
   function drawMap(){const G=GEO,names=Object.keys(G.p),box=$('pmap');const sl=$('nsel');
     if(sl.options.length<2)names.slice().sort((x,y)=>x.localeCompare(y,'es')).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sl.appendChild(o)});
@@ -84,7 +84,7 @@
     box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?colr(wsel):(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
     if(sel){const se=[...box.querySelectorAll('.gp')].find(e=>e.dataset.n===sel);if(se)se.parentNode.appendChild(se)}
     const ws=new Set(['PP','PSOE','VOX','SUMAR','POD','ERC','JUNTS','BILDU','PNV','BNG','CCa','UPN']);Object.keys(D).forEach(n=>{const w=win(D[n]);if(w)ws.add(w)});
-    $('plg').innerHTML=(met==='win'?[...ws].map(k=>`<span><i style="background:${colr(k)}"></i>${nmf(k)}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>';
+    $('plg').innerHTML=(met==='win'?[...ws].map(k=>`<span><i style="background:${colr(k)}"></i>${nmf(k)}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':colr(met),15)},${met==='part'?'var(--fg)':colr(met)})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>';
     drawPanel()}
   const MAIN=['PP','PSOE','VOX','SUMAR'];
   const bars=(pc,es,p23)=>{pc=pc||{};
