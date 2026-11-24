@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded',function(){rvScan();window.rvReady=tr
     ['vuelos.html','Falcon','Cada vuelo registrado de los aviones oficiales, con fuentes','<path d="M12 2.8c.9 0 1.5.8 1.5 1.8v4.6l7.5 4.4v2l-7.5-2.3v4.4l2 1.5v1.6L12 19.8l-3.5 1v-1.6l2-1.5v-4.4L3 15.6v-2l7.5-4.4V4.6c0-1 .6-1.8 1.5-1.8z"/>'],
     ['promesas.html','Promesas','Promesas cumplidas e incumplidas, con cita y fuente','<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>'],
     ['gastos.html','Gastos','Gasto público desde 2018, sueldos y vuelos oficiales','<circle cx="12" cy="12" r="9"/><path d="M15.5 8.7a4 4 0 100 6.6M7.5 11h6M7.5 13.2h6"/>'],
-    ['noche.html','Día electoral','El 29-N: resultados oficiales frente a la previsión','<path d="M3 19a9 9 0 0118 0M7.5 19a4.5 4.5 0 019 0M12 19v-.01M3 19h18"/>'],
+    ['noche.html','Día electoral','El 29-N: resultados oficiales en directo','<path d="M3 19a9 9 0 0118 0M7.5 19a4.5 4.5 0 019 0M12 19v-.01M3 19h18"/>'],
     ['entrevistas.html','Entrevistas y debates','Wild y el resto: fechas, estado y fuentes','<path d="M12 3a3 3 0 013 3v5a3 3 0 01-6 0V6a3 3 0 013-3zM6 11a6 6 0 0012 0M12 17v4M9 21h6"/>'],
     ['casos.html','Casos','Casos judiciales y su estado, con presunción de inocencia y fuentes','<path d="M12 3v18M6 21h12M5 7h14M5 7l-3 7a3.5 3.5 0 007 0zM19 7l-3 7a3.5 3.5 0 007 0z"/>'],
     ['mesas.html','Mesas electorales','Si te toca: plazos, causas para no ir y calculadora','<path d="M3 11h18v9H3zM7 11V4h10v7M10 7.5h4M9 15.5h6"/>'],
