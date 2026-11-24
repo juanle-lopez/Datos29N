@@ -124,7 +124,7 @@
     $('shw').href='https://wa.me/?text='+t+u;$('sht').href='https://t.me/share/url?url='+u+'&text='+t;$('shs').href='sms:?&body='+t+u;
     const k=$('shk'),say=m=>{k.textContent=m;setTimeout(()=>{k.textContent=''},2500)};
     $('shc').addEventListener('click',()=>{(navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(()=>say('Enlace copiado'),()=>{const i=document.createElement('input');i.value=url;document.body.appendChild(i);i.select();try{document.execCommand('copy');say('Enlace copiado')}catch(e){say(url)}i.remove()})});
-    $('shb').addEventListener('click',()=>{if(navigator.share){navigator.share({title:'29-N en directo · Datos 29N',text:tx,url}).catch(()=>{})}else{$('shm').hidden=!$('shm').hidden}})})();
+    $('shb').addEventListener('click',e=>{e.stopPropagation();if(navigator.share){navigator.share({title:'29-N en directo · Datos 29N',text:tx,url}).catch(()=>{})}else{$('shm').hidden=!$('shm').hidden}});document.addEventListener('click',e=>{if(!e.target.closest('#shm'))$('shm').hidden=true})})();
   $('rfb').addEventListener('click',()=>refresh());
   document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
