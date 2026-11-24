@@ -71,7 +71,12 @@
     box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;el.style.fill=s?s.bg:'';el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
     $('plg').innerHTML=any?(met==='win'?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>':'<span>El mapa se colorea con los primeros resultados.</span>';
     drawPanel()}
-  const bars=(pc,es,p23)=>['PP','PSOE','VOX','SUMAR'].map(k=>{const v=pc&&pc[k];return `<div class="pb${v==null?' emp':''}"><span style="color:${C[k]}"><b>${k==='SUMAR'?'Sumar':NM[k]}</b></span><div class="db"><i style="width:${v==null?0:Math.min(100,v*2)}%;background:${C[k]}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('');
+  const MAIN=['PP','PSOE','VOX','SUMAR'];
+  const bars=(pc,es,p23)=>{pc=pc||{};
+    let ks=Object.keys(pc).filter(k=>pc[k]!=null).sort((x,y)=>pc[y]-pc[x]);
+    const has=ks.length>0;if(!has)ks=MAIN;const mx=has?Math.max(...ks.map(k=>pc[k]),1):1;
+    return ks.map(k=>{const v=pc[k],col=C[k]||'var(--reg)',nm=k==='SUMAR'?'Sumar':(NM[k]||k);
+      return `<div class="pb${v==null?' emp':''}"><span style="color:${col}"><b>${nm}</b></span><div class="db"><i style="width:${v==null?0:v/mx*100}%;background:${col}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('')};
   function drawPanel(){const el=$('ppan');
     if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
     if(!sel){el.innerHTML='<p class="note" style="margin:0">Toca una provincia o elígela en la lista.</p>';return}
