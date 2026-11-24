@@ -113,11 +113,11 @@
     return Promise.all([p1,p2])}
   // ---- botón de actualizar como barra de progreso con los colores del logotipo
   let rfT=0;
-  function refresh(first){const b=$('rfb'),f=b.querySelector('i'),l=b.querySelector('span');clearTimeout(rfT);
-    b.classList.remove('done');b.classList.add('run');f.style.transition='none';f.style.width='0%';l.textContent='Actualizando…';
+  function refresh(){const b=$('rfb'),u=$('upb'),f=u.querySelector('i');clearTimeout(rfT);
+    b.classList.add('run');u.classList.remove('done');f.style.transition='none';f.style.width='0%';u.setAttribute('aria-valuenow','0');
     void f.offsetWidth;f.style.transition='width 1.6s cubic-bezier(.2,.7,.2,1)';f.style.width='88%';
     const t0=Date.now();
-    load().then(()=>{const w=Math.max(0,700-(Date.now()-t0));rfT=setTimeout(()=>{f.style.transition='width .35s ease-out';f.style.width='100%';rfT=setTimeout(()=>{b.classList.remove('run');b.classList.add('done');l.textContent='Actualizado'},380)},w)})}
+    load().then(()=>{const w=Math.max(0,700-(Date.now()-t0));rfT=setTimeout(()=>{f.style.transition='width .35s ease-out';f.style.width='100%';u.setAttribute('aria-valuenow','100');rfT=setTimeout(()=>{b.classList.remove('run');u.classList.add('done')},380)},w)})}
   // ---- compartir
   (function(){const url='https://datos29n.juanle.net/noche.html',tx='Resultados del 29-N en directo, por provincia, sin opiniones y con fuentes: ';
     const u=encodeURIComponent(url),t=encodeURIComponent(tx);
