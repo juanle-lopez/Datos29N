@@ -1195,3 +1195,6 @@ header.mini{align-items:flex-start}
 .upb{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:0 0 22px}
 .upb i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#4b9be0,#ef6a62,#74c063,#cf6fc0)}
 @media(prefers-reduced-motion:reduce){.shi.run svg{animation:none}.upb i{transition:none!important}}
+header.mini{max-width:100%;box-sizing:border-box;padding-right:max(0px,env(safe-area-inset-right,0px));min-width:0}
+header.mini .brand{min-width:0}.hact{flex:none;max-width:100%}
+.hact .shm{right:0;left:auto;max-width:calc(100vw - 24px)}
