@@ -40,14 +40,14 @@
   const hm=d=>d.toLocaleTimeString('es-ES',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'});
   function tick(){const t=Date.now(),nx=EV.find(e=>e[1]>t);
     $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[1][1]?'Se está votando':t<EV[2][1]?'Colegios cerrados':'Escrutinio en directo';
-    $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'':'Escrutinio general: 4–7 dic';
+    $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'Aquí aparecerán los resultados oficiales':'Escrutinio general: 4–7 dic';
     $('lck').textContent=lastCk?(hm(lastCk)+(lastData?' · datos de '+lastData:'')):'—';
     $('live').classList.toggle('on',t>=EV[0][1]);$('rfb').classList.toggle('on',t>=EV[0][1])}
   function drawTL(){tick()}
   // ---- participación: tantas lecturas como publique Interior (sin horas fijas)
   function drawPart(R){const S=(R&&R.part&&R.part.serie||[]).filter(x=>x&&x.v!=null),m=R&&R.mesas||{};
     const last=S[S.length-1];let h='';
-    h+=`<div class="pbig${last?'':' emp'}"><b>${last?f1(last.v)+' %':'—'}</b><span>${last?'participación a las '+last.hora:'participación: sin datos todavía'}</span></div>`;
+    h+=last?`<div class="pbig"><b>${f1(last.v)} %</b><span>participación a las ${last.hora}</span></div>`:`<div class="pb emp"><span>Participación</span><div class="db"><i style="width:0%"></i></div><b>—</b></div>`;
     if(S.length>1){const W=300,H=70,mx=Math.max(...S.map(x=>x.v),1)*1.1,pts=S.map((x,i)=>[8+i*(W-16)/(S.length-1),H-8-(x.v/mx)*(H-16)]);
       h+=`<svg class="pspark" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolución de la participación"><polyline points="${pts.map(p=>p.map(n=>n.toFixed(1)).join(',')).join(' ')}"/>${pts.map((p,i)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3.5"><title>${S[i].hora}: ${f1(S[i].v)} %</title></circle>`).join('')}</svg><div class="plab"><span>${S[0].hora}</span><span>${last.hora}</span></div>`}
     const mp=m.constituidas!=null&&m.total?Math.round(1000*m.constituidas/m.total)/10:null;
@@ -104,7 +104,7 @@
   function draw(R){
     const has=R&&R.esc&&R.esc.PP!=null;
     drawHemi(has?R:null);drawTL();drawPart(R);drawMaj(has?R:null);
-    $('nstate').innerHTML=has?`<b>Escrutinio en curso.</b> Se actualiza solo.`:PRE?`<b>Se activa el 29-N.</b> Los datos oficiales aparecerán aquí.`:`<b>Esperando datos oficiales.</b> Se actualiza solo.`;
+    $('nstate').hidden=true;
     if(has){$('nprog').hidden=false;$('nbar').style.width=(R.escrutado||0)+'%';$('npct').textContent=`${String(R.escrutado).replace('.',',')} % escrutado`;$('nupd').textContent=R.actualizado?'· '+fmt(R.actualizado):''}
   }
   function load(){lastCk=new Date();

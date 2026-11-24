@@ -1198,3 +1198,12 @@ header.mini{align-items:flex-start}
 header.mini{max-width:100%;box-sizing:border-box;padding-right:max(0px,env(safe-area-inset-right,0px));min-width:0}
 header.mini .brand{min-width:0}.hact{flex:none;max-width:100%}
 .hact .shm{right:0;left:auto;max-width:calc(100vw - 24px)}
+
+/* cabecera de Día electoral: título + acciones, y tarjeta de estado compacta */
+.sh2{display:flex;align-items:center;justify-content:space-between;gap:12px}.sh2 h2{margin:0;min-width:0}.sh2 .hact{margin:0}
+#p_noche .live{display:grid;grid-template-columns:auto 1fr auto;column-gap:12px;row-gap:2px;align-items:center;padding:12px 16px;border-radius:14px}
+#p_noche .live .lt{min-width:0;display:grid;gap:1px}#p_noche .live .lt b{font-size:clamp(17px,4.6vw,22px)}
+#p_noche .live .lu{text-align:right;white-space:nowrap}#p_noche .live .lu b{font:600 12.5px var(--mono);color:var(--fg);margin-left:4px}
+@media(max-width:560px){#p_noche .live{grid-template-columns:auto 1fr}#p_noche .live .lu{grid-column:2;text-align:left;white-space:normal}}
+#p_noche .pbars{gap:12px}
+@media(max-width:560px){#p_noche .live .lu{white-space:nowrap;display:flex;gap:6px;align-items:baseline}#p_noche .live .lu b{margin-left:0}}
