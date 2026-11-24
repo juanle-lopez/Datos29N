@@ -1107,3 +1107,5 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 .gp{fill:var(--line);stroke:var(--bg);stroke-width:1.2;cursor:pointer;transition:fill .25s,opacity .15s;vector-effect:non-scaling-stroke}
 .gp:hover{opacity:.78}.gp.on{stroke:var(--fg);stroke-width:2.5}
 .ginset{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3}.gil{font:600 12px var(--mono);fill:var(--muted)}
+.ctl label{min-width:0;max-width:100%}.ctl select{max-width:100%;min-width:0}
+@media(max-width:520px){.ctl{flex-direction:column;align-items:stretch}.ctl label{display:flex;gap:8px;align-items:center}.ctl select{flex:1}}
