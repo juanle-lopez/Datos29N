@@ -51,20 +51,34 @@
   // ---- mapa de provincias
   const AB={'A Coruña':'CRU','Araba/Álava':'ÁLA','Illes Balears':'BAL','Las Palmas':'LPA','Santa Cruz de Tenerife':'TEN','La Rioja':'RIO','Ciudad Real':'CRE','Castellón':'CAS','Cádiz':'CÁD','Cáceres':'CÁC','Guadalajara':'GUA','Gipuzkoa':'GIP','Girona':'GIR','Granada':'GRA','Huesca':'HSC','Huelva':'HUV'};
   const ab=n=>AB[n]||n.slice(0,3).toUpperCase();
-  let PV=null,sel='';
+  let PV=null,sel='',met='win',MUN=null,msel='';
+  const MET=[['win','Ganador'],['PP','PP'],['PSOE','PSOE'],['VOX','Vox'],['SUMAR','Sumar'],['part','Participación']];
   const win=p=>{if(!p||!p.pct)return null;let b=null,v=-1;['PP','PSOE','VOX','SUMAR'].forEach(k=>{if(p.pct[k]!=null&&p.pct[k]>v){v=p.pct[k];b=k}});return b};
+  const mix=(c,x)=>`color-mix(in srgb,${c} ${Math.round(Math.max(12,Math.min(100,x)))}%,var(--line))`;
+  const f1=v=>String(v).replace('.',',');
+  function tileStyle(p){if(!p)return null;
+    if(met==='win'){const w=win(p);return w?{bg:C[w],tx:'#fff',tip:NM[w]}:null}
+    if(met==='part'){return p.part!=null?{bg:mix('var(--fg)',(p.part-45)*2.2),tx:p.part>62?'var(--bg)':'var(--fg)',tip:f1(p.part)+' %'}:null}
+    const v=p.pct&&p.pct[met];return v!=null?{bg:mix(C[met],v*2.6),tx:v>22?'#fff':'var(--fg)',tip:f1(v)+' %'}:null}
   function drawMap(){const T=window.TILES||{},names=Object.keys(T);const sl=$('nsel');
     if(sl.options.length<2)names.slice().sort((x,y)=>x.localeCompare(y,'es')).forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sl.appendChild(o)});
-    const D=PV&&PV.prov||{};
-    $('pmap').innerHTML=names.map(n=>{const [c,r]=T[n],w=win(D[n]);return `<button type="button" class="pt${w?' w-'+w:''}${n===sel?' on':''}" data-n="${n}" style="grid-column:${c+1};grid-row:${r+1}" aria-label="${n}">${ab(n)}</button>`}).join('');
-    const any=names.some(n=>win(D[n]));
-    $('plg').innerHTML=any?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join('')+'<span><i style="background:var(--line)"></i>Sin datos</span>':'';
+    $('nmet').innerHTML=MET.map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===met}">${l}</button>`).join('');
+    const D=PV&&PV.prov||{};let any=false;
+    $('pmap').innerHTML=names.map(n=>{const [c,r]=T[n],s=tileStyle(D[n]);if(s)any=true;return `<button type="button" class="pt${n===sel?' on':''}" data-n="${n}" title="${n}${s?' · '+s.tip:''}" style="grid-column:${c+1};grid-row:${r+1}${s?`;background:${s.bg};color:${s.tx}`:''}" aria-label="${n}${s?', '+s.tip:''}">${ab(n)}</button>`}).join('');
+    $('plg').innerHTML=any?(met==='win'?['PP','PSOE','VOX','SUMAR'].map(k=>`<span><i style="background:${C[k]}"></i>${k==='SUMAR'?'Sumar':NM[k]}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>':'<span>El mapa se colorea con los primeros resultados.</span>';
     drawPanel()}
-  function drawPanel(){const el=$('ppan');if(!sel){el.innerHTML='<p class="note" style="margin:0">Toca una provincia.</p>';return}
-    const p=PV&&PV.prov&&PV.prov[sel]||{},pc=p.pct||{},es=p.esc||{};
-    const rows=['PP','PSOE','VOX','SUMAR'].map(k=>{const v=pc[k];return `<div class="pb${v==null?' emp':''}"><span style="color:${C[k]}"><b>${k==='SUMAR'?'Sumar':NM[k]}</b></span><div class="db"><i style="width:${v==null?0:Math.min(100,v*2)}%;background:${C[k]}"></i></div><b>${v==null?'—':String(v).replace('.',',')+' %'}</b><small>${es[k]!=null?es[k]+' esc.':''}</small></div>`}).join('');
-    el.innerHTML=`<h4>${sel}</h4>${rows}<p class="note" style="margin:6px 0 0">${p.escrutado!=null?String(p.escrutado).replace('.',',')+' % escrutado':'Aún sin datos'}${p.part!=null?' · participación '+String(p.part).replace('.',',')+' %':''}</p>`}
-  function pick(n){sel=n;$('nsel').value=n;drawMap()}
+  const bars=(pc,es,p23)=>['PP','PSOE','VOX','SUMAR'].map(k=>{const v=pc&&pc[k];return `<div class="pb${v==null?' emp':''}"><span style="color:${C[k]}"><b>${k==='SUMAR'?'Sumar':NM[k]}</b></span><div class="db"><i style="width:${v==null?0:Math.min(100,v*2)}%;background:${C[k]}"></i></div><b>${v==null?'—':f1(v)+' %'}</b><small>${es&&es[k]!=null?es[k]+' esc.':p23&&p23[k]!=null?'2023: '+f1(p23[k])+' %':''}</small></div>`}).join('');
+  function drawPanel(){const el=$('ppan');
+    if(msel&&MUN){const m=MUN.find(x=>x.c===msel);if(m){el.innerHTML=`<h4>${m.n}</h4><small class="note">${sel}</small>${bars(m.pct,null,m.pct23)}<p class="note" style="margin:6px 0 0">${m.escrutado!=null?f1(m.escrutado)+' % escrutado':'Aún sin datos'}${m.part!=null?' · participación '+f1(m.part)+' %':''}</p>`;return}}
+    if(!sel){el.innerHTML='<p class="note" style="margin:0">Toca una provincia o elígela en la lista.</p>';return}
+    const p=PV&&PV.prov&&PV.prov[sel]||{};
+    el.innerHTML=`<h4>${sel}</h4>${bars(p.pct,p.esc)}<p class="note" style="margin:6px 0 0">${p.escrutado!=null?f1(p.escrutado)+' % escrutado':'Aún sin datos'}${p.part!=null?' · participación '+f1(p.part)+' %':''}</p>`}
+  function loadMun(){const ms=$('nmun');msel='';MUN=null;ms.innerHTML='<option value="">Elige provincia</option>';ms.disabled=true;if(!sel)return;
+    ms.innerHTML='<option value="">Cargando…</option>';const code=(window.CODES||{})[sel],mine=sel;
+    fetch('datos/municipios/'+code+'.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{if(mine!==sel)return;
+      if(!j||!j.mun||!j.mun.length){ms.innerHTML='<option value="">Disponible el 29-N</option>';return}
+      MUN=j.mun;ms.innerHTML='<option value="">Elige municipio…</option>'+MUN.slice().sort((a,b)=>a.n.localeCompare(b.n,'es')).map(m=>`<option value="${m.c}">${m.n}</option>`).join('');ms.disabled=false;drawPanel()}).catch(()=>{ms.innerHTML='<option value="">Disponible el 29-N</option>'})}
+  function pick(n){sel=n;msel='';$('nsel').value=n;drawMap();loadMun()}
   function draw(R){
     const has=R&&R.esc&&R.esc.PP!=null;
     drawHemi(has?R:null);drawTL();drawPart(R);drawMaj(has?R:null);
@@ -73,7 +87,8 @@
   }
   function load(){fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(draw).catch(()=>draw(null));
     fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
-  document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.pt');if(t)pick(t.dataset.n)});
+  document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.pt');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
+  $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
   $('nsel').addEventListener('change',e=>pick(e.target.value));
   draw(null);drawMap();load();
   if(!PRE)setInterval(load,60000);
