@@ -1157,3 +1157,4 @@ dialog.cvd2 .cvl,dialog.cvd2 .cvg,dialog.cvd2 .cvs{margin-left:16px;margin-right
 @media(max-width:520px){#p_noche .live .lu{text-align:left;width:100%}}
 @media(prefers-reduced-motion:reduce){#p_noche .live.on .ld{animation:none}}
 #p_noche .ppan{border-top:4px solid var(--line);transition:border-color .3s}#p_noche .gp.on{stroke-width:3}
+#p_noche .gp.on{stroke-linejoin:round;paint-order:stroke}

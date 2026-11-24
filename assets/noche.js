@@ -49,7 +49,7 @@
   function drawPart(R){const p=R&&R.part||{},m=R&&R.mesas||{};
     let h=PB.map(([k,l])=>{const v=p[k];return `<div class="pb${v==null?' emp':''}"><span>${l}</span><div class="db"><i style="width:${v==null?0:v}%"></i></div><b>${v==null?'—':String(v).replace('.',',')+' %'}</b></div>`}).join('');
     const mp=m.constituidas!=null&&m.total?Math.round(1000*m.constituidas/m.total)/10:null;
-    h+=`<div class="pb${mp==null?' emp':''}"><span>Mesas constituidas</span><div class="db"><i style="width:${mp==null?0:mp}%"></i></div><b>${mp==null?'—':String(mp).replace('.',',')+' %'}</b></div>`;
+    h+=`<div class="pb${mp==null?' emp':''}"><span>Mesas</span><div class="db"><i style="width:${mp==null?0:mp}%"></i></div><b>${mp==null?'—':String(mp).replace('.',',')+' %'}</b></div>`;
     $('npart').innerHTML=h}
   // ---- mayoría: dos barras hasta 176
   function drawMaj(R){const E=R&&R.esc||{},has=E.PP!=null;
@@ -78,6 +78,7 @@
     $('nmet').innerHTML=MET.map(([k,l])=>`<button type="button" data-m="${k}" aria-pressed="${k===met}">${l}</button>`).join('');
     const D=PV&&PV.prov||{};let any=false;
     box.querySelectorAll('.gp').forEach(el=>{const n=el.dataset.n,s=tileStyle(D[n]);if(s)any=true;const wsel=n===sel&&win(D[n]);el.style.fill=wsel?colr(wsel):(s?s.bg:'');el.classList.toggle('on',n===sel);el.firstChild.textContent=n+(s?' · '+s.tip:'')});
+    if(sel){const se=[...box.querySelectorAll('.gp')].find(e=>e.dataset.n===sel);if(se)se.parentNode.appendChild(se)}
     const ws=new Set(MAIN);Object.keys(D).forEach(n=>{const w=win(D[n]);if(w)ws.add(w)});
     $('plg').innerHTML=(met==='win'?[...ws].map(k=>`<span><i style="background:${colr(k)}"></i>${nmf(k)}</span>`).join(''):`<span>menos</span><i class="grad" style="background:linear-gradient(90deg,${mix(met==='part'?'var(--fg)':C[met],15)},${met==='part'?'var(--fg)':C[met]})"></i><span>más</span>`)+'<span><i style="background:var(--line)"></i>Sin datos</span>';
     drawPanel()}
