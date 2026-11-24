@@ -107,6 +107,7 @@
   }
   function load(){lastCk=new Date();fetch('datos/resultados.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(R=>{lastData=R&&R.actualizado?hm(new Date(R.actualizado)):'';draw(R)}).catch(()=>draw(null));
     fetch('datos/provincias.json?t='+Date.now()).then(r=>r.ok?r.json():null).then(j=>{PV=j;drawMap()}).catch(()=>drawMap())}
+  $('rfb').addEventListener('click',()=>{const b=$('rfb');b.classList.add('spin');load();setTimeout(()=>b.classList.remove('spin'),900)});
   document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.gp');if(t)pick(t.dataset.n);const m=e.target.closest&&e.target.closest('#nmet button');if(m){met=m.dataset.m;drawMap()}});
   $('nmun').addEventListener('change',e=>{msel=e.target.value;drawPanel()});
   $('nsel').addEventListener('change',e=>pick(e.target.value));
