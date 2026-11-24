@@ -1207,3 +1207,15 @@ header.mini .brand{min-width:0}.hact{flex:none;max-width:100%}
 @media(max-width:560px){#p_noche .live{grid-template-columns:auto 1fr}#p_noche .live .lu{grid-column:2;text-align:left;white-space:normal}}
 #p_noche .pbars{gap:12px}
 @media(max-width:560px){#p_noche .live .lu{white-space:nowrap;display:flex;gap:6px;align-items:baseline}#p_noche .live .lu b{margin-left:0}}
+
+/* cuenta atrás */
+#p_noche .live{display:grid;grid-template-columns:1fr;gap:12px;padding:16px 18px;border-radius:16px;justify-items:center;text-align:center}
+#p_noche .live .lt{display:grid;gap:12px;justify-items:center;width:100%}
+#p_noche .live .lk{display:inline-flex;align-items:center;gap:8px;font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#p_noche .live .ld{margin:0}
+#p_noche .ncdw{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;max-width:460px;margin:0;border:0;padding:0;background:none}
+#p_noche .ncdw[hidden]{display:none}
+#p_noche .ncdw>div{display:grid;gap:2px;padding:12px 4px 9px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}
+#p_noche .ncdw b{font:700 clamp(30px,9vw,46px)/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--fg)}
+#p_noche .ncdw span{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+#p_noche .live .lu{grid-column:auto;text-align:center;white-space:normal;display:block}

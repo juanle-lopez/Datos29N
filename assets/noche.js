@@ -38,11 +38,13 @@
   const dur=ms=>{const s=Math.max(0,Math.floor(ms/1000)),d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),r=s%60;
     return d?`${d} d ${h} h`:h?`${h} h ${String(m).padStart(2,'0')} min`:`${m} min ${String(r).padStart(2,'0')} s`};
   const hm=d=>d.toLocaleTimeString('es-ES',{timeZone:'Europe/Madrid',hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  function tick(){const t=Date.now(),nx=EV.find(e=>e[1]>t);
-    $('lph').textContent=t<EV[0][1]?'Faltan '+dur(EV[0][1]-t)+' para votar':t<EV[1][1]?'Se está votando':t<EV[2][1]?'Colegios cerrados':'Escrutinio en directo';
-    $('lnx').textContent=nx&&t>=EV[0][1]?nx[0]+' · en '+dur(nx[1]-t):nx?'Aquí aparecerán los resultados oficiales':'Escrutinio general: 4–7 dic';
+  const p2=n=>String(n).padStart(2,'0');
+  function tick(){const t=Date.now(),on=t>=EV[0][1],nx=EV.find(e=>e[1]>t);
+    $('lph').textContent=!on?'Faltan para que abran los colegios':t<EV[1][1]?'Faltan para que cierren los colegios':t<EV[2][1]?'Faltan para los primeros resultados':'Escrutinio en directo';
+    const cd=$('ncd');cd.hidden=!nx;
+    if(nx){const s=Math.max(0,Math.floor((nx[1]-t)/1000));$('ncdd').textContent=p2(Math.floor(s/86400));$('ncdh').textContent=p2(Math.floor(s%86400/3600));$('ncdm').textContent=p2(Math.floor(s%3600/60));$('ncds').textContent=p2(s%60)}
     $('lck').textContent=lastCk?(hm(lastCk)+(lastData?' · datos de '+lastData:'')):'—';
-    $('live').classList.toggle('on',t>=EV[0][1]);$('rfb').classList.toggle('on',t>=EV[0][1])}
+    $('live').classList.toggle('on',on);$('rfb').classList.toggle('on',on)}
   function drawTL(){tick()}
   // ---- participación: tantas lecturas como publique Interior (sin horas fijas)
   function drawPart(R){const S=(R&&R.part&&R.part.serie||[]).filter(x=>x&&x.v!=null),m=R&&R.mesas||{};
